@@ -4,12 +4,12 @@ package com.buildtrack.util;
 
 import java.io.InputStream;
 import java.util.Properties;
-import javax.mail.Message;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import jakarta.mail.Message;
+import jakarta.mail.PasswordAuthentication;
+import jakarta.mail.Session;
+import jakarta.mail.Transport;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
 
 public class EmailUtil {
     private static String SMTP_HOST;
@@ -63,7 +63,7 @@ public class EmailUtil {
             mailProps.put("mail.smtp.ssl.trust", SMTP_HOST);
 
             // Create session with authentication
-            Session session = Session.getInstance(mailProps, new javax.mail.Authenticator() {
+            Session session = Session.getInstance(mailProps, new jakarta.mail.Authenticator() {
                 @Override
                 protected PasswordAuthentication getPasswordAuthentication() {
                     return new PasswordAuthentication(SMTP_USERNAME, SMTP_PASSWORD);

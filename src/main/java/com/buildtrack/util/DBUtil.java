@@ -13,7 +13,9 @@ public class DBUtil {
     static {
         loadConfig();
         try{
-            Class.forName(DB_DRIVER);
+//            Class.forName(DB_DRIVER);
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
         } catch (ClassNotFoundException e) {
             System.err.println("[DBUtil] MySql driver not found!" + e.getMessage());
             throw new RuntimeException(e);
@@ -43,6 +45,7 @@ public class DBUtil {
         }
     }
     public static Connection getConnection() throws SQLException {
+
         return DriverManager.getConnection(DB_URL,DB_USERNAME,DB_PASSWORD);
     }
     public static void close(Connection conn, PreparedStatement pstmt, ResultSet rs){
