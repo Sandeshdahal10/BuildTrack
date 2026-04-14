@@ -38,7 +38,7 @@
             <span>Projects</span>
         </a>
 
-        <a href="<%= basePath %>/admin/users" class="<%= uri.startsWith("/admin/users") ? activeNavClass : inactiveNavClass %>">
+        <a href="<%= basePath %>/admin/workers" class="<%= uri.startsWith("/admin/workers") ? activeNavClass : inactiveNavClass %>">
             <i data-lucide="user" class="w-4 h-4"></i>
             <span>Workers</span>
         </a>
