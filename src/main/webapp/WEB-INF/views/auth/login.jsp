@@ -25,7 +25,7 @@
         body {
             margin: 0;
             font-family: Arial, Helvetica, sans-serif;
-            background: linear-gradient(160deg, #0f172a 0%, #111827 45%, #1f2937 100%);
+            background: #ffffff;
             color: #111827;
             min-height: 100vh;
             display: flex;
@@ -62,7 +62,7 @@
         .brand h1 {
             margin: 0;
             font-size: 28px;
-            color: #0f172a;
+            color: #E65101;
         }
         .brand p {
             margin: 6px 0 0;
@@ -107,6 +107,7 @@
             text-decoration: none;
         }
         a:hover { text-decoration: underline; }
+        .accent-link { color: #E65101; }
         .field {
             width: 100%;
             height: 44px;
@@ -133,14 +134,14 @@
             width: 100%;
             border: none;
             border-radius: 10px;
-            background: #2563eb;
+            background: #E65101;
             color: #ffffff;
             font-weight: 700;
             height: 46px;
             font-size: 15px;
             cursor: pointer;
         }
-        .submit-btn:hover { background: #1d4ed8; }
+        .submit-btn:hover { background: #d84315; }
         .register {
             margin: 16px 0 18px;
             text-align: center;
@@ -223,7 +224,7 @@
 
         <div class="label-row">
             <label for="password">Password</label>
-            <a href="<%= request.getContextPath() %>/forgot-password">Forgot?</a>
+            <a class="accent-link" href="<%= request.getContextPath() %>/forgot-password">Forgot?</a>
         </div>
         <input class="field" type="password" id="password" name="password"
                placeholder="Enter your password" required>
@@ -238,7 +239,7 @@
 
     <p class="register">
         New to BuildTrack?
-        <a href="<%= request.getContextPath() %>/register">Register Account</a>
+        <a class="accent-link" href="<%= request.getContextPath() %>/register">Register Account</a>
     </p>
 
     <section class="feature-grid">
