@@ -1,9 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    String mode = request.getParameter("mode");
+    String mode = (String) request.getAttribute("formMode");
+    if (mode == null || mode.isBlank()) {
+        mode = request.getParameter("mode");
+    }
     if (mode == null || mode.isBlank()) {
         mode = "create";
+    }
+
+    String projectId = (String) request.getAttribute("projectId");
+    if (projectId == null || projectId.isBlank()) {
+        projectId = request.getParameter("id");
     }
 
     boolean viewMode = "view".equalsIgnoreCase(mode);
@@ -51,57 +59,59 @@
             </section>
 
             <section class="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-                <form class="space-y-6">
+                <form method="post" action="<%= request.getContextPath() %>/admin/projects" class="space-y-6">
+                    <input type="hidden" name="mode" value="<%= editMode ? "edit" : "create" %>" />
+                    <input type="hidden" name="id" value="<%= projectId == null ? "" : projectId %>" />
                     <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
                         <div class="md:col-span-2">
                             <label class="mb-2 block text-sm font-semibold text-slate-700">Project Title</label>
-                            <input type="text" placeholder="Enter project title" <%= lockFields %> class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-orange-300 focus:ring-2 focus:ring-orange-200 <%= viewMode ? "bg-slate-100" : "" %>" />
+                            <input name="title" type="text" value="<%= projectTitleValue %>" placeholder="Enter project title" <%= lockFields %> class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-orange-300 focus:ring-2 focus:ring-orange-200 <%= viewMode ? "bg-slate-100" : "" %>" />
                         </div>
 
                         <div class="md:col-span-2">
                             <label class="mb-2 block text-sm font-semibold text-slate-700">Description</label>
-                            <textarea rows="4" placeholder="Describe scope, goals, and key notes" <%= lockFields %> class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-orange-300 focus:ring-2 focus:ring-orange-200 <%= viewMode ? "bg-slate-100" : "" %>"></textarea>
+                            <textarea name="description" rows="4" placeholder="Describe scope, goals, and key notes" <%= lockFields %> class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-orange-300 focus:ring-2 focus:ring-orange-200 <%= viewMode ? "bg-slate-100" : "" %>"><%= projectDescriptionValue %></textarea>
                         </div>
 
                         <div>
                             <label class="mb-2 block text-sm font-semibold text-slate-700">Client</label>
-                            <input type="text" placeholder="Client name" <%= lockFields %> class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-orange-300 focus:ring-2 focus:ring-orange-200 <%= viewMode ? "bg-slate-100" : "" %>" />
+                            <input name="client" type="text" value="<%= projectClientValue %>" placeholder="Client name" <%= lockFields %> class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-orange-300 focus:ring-2 focus:ring-orange-200 <%= viewMode ? "bg-slate-100" : "" %>" />
                         </div>
 
                         <div>
                             <label class="mb-2 block text-sm font-semibold text-slate-700">Total Budget (Rs)</label>
-                            <input type="number" placeholder="5000000" <%= lockFields %> class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-orange-300 focus:ring-2 focus:ring-orange-200 <%= viewMode ? "bg-slate-100" : "" %>" />
+                            <input name="budget" type="number" value="<%= projectBudgetValue %>" placeholder="5000000" <%= lockFields %> class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-orange-300 focus:ring-2 focus:ring-orange-200 <%= viewMode ? "bg-slate-100" : "" %>" />
                         </div>
 
                         <div>
                             <label class="mb-2 block text-sm font-semibold text-slate-700">Start Date</label>
-                            <input type="date" <%= disableInputs %> class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-orange-300 focus:ring-2 focus:ring-orange-200 <%= viewMode ? "bg-slate-100" : "" %>" />
+                            <input name="startDate" type="date" value="<%= projectStartDateValue %>" <%= disableInputs %> class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-orange-300 focus:ring-2 focus:ring-orange-200 <%= viewMode ? "bg-slate-100" : "" %>" />
                         </div>
 
                         <div>
                             <label class="mb-2 block text-sm font-semibold text-slate-700">End Date</label>
-                            <input type="date" <%= disableInputs %> class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-orange-300 focus:ring-2 focus:ring-orange-200 <%= viewMode ? "bg-slate-100" : "" %>" />
+                            <input name="endDate" type="date" value="<%= projectEndDateValue %>" <%= disableInputs %> class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-orange-300 focus:ring-2 focus:ring-orange-200 <%= viewMode ? "bg-slate-100" : "" %>" />
                         </div>
 
                         <div>
                             <label class="mb-2 block text-sm font-semibold text-slate-700">Status</label>
-                            <select <%= disableInputs %> class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-orange-300 focus:ring-2 focus:ring-orange-200 <%= viewMode ? "bg-slate-100" : "" %>">
-                                <option>Planned</option>
-                                <option selected>In Progress</option>
-                                <option>Completed</option>
-                                <option>On Hold</option>
+                            <select name="status" <%= disableInputs %> class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-orange-300 focus:ring-2 focus:ring-orange-200 <%= viewMode ? "bg-slate-100" : "" %>">
+                                <option <%= "Planned".equalsIgnoreCase(projectStatusValue) ? "selected" : "" %>>Planned</option>
+                                <option <%= "In Progress".equalsIgnoreCase(projectStatusValue) ? "selected" : "" %>>In Progress</option>
+                                <option <%= "Completed".equalsIgnoreCase(projectStatusValue) ? "selected" : "" %>>Completed</option>
+                                <option <%= "On Hold".equalsIgnoreCase(projectStatusValue) ? "selected" : "" %>>On Hold</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="flex flex-wrap items-center gap-3 border-t border-slate-200 pt-4">
                         <% if (viewMode) { %>
-                            <a href="<%= request.getContextPath() %>/admin/projects?view=form&mode=edit" class="inline-flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-orange-600">
+                            <a href="<%= request.getContextPath() %>/admin/projects/<%= projectId == null ? "" : projectId %>/edit" class="inline-flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-orange-600">
                                 <i data-lucide="pencil" class="h-4 w-4"></i>
                                 Edit Project
                             </a>
                         <% } else { %>
-                            <button type="button" class="inline-flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-orange-600">
+                            <button type="submit" class="inline-flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-orange-600">
                                 <i data-lucide="save" class="h-4 w-4"></i>
                                 <%= editMode ? "Update Project" : "Save Project" %>
                             </button>

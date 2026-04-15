@@ -5,57 +5,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <title>Project Management - BuildTrack</title>
-    <style>
-        /* Background Grid Pattern */
-        .project-grid-bg {
-            background-image: linear-gradient(to right, rgba(148, 163, 184, 0.1) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(148, 163, 184, 0.1) 1px, transparent 1px);
-            background-size: 24px 24px;
-        }
 
-        /* Card Styles */
-        .project-card {
-            position: relative;
-            overflow: hidden;
-            background: white;
-            border: 1px solid gainsboro;
-            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
-            transition: all 0.2s ease;
-        }
-
-        .project-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
-        }
-
-        /* Left Border Indicator */
-        .project-card::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 4px;
-            background: orange;
-        }
-
-        /* Status Specific Colors */
-        .project-card[data-status="planned"] .status-badge { background: aliceblue; color: blue; border: 1px solid lightblue; }
-
-        .project-card[data-status="in progress"] .status-badge { background: floralwhite; color: darkorange; border: 1px solid moccasin; }
-
-        .project-card[data-status="completed"] .status-badge { background: honeydew; color: green; border: 1px solid lightgreen; }
-
-        .project-card[data-status="on hold"] .status-badge { background: lavenderblush; color: crimson; border: 1px solid lightpink; }
-
-        /* Progress Bar */
-        .progress-track { background: whitesmoke; border: 1px solid lightgray; }
-        .progress-fill { background: linear-gradient(to right, orange, darkorange); }
-
-        /* Animations */
-        .fade-up { animation: fadeUp 0.4s ease-out; }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    </style>
 </head>
 <body class="h-screen overflow-hidden bg-slate-50 text-slate-900">
 
@@ -120,195 +70,47 @@
                     <button onclick="filterProjects('planned')" class="filter-btn rounded-full border border-slate-300 px-4 py-1.5 text-xs font-semibold text-slate-600 ">Planned</button>
                 </div>
             </div>
+            <jsp:include page="../common/projectCard.jsp">
+                <jsp:param name="title" value="Skyline Tower Complex"/>
+                <jsp:param name="client" value="Amit Sharma"/>
+                <jsp:param name="status" value="In Progress"/>
+                <jsp:param name="statusColor" value="text-orange-600"/>
+                <jsp:param name="progress" value="68"/>
+                <jsp:param name="workers" value="12"/>
+                <jsp:param name="budget" value="Rs 50.0L"/>
+                <jsp:param name="startDate" value="2025-01-15"/>
+                <jsp:param name="endDate" value="2025-12-30"/>
+                <jsp:param name="viewLink" value="${pageContext.request.contextPath}/admin/projects/form?mode=view&amp;id=1"/>
+                <jsp:param name="editLink" value="${pageContext.request.contextPath}/admin/projects/form?mode=edit&amp;id=1"/>
+            </jsp:include>
 
-            <!-- Project List -->
-            <div id="projectList" class="project-grid-bg rounded-xl border border-slate-200 p-6 space-y-4">
-
-                <!-- Project 1: Skyline Tower -->
-                <article data-status="in progress" data-title="Skyline Tower Complex" class="project-card fade-up rounded-xl p-5">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2 mb-1">
-                                <h3 class="font-bold text-slate-800">Skyline Tower Complex</h3>
-                                <span class="status-badge text-xs font-bold rounded-full px-2 py-0.5">In Progress</span>
-                            </div>
-                            <p class="text-sm text-slate-500 mb-3">Client: Amit Sharma</p>
-                            <div class="flex flex-wrap gap-4 text-xs text-slate-500 mb-4">
-                                <span class="flex items-center gap-1"><i data-lucide="calendar" class="w-3 h-3"></i> 2025-01-15 - 2025-12-30</span>
-                                <span class="flex items-center gap-1"><i data-lucide="users" class="w-3 h-3"></i> 12 Workers</span>
-                                <span class="flex items-center gap-1"><i data-lucide="wallet" class="w-3 h-3"></i> Rs 50.0L</span>
-                            </div>
-                            <div class="w-full">
-                                <div class="flex justify-between text-xs mb-1">
-                                    <span class="text-slate-500">Progress</span>
-                                    <span class="font-bold text-orange-600">68%</span>
-                                </div>
-                                <div class="progress-track h-2 rounded-full">
-                                    <div class="progress-fill h-2 rounded-full" style="width: 68%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex gap-2">
-                            <a href="#" class="rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50">View</a>
-                            <a href="#" class="rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-600">Edit</a>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Project 2: Green Valley -->
-                <article data-status="in progress" data-title="Green Valley Residency" class="project-card fade-up rounded-xl p-5">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2 mb-1">
-                                <h3 class="font-bold text-slate-800">Green Valley Residency</h3>
-                                <span class="status-badge text-xs font-bold rounded-full px-2 py-0.5">In Progress</span>
-                            </div>
-                            <p class="text-sm text-slate-500 mb-3">Client: Priya Mehta</p>
-                            <div class="flex flex-wrap gap-4 text-xs text-slate-500 mb-4">
-                                <span class="flex items-center gap-1"><i data-lucide="calendar" class="w-3 h-3"></i> 2025-02-01 - 2025-11-15</span>
-                                <span class="flex items-center gap-1"><i data-lucide="users" class="w-3 h-3"></i> 8 Workers</span>
-                                <span class="flex items-center gap-1"><i data-lucide="wallet" class="w-3 h-3"></i> Rs 32.0L</span>
-                            </div>
-                            <div class="w-full">
-                                <div class="flex justify-between text-xs mb-1">
-                                    <span class="text-slate-500">Progress</span>
-                                    <span class="font-bold text-orange-600">54%</span>
-                                </div>
-                                <div class="progress-track h-2 rounded-full">
-                                    <div class="progress-fill h-2 rounded-full" style="width: 54%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex gap-2">
-                            <a href="#" class="rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50">View</a>
-                            <a href="#" class="rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-600">Edit</a>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Project 3: River Bridge -->
-                <article data-status="in progress" data-title="River Bridge Construction" class="project-card fade-up rounded-xl p-5">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2 mb-1">
-                                <h3 class="font-bold text-slate-800">River Bridge Construction</h3>
-                                <span class="status-badge text-xs font-bold rounded-full px-2 py-0.5">In Progress</span>
-                            </div>
-                            <p class="text-sm text-slate-500 mb-3">Client: Govt. Authority</p>
-                            <div class="flex flex-wrap gap-4 text-xs text-slate-500 mb-4">
-                                <span class="flex items-center gap-1"><i data-lucide="calendar" class="w-3 h-3"></i> 2025-03-10 - 2026-03-10</span>
-                                <span class="flex items-center gap-1"><i data-lucide="users" class="w-3 h-3"></i> 15 Workers</span>
-                                <span class="flex items-center gap-1"><i data-lucide="wallet" class="w-3 h-3"></i> Rs 80.0L</span>
-                            </div>
-                            <div class="w-full">
-                                <div class="flex justify-between text-xs mb-1">
-                                    <span class="text-slate-500">Progress</span>
-                                    <span class="font-bold text-orange-600">35%</span>
-                                </div>
-                                <div class="progress-track h-2 rounded-full">
-                                    <div class="progress-fill h-2 rounded-full" style="width: 35%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex gap-2">
-                            <a href="#" class="rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50">View</a>
-                            <a href="#" class="rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-600">Edit</a>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Project 4: Shopping Mall (Completed) -->
-                <article data-status="completed" data-title="Shopping Mall Renovation" class="project-card fade-up rounded-xl p-5">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2 mb-1">
-                                <h3 class="font-bold text-slate-800">Shopping Mall Renovation</h3>
-                                <span class="status-badge text-xs font-bold rounded-full px-2 py-0.5">Completed</span>
-                            </div>
-                            <p class="text-sm text-slate-500 mb-3">Client: Rahul Industries</p>
-                            <div class="flex flex-wrap gap-4 text-xs text-slate-500 mb-4">
-                                <span class="flex items-center gap-1"><i data-lucide="calendar" class="w-3 h-3"></i> 2024-06-01 - 2025-06-30</span>
-                                <span class="flex items-center gap-1"><i data-lucide="users" class="w-3 h-3"></i> 10 Workers</span>
-                                <span class="flex items-center gap-1"><i data-lucide="wallet" class="w-3 h-3"></i> Rs 45.0L</span>
-                            </div>
-                            <div class="w-full">
-                                <div class="flex justify-between text-xs mb-1">
-                                    <span class="text-slate-500">Progress</span>
-                                    <span class="font-bold text-green-600">100%</span>
-                                </div>
-                                <div class="progress-track h-2 rounded-full">
-                                    <div class="progress-fill h-2 rounded-full bg-green-500" style="width: 100%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex gap-2">
-                            <a href="#" class="rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50">View</a>
-                            <a href="#" class="rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-600">Edit</a>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Project 5: Sunrise School (Planned) -->
-                <article data-status="planned" data-title="Sunrise School Block A" class="project-card fade-up rounded-xl p-5">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2 mb-1">
-                                <h3 class="font-bold text-slate-800">Sunrise School Block A</h3>
-                                <span class="status-badge text-xs font-bold rounded-full px-2 py-0.5">Planned</span>
-                            </div>
-                            <p class="text-sm text-slate-500 mb-3">Client: Metro Education Trust</p>
-                            <div class="flex flex-wrap gap-4 text-xs text-slate-500 mb-4">
-                                <span class="flex items-center gap-1"><i data-lucide="calendar" class="w-3 h-3"></i> 2025-08-01 - 2026-04-20</span>
-                                <span class="flex items-center gap-1"><i data-lucide="users" class="w-3 h-3"></i> 6 Workers</span>
-                                <span class="flex items-center gap-1"><i data-lucide="wallet" class="w-3 h-3"></i> Rs 18.0L</span>
-                            </div>
-                            <div class="w-full">
-                                <div class="flex justify-between text-xs mb-1">
-                                    <span class="text-slate-500">Progress</span>
-                                    <span class="font-bold text-blue-600">8%</span>
-                                </div>
-                                <div class="progress-track h-2 rounded-full">
-                                    <div class="progress-fill h-2 rounded-full bg-blue-500" style="width: 8%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex gap-2">
-                            <a href="#" class="rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50">View</a>
-                            <a href="#" class="rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-600">Edit</a>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Project 6: Warehouse (On Hold) -->
-                <article data-status="on hold" data-title="Industrial Warehouse Expansion" class="project-card fade-up rounded-xl p-5">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2 mb-1">
-                                <h3 class="font-bold text-slate-800">Industrial Warehouse Expansion</h3>
-                                <span class="status-badge text-xs font-bold rounded-full px-2 py-0.5">On Hold</span>
-                            </div>
-                            <p class="text-sm text-slate-500 mb-3">Client: Atlas Supply Ltd</p>
-                            <div class="flex flex-wrap gap-4 text-xs text-slate-500 mb-4">
-                                <span class="flex items-center gap-1"><i data-lucide="calendar" class="w-3 h-3"></i> 2024-11-10 - 2025-10-25</span>
-                                <span class="flex items-center gap-1"><i data-lucide="users" class="w-3 h-3"></i> 9 Workers</span>
-                                <span class="flex items-center gap-1"><i data-lucide="wallet" class="w-3 h-3"></i> Rs 22.0L</span>
-                            </div>
-                            <div class="w-full">
-                                <div class="flex justify-between text-xs mb-1">
-                                    <span class="text-slate-500">Progress</span>
-                                    <span class="font-bold text-red-600">41%</span>
-                                </div>
-                                <div class="progress-track h-2 rounded-full">
-                                    <div class="progress-fill h-2 rounded-full bg-red-400" style="width: 41%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex gap-2">
-                            <a href="#" class="rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50">View</a>
-                            <a href="#" class="rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-600">Edit</a>
-                        </div>
-                    </div>
-                </article>
+            <jsp:include page="../common/projectCard.jsp">
+                <jsp:param name="title" value="Green Valley Residency"/>
+                <jsp:param name="client" value="Priya Mehta"/>
+                <jsp:param name="status" value="In Progress"/>
+                <jsp:param name="statusColor" value="text-orange-600"/>
+                <jsp:param name="progress" value="54"/>
+                <jsp:param name="workers" value="8"/>
+                <jsp:param name="budget" value="Rs 32.0L"/>
+                <jsp:param name="startDate" value="2025-02-01"/>
+                <jsp:param name="endDate" value="2025-11-15"/>
+                <jsp:param name="viewLink" value="${pageContext.request.contextPath}/admin/projects/form?mode=view&amp;id=2"/>
+                <jsp:param name="editLink" value="${pageContext.request.contextPath}/admin/projects/form?mode=edit&amp;id=2"/>
+            </jsp:include>
+            <jsp:include page="../common/projectCard.jsp">
+                <jsp:param name="title" value="River Bridge Construction"/>
+                <jsp:param name="client" value="Govt. Authority"/>
+                <jsp:param name="status" value="In Progress"/>
+                <jsp:param name="statusColor" value="text-orange-600"/>
+                <jsp:param name="progress" value="35"/>
+                <jsp:param name="workers" value="15"/>
+                <jsp:param name="budget" value="Rs 80.0L"/>
+                <jsp:param name="startDate" value="2025-03-10"/>
+                <jsp:param name="endDate" value="2026-03-10"/>
+                <jsp:param name="viewLink" value="${pageContext.request.contextPath}/admin/projects/form?mode=view&amp;id=3"/>
+                <jsp:param name="editLink" value="${pageContext.request.contextPath}/admin/projects/form?mode=edit&amp;id=3"/>
+            </jsp:include>
+                </main>
 
             </div>
         </main>
