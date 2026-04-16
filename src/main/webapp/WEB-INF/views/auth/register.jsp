@@ -13,175 +13,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BuildTrack - Register</title>
-    <style>
-        * { box-sizing: border-box; }
-        body {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #ffffff;
-            color: #111827;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-        }
-        .card {
-            width: 100%;
-            max-width: 1020px;
-            background: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 18px 42px rgba(15, 23, 42, 0.18);
-            border: 1px solid #f1f5f9;
-            overflow: hidden;
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-        }
-        .left-panel {
-            padding: 36px 30px;
-            background: linear-gradient(160deg, #fffaf5 0%, #ffffff 100%);
-            border-right: 1px solid #f3f4f6;
-        }
-        .left-panel h1 {
-            margin: 0;
-            color: #E65101;
-            line-height: 1.25;
-            font-size: 32px;
-        }
-        .left-panel p {
-            margin: 16px 0;
-            color: #475569;
-            font-size: 15px;
-            line-height: 1.55;
-        }
-        .stat {
-            margin-top: 18px;
-            display: inline-block;
-            border: 1px solid #ffedd5;
-            background: #fff7ed;
-            color: #9a3412;
-            border-radius: 999px;
-            padding: 8px 14px;
-            font-size: 13px;
-            font-weight: 700;
-        }
-        .right-panel {
-            padding: 30px;
-        }
-        h2 {
-            margin: 0;
-            color: #0f172a;
-            font-size: 28px;
-        }
-        .subtitle {
-            margin: 8px 0 16px;
-            color: #64748b;
-            font-size: 14px;
-        }
-        .alert {
-            border-radius: 10px;
-            padding: 10px 12px;
-            margin-bottom: 14px;
-            background: #fef2f2;
-            color: #991b1b;
-            border: 1px solid #fca5a5;
-            font-size: 14px;
-        }
-        .alert ul {
-            margin: 0;
-            padding-left: 18px;
-        }
-        form { margin-top: 4px; }
-        .label {
-            margin-bottom: 6px;
-            font-size: 14px;
-            color: #1f2937;
-            font-weight: 600;
-            display: block;
-        }
-        .field {
-            width: 100%;
-            height: 44px;
-            border: 1px solid #cbd5e1;
-            border-radius: 10px;
-            padding: 0 12px;
-            font-size: 14px;
-            margin-bottom: 12px;
-            outline: none;
-            background: #ffffff;
-        }
-        .field:focus {
-            border-color: #E65101;
-            box-shadow: 0 0 0 3px rgba(230, 81, 1, 0.16);
-        }
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        .submit-btn {
-            margin-top: 8px;
-            width: 100%;
-            border: none;
-            border-radius: 10px;
-            background: #E65101;
-            color: #ffffff;
-            font-weight: 700;
-            height: 46px;
-            font-size: 15px;
-            cursor: pointer;
-        }
-        .submit-btn:hover { background: #d84315; }
-        .notice {
-            margin-top: 14px;
-            font-size: 13px;
-            color: #64748b;
-            line-height: 1.5;
-            border-left: 3px solid #E65101;
-            padding-left: 10px;
-        }
-        .login-link {
-            margin-top: 14px;
-            font-size: 14px;
-            color: #475569;
-        }
-        .login-link a {
-            color: #E65101;
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .login-link a:hover { text-decoration: underline; }
-        @media (max-width: 920px) {
-            .card {
-                grid-template-columns: 1fr;
-            }
-            .left-panel {
-                border-right: none;
-                border-bottom: 1px solid #f3f4f6;
-            }
-        }
-        @media (max-width: 640px) {
-            body { padding: 16px; }
-            .left-panel, .right-panel { padding: 22px; }
-            .grid-2 { grid-template-columns: 1fr; gap: 0; }
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<main class="card">
-    <section class="left-panel">
-        <h1>The Digital Monument to Project Management.</h1>
-        <p>Precision, structural integrity, and layered complexity. Register to access the master architect's dashboard.</p>
-        <span class="stat">Join 1,000+ project leads</span>
+<body class="m-0 min-h-screen bg-white px-4 py-4 text-slate-900 sm:px-6 sm:py-6 flex items-center justify-center">
+<main class="grid w-full max-w-[1020px] grid-cols-1 overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-[0_18px_42px_rgba(15,23,42,0.18)] md:grid-cols-[1fr_1.2fr]">
+    <section class="border-b border-slate-100 bg-gradient-to-br from-orange-50 to-white px-[22px] py-[22px] md:border-b-0 md:border-r md:px-[30px] md:py-9">
+        <h1 class="m-0 text-[32px] font-bold leading-tight text-orange-700">The Digital Monument to Project Management.</h1>
+        <p class="my-4 text-[15px] leading-relaxed text-slate-600">Precision, structural integrity, and layered complexity. Register to access the master architect's dashboard.</p>
+        <span class="mt-[18px] inline-block rounded-full border border-orange-100 bg-orange-50 px-[14px] py-2 text-[13px] font-bold text-orange-900">Join 1,000+ project leads</span>
     </section>
 
-    <section class="right-panel">
-        <h2>Create Account</h2>
-        <p class="subtitle">Please fill in your details to start your project journey.</p>
+    <section class="px-[22px] py-[22px] sm:p-[30px]">
+        <h2 class="m-0 text-[28px] font-semibold text-slate-900">Create Account</h2>
+        <p class="mb-4 mt-2 text-sm text-slate-500">Please fill in your details to start your project journey.</p>
 
         <% if (errors != null && !errors.isEmpty()) { %>
-        <div class="alert">
-            <ul>
+        <div class="mb-[14px] rounded-[10px] border border-red-300 bg-red-50 px-3 py-2.5 text-sm text-red-800">
+            <ul class="m-0 list-disc pl-[18px]">
                 <% for (String err : errors) { %>
                 <li><%= err %></li>
                 <% } %>
@@ -189,63 +37,112 @@
         </div>
         <% } %>
 
-        <form method="post" action="<%= request.getContextPath() %>/register">
-            <label class="label" for="fullName">First Name</label>
-            <input class="field" type="text" id="fullName" name="fullName"
-                   placeholder="Enter first name"
-                   value="<%= fullName == null ? "" : fullName %>" required>
+        <form class="mt-1" method="post" action="<%= request.getContextPath() %>/register">
+            <label class="mb-1.5 block text-sm font-semibold text-slate-800" for="fullName">Full Name</label>
+            <div class="relative mb-3">
+                <span class="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-slate-500" aria-hidden="true">
+                    <svg class="h-full w-full fill-current" viewBox="0 0 24 24">
+                        <path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5zm0 2c-4.97 0-9 2.24-9 5v1h18v-1c0-2.76-4.03-5-9-5z"/>
+                    </svg>
+                </span>
+                <input class="h-11 w-full rounded-[10px] border border-slate-300 bg-slate-100 pl-10 pr-3 text-sm text-slate-900 outline-none placeholder:text-slate-500 focus:border-orange-700 focus:bg-slate-200 focus:ring-4 focus:ring-orange-200" type="text" id="fullName" name="fullName"
+                       placeholder="Enter Your Full Name"
+                       value="<%= fullName == null ? "" : fullName %>" required>
+            </div>
 
-            <div class="grid-2">
+            <div class="grid grid-cols-1 gap-0 sm:gap-3 md:grid-cols-2">
                 <div>
-                    <label class="label" for="email">Email</label>
-                    <input class="field" type="email" id="email" name="email"
-                           placeholder="name@company.com"
-                           value="<%= email == null ? "" : email %>" required>
+                    <label class="mb-1.5 block text-sm font-semibold text-slate-800" for="email">Email</label>
+                    <div class="relative mb-3">
+                        <span class="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-slate-500" aria-hidden="true">
+                            <svg class="h-full w-full fill-current" viewBox="0 0 24 24">
+                                <path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v.35l-10 6.25L2 6.35V6zm0 2.7V18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8.7l-9.47 5.92a1 1 0 0 1-1.06 0L2 8.7z"/>
+                            </svg>
+                        </span>
+                        <input class="h-11 w-full rounded-[10px] border border-slate-300 bg-slate-100 pl-10 pr-3 text-sm text-slate-900 outline-none placeholder:text-slate-500 focus:border-orange-700 focus:bg-slate-200 focus:ring-4 focus:ring-orange-200" type="email" id="email" name="email"
+                               placeholder="Enter your Email Address"
+                               value="<%= email == null ? "" : email %>" required>
+                    </div>
                 </div>
                 <div>
-                    <label class="label" for="phone">Phone Number</label>
-                    <input class="field" type="tel" id="phone" name="phone"
-                           placeholder="+1 555 123 4567"
-                           value="<%= phone == null ? "" : phone %>" required>
+                    <label class="mb-1.5 block text-sm font-semibold text-slate-800" for="phone">Phone Number</label>
+                    <div class="relative mb-3">
+                        <span class="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-slate-500" aria-hidden="true">
+                            <svg class="h-full w-full fill-current" viewBox="0 0 24 24">
+                                <path d="M6.62 10.79a15.46 15.46 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24 11.68 11.68 0 0 0 3.67.59 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.47a1 1 0 0 1 1 1 11.68 11.68 0 0 0 .59 3.67 1 1 0 0 1-.24 1.02l-2.2 2.1z"/>
+                            </svg>
+                        </span>
+                        <input class="h-11 w-full rounded-[10px] border border-slate-300 bg-slate-100 pl-10 pr-3 text-sm text-slate-900 outline-none placeholder:text-slate-500 focus:border-orange-700 focus:bg-slate-200 focus:ring-4 focus:ring-orange-200" type="tel" id="phone" name="phone"
+                               placeholder="+977 0123456789"
+                               value="<%= phone == null ? "" : phone %>" required>
+                    </div>
                 </div>
             </div>
 
-            <div class="grid-2">
+            <div class="grid grid-cols-1 gap-0 sm:gap-3 md:grid-cols-2">
                 <div>
-                    <label class="label" for="dob">DOB</label>
-                    <input class="field" type="text" id="dob" name="dob" placeholder="mm/dd/yyyy">
+                    <label class="mb-1.5 block text-sm font-semibold text-slate-800" for="dob">DOB</label>
+                    <div class="relative mb-3">
+                        <span class="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-slate-500" aria-hidden="true">
+                            <svg class="h-full w-full fill-current" viewBox="0 0 24 24">
+                                <path d="M7 2h2v2h6V2h2v2h2a2 2 0 0 1 2 2v13a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6a2 2 0 0 1 2-2h2V2zm12 8H5v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-9z"/>
+                            </svg>
+                        </span>
+                        <input class="h-11 w-full rounded-[10px] border border-slate-300 bg-slate-100 pl-10 pr-3 text-sm text-slate-900 outline-none placeholder:text-slate-500 focus:border-orange-700 focus:bg-slate-200 focus:ring-4 focus:ring-orange-200" type="text" id="dob" name="dob" placeholder="mm/dd/yyyy">
+                    </div>
                 </div>
                 <div>
-                    <label class="label" for="role">Role Selection</label>
-                    <select class="field" id="role" name="role" required>
-                        <option value="">Select Role</option>
-                        <option value="CLIENT" <%= "CLIENT".equalsIgnoreCase(role) ? "selected" : "" %>>Client</option>
-                        <option value="WORKER" <%= "WORKER".equalsIgnoreCase(role) ? "selected" : "" %>>Worker</option>
-                    </select>
+                    <label class="mb-1.5 block text-sm font-semibold text-slate-800" for="role">Role Selection</label>
+                    <div class="relative mb-3">
+                        <span class="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-slate-500" aria-hidden="true">
+                            <svg class="h-full w-full fill-current" viewBox="0 0 24 24">
+                                <path d="M19 4h-3.18C15.4 2.84 14.3 2 13 2h-2c-1.3 0-2.4.84-2.82 2H5a2 2 0 0 0-2 2v2h18V6a2 2 0 0 0-2-2zm-8-1h2a1 1 0 0 1 1 1h-4a1 1 0 0 1 1-1zm10 7H3v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V10z"/>
+                            </svg>
+                        </span>
+                        <select class="h-11 w-full rounded-[10px] border border-slate-300 bg-slate-100 pl-10 pr-3 text-sm text-slate-900 outline-none focus:border-orange-700 focus:bg-slate-200 focus:ring-4 focus:ring-orange-200" id="role" name="role" required>
+                            <option value="">Select Role</option>
+                            <option value="CLIENT" <%= "CLIENT".equalsIgnoreCase(role) ? "selected" : "" %>>Client</option>
+                            <option value="WORKER" <%= "WORKER".equalsIgnoreCase(role) ? "selected" : "" %>>Worker</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
-            <div class="grid-2">
+            <div class="grid grid-cols-1 gap-0 sm:gap-3 md:grid-cols-2">
                 <div>
-                    <label class="label" for="password">Password</label>
-                    <input class="field" type="password" id="password" name="password"
-                           placeholder="Enter password" required>
+                    <label class="mb-1.5 block text-sm font-semibold text-slate-800" for="password">Password</label>
+                    <div class="relative mb-3">
+                        <span class="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-slate-500" aria-hidden="true">
+                            <svg class="h-full w-full fill-current" viewBox="0 0 24 24">
+                                <path d="M17 8h-1V6a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2zm-7-2a2 2 0 1 1 4 0v2h-4V6zm2 10a2 2 0 0 1-1-3.73V11h2v1.27A2 2 0 0 1 12 16z"/>
+                            </svg>
+                        </span>
+                        <input class="h-11 w-full rounded-[10px] border border-slate-300 bg-slate-100 pl-10 pr-3 text-sm text-slate-900 outline-none placeholder:text-slate-500 focus:border-orange-700 focus:bg-slate-200 focus:ring-4 focus:ring-orange-200" type="password" id="password" name="password"
+                               placeholder="Enter password" required>
+                    </div>
                 </div>
                 <div>
-                    <label class="label" for="confirmPassword">Confirm Password</label>
-                    <input class="field" type="password" id="confirmPassword" name="confirmPassword"
-                           placeholder="Confirm password" required>
+                    <label class="mb-1.5 block text-sm font-semibold text-slate-800" for="confirmPassword">Confirm Password</label>
+                    <div class="relative mb-3">
+                        <span class="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-slate-500" aria-hidden="true">
+                            <svg class="h-full w-full fill-current" viewBox="0 0 24 24">
+                                <path d="M17 8h-1V6a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2zm-7-2a2 2 0 1 1 4 0v2h-4V6zm1.29 8.29 1.12 1.12 2.3-2.3 1.02 1.02-3.32 3.32a1 1 0 0 1-1.41 0l-1.83-1.83 1.12-1.33z"/>
+                            </svg>
+                        </span>
+                        <input class="h-11 w-full rounded-[10px] border border-slate-300 bg-slate-100 pl-10 pr-3 text-sm text-slate-900 outline-none placeholder:text-slate-500 focus:border-orange-700 focus:bg-slate-200 focus:ring-4 focus:ring-orange-200" type="password" id="confirmPassword" name="confirmPassword"
+                               placeholder="Confirm password" required>
+                    </div>
                 </div>
             </div>
 
-            <button class="submit-btn" type="submit">Complete Registration -&gt;</button>
+            <button class="mt-2 h-[46px] w-full cursor-pointer rounded-[10px] bg-orange-700 text-[15px] font-bold text-white transition-colors hover:bg-orange-800" type="submit">Complete Registration</button>
         </form>
 
-        <p class="notice">!Your registration will be reviewed by Admin. Access to the BuildTrack platform will be granted upon verification of your credentials.</p>
+        <p class="mt-[14px] border-l-[3px] border-orange-700 pl-[10px] text-[13px] leading-relaxed text-slate-500">!Your registration will be reviewed by Admin. Access to the BuildTrack platform will be granted upon verification of your credentials.</p>
 
-        <p class="login-link">
+        <p class="mt-[14px] text-sm text-slate-600">
             Already have an account?
-            <a href="<%= request.getContextPath() %>/login">Log in</a>
+            <a class="font-semibold text-orange-700 no-underline hover:underline" href="<%= request.getContextPath() %>/login">Log in</a>
         </p>
     </section>
 </main>
