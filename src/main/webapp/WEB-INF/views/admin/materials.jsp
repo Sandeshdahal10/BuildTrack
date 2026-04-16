@@ -1,16 +1,155 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: sande
-  Date: 4/12/2026
-  Time: 8:36 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>Material Management - BuildTrack</title>
+    <style>
+    </style>
 </head>
-<body>
+<body class="h-screen overflow-hidden bg-slate-50 text-slate-900">
+
+<div class="h-screen flex">
+    <div class="fixed inset-y-0 left-0 w-56 border-r border-slate-200 bg-white">
+        <jsp:include page="../common/sidebar.jsp" />
+    </div>
+
+    <div class="ml-56 flex flex-1 flex-col overflow-y-auto">
+
+        <div class="sticky top-0 z-10 border-b border-slate-200 bg-white">
+            <jsp:include page="../common/adminTopbar.jsp" />
+        </div>
+
+        <main class="flex-1 p-6">
+
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold text-slate-800">Material Management</h1>
+                    <p class="text-slate-500 mt-1">Manage inventory, stock, and usage logs.</p>
+                </div>
+                <div class="flex gap-3">
+                    <button class="flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+                        <i data-lucide="clipboard-list" class="h-4 w-4"></i>
+                        Log Usage
+                    </button>
+                    <a href="#" class="flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-600">
+                        <i data-lucide="plus" class="h-4 w-4"></i>
+                        Add Material
+                    </a>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+                    <p class="text-xs font-semibold uppercase text-slate-400">Total Items</p>
+                    <p class="text-2xl font-bold text-slate-800 mt-1">24</p>
+                </div>
+                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+                    <p class="text-xs font-semibold uppercase text-slate-400">Low Stock Alerts</p>
+                    <p class="text-2xl font-bold text-slate-800 text- mt-1">3</p>
+                </div>
+                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+                    <p class="text-xs font-semibold uppercase text-slate-400">Total Stock Value</p>
+                    <p class="text-2xl font-bold text-slate-800 mt-1">Rs 12.5L</p>
+                </div>
+                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+                    <p class="text-xs font-semibold uppercase text-slate-400">Used This Month</p>
+                    <p class="text-2xl font-bold text-slate-800 mt-1">Rs 2.1L</p>
+                </div>
+            </div>
+
+            <!-- Main Content Grid -->
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+
+                <!-- Left Column: Material Catalogue (2/3 width) -->
+                <div class="xl:col-span-2 space-y-4">
+                    <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="font-bold text-slate-800">Material Catalogue</h2>
+                            <input type="text" placeholder="Search materials..." class="rounded-lg border border-slate-300 px-3 py-1.5 text-sm outline-none focus:border-orange-300">
+                        </div>
+
+                        <!-- Material List -->
+                        <div class="space-y-3">
+
+                            <jsp:include page="../common/materialCard.jsp">
+                                <jsp:param name="name" value="Cement (PPC)" />
+                                <jsp:param name="unit" value="Bags (50kg)" />
+                                <jsp:param name="stock" value="150" />
+                                <jsp:param name="price" value="Rs 450" />
+                                <jsp:param name="totalValue" value="Rs 67,500" />
+                                <jsp:param name="status" value="In Stock" />
+                                <jsp:param name="icon" value="package" />
+                                <jsp:param name="editLink" value="#" />
+                            </jsp:include>
+                            <jsp:include page="../common/materialCard.jsp">
+                                <jsp:param name="name" value="Iron Rods (TMT)" />
+                                <jsp:param name="unit" value="Quintals" />
+                                <jsp:param name="stock" value="5" />
+                                <jsp:param name="price" value="Rs 7,200" />
+                                <jsp:param name="totalValue" value="Rs 36,000" />
+                                <jsp:param name="status" value="Low Stock" />
+                                <jsp:param name="icon" value="align-justify" />
+                                <jsp:param name="iconBg" value="bg-slate-200" />
+                                <jsp:param name="editLink" value="#" />
+                            </jsp:include>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Usage Log (1/3 width) -->
+                <div class="xl:col-span-1">
+                    <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm h-full">
+                        <h2 class="font-bold text-slate-800 mb-4">Recent Usage Logs</h2>
+
+                        <div class="space-y-4">
+                            <jsp:include page="../common/usageLogCard.jsp">
+                                <jsp:param name="materialName" value="Cement" />
+                                <jsp:param name="projectName" value="Skyline Tower" />
+                                <jsp:param name="quantity" value="-50 Bags" />
+                                <jsp:param name="admin" value="Rahul" />
+                                <jsp:param name="date" value="Today, 10:30 AM" />
+                                <jsp:param name="cost" value="Rs 22,500" />
+                                <jsp:param name="borderAccent" value="border-orange-400" />
+                            </jsp:include>
+
+                            <jsp:include page="../common/usageLogCard.jsp">
+                                <jsp:param name="materialName" value="Iron Rods" />
+                                <jsp:param name="projectName" value="River Bridge" />
+                                <jsp:param name="quantity" value="-2 Quintal" />
+                                <jsp:param name="admin" value="Amit" />
+                                <jsp:param name="date" value="Yesterday" />
+                                <jsp:param name="cost" value="Rs 14,400" />
+                                <jsp:param name="borderAccent" value="border-blue-400" />
+                            </jsp:include>
+                        </div>
+
+                        <button class="w-full mt-4 text-center text-sm font-semibold text-orange-600 hover:text-orange-700">
+                            View All History →
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+</div>
+
+<script>
+    function toggleModal(id) {
+        const modal = document.getElementById(id);
+        if (modal.classList.contains('hidden')) {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        } else {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+    }
+    lucide.createIcons();
+</script>
 
 </body>
 </html>
