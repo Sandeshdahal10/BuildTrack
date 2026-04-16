@@ -251,6 +251,17 @@
             border-radius: 14px;
             padding: 18px 20px;
             box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+            transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(15, 23, 42, 0.2);
+            box-shadow: 0 16px 30px rgba(15, 23, 42, 0.12);
+        }
+
+        .card:focus-within {
+            border-color: rgba(246, 165, 35, 0.45);
         }
 
         .welcome h1 {
@@ -451,6 +462,16 @@
             .search {
                 min-width: 0;
                 flex: 1;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .card {
+                transition: none;
+            }
+
+            .card:hover {
+                transform: none;
             }
         }
     </style>
