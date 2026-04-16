@@ -21,7 +21,7 @@
                     <span class="font-extrabold text-2xl text-[#ea580c] tracking-tight">BuildTrack</span>
                 </div>
                 <div>
-                   <a href="login.jsp" class="text-slate-600 hover:text-[#ea580c] font-semibold px-4 py-2 transition-colors">Log in <span aria-hidden="true">&rarr;</span></a>
+                   <a href="${pageContext.request.contextPath}/login" class="text-slate-600 hover:text-[#ea580c] font-semibold px-4 py-2 transition-colors">Log in <span aria-hidden="true">&rarr;</span></a>
                 </div>
             </div>
         </div>
@@ -48,7 +48,7 @@
                         </p>
                         <div class="mt-8 sm:mt-10 flex flex-col sm:flex-row sm:justify-center lg:justify-start gap-4">
                             <div class="rounded-md shadow-lg">
-                                <a href="register.jsp" class="w-full flex items-center justify-center px-8 py-4 border border-transparent text-base font-semibold rounded-lg text-white bg-[#ea580c] hover:bg-[#c2410c] md:text-lg transition-all duration-200 transform hover:-translate-y-0.5">
+                                <a href="${pageContext.request.contextPath}/register" class="w-full flex items-center justify-center px-8 py-4 border border-transparent text-base font-semibold rounded-lg text-white bg-[#ea580c] hover:bg-[#c2410c] md:text-lg transition-all duration-200 transform hover:-translate-y-0.5">
                                     <i class="fa-solid fa-user-plus mr-2"></i> Register Account
                                 </a>
                             </div>
