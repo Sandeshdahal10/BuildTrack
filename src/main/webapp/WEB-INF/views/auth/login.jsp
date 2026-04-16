@@ -20,195 +20,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BuildTrack - Login</title>
-    <style>
-        * { box-sizing: border-box; }
-        body {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #ffffff;
-            color: #111827;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-        }
-        .page {
-            width: 100%;
-            max-width: 560px;
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 28px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-        }
-        .brand {
-            text-align: center;
-            margin-bottom: 24px;
-        }
-        .logo {
-            width: 76px;
-            height: 76px;
-            margin: 0 auto 12px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #2563eb, #0ea5e9);
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 26px;
-            letter-spacing: 1px;
-        }
-        .brand h1 {
-            margin: 0;
-            font-size: 28px;
-            color: #E65101;
-        }
-        .brand p {
-            margin: 6px 0 0;
-            color: #475569;
-            font-size: 14px;
-        }
-        h2 {
-            margin: 0;
-            font-size: 24px;
-            color: #0f172a;
-        }
-        .subtitle {
-            margin: 8px 0 18px;
-            color: #64748b;
-            font-size: 14px;
-        }
-        .alert {
-            border-radius: 10px;
-            padding: 10px 12px;
-            margin-bottom: 12px;
-            font-size: 14px;
-        }
-        .alert-warning { background: #fff7ed; color: #9a3412; border: 1px solid #fdba74; }
-        .alert-success { background: #ecfdf5; color: #166534; border: 1px solid #86efac; }
-        .alert-error { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
-        .alert ul {
-            margin: 0;
-            padding-left: 18px;
-        }
-        form { margin-top: 8px; }
-        .label-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 6px;
-            font-size: 14px;
-            color: #1f2937;
-            font-weight: 600;
-        }
-        a {
-            color: #1d4ed8;
-            text-decoration: none;
-        }
-        a:hover { text-decoration: underline; }
-        .accent-link { color: #E65101; }
-        .field {
-            width: 100%;
-            height: 44px;
-            border: 1px solid #cbd5e1;
-            border-radius: 10px;
-            padding: 0 12px;
-            font-size: 14px;
-            margin-bottom: 14px;
-            outline: none;
-        }
-        .field:focus {
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
-        }
-        .checkbox-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin: 4px 0 16px;
-            font-size: 14px;
-            color: #334155;
-        }
-        .submit-btn {
-            width: 100%;
-            border: none;
-            border-radius: 10px;
-            background: #E65101;
-            color: #ffffff;
-            font-weight: 700;
-            height: 46px;
-            font-size: 15px;
-            cursor: pointer;
-        }
-        .submit-btn:hover { background: #d84315; }
-        .register {
-            margin: 16px 0 18px;
-            text-align: center;
-            font-size: 14px;
-            color: #475569;
-        }
-        .feature-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        .feature {
-            border: 1px solid #dbeafe;
-            background: #f8fbff;
-            border-radius: 10px;
-            padding: 12px;
-        }
-        .feature-title {
-            margin: 0;
-            color: #0f172a;
-            font-size: 14px;
-            font-weight: 700;
-        }
-        .feature-text {
-            margin: 6px 0 0;
-            color: #475569;
-            font-size: 13px;
-        }
-        .footer-links {
-            margin-top: 18px;
-            text-align: center;
-            font-size: 13px;
-            color: #64748b;
-        }
-        .footer-links a { margin: 0 8px; }
-        @media (max-width: 600px) {
-            .page { padding: 22px; }
-            .feature-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<main class="page">
-    <section class="brand">
-        <div class="logo">BT</div>
-        <h1>BuildTrack</h1>
-        <p>Advanced Construction Project Management</p>
+<body class="m-0 min-h-screen bg-white px-4 py-6 text-slate-900 sm:px-6 flex items-center justify-center">
+<main class="w-full max-w-[560px] rounded-2xl bg-white p-6 shadow-[0_20px_40px_rgba(0,0,0,0.25)] sm:p-7">
+    <section class="mb-6 text-center">
+        <div class="mx-auto mb-3 flex h-[76px] w-[76px] items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-sky-500 text-[26px] font-bold tracking-[1px] text-white">BT</div>
+        <h1 class="m-0 text-[28px] font-bold text-orange-700">BuildTrack</h1>
+        <p class="mt-1.5 text-sm text-slate-600">Advanced Construction Project Management</p>
     </section>
 
-    <h2>Welcome Back</h2>
-    <p class="subtitle">Enter your credentials to access your site dashboard.</p>
+    <h2 class="m-0 text-2xl font-semibold text-slate-900">Welcome Back</h2>
+    <p class="mb-[18px] mt-2 text-sm text-slate-500">Enter your credentials to access your site dashboard.</p>
 
     <% if (authWarning != null) { %>
-    <div class="alert alert-warning"><%= authWarning %></div>
+    <div class="mb-3 rounded-[10px] border border-orange-300 bg-orange-50 px-3 py-2.5 text-sm text-orange-900"><%= authWarning %></div>
     <% } %>
 
     <% if (registered) { %>
-    <div class="alert alert-success">Registration successful. You can now sign in.</div>
+    <div class="mb-3 rounded-[10px] border border-green-300 bg-green-50 px-3 py-2.5 text-sm text-green-800">Registration successful. You can now sign in.</div>
     <% } %>
 
     <% if (resetSuccess) { %>
-    <div class="alert alert-success">Password reset successful. Please sign in with your new password.</div>
+    <div class="mb-3 rounded-[10px] border border-green-300 bg-green-50 px-3 py-2.5 text-sm text-green-800">Password reset successful. Please sign in with your new password.</div>
     <% } %>
 
     <% if (errors != null && !errors.isEmpty()) { %>
-    <div class="alert alert-error">
-        <ul>
+    <div class="mb-3 rounded-[10px] border border-red-300 bg-red-50 px-3 py-2.5 text-sm text-red-800">
+        <ul class="m-0 list-disc pl-[18px]">
             <% for (String err : errors) { %>
             <li><%= err %></li>
             <% } %>
@@ -216,48 +55,49 @@
     </div>
     <% } %>
 
-    <form method="post" action="<%= request.getContextPath() %>/login">
-        <label class="label-row" for="email">Email Address</label>
-        <input class="field" type="email" id="email" name="email"
-               placeholder="name@company.com"
-               value="<%= preservedEmail == null ? "" : preservedEmail %>" required>
-
-        <div class="label-row">
-            <label for="password">Password</label>
-            <a class="accent-link" href="<%= request.getContextPath() %>/forgot-password">Forgot?</a>
+    <form class="mt-2" method="post" action="<%= request.getContextPath() %>/login">
+        <label class="mb-1.5 block text-sm font-semibold text-slate-800" for="email">Email Address</label>
+        <div class="relative mb-[14px]">
+            <span class="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-slate-500" aria-hidden="true">
+                <svg class="h-full w-full fill-current" viewBox="0 0 24 24">
+                    <path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v.35l-10 6.25L2 6.35V6zm0 2.7V18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8.7l-9.47 5.92a1 1 0 0 1-1.06 0L2 8.7z"/>
+                </svg>
+            </span>
+            <input class="h-11 w-full rounded-[10px] border border-slate-300 bg-slate-100 pl-10 pr-3 text-sm text-slate-900 outline-none placeholder:text-slate-500 focus:border-blue-600 focus:bg-slate-200 focus:ring-4 focus:ring-blue-200" type="email" id="email" name="email"
+                   placeholder="Enter your Email Address"
+                   value="<%= preservedEmail == null ? "" : preservedEmail %>" required>
         </div>
-        <input class="field" type="password" id="password" name="password"
-               placeholder="Enter your password" required>
 
-        <label class="checkbox-row" for="rememberMe">
+        <div class="mb-1.5 flex items-center justify-between text-sm font-semibold text-slate-800">
+            <label for="password">Password</label>
+            <a class="text-sm font-semibold text-orange-700 no-underline hover:underline" href="<%= request.getContextPath() %>/forgot-password">Forgot Password?</a>
+        </div>
+        <div class="relative mb-[14px]">
+            <span class="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-slate-500" aria-hidden="true">
+                <svg class="h-full w-full fill-current" viewBox="0 0 24 24">
+                    <path d="M17 8h-1V6a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2zm-7-2a2 2 0 1 1 4 0v2h-4V6zm2 10a2 2 0 0 1-1-3.73V11h2v1.27A2 2 0 0 1 12 16z"/>
+                </svg>
+            </span>
+            <input class="h-11 w-full rounded-[10px] border border-slate-300 bg-slate-100 pl-10 pr-3 text-sm text-slate-900 outline-none placeholder:text-slate-500 focus:border-blue-600 focus:bg-slate-200 focus:ring-4 focus:ring-blue-200" type="password" id="password" name="password"
+                   placeholder="Enter your password" required>
+        </div>
+
+        <label class="mb-4 mt-1 flex items-center gap-2 text-sm text-slate-700" for="rememberMe">
             <input type="checkbox" id="rememberMe" name="rememberMe">
             Keep me logged in on this device
         </label>
 
-        <button class="submit-btn" type="submit">Sign in to Dashboard -&gt;</button>
+        <button class="h-[46px] w-full cursor-pointer rounded-[10px] bg-orange-700 text-[15px] font-bold text-white transition-colors hover:bg-orange-800" type="submit">Sign in to Dashboard</button>
     </form>
 
-    <p class="register">
+    <p class="mb-[18px] mt-4 text-center text-sm text-slate-600">
         New to BuildTrack?
-        <a class="accent-link" href="<%= request.getContextPath() %>/register">Register Account</a>
+        <a class="font-semibold text-orange-700 no-underline hover:underline" href="<%= request.getContextPath() %>/register">Register Account</a>
     </p>
 
-    <section class="feature-grid">
-        <article class="feature">
-            <p class="feature-title">SECURE ACCESS</p>
-            <p class="feature-text">256-bit AES Encryption</p>
-        </article>
-        <article class="feature">
-            <p class="feature-title">LIVE SYNC</p>
-            <p class="feature-text">Real-time Site Updates</p>
-        </article>
-    </section>
 
-    <footer class="footer-links">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Service</a>
-        <a href="#">Contact Support</a>
-    </footer>
+
+
 </main>
 </body>
 </html>
