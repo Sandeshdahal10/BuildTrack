@@ -1,5 +1,8 @@
 package com.buildtrack.controller.admin;
 
+import java.io.IOException;
+import java.util.List;
+
 import com.buildtrack.model.Material;
 import com.buildtrack.model.MaterialUsage;
 import com.buildtrack.service.admin.MaterialService;
@@ -9,22 +12,20 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
 /**
- * Material management — CRUD for materials + logging material usage per project.
+ * Material management — CRUD for materials + logging material usage per
+ * project.
  * Usage logging is TRANSACTIONAL (inserts usage record AND deducts stock).
  *
- * GET  /admin/materials                      → list all materials
- * GET  /admin/materials?action=new           → new material form
- * GET  /admin/materials?action=edit&id=X     → edit material form
- * GET  /admin/materials?action=usage&pid=X   → view usage for a project
- * POST /admin/materials?action=create        → create material
- * POST /admin/materials?action=update        → update material
- * POST /admin/materials?action=delete&id=X   → delete material
- * POST /admin/materials?action=log-usage     → log material usage for a project
+ * GET /admin/materials → list all materials
+ * GET /admin/materials?action=new → new material form
+ * GET /admin/materials?action=edit&id=X → edit material form
+ * GET /admin/materials?action=usage&pid=X → view usage for a project
+ * POST /admin/materials?action=create → create material
+ * POST /admin/materials?action=update → update material
+ * POST /admin/materials?action=delete&id=X → delete material
+ * POST /admin/materials?action=log-usage → log material usage for a project
  */
 @WebServlet("/admin/materials")
 public class MaterialController extends HttpServlet {
@@ -38,8 +39,9 @@ public class MaterialController extends HttpServlet {
             throws ServletException, IOException {
 
         String action = request.getParameter("action");
+        String normalizedAction = action == null ? null : action.trim().toLowerCase();
 
-        if (action == null) {
+        if (normalizedAction == null || normalizedAction.isBlank()) {
             // ---------- List all materials ----------
             List<Material> materials = materialService.getAllMaterials();
             request.setAttribute("materials", materials);
@@ -50,28 +52,34 @@ public class MaterialController extends HttpServlet {
             return;
         }
 
-        switch (action) {
+        switch (normalizedAction) {
 
             // ---------- New material form ----------
-            case "new": {
-                request.getRequestDispatcher("/WEB-INF/views/admin/materials.jsp")
+            case "new" -> {
+                request.getRequestDispatcher("/WEB-INF/views/form/materialForm.jsp")
                         .forward(request, response);
-                break;
             }
 
             // ---------- Edit material form ----------
-            case "edit": {
-                int id = Integer.parseInt(request.getParameter("id"));
-                Material m = materialService.getMaterialById(id);
-                if (m == null) { response.sendError(404, "Material not found"); return; }
-                request.setAttribute("material", m);
-                request.getRequestDispatcher("/WEB-INF/views/admin/materials.jsp")
+            case "edit" -> {
+                String idParam = request.getParameter("id");
+                if (idParam != null && !idParam.isBlank()) {
+                    try {
+                        int id = Integer.parseInt(idParam);
+                        Material m = materialService.getMaterialById(id);
+                        if (m != null) {
+                            request.setAttribute("material", m);
+                        }
+                    } catch (NumberFormatException ignored) {
+                        // Fallback to empty form when id is invalid.
+                    }
+                }
+                request.getRequestDispatcher("/WEB-INF/views/form/materialForm.jsp")
                         .forward(request, response);
-                break;
             }
 
             // ---------- View usage for a project ----------
-            case "usage": {
+            case "usage" -> {
                 int projectId = Integer.parseInt(request.getParameter("pid"));
                 List<MaterialUsage> usageList = materialService.getUsageByProject(projectId);
                 List<MaterialUsage> summary = materialService.getUsageSummaryByProject(projectId);
@@ -83,10 +91,16 @@ public class MaterialController extends HttpServlet {
                 request.setAttribute("materials", materialService.getAllMaterials());
                 request.getRequestDispatcher("/WEB-INF/views/admin/materials.jsp")
                         .forward(request, response);
-                break;
             }
 
-            default:
+            // ---------- Log usage form ----------
+            case "log-form", "logform", "log_usage", "logusage" -> {
+                request.setAttribute("materials", materialService.getAllMaterials());
+                request.getRequestDispatcher("/WEB-INF/views/form/logUsageForm.jsp")
+                        .forward(request, response);
+            }
+
+            default ->
                 response.sendRedirect(request.getContextPath() + "/admin/materials");
         }
     }
@@ -107,29 +121,27 @@ public class MaterialController extends HttpServlet {
         switch (action) {
 
             // ---------- Create material ----------
-            case "create": {
+            case "create" -> {
                 List<String> errors = materialService.createMaterial(
                         request.getParameter("name"),
                         request.getParameter("unit"),
                         request.getParameter("unitPrice"),
                         request.getParameter("totalStock"),
                         request.getParameter("lowStockThreshold"),
-                        request.getParameter("description")
-                );
+                        request.getParameter("description"));
                 if (!errors.isEmpty()) {
                     request.setAttribute("errors", errors);
                     preserveMaterialForm(request);
-                    request.getRequestDispatcher("/WEB-INF/views/admin/materials.jsp")
+                    request.getRequestDispatcher("/WEB-INF/views/form/materialForm.jsp")
                             .forward(request, response);
                 } else {
                     response.sendRedirect(request.getContextPath()
                             + "/admin/materials?created=true");
                 }
-                break;
             }
 
             // ---------- Update material ----------
-            case "update": {
+            case "update" -> {
                 int id = Integer.parseInt(request.getParameter("id"));
                 List<String> errors = materialService.updateMaterial(
                         id,
@@ -138,22 +150,21 @@ public class MaterialController extends HttpServlet {
                         request.getParameter("unitPrice"),
                         request.getParameter("totalStock"),
                         request.getParameter("lowStockThreshold"),
-                        request.getParameter("description")
-                );
+                        request.getParameter("description"));
                 if (!errors.isEmpty()) {
                     request.setAttribute("errors", errors);
-                    request.setAttribute("material", materialService.getMaterialById(id));
-                    request.getRequestDispatcher("/WEB-INF/views/admin/materials.jsp")
+                    request.setAttribute("id", String.valueOf(id));
+                    preserveMaterialForm(request);
+                    request.getRequestDispatcher("/WEB-INF/views/form/materialForm.jsp")
                             .forward(request, response);
                 } else {
                     response.sendRedirect(request.getContextPath()
                             + "/admin/materials?updated=true");
                 }
-                break;
             }
 
             // ---------- Delete material ----------
-            case "delete": {
+            case "delete" -> {
                 int id = Integer.parseInt(request.getParameter("id"));
                 List<String> errors = materialService.deleteMaterial(id);
                 if (!errors.isEmpty()) {
@@ -163,37 +174,42 @@ public class MaterialController extends HttpServlet {
                             "Material deleted successfully.");
                 }
                 response.sendRedirect(request.getContextPath() + "/admin/materials");
-                break;
             }
 
             // ---------- Log material usage (transactional) ----------
-            case "log-usage": {
+            case "log-usage" -> {
                 int adminId = (int) request.getSession().getAttribute("userId");
 
+                String projectIdParam = request.getParameter("projectId");
                 List<String> errors = materialService.logUsage(
                         Integer.parseInt(request.getParameter("materialId")),
-                        Integer.parseInt(request.getParameter("projectId")),
+                        Integer.parseInt(projectIdParam),
                         request.getParameter("quantity"),
                         request.getParameter("usageDate"),
                         adminId,
-                        request.getParameter("notes")
-                );
+                        request.getParameter("notes"));
 
                 if (!errors.isEmpty()) {
-                    request.getSession().setAttribute("errors", errors);
+                    request.setAttribute("errors", errors);
+                    request.setAttribute("projectId", projectIdParam);
+                    request.setAttribute("materialId", request.getParameter("materialId"));
+                    request.setAttribute("quantity", request.getParameter("quantity"));
+                    request.setAttribute("usageDate", request.getParameter("usageDate"));
+                    request.setAttribute("notes", request.getParameter("notes"));
+                    request.setAttribute("materials", materialService.getAllMaterials());
+                    request.getRequestDispatcher("/WEB-INF/views/form/logUsageForm.jsp")
+                            .forward(request, response);
                 } else {
                     request.getSession().setAttribute("success",
                             "Material usage logged successfully. Stock has been deducted.");
+                    // Redirect back to the usage view for this project
+                    int projectId = Integer.parseInt(projectIdParam);
+                    response.sendRedirect(request.getContextPath()
+                            + "/admin/materials?action=usage&pid=" + projectId);
                 }
-
-                // Redirect back to the usage view for this project
-                int projectId = Integer.parseInt(request.getParameter("projectId"));
-                response.sendRedirect(request.getContextPath()
-                        + "/admin/materials?action=usage&pid=" + projectId);
-                break;
             }
 
-            default:
+            default ->
                 response.sendRedirect(request.getContextPath() + "/admin/materials");
         }
     }

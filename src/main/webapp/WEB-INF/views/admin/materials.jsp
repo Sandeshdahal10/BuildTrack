@@ -28,11 +28,11 @@
                     <p class="text-slate-500 mt-1">Manage inventory, stock, and usage logs.</p>
                 </div>
                 <div class="flex gap-3">
-                    <button class="flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+                    <a id="logUsageBtn" href="<%= request.getContextPath() %>/admin/materials?action=log-form" onclick="window.location.href='<%= request.getContextPath() %>/admin/materials?action=log-form'; return false;" class="flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
                         <i data-lucide="clipboard-list" class="h-4 w-4"></i>
                         Log Usage
-                    </button>
-                    <a href="#" class="flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-600">
+                    </a>
+                    <a href="<%= request.getContextPath() %>/admin/materials?action=new" class="flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-600">
                         <i data-lucide="plus" class="h-4 w-4"></i>
                         Add Material
                     </a>
@@ -80,7 +80,7 @@
                                 <jsp:param name="totalValue" value="Rs 67,500" />
                                 <jsp:param name="status" value="In Stock" />
                                 <jsp:param name="icon" value="package" />
-                                <jsp:param name="editLink" value="#" />
+                                <jsp:param name="editLink" value="${pageContext.request.contextPath}/admin/materials?action=new" />
                             </jsp:include>
                             <jsp:include page="../common/materialCard.jsp">
                                 <jsp:param name="name" value="Iron Rods (TMT)" />
@@ -91,7 +91,7 @@
                                 <jsp:param name="status" value="Low Stock" />
                                 <jsp:param name="icon" value="align-justify" />
                                 <jsp:param name="iconBg" value="bg-slate-200" />
-                                <jsp:param name="editLink" value="#" />
+                                <jsp:param name="editLink" value="${pageContext.request.contextPath}/admin/materials?action=new" />
                             </jsp:include>
 
 

@@ -47,8 +47,8 @@
                 <span class="px-2.5 py-1 rounded-full text-xs font-bold ">
                     ${param.status}
                 </span>
-                <a href="${param.editLink}" class="p-2 rounded-lg hover:bg-white text-slate-500 hover:text-slate-800 transition">
-                    <i data-lucide="pencil" class="w-4 h-4"></i>
+                <a href="${param.editLink}" class=" p-2 rounded-lg bg-orange-500 hover:bg-orange-600 text-white transition">
+                 Edit
                 </a>
             </div>
 
