@@ -1,18 +1,59 @@
 package com.buildtrack.controller.admin;
 
+import com.buildtrack.service.admin.*;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
-@WebServlet(name="adminDashboard", value = "/admin/dashboard")
+/**
+ * Admin Dashboard — displays overview statistics.
+ * GET /admin/dashboard
+ */
+@WebServlet("/admin/dashboard")
 public class AdminDashboardController extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("activePage", "dashboard");
-        req.getRequestDispatcher("/WEB-INF/views/admin/dashboard.jsp").forward(req, resp);
 
+    private final ProjectService projectService = new ProjectService();
+    private final UserService userService = new UserService();
+    private final MaterialService materialService = new MaterialService();
+    private final ReportService reportService = new ReportService();
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Project stats
+        Map<String, Integer> projectStats = projectService.getStatusCounts();
+        request.setAttribute("projectStats", projectStats);
+
+        // User stats
+        Map<String, Integer> userStats = userService.getUserStats();
+        request.setAttribute("userStats", userStats);
+
+        // Material stats
+        Map<String, Integer> materialStats = materialService.getMaterialStats();
+        request.setAttribute("materialStats", materialStats);
+
+        // Financial overview
+        request.setAttribute("totalMaterialCost", reportService.getTotalMaterialCost());
+        request.setAttribute("totalPayrollCost", reportService.getTotalPayrollCost());
+        request.setAttribute("totalExpenses", reportService.getTotalExpenses());
+
+        // Recent projects (top 5)
+        request.setAttribute("recentProjects",
+                projectService.getAllProjects().stream().limit(5).toList());
+
+        // Pending approvals
+        request.setAttribute("pendingUsers", userService.getPendingUsers());
+
+        // Low stock alerts
+        request.setAttribute("lowStockMaterials", materialService.getLowStockMaterials());
+
+        request.getRequestDispatcher("/WEB-INF/views/admin/dashboard.jsp")
+                .forward(request, response);
     }
 }

@@ -1,4 +1,263 @@
 package com.buildtrack.dao.admin;
 
+import com.buildtrack.model.Project;
+import com.buildtrack.model.User;
+import com.buildtrack.util.DBUtil;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class ProjectDao {
+
+    //CRUD Operation
+    public List<Project> findAll(){
+        List<Project> list = new ArrayList<>();
+        String sql = "SELECT p.*, u.full_name AS client_name " +
+                "FROM projects p LEFT JOIN users u ON p.client_id = u.id " +
+                "ORDER BY p.created_at DESC";
+        try(Connection conn = DBUtil.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery()
+        ){
+            while (rs.next()) list.add(mapRow(rs, true));
+        } catch (SQLException e) {
+            System.err.println("Project Dao error" + e.getMessage());
+        }
+        return list;
+    }
+    public List<Project> findByStatus(String status){
+        List <Project> list = new ArrayList<>();
+        String sql = "SELECT p.*, u.full_name AS client_name " +
+                "FROM projects p LEFT JOIN users u ON p.client_id = u.id " +
+                "WHERE p.status = ? ORDER BY p.created_at DESC";
+        try(Connection conn = DBUtil.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)
+        ){
+            ps.setString(1,status);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) list.add(mapRow(rs, true));
+        } catch (SQLException e) {
+            System.err.println("Project Dao findBy Status Error" + e.getMessage());
+        }
+        return list;
+    }
+    public Project findById(int id) {
+        String sql = "SELECT p.*, u.full_name AS client_name " +
+                "FROM projects p LEFT JOIN users u ON p.client_id = u.id " +
+                "WHERE p.id = ?";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) return mapRow(rs, true);
+        } catch (SQLException e) {
+            System.err.println("[ProjectDAO] findById error: " + e.getMessage());
+        }
+        return null;
+    }
+    public int insert(Project p) {
+        String sql = "INSERT INTO projects (title,description,client_id,start_date,end_date,total_budget,status) " +
+                "VALUES (?,?,?,?,?,?,?)";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, p.getTitle());
+            ps.setString(2, p.getDescription());
+            if (p.getClientId() != null) ps.setInt(3, p.getClientId());
+            else ps.setNull(3, Types.INTEGER);
+            ps.setDate(4, p.getStartDate());
+            ps.setDate(5, p.getEndDate());
+            ps.setBigDecimal(6, p.getTotalBudget());
+            ps.setString(7, p.getStatus());
+            ps.executeUpdate();
+            ResultSet keys = ps.getGeneratedKeys();
+            if (keys.next()) return keys.getInt(1);
+        } catch (SQLException e) {
+            System.err.println("[ProjectDAO] insert error: " + e.getMessage());
+        }
+        return -1;
+    }
+    public boolean update(Project p) {
+        String sql = "UPDATE projects SET title=?,description=?,client_id=?,start_date=?," +
+                "end_date=?,total_budget=?,status=? WHERE id=?";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, p.getTitle());
+            ps.setString(2, p.getDescription());
+            if (p.getClientId() != null) ps.setInt(3, p.getClientId());
+            else ps.setNull(3, Types.INTEGER);
+            ps.setDate(4, p.getStartDate());
+            ps.setDate(5, p.getEndDate());
+            ps.setBigDecimal(6, p.getTotalBudget());
+            ps.setString(7, p.getStatus());
+            ps.setInt(8, p.getId());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("[ProjectDAO] update error: " + e.getMessage());
+        }
+        return false;
+    }
+    public boolean delete(int id) {
+        String sql = "DELETE FROM projects WHERE id = ?";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("[ProjectDAO] delete error: " + e.getMessage());
+        }
+        return false;
+    }
+
+    //Logic of Counting
+    public int countByStatus(String status) {
+        String sql = "SELECT COUNT(*) FROM projects WHERE status = ?";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, status);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) return rs.getInt(1);
+        } catch (SQLException e) {
+            System.err.println("ProjectDAO countByStatus error: " + e.getMessage());
+        }
+        return 0;
+    }
+    public int countAll() {
+        String sql = "SELECT COUNT(*) FROM projects";
+        try (Connection conn = DBUtil.getConnection();
+             Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
+            if (rs.next()) return rs.getInt(1);
+        } catch (SQLException e) {
+            System.err.println("ProjectDAO countAll error: " + e.getMessage());
+        }
+        return 0;
+    }
+
+    //Worker Assignment
+
+    public boolean assignWorker(int projectId, int workerId, String assignedRole) {
+        String sql = "INSERT INTO project_workers (project_id,worker_id,assigned_role,assigned_date,is_active) " +
+                "VALUES (?,?,?,CURDATE(),1)";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, projectId);
+            ps.setInt(2, workerId);
+            ps.setString(3, assignedRole);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            if (e.getErrorCode() == 1062) {
+                System.err.println("[ProjectDAO] Worker already assigned to project.");
+            } else {
+                System.err.println("[ProjectDAO] assignWorker error: " + e.getMessage());
+            }
+        }
+        return false;
+    }
+    public boolean removeWorker(int projectId, int workerId) {
+        String sql = "UPDATE project_workers SET is_active=0, removed_date=CURDATE() " +
+                "WHERE project_id=? AND worker_id=? AND is_active=1";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, projectId);
+            ps.setInt(2, workerId);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("[ProjectDAO] removeWorker error: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public List<User> findAssignedWorkers(int projectId) {
+        List<User> list = new ArrayList<>();
+        String sql = "SELECT u.id, u.full_name, u.email, u.phone, u.role, u.status, u.daily_wage, " +
+                "pw.assigned_role, pw.assigned_date " +
+                "FROM project_workers pw JOIN users u ON pw.worker_id = u.id " +
+                "WHERE pw.project_id = ? AND pw.is_active = 1 " +
+                "ORDER BY pw.assigned_date DESC";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, projectId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                User u = new User();
+                u.setId(rs.getInt("id"));
+                u.setFullName(rs.getString("full_name"));
+                u.setEmail(rs.getString("email"));
+                u.setPhone(rs.getString("phone"));
+                u.setRole(com.buildtrack.model.Role.fromString(rs.getString("role")));
+                u.setStatus(rs.getString("status"));
+                u.setDailyWage(rs.getBigDecimal("daily_wage"));
+                // Store assigned_role in phone temporarily — we'll use a map in controller
+                list.add(u);
+            }
+        } catch (SQLException e) {
+            System.err.println("[ProjectDAO] findAssignedWorkers error: " + e.getMessage());
+        }
+        return list;
+    }
+    public int countAssignedWorkers(int projectId) {
+        String sql = "SELECT COUNT(*) FROM project_workers WHERE project_id=? AND is_active=1";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, projectId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) return rs.getInt(1);
+        } catch (SQLException e) {
+            System.err.println("[ProjectDAO] countAssignedWorkers error: " + e.getMessage());
+        }
+        return 0;
+    }
+
+    /** Simple inner class for worker+role mapping. */
+    public static class AssignedWorker {
+        public com.buildtrack.model.User user;
+        public String assignedRole;
+        public Date assignedDate;
+    }
+    public List<AssignedWorker> findAssignedWorkersWithRole(int projectId) {
+        List<AssignedWorker> list = new ArrayList<>();
+        String sql = "SELECT u.id, u.full_name, u.email, u.phone, u.role, u.status, u.daily_wage, " +
+                "pw.assigned_role, pw.assigned_date " +
+                "FROM project_workers pw JOIN users u ON pw.worker_id = u.id " +
+                "WHERE pw.project_id = ? AND pw.is_active = 1 ORDER BY pw.assigned_date DESC";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, projectId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                AssignedWorker aw = new AssignedWorker();
+                com.buildtrack.model.User u = new com.buildtrack.model.User();
+                u.setId(rs.getInt("id"));
+                u.setFullName(rs.getString("full_name"));
+                u.setEmail(rs.getString("email"));
+                u.setPhone(rs.getString("phone")); u.setRole(com.buildtrack.model.Role.fromString(rs.getString("role")));
+                u.setStatus(rs.getString("status"));
+                u.setDailyWage(rs.getBigDecimal("daily_wage"));
+                aw.user = u;
+                aw.assignedRole = rs.getString("assigned_role");
+                aw.assignedDate = rs.getDate("assigned_date");
+                list.add(aw);
+            }
+        } catch (SQLException e) {
+            System.err.println("[ProjectDAO] findAssignedWorkersWithRole error: " + e.getMessage());
+        }
+        return list;
+    }
+    private Project mapRow(ResultSet rs, boolean withClient) throws SQLException {
+        Project p = new Project();
+        p.setId(rs.getInt("id"));
+        p.setTitle(rs.getString("title"));
+        p.setDescription(rs.getString("description"));
+        int cid = rs.getInt("client_id");
+        p.setClientId(rs.wasNull() ? null : cid);
+        p.setStartDate(rs.getDate("start_date"));
+        p.setEndDate(rs.getDate("end_date"));
+        p.setTotalBudget(rs.getBigDecimal("total_budget"));
+        p.setStatus(rs.getString("status"));
+        p.setCreatedAt(rs.getTimestamp("created_at"));
+        p.setUpdatedAt(rs.getTimestamp("updated_at"));
+        if (withClient) p.setClientName(rs.getString("client_name"));
+        return p;
+    }
 }
