@@ -1,16 +1,223 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: sande
-  Date: 4/12/2026
-  Time: 8:36 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>Reports & Documents - BuildTrack</title>
+    <style>.tab-active { border-color: #f97316; color: #f97316; background-color: #fff7ed; }</style>
 </head>
-<body>
+<body class="h-screen overflow-hidden bg-slate-50 text-slate-900">
 
+<div class="h-screen flex">
+    <div class="fixed inset-y-0 left-0 w-56 border-r border-slate-200 bg-white">
+        <jsp:include page="../common/sidebar.jsp" />
+    </div>
+
+    <div class="ml-56 flex flex-1 flex-col overflow-y-auto">
+
+        <div class="sticky top-0 z-10 border-b border-slate-200 bg-white">
+            <jsp:include page="../common/adminTopbar.jsp" />
+        </div>
+
+        <main class="flex-1 p-6">
+
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold text-slate-800">Reports & Insights</h1>
+                    <p class="text-slate-500 mt-1">Analyze budget vs actuals, documents, and client inquiries.</p>
+                </div>
+                <button class="flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+                    <i data-lucide="download" class="h-4 w-4"></i>
+                    Export PDF
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-semibold uppercase text-slate-400">Total Budget</p>
+                            <p class="text-2xl font-bold text-slate-800 mt-1">Rs 50L</p>
+                        </div>
+                        <div class="p-3 rounded-lg bg-slate-100">
+                            <i data-lucide="calculator" class="w-5 h-5 text-slate-600"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-semibold uppercase text-slate-400">Utilized</p>
+                            <p class="text-2xl font-bold  text-slate-800 mt-1">Rs 24.5L</p>
+                        </div>
+                        <div class="p-3 rounded-lg bg-orange-100">
+                            <i data-lucide="trending-up" class="w-5 h-5 text-orange-600"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-semibold uppercase text-slate-400">Documents</p>
+                            <p class="text-2xl font-bold  text-slate-800 mt-1">12 Files</p>
+                        </div>
+                        <div class="p-3 rounded-lg bg-blue-100">
+                            <i data-lucide="folder" class="w-5 h-5 text-blue-600"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-semibold uppercase text-slate-400">Pending Requests</p>
+                            <p class="text-2xl font-bold  text-slate-800 mt-1">4</p>
+                        </div>
+                        <div class="p-3 rounded-lg bg-amber-100">
+                            <i data-lucide="inbox" class="w-5 h-5 text-amber-600"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex gap-2 mb-4 border-b border-slate-200 pb-2">
+                <button onclick="switchTab('budget')" id="tab-budget" class="tab-active px-4 py-2 text-sm font-semibold rounded-t-lg border-b-2 transition">Budget Reports</button>
+                <button onclick="switchTab('documents')" id="tab-documents" class="px-4 py-2 text-sm font-semibold rounded-t-lg text-slate-500 border-b-2 border-transparent transition">Documents</button>
+                <button onclick="switchTab('inquiries')" id="tab-inquiries" class="px-4 py-2 text-sm font-semibold rounded-t-lg text-slate-500 border-b-2 border-transparent transition">Inquiries</button>
+            </div>
+
+            <div id="content-budget" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+                    <h3 class="font-bold text-slate-800 mb-4">Budget vs Actual (Skyline Tower)</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-xs mb-1 text-slate-600">
+                                <span>Material</span>
+                                <span class="font-bold">Rs 12L / Rs 15L</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-2">
+                                <div class="bg-orange-500 h-2 rounded-full" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs mb-1 text-slate-600">
+                                <span>Labour</span>
+                                <span class="font-bold">Rs 5L / Rs 6L</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-2">
+                                <div class="bg-orange-500 h-2 rounded-full" style="width: 83%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs mb-1 text-red-600">
+                                <span>Equipment</span>
+                                <span class="font-bold">Rs 2.5L / Rs 1.5L (Over)</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-2">
+                                <div class="bg-orange-500 h-2 rounded-full" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+                    <h3 class="font-bold text-slate-800 mb-4">Material Usage Summary</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                            <tr class="text-slate-500 text-left border-b">
+                                <th class="pb-2">Material</th>
+                                <th class="pb-2">Used</th>
+                                <th class="pb-2">Cost</th>
+                            </tr>
+                            </thead>
+                            <tbody class="text-slate-700">
+                            <tr class="border-b border-slate-50">
+                                <td class="py-2">Cement</td>
+                                <td>500 Bags</td>
+                                <td class="font-medium">Rs 2.25L</td>
+                            </tr>
+                            <tr class="border-b border-slate-50">
+                                <td class="py-2">Steel Rods</td>
+                                <td>20 Tons</td>
+                                <td class="font-medium">Rs 6.0L</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2">Bricks</td>
+                                <td>50,000</td>
+                                <td class="font-medium">Rs 4.0L</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="content-documents" class="hidden">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <jsp:include page="../common/documentCard..jsp">
+                        <jsp:param name="fileName" value="Blueprint_Final_v2.pdf" />
+                        <jsp:param name="uploadedBy" value="Amit Sharma" />
+                        <jsp:param name="date" value="12 Apr 2025" />
+                    </jsp:include>
+
+                    <jsp:include page="../common/documentCard..jsp">
+                        <jsp:param name="fileName" value="Site_Survey_Report.pdf" />
+                        <jsp:param name="uploadedBy" value="Site Engineer" />
+                        <jsp:param name="date" value="10 Apr 2025" />
+                    </jsp:include>
+
+                    <jsp:include page="../common/documentCard..jsp">
+                        <jsp:param name="fileName" value="Foundation_Plan.jpg" />
+                        <jsp:param name="uploadedBy" value="Architect" />
+                        <jsp:param name="date" value="09 Apr 2025" />
+                    </jsp:include>
+                </div>
+            </div>
+
+            <div id="content-inquiries" class="hidden space-y-3">
+                <jsp:include page="../common/inquiryRow.jsp">
+                    <jsp:param name="subject" value="Wall construction quality issue" />
+                    <jsp:param name="client" value="Rahul Industries" />
+                    <jsp:param name="project" value="Shopping Mall" />
+                    <jsp:param name="date" value="Today, 10:30 AM" />
+                    <jsp:param name="status" value="Pending" />
+                    <jsp:param name="statusStyle" value="bg-amber-100 text-amber-700" />
+                    <jsp:param name="replyLink" value="#" />
+                </jsp:include>
+
+                <jsp:include page="../common/inquiryRow.jsp">
+                    <jsp:param name="subject" value="Request for additional electrical points" />
+                    <jsp:param name="client" value="Amit Sharma" />
+                    <jsp:param name="project" value="Skyline Tower" />
+                    <jsp:param name="date" value="Yesterday" />
+                    <jsp:param name="status" value="Resolved" />
+                    <jsp:param name="statusStyle" value="bg-green-100 text-green-700" />
+                    <jsp:param name="replyLink" value="#" />
+                </jsp:include>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+<script>
+    function switchTab(tabName) {
+        document.getElementById('content-budget').classList.add('hidden');
+        document.getElementById('content-documents').classList.add('hidden');
+        document.getElementById('content-inquiries').classList.add('hidden');
+
+        ['budget', 'documents', 'inquiries'].forEach(t => {
+            document.getElementById('tab-' + t).classList.remove('tab-active');
+            document.getElementById('tab-' + t).classList.add('text-slate-500', 'border-transparent');
+        });
+
+        document.getElementById('content-' + tabName).classList.remove('hidden');
+        document.getElementById('tab-' + tabName).classList.add('tab-active');
+        document.getElementById('tab-' + tabName).classList.remove('text-slate-500', 'border-transparent');
+
+        lucide.createIcons(); // Re-render icons after switch
+    }
+    lucide.createIcons();
+</script>
 </body>
 </html>
