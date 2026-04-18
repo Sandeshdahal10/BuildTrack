@@ -79,5 +79,284 @@
             </div>
         </div>
     </div>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white">
+         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+             <div class="text-center mb-12">
+                 <span class="px-4 py-1.5 rounded-full text-xs font-bold text-orange-800 bg-orange-100 mb-6 inline-block tracking-widest uppercase shadow-sm">
+                     Features
+                 </span>
+                 <h2 class="text-4xl sm:text-5xl font-bold text-slate-900 mt-4 mb-4">
+                     Powerful Features for Modern Construction
+                 </h2>
+                 <p class="text-lg text-slate-600 max-w-3xl mx-auto">
+                     Everything you need to manage your construction projects efficiently and effectively.
+                 </p>
+             </div>
+
+             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                 <!-- Feature 1 -->
+                 <div class="p-8 rounded-xl border border-slate-100 hover:border-orange-300 hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-white to-slate-50">
+                     <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+                         <i class="fa-solid fa-chart-gantt text-[#ea580c] text-xl"></i>
+                     </div>
+                     <h3 class="text-xl font-semibold text-slate-900 mb-2">Project Management</h3>
+                     <p class="text-slate-600">Plan, track, and manage multiple construction projects from a single intuitive dashboard.</p>
+                 </div>
+
+                 <!-- Feature 2 -->
+                 <div class="p-8 rounded-xl border border-slate-100 hover:border-orange-300 hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-white to-slate-50">
+                     <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+                         <i class="fa-solid fa-people-group text-[#ea580c] text-xl"></i>
+                     </div>
+                     <h3 class="text-xl font-semibold text-slate-900 mb-2">Workforce Management</h3>
+                     <p class="text-slate-600">Efficiently manage workers, track attendance, assign tasks, and monitor productivity.</p>
+                 </div>
+
+                 <!-- Feature 3 -->
+                 <div class="p-8 rounded-xl border border-slate-100 hover:border-orange-300 hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-white to-slate-50">
+                     <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+                         <i class="fa-solid fa-box text-[#ea580c] text-xl"></i>
+                     </div>
+                     <h3 class="text-xl font-semibold text-slate-900 mb-2">Material Tracking</h3>
+                     <p class="text-slate-600">Keep detailed records of materials, inventory management, and supplier information.</p>
+                 </div>
+
+                 <!-- Feature 4 -->
+                 <div class="p-8 rounded-xl border border-slate-100 hover:border-orange-300 hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-white to-slate-50">
+                     <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+                         <i class="fa-solid fa-receipt text-[#ea580c] text-xl"></i>
+                     </div>
+                     <h3 class="text-xl font-semibold text-slate-900 mb-2">Budget & Expense Tracking</h3>
+                     <p class="text-slate-600">Monitor project budgets, track expenses, and maintain financial control across all projects.</p>
+                 </div>
+
+                 <!-- Feature 5 -->
+                 <div class="p-8 rounded-xl border border-slate-100 hover:border-orange-300 hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-white to-slate-50">
+                     <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+                         <i class="fa-solid fa-handshake text-[#ea580c] text-xl"></i>
+                     </div>
+                     <h3 class="text-xl font-semibold text-slate-900 mb-2">Client Collaboration</h3>
+                     <p class="text-slate-600">Seamless communication and project updates with clients in real-time.</p>
+                 </div>
+
+                 <!-- Feature 6 -->
+                 <div class="p-8 rounded-xl border border-slate-100 hover:border-orange-300 hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-white to-slate-50">
+                     <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+                         <i class="fa-solid fa-chart-line text-[#ea580c] text-xl"></i>
+                     </div>
+                     <h3 class="text-xl font-semibold text-slate-900 mb-2">Advanced Reports</h3>
+                     <p class="text-slate-600">Generate comprehensive analytics and reports to make data-driven decisions.</p>
+                 </div>
+             </div>
+         </div>
+     </section>
+
+     <!-- Our Services Section -->
+     <section class="py-20 bg-gradient-to-br from-orange-50 to-white">
+         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+             <div class="text-center mb-12">
+                 <span class="px-4 py-1.5 rounded-full text-xs font-bold text-orange-800 bg-orange-100 mb-6 inline-block tracking-widest uppercase shadow-sm">
+                     Our Services
+                 </span>
+                 <h2 class="text-4xl sm:text-5xl font-bold text-slate-900 mt-4 mb-4">
+                     Comprehensive Construction Solutions
+                 </h2>
+                 <p class="text-lg text-slate-600 max-w-3xl mx-auto">
+                     We provide end-to-end construction management services tailored to your project needs.
+                 </p>
+             </div>
+
+             <div class="grid md:grid-cols-2 gap-8">
+                 <!-- Service 1 -->
+                 <div class="flex gap-4">
+                     <div class="flex-shrink-0">
+                         <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white">
+                             <i class="fa-solid fa-calendar-check"></i>
+                         </div>
+                     </div>
+                     <div class="pt-1">
+                         <h3 class="text-lg font-semibold text-slate-900 mb-2">Project Planning & Scheduling</h3>
+                         <p class="text-slate-600">Create detailed project timelines, set milestones, and manage critical paths with precision.</p>
+                     </div>
+                 </div>
+
+                 <!-- Service 2 -->
+                 <div class="flex gap-4">
+                     <div class="flex-shrink-0">
+                         <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white">
+                             <i class="fa-solid fa-hard-hat"></i>
+                         </div>
+                     </div>
+                     <div class="pt-1">
+                         <h3 class="text-lg font-semibold text-slate-900 mb-2">Labor & Site Management</h3>
+                         <p class="text-slate-600">Optimize workforce scheduling, track daily attendance, and manage site operations efficiently.</p>
+                     </div>
+                 </div>
+
+                 <!-- Service 3 -->
+                 <div class="flex gap-4">
+                     <div class="flex-shrink-0">
+                         <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white">
+                             <i class="fa-solid fa-warehouse"></i>
+                         </div>
+                     </div>
+                     <div class="pt-1">
+                         <h3 class="text-lg font-semibold text-slate-900 mb-2">Inventory & Logistics</h3>
+                         <p class="text-slate-600">Manage material orders, track deliveries, and maintain optimal stock levels on site.</p>
+                     </div>
+                 </div>
+
+                 <!-- Service 4 -->
+                 <div class="flex gap-4">
+                     <div class="flex-shrink-0">
+                         <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white">
+                             <i class="fa-solid fa-coins"></i>
+                         </div>
+                     </div>
+                     <div class="pt-1">
+                         <h3 class="text-lg font-semibold text-slate-900 mb-2">Financial Management</h3>
+                         <p class="text-slate-600">Monitor budgets, track expenses, generate invoices, and maintain financial transparency.</p>
+                     </div>
+                 </div>
+
+                 <!-- Service 5 -->
+                 <div class="flex gap-4">
+                     <div class="flex-shrink-0">
+                         <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white">
+                             <i class="fa-solid fa-file-contract"></i>
+                         </div>
+                     </div>
+                     <div class="pt-1">
+                         <h3 class="text-lg font-semibold text-slate-900 mb-2">Payroll & HR Management</h3>
+                         <p class="text-slate-600">Process salaries, manage payroll deductions, and maintain employee records seamlessly.</p>
+                     </div>
+                 </div>
+
+                 <!-- Service 6 -->
+                 <div class="flex gap-4">
+                     <div class="flex-shrink-0">
+                         <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white">
+                             <i class="fa-solid fa-headset"></i>
+                         </div>
+                     </div>
+                     <div class="pt-1">
+                         <h3 class="text-lg font-semibold text-slate-900 mb-2">24/7 Customer Support</h3>
+                         <p class="text-slate-600">Get dedicated support from our expert team available round the clock for assistance.</p>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </section>
+
+     <!-- How It Works Section -->
+     <section class="py-20 bg-white">
+         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+             <div class="text-center mb-16">
+                 <span class="px-4 py-1.5 rounded-full text-xs font-bold text-orange-800 bg-orange-100 mb-6 inline-block tracking-widest uppercase shadow-sm">
+                     How It Works
+                 </span>
+                 <h2 class="text-4xl sm:text-5xl font-bold text-slate-900 mt-4 mb-4">
+                     Getting Started is Simple
+                 </h2>
+                 <p class="text-lg text-slate-600 max-w-3xl mx-auto">
+                     Follow these easy steps to get your projects on track with BuildTrack.
+                 </p>
+             </div>
+
+             <div class="grid md:grid-cols-4 gap-8">
+                 <!-- Step 1 -->
+                 <div class="text-center relative">
+                     <div class="mb-4">
+                         <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-[#ea580c] text-white text-2xl font-bold">
+                             1
+                         </div>
+                     </div>
+                     <h3 class="text-xl font-semibold text-slate-900 mb-2">Create Account</h3>
+                     <p class="text-slate-600">Sign up for your BuildTrack account in just a few minutes and get instant access to all features.</p>
+                 </div>
+
+                 <!-- Step 2 -->
+                 <div class="text-center relative">
+                     <div class="mb-4">
+                         <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-[#ea580c] text-white text-2xl font-bold">
+                             2
+                         </div>
+                     </div>
+                     <h3 class="text-xl font-semibold text-slate-900 mb-2">Set Up Projects</h3>
+                     <p class="text-slate-600">Create your construction projects, define teams, set budgets, and establish project milestones.</p>
+                 </div>
+
+                 <!-- Step 3 -->
+                 <div class="text-center relative">
+                     <div class="mb-4">
+                         <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-[#ea580c] text-white text-2xl font-bold">
+                             3
+                         </div>
+                     </div>
+                     <h3 class="text-xl font-semibold text-slate-900 mb-2">Manage & Execute</h3>
+                     <p class="text-slate-600">Assign tasks, track workforce, manage materials, and monitor project progress in real-time.</p>
+                 </div>
+
+                 <!-- Step 4 -->
+                 <div class="text-center relative">
+                     <div class="mb-4">
+                         <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-[#ea580c] text-white text-2xl font-bold">
+                             4
+                         </div>
+                     </div>
+                     <h3 class="text-xl font-semibold text-slate-900 mb-2">Analyze & Report</h3>
+                     <p class="text-slate-600">Review detailed reports, analyze project performance, and optimize future project planning.</p>
+                 </div>
+             </div>
+         </div>
+     </section>
+
+     <!-- Schedule a Demo Section -->
+     <section class="py-20 bg-gradient-to-r from-[#ea580c] to-orange-600 text-white">
+         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+             <h2 class="text-4xl sm:text-5xl font-bold mb-4">
+                 Ready to Transform Your Construction Business?
+             </h2>
+             <p class="text-lg text-orange-100 mb-8 max-w-2xl mx-auto">
+                 Schedule a personalized demo with our experts to see how BuildTrack can revolutionize your project management workflow.
+             </p>
+
+             <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                 <a href="${pageContext.request.contextPath}/schedule-demo.jsp" class="inline-flex items-center justify-center px-8 py-4 border border-white text-base font-semibold rounded-lg text-[#ea580c] bg-white hover:bg-orange-50 transition-all duration-200 transform hover:-translate-y-0.5 shadow-lg">
+                     <i class="fa-solid fa-calendar mr-2"></i> Schedule Demo
+                 </a>
+                 <a href="${pageContext.request.contextPath}/register" class="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-base font-semibold rounded-lg text-white hover:bg-white/10 transition-all duration-200 transform hover:-translate-y-0.5">
+                     <i class="fa-solid fa-user-plus mr-2"></i> Get Started Free
+                 </a>
+             </div>
+
+             <!-- Demo Details Grid -->
+             <div class="grid md:grid-cols-3 gap-8 mt-16 pt-12 border-t border-white/20">
+                 <div>
+                     <div class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-white/20 text-white mb-4">
+                         <i class="fa-solid fa-clock"></i>
+                     </div>
+                     <h3 class="font-semibold text-lg mb-1">30 Minutes</h3>
+                     <p class="text-orange-100 text-sm">Quick overview of key features</p>
+                 </div>
+                 <div>
+                     <div class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-white/20 text-white mb-4">
+                         <i class="fa-solid fa-user-tie"></i>
+                     </div>
+                     <h3 class="font-semibold text-lg mb-1">Expert Guide</h3>
+                     <p class="text-orange-100 text-sm">Dedicated product specialist</p>
+                 </div>
+                 <div>
+                     <div class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-white/20 text-white mb-4">
+                         <i class="fa-solid fa-check-circle"></i>
+                     </div>
+                     <h3 class="font-semibold text-lg mb-1">Free Trial</h3>
+                     <p class="text-orange-100 text-sm">No credit card required</p>
+                 </div>
+             </div>
+         </div>
+     </section>
 </body>
 </html>

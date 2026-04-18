@@ -23,7 +23,7 @@
         <span class="mt-[18px] inline-block rounded-full border border-orange-100 bg-orange-50 px-[14px] py-2 text-[13px] font-bold text-orange-900">Join 1,000+ project leads</span>
     </section>
 
-    <section class="px-[22px] py-[22px] sm:p-[30px]">
+    <section class="px-[    2px] py-[22px] sm:p-[30px]">
         <h2 class="m-0 text-[28px] font-semibold text-slate-900">Create Account</h2>
         <p class="mb-4 mt-2 text-sm text-slate-500">Please fill in your details to start your project journey.</p>
 
