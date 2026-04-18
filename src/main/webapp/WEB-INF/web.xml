@@ -5,7 +5,8 @@
          version="6.0">
 
 
-         <error-page>
+    <!-- Error Pages -->
+    <error-page>
         <error-code>404</error-code>
         <location>/error/404.jsp</location>
     </error-page>
