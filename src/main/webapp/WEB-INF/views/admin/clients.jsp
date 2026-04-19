@@ -37,22 +37,34 @@
                 </div>
 
                 <div class="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-                    <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-                        <p class="text-xs font-semibold uppercase text-slate-400">Active</p>
-                        <p class="mt-2 text-2xl font-bold ">14</p>
-                    </article>
-                    <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-                        <p class="text-xs font-semibold uppercase text-slate-400">New</p>
-                        <p class="mt-2 text-2xl font-bold ">4</p>
-                    </article>
-                    <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-                        <p class="text-xs font-semibold uppercase text-slate-400">Premium</p>
-                        <p class="mt-2 text-2xl font-bold">6</p>
-                    </article>
-                    <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-                        <p class="text-xs font-semibold uppercase text-slate-400">Inactive</p>
-                        <p class="mt-2 text-2xl font-bold">2</p>
-                    </article>
+                    <jsp:include page="../common/statsCard.jsp">
+                        <jsp:param name="title" value="Active" />
+                        <jsp:param name="value" value="18" />
+                        <jsp:param name="icon" value="user-check" />
+                        <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-green-100" />
+                        <jsp:param name="iconClass" value="w-5 h-5 text-green-600" />
+                    </jsp:include>
+                    <jsp:include page="../common/statsCard.jsp">
+                        <jsp:param name="title" value="New" />
+                        <jsp:param name="value" value="5" />
+                        <jsp:param name="icon" value="user-plus" />
+                        <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-blue-100" />
+                        <jsp:param name="iconClass" value="w-5 h-5 text-blue-600" />
+                    </jsp:include>
+                    <jsp:include page="../common/statsCard.jsp">
+                        <jsp:param name="title" value="Premium" />
+                        <jsp:param name="value" value="7" />
+                        <jsp:param name="icon" value="star" />
+                        <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-amber-100" />
+                        <jsp:param name="iconClass" value="w-5 h-5 text-amber-600" />
+                    </jsp:include>
+                    <jsp:include page="../common/statsCard.jsp">
+                        <jsp:param name="title" value="Inactive" />
+                        <jsp:param name="value" value="3" />
+                        <jsp:param name="icon" value="user-x" />
+                        <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-red-100" />
+                        <jsp:param name="iconClass" value="w-5 h-5 text-red-600" />
+                    </jsp:include>
                 </div>
 
                 <div class="rounded-xl border border-slate-200 bg-white p-3">

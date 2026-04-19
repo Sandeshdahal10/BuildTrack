@@ -40,22 +40,34 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-                    <p class="text-xs font-semibold uppercase text-slate-400">Total Items</p>
-                    <p class="text-2xl font-bold text-slate-800 mt-1">24</p>
-                </div>
-                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-                    <p class="text-xs font-semibold uppercase text-slate-400">Low Stock Alerts</p>
-                    <p class="text-2xl font-bold text-slate-800 text- mt-1">3</p>
-                </div>
-                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-                    <p class="text-xs font-semibold uppercase text-slate-400">Total Stock Value</p>
-                    <p class="text-2xl font-bold text-slate-800 mt-1">Rs 12.5L</p>
-                </div>
-                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-                    <p class="text-xs font-semibold uppercase text-slate-400">Used This Month</p>
-                    <p class="text-2xl font-bold text-slate-800 mt-1">Rs 2.1L</p>
-                </div>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Total Items" />
+                    <jsp:param name="value" value="32" />
+                    <jsp:param name="icon" value="boxes" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-slate-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-slate-600" />
+                </jsp:include>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Low Stock Alerts" />
+                    <jsp:param name="value" value="5" />
+                    <jsp:param name="icon" value="triangle-alert" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-red-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-red-600" />
+                </jsp:include>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Total Stock Value" />
+                    <jsp:param name="value" value="Rs 16.8L" />
+                    <jsp:param name="icon" value="badge-indian-rupee" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-green-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-green-600" />
+                </jsp:include>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Used This Month" />
+                    <jsp:param name="value" value="Rs 3.4L" />
+                    <jsp:param name="icon" value="trending-down" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-orange-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-orange-600" />
+                </jsp:include>
             </div>
 
             <!-- Main Content Grid -->

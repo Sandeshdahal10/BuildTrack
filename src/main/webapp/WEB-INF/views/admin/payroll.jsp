@@ -28,55 +28,37 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Total Payroll" />
+                    <jsp:param name="value" value="Rs 6.1L" />
+                    <jsp:param name="icon" value="wallet" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-blue-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-blue-600" />
+                </jsp:include>
 
-                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-semibold uppercase text-slate-400">Total Payroll</p>
-                            <p class="text-2xl font-bold text-slate-800 mt-1">Rs 4.5L</p>
-                        </div>
-                        <div class="p-3 rounded-lg bg-blue-100">
-                            <i data-lucide="wallet" class="w-5 h-5 text-blue-600"></i>
-                        </div>
-                    </div>
-                </div>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Amount Paid" />
+                    <jsp:param name="value" value="Rs 4.8L" />
+                    <jsp:param name="icon" value="check-circle" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-green-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-green-600" />
+                </jsp:include>
 
-                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-semibold uppercase text-slate-400">Amount Paid</p>
-                            <p class="text-2xl font-bold text-slate-800 mt-1">Rs 3.2L</p>
-                        </div>
-                        <div class="p-3 rounded-lg bg-green-100">
-                            <i data-lucide="check-circle" class="w-5 h-5 text-green-600"></i>
-                        </div>
-                    </div>
-                </div>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Pending Amount" />
+                    <jsp:param name="value" value="Rs 1.3L" />
+                    <jsp:param name="icon" value="clock" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-orange-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-orange-600" />
+                </jsp:include>
 
-                <!-- Card 3: Pending Amount -->
-                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-semibold uppercase text-slate-400">Pending Amount</p>
-                            <p class="text-2xl font-bold text-slate-800 mt-1">Rs 1.3L</p>
-                        </div>
-                        <div class="p-3 rounded-lg bg-orange-100">
-                            <i data-lucide="clock" class="w-5 h-5 text-orange-600"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-semibold uppercase text-slate-400">Workers Paid</p>
-                            <p class="text-2xl font-bold text-slate-800 mt-1">38 / 45</p>
-                        </div>
-                        <div class="p-3 rounded-lg bg-slate-100">
-                            <i data-lucide="users" class="w-5 h-5 text-slate-600"></i>
-                        </div>
-                    </div>
-                </div>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Workers Paid" />
+                    <jsp:param name="value" value="44 / 52" />
+                    <jsp:param name="icon" value="users" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-slate-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-slate-600" />
+                </jsp:include>
 
             </div>
 

@@ -34,56 +34,38 @@
             </div>
 
             <%-- Stat cards --%>
-            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px;">
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Total Workers" />
+                    <jsp:param name="value" value="52" />
+                    <jsp:param name="icon" value="users" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-slate-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-slate-600" />
+                </jsp:include>
 
-                <div style="flex:1;min-width:150px;background:white;border:1px solid lavender;border-radius:12px;padding:18px 20px;">
-                    <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-                        <div>
-                            <p style="margin:0;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:slategray;">Total Workers</p>
-                            <p style="margin:8px 0 0;font-size:28px;font-weight:700;color:darkslategray;">6</p>
-                        </div>
-                        <span style="width:40px;height:40px;border-radius:8px;background:floralwhite;border:1px solid peachpuff;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                            <svg style="width:16px;height:16px;" fill="none" stroke="orangered" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8z"/></svg>
-                        </span>
-                    </div>
-                </div>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Active" />
+                    <jsp:param name="value" value="45" />
+                    <jsp:param name="icon" value="user-check" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-green-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-green-600" />
+                </jsp:include>
 
-                <div style="flex:1;min-width:150px;background:white;border:1px solid lavender;border-radius:12px;padding:18px 20px;">
-                    <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-                        <div>
-                            <p style="margin:0;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:slategray;">Active</p>
-                            <p style="margin:8px 0 0;font-size:28px;font-weight:700;color:darkslategray;">4</p>
-                        </div>
-                        <span style="width:40px;height:40px;border-radius:8px;background:honeydew;border:1px solid palegreen;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                            <svg style="width:16px;height:16px;" fill="none" stroke="seagreen" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        </span>
-                    </div>
-                </div>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="On Leave" />
+                    <jsp:param name="value" value="4" />
+                    <jsp:param name="icon" value="pause-circle" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-amber-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-amber-600" />
+                </jsp:include>
 
-                <div style="flex:1;min-width:150px;background:white;border:1px solid lavender;border-radius:12px;padding:18px 20px;">
-                    <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-                        <div>
-                            <p style="margin:0;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:slategray;">On Leave</p>
-                            <p style="margin:8px 0 0;font-size:28px;font-weight:700;color:darkslategray;">1</p>
-                        </div>
-                        <span style="width:40px;height:40px;border-radius:8px;background:lightyellow;border:1px solid khaki;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                            <svg style="width:16px;height:16px;" fill="none" stroke="darkgoldenrod" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="10" y1="15" x2="10" y2="9"/><line x1="14" y1="15" x2="14" y2="9"/></svg>
-                        </span>
-                    </div>
-                </div>
-
-                <div style="flex:1;min-width:150px;background:white;border:1px solid lavender;border-radius:12px;padding:18px 20px;">
-                    <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-                        <div>
-                            <p style="margin:0;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:slategray;">Deactivated</p>
-                            <p style="margin:8px 0 0;font-size:28px;font-weight:700;color:darkslategray;">1</p>
-                        </div>
-                        <span style="width:40px;height:40px;border-radius:8px;background:lavenderblush;border:1px solid mistyrose;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                            <svg style="width:16px;height:16px;" fill="none" stroke="crimson" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-                        </span>
-                    </div>
-                </div>
-
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Deactivated" />
+                    <jsp:param name="value" value="3" />
+                    <jsp:param name="icon" value="user-x" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-red-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-red-600" />
+                </jsp:include>
             </div>
 
             <%-- Search & Filter --%>

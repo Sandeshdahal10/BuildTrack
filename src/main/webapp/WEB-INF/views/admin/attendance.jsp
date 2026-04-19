@@ -31,54 +31,37 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Total Workers" />
+                    <jsp:param name="value" value="52" />
+                    <jsp:param name="icon" value="users" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-slate-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-slate-600" />
+                </jsp:include>
 
-                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-semibold uppercase text-slate-400">Total Workers</p>
-                            <p class="text-2xl font-bold text-slate-800 mt-1">45</p>
-                        </div>
-                        <div class="p-3 rounded-lg bg-slate-100">
-                            <i data-lucide="users" class="w-5 h-5 text-slate-600"></i>
-                        </div>
-                    </div>
-                </div>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Present Today" />
+                    <jsp:param name="value" value="44" />
+                    <jsp:param name="icon" value="user-check" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-green-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-green-600" />
+                </jsp:include>
 
-                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-semibold uppercase text-slate-400">Present Today</p>
-                            <p class="text-2xl font-bold text-slate-800 mt-1">38</p>
-                        </div>
-                        <div class="p-3 rounded-lg bg-green-100">
-                            <i data-lucide="user-check" class="w-5 h-5 text-green-600"></i>
-                        </div>
-                    </div>
-                </div>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Absent Today" />
+                    <jsp:param name="value" value="5" />
+                    <jsp:param name="icon" value="user-x" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-red-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-red-600" />
+                </jsp:include>
 
-                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-semibold uppercase text-slate-400">Absent Today</p>
-                            <p class="text-2xl font-bold text-slate-800 mt-1">5</p>
-                        </div>
-                        <div class="p-3 rounded-lg bg-red-100">
-                            <i data-lucide="user-x" class="w-5 h-5 text-red-600"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-semibold uppercase text-slate-400">On Leave</p>
-                            <p class="text-2xl font-bold text-slate-800 mt-1">2</p>
-                        </div>
-                        <div class="p-3 rounded-lg bg-amber-100">
-                            <i data-lucide="calendar-off" class="w-5 h-5 text-amber-600"></i>
-                        </div>
-                    </div>
-                </div>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="On Leave" />
+                    <jsp:param name="value" value="3" />
+                    <jsp:param name="icon" value="calendar-off" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-amber-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-amber-600" />
+                </jsp:include>
 
             </div>
 

@@ -39,22 +39,37 @@
 
             <!-- Stats Cards -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-                    <p class="text-xs font-semibold uppercase text-slate-400">Planned</p>
-                    <p class="text-2xl font-bold text-slate-800 mt-1">1</p>
-                </div>
-                <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-                    <p class="text-xs font-semibold uppercase text-slate-400">In Progress</p>
-                    <p class="text-2xl font-bold text-orange-500 mt-1">3</p>
-                </div>
-                <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-                    <p class="text-xs font-semibold uppercase text-slate-400">Completed</p>
-                    <p class="text-2xl font-bold text-green-600 mt-1">1</p>
-                </div>
-                <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-                    <p class="text-xs font-semibold uppercase text-slate-400">On Hold</p>
-                    <p class="text-2xl font-bold text-red-500 mt-1">1</p>
-                </div>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Planned" />
+                    <jsp:param name="value" value="2" />
+                    <jsp:param name="icon" value="calendar-clock" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-slate-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-slate-600" />
+                </jsp:include>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="In Progress" />
+                    <jsp:param name="value" value="4" />
+                    <jsp:param name="valueClass" value="text-2xl font-bold text-orange-500 mt-1" />
+                    <jsp:param name="icon" value="hammer" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-orange-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-orange-600" />
+                </jsp:include>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Completed" />
+                    <jsp:param name="value" value="3" />
+                    <jsp:param name="valueClass" value="text-2xl font-bold text-green-600 mt-1" />
+                    <jsp:param name="icon" value="check-circle-2" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-green-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-green-600" />
+                </jsp:include>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="On Hold" />
+                    <jsp:param name="value" value="1" />
+                    <jsp:param name="valueClass" value="text-2xl font-bold text-red-500 mt-1" />
+                    <jsp:param name="icon" value="pause-circle" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-red-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-red-600" />
+                </jsp:include>
             </div>
 
             <!-- Filters -->

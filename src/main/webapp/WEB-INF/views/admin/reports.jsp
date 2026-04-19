@@ -33,50 +33,34 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-semibold uppercase text-slate-400">Total Budget</p>
-                            <p class="text-2xl font-bold text-slate-800 mt-1">Rs 50L</p>
-                        </div>
-                        <div class="p-3 rounded-lg bg-slate-100">
-                            <i data-lucide="calculator" class="w-5 h-5 text-slate-600"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-semibold uppercase text-slate-400">Utilized</p>
-                            <p class="text-2xl font-bold  text-slate-800 mt-1">Rs 24.5L</p>
-                        </div>
-                        <div class="p-3 rounded-lg bg-orange-100">
-                            <i data-lucide="trending-up" class="w-5 h-5 text-orange-600"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-semibold uppercase text-slate-400">Documents</p>
-                            <p class="text-2xl font-bold  text-slate-800 mt-1">12 Files</p>
-                        </div>
-                        <div class="p-3 rounded-lg bg-blue-100">
-                            <i data-lucide="folder" class="w-5 h-5 text-blue-600"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-semibold uppercase text-slate-400">Pending Requests</p>
-                            <p class="text-2xl font-bold  text-slate-800 mt-1">4</p>
-                        </div>
-                        <div class="p-3 rounded-lg bg-amber-100">
-                            <i data-lucide="inbox" class="w-5 h-5 text-amber-600"></i>
-                        </div>
-                    </div>
-                </div>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Total Budget" />
+                    <jsp:param name="value" value="Rs 60L" />
+                    <jsp:param name="icon" value="calculator" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-slate-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-slate-600" />
+                </jsp:include>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Utilized" />
+                    <jsp:param name="value" value="Rs 31.4L" />
+                    <jsp:param name="icon" value="trending-up" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-orange-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-orange-600" />
+                </jsp:include>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Documents" />
+                    <jsp:param name="value" value="18 Files" />
+                    <jsp:param name="icon" value="folder" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-blue-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-blue-600" />
+                </jsp:include>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Pending Requests" />
+                    <jsp:param name="value" value="6" />
+                    <jsp:param name="icon" value="inbox" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-amber-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-amber-600" />
+                </jsp:include>
             </div>
 
             <div class="flex gap-2 mb-4 border-b border-slate-200 pb-2">

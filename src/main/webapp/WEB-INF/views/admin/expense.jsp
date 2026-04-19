@@ -34,50 +34,34 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-semibold uppercase text-slate-400">Total Expenses</p>
-                            <p class="text-2xl font-bold text-slate-800 mt-1">Rs 24.5L</p>
-                        </div>
-                        <div class="p-3 rounded-lg bg-red-100">
-                            <i data-lucide="trending-down" class="w-5 h-5 text-red-600"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-semibold uppercase text-slate-400">Material Costs</p>
-                            <p class="text-2xl font-bold text-slate-800 mt-1">Rs 12.1L</p>
-                        </div>
-                        <div class="p-3 rounded-lg bg-orange-100">
-                            <i data-lucide="package" class="w-5 h-5 text-orange-600"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-semibold uppercase text-slate-400">Labour Costs</p>
-                            <p class="text-2xl font-bold text-slate-800 mt-1">Rs 8.4L</p>
-                        </div>
-                        <div class="p-3 rounded-lg bg-blue-100">
-                            <i data-lucide="users" class="w-5 h-5 text-blue-600"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-semibold uppercase text-slate-400">Misc / Equip</p>
-                            <p class="text-2xl font-bold text-slate-800 mt-1">Rs 4.0L</p>
-                        </div>
-                        <div class="p-3 rounded-lg bg-purple-100">
-                            <i data-lucide="briefcase" class="w-5 h-5 text-purple-600"></i>
-                        </div>
-                    </div>
-                </div>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Total Expenses" />
+                    <jsp:param name="value" value="Rs 31.4L" />
+                    <jsp:param name="icon" value="trending-down" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-red-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-red-600" />
+                </jsp:include>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Material Costs" />
+                    <jsp:param name="value" value="Rs 15.8L" />
+                    <jsp:param name="icon" value="package" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-orange-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-orange-600" />
+                </jsp:include>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Labour Costs" />
+                    <jsp:param name="value" value="Rs 10.6L" />
+                    <jsp:param name="icon" value="users" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-blue-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-blue-600" />
+                </jsp:include>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Misc / Equip" />
+                    <jsp:param name="value" value="Rs 5.0L" />
+                    <jsp:param name="icon" value="briefcase" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-purple-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-purple-600" />
+                </jsp:include>
             </div>
 
             <div class="bg-white border border-slate-200 rounded-xl p-4 mb-4 shadow-sm flex flex-wrap gap-3 items-center">
