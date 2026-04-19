@@ -17,7 +17,5 @@
 <!-- Tailwind Config -->
 <script src="${pageContext.request.contextPath}/js/tailwind-config.js"></script>
 
-<!-- Custom CSS -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/buildtrack.css">
 </body>
 </html>
