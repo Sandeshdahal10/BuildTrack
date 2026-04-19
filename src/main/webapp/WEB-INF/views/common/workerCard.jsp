@@ -72,12 +72,12 @@
         <div class="flex items-center gap-2">
 
             <a href="${pageContext.request.contextPath}/admin/workers/form?mode=view&id=${param.id}"
-               class="text-xs px-3 py-1.5 border rounded text-gray-600 hover:bg-gray-50">
+               class="text-center rounded-lg text-gray-600 px-4 py-2 text-sm font-medium  hover:bg-gray-50 transition">
                 View
             </a>
 
             <a href="${pageContext.request.contextPath}/admin/workers/form?mode=edit&id=${param.id}"
-               class="text-xs px-3 py-1.5 bg-orange-500 text-white rounded hover:bg-orange-600">
+               class="text-center rounded-lg bg-orange-500 px-4 py-2 text-sm font-medium text-white hover:bg-orange-600 transition">
                 Edit
             </a>
 

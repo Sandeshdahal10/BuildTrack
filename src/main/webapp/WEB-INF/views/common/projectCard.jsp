@@ -70,12 +70,12 @@
 
         <div class="flex gap-2">
             <a href="${param.viewLink}"
-               class="rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50">
+               class="text-center rounded-lg text-gray-600 px-4 py-2 text-sm font-medium  hover:bg-gray-50 transition">
                 View
             </a>
 
             <a href="${param.editLink}"
-               class="rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-600">
+               class="text-center rounded-lg bg-orange-500 px-4 py-2 text-sm font-medium text-white hover:bg-orange-600 transition">
                 Edit
             </a>
         </div>

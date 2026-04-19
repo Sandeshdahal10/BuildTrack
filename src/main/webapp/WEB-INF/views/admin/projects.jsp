@@ -31,7 +31,7 @@
                     <h1 class="text-2xl font-bold text-slate-800">Projects</h1>
                     <p class="text-slate-500 mt-1">Manage and track all your construction projects.</p>
                 </div>
-                <a href="<%= request.getContextPath() %>/admin/projects/form?mode=create" class="flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-600">
+                <a href="<%= request.getContextPath() %>/admin/projects?action=new" class="flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-600">
                     <i data-lucide="plus" class="h-4 w-4"></i>
                     Add Project
                 </a>

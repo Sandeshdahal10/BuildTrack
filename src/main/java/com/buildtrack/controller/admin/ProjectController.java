@@ -1,8 +1,9 @@
 package com.buildtrack.controller.admin;
 
-import com.buildtrack.dao.admin.ProjectDao;
+import java.io.IOException;
+import java.util.List;
+
 import com.buildtrack.model.Project;
-import com.buildtrack.model.User;
 import com.buildtrack.service.admin.ProjectService;
 import com.buildtrack.service.admin.UserService;
 
@@ -11,20 +12,17 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Full CRUD for projects + worker assignment.
  *
- * GET  /admin/projects                     → list all
- * GET  /admin/projects?action=new          → new form
- * GET  /admin/projects?action=edit&id=X     → edit form
- * GET  /admin/projects?action=view&id=X     → detail view
- * POST /admin/projects?action=create        → create
- * POST /admin/projects?action=update        → update
- * POST /admin/projects?action=delete&id=X   → delete
+ * GET /admin/projects → list all
+ * GET /admin/projects?action=new → new form
+ * GET /admin/projects?action=edit&id=X → edit form
+ * GET /admin/projects?action=view&id=X → detail view
+ * POST /admin/projects?action=create → create
+ * POST /admin/projects?action=update → update
+ * POST /admin/projects?action=delete&id=X → delete
  * POST /admin/projects?action=assign-worker → assign worker
  * POST /admin/projects?action=remove-worker → remove worker
  */
@@ -52,14 +50,18 @@ public class ProjectController extends HttpServlet {
             case "new":
                 // Pass clients for dropdown
                 request.setAttribute("clients", userService.getClients());
-                request.getRequestDispatcher("/WEB-INF/views/admin/projects.jsp")
+                request.setAttribute("formMode", "create");
+                request.getRequestDispatcher("/WEB-INF/views/form/projectForm.jsp")
                         .forward(request, response);
                 break;
 
             case "edit": {
                 int id = Integer.parseInt(request.getParameter("id"));
                 Project p = projectService.getProjectById(id);
-                if (p == null) { response.sendError(404, "Project not found"); return; }
+                if (p == null) {
+                    response.sendError(404, "Project not found");
+                    return;
+                }
                 request.setAttribute("project", p);
                 request.setAttribute("clients", userService.getClients());
                 request.getRequestDispatcher("/WEB-INF/views/admin/projects.jsp")
@@ -70,7 +72,10 @@ public class ProjectController extends HttpServlet {
             case "view": {
                 int id = Integer.parseInt(request.getParameter("id"));
                 Project p = projectService.getProjectById(id);
-                if (p == null) { response.sendError(404, "Project not found"); return; }
+                if (p == null) {
+                    response.sendError(404, "Project not found");
+                    return;
+                }
                 request.setAttribute("project", p);
                 request.setAttribute("assignedWorkers", projectService.getAssignedWorkers(id));
                 request.getRequestDispatcher("/WEB-INF/views/admin/projects.jsp")
@@ -82,7 +87,10 @@ public class ProjectController extends HttpServlet {
                 // Show assign-worker form
                 int id = Integer.parseInt(request.getParameter("id"));
                 Project p = projectService.getProjectById(id);
-                if (p == null) { response.sendError(404); return; }
+                if (p == null) {
+                    response.sendError(404);
+                    return;
+                }
                 request.setAttribute("project", p);
                 request.setAttribute("assignedWorkers", projectService.getAssignedWorkers(id));
                 // Search query param
@@ -120,8 +128,7 @@ public class ProjectController extends HttpServlet {
                         request.getParameter("startDate"),
                         request.getParameter("endDate"),
                         request.getParameter("totalBudget"),
-                        request.getParameter("status")
-                );
+                        request.getParameter("status"));
                 if (!errors.isEmpty()) {
                     request.setAttribute("errors", errors);
                     request.setAttribute("clients", userService.getClients());
@@ -146,8 +153,7 @@ public class ProjectController extends HttpServlet {
                         request.getParameter("startDate"),
                         request.getParameter("endDate"),
                         request.getParameter("totalBudget"),
-                        request.getParameter("status")
-                );
+                        request.getParameter("status"));
                 if (!errors.isEmpty()) {
                     request.setAttribute("errors", errors);
                     request.setAttribute("project", projectService.getProjectById(id));
