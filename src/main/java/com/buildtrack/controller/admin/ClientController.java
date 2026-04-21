@@ -1,14 +1,14 @@
 package com.buildtrack.controller.admin;
 
+import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @WebServlet(name = "clientController", value = { "/admin/clients", "/admin/clients/*" })
 public class ClientController extends HttpServlet {
@@ -30,14 +30,14 @@ public class ClientController extends HttpServlet {
         if (editMatcher.matches()) {
             req.setAttribute("formMode", "edit");
             req.setAttribute("clientId", editMatcher.group(1));
-            req.getRequestDispatcher("/WEB-INF/views/admin/clientForm.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/views/form/clientForm.jsp").forward(req, resp);
             return;
         }
 
         if ("/form".equals(pathInfo) || "/form/".equals(pathInfo) || "form".equalsIgnoreCase(view)) {
             req.setAttribute("formMode", "edit".equalsIgnoreCase(mode) ? "edit" : "create");
             req.setAttribute("clientId", req.getParameter("id"));
-            req.getRequestDispatcher("/WEB-INF/views/admin/clientForm.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/views/form/clientForm.jsp").forward(req, resp);
             return;
         }
 

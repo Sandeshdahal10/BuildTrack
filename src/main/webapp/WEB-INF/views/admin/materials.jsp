@@ -42,7 +42,7 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
                 <jsp:include page="../common/statsCard.jsp">
                     <jsp:param name="title" value="Total Items" />
-                    <jsp:param name="value" value="32" />
+                     <jsp:param name="value" value="32" />
                     <jsp:param name="icon" value="boxes" />
                     <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-slate-100" />
                     <jsp:param name="iconClass" value="w-5 h-5 text-slate-600" />

@@ -1,12 +1,12 @@
 package com.buildtrack.controller.admin;
 
+import java.io.IOException;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
 
 @WebServlet(name = "workerController", value = { "/admin/workers", "/admin/workers/*" })
 public class WorkerController extends HttpServlet {
@@ -17,7 +17,7 @@ public class WorkerController extends HttpServlet {
         String view = req.getParameter("view");
 
         if ("/form".equals(pathInfo) || "/form/".equals(pathInfo) || "form".equalsIgnoreCase(view)) {
-            req.getRequestDispatcher("/WEB-INF/views/admin/workerForm.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/views/form/workerForm.jsp").forward(req, resp);
             return;
         }
 
