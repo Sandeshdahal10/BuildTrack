@@ -73,8 +73,7 @@ public class ProjectController extends HttpServlet {
 
         if (action == null) {
             // List all projects with status counts
-            request.setAttribute("projects", projectService.getAllProjects());
-            request.setAttribute("statusCounts", projectService.getStatusCounts());
+            loadProjectListPageData(request);
             request.getRequestDispatcher("/WEB-INF/views/admin/projects.jsp").forward(request, response);
             return;
         }
@@ -131,6 +130,7 @@ public class ProjectController extends HttpServlet {
                 if (q != null && !q.trim().isEmpty()) {
                     request.setAttribute("searchResults", userService.searchWorkers(q.trim()));
                 }
+                loadProjectListPageData(request);
                 request.getRequestDispatcher("/WEB-INF/views/admin/projects.jsp")
                         .forward(request, response);
             }
@@ -244,5 +244,10 @@ public class ProjectController extends HttpServlet {
         request.setAttribute("endDate", request.getParameter("endDate"));
         request.setAttribute("totalBudget", request.getParameter("totalBudget"));
         request.setAttribute("status", request.getParameter("status"));
+    }
+
+    private void loadProjectListPageData(HttpServletRequest request) {
+        request.setAttribute("projects", projectService.getAllProjects());
+        request.setAttribute("statusCounts", projectService.getStatusCounts());
     }
 }

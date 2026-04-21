@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%
     com.buildtrack.model.Project project = (com.buildtrack.model.Project) request.getAttribute("project");
@@ -75,8 +76,11 @@
         projectStatusValue = "PLANNED";
     }
 
+    request.setAttribute("selectedClientId", projectClientIdValue);
+
     boolean viewMode = "view".equalsIgnoreCase(mode);
     boolean editMode = "edit".equalsIgnoreCase(mode);
+    String defaultAction = editMode ? "update" : "create";
 
     String formTitle = viewMode ? "Project Details" : (editMode ? "Edit Project" : "Add Project");
     String formSubtitle = viewMode
@@ -121,7 +125,7 @@
 
             <section class="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
                 <form method="post" action="<%= request.getContextPath() %>/admin/projects" class="space-y-6">
-                    <input type="hidden" name="action" value="<%= editMode ? "update" : "create" %>" />
+                    <input type="hidden" id="projectActionField" name="action" value="<%= defaultAction %>" />
                     <input type="hidden" name="id" value="<%= projectId == null ? "" : projectId %>" />
                     <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
                         <div class="md:col-span-2">
@@ -136,7 +140,12 @@
 
                         <div>
                             <label class="mb-2 block text-sm font-semibold text-slate-700">Client</label>
-                            <input name="clientId" type="number" value="<%= projectClientIdValue %>" placeholder="Client ID" <%= lockFields %> class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-orange-300 focus:ring-2 focus:ring-orange-200 <%= viewMode ? "bg-slate-100" : "" %>" />
+                            <select name="clientId" <%= disableInputs %> class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-orange-300 focus:ring-2 focus:ring-orange-200 <%= viewMode ? "bg-slate-100" : "" %>">
+                                <option value="">Unassigned</option>
+                                <c:forEach var="client" items="${clients}">
+                                    <option value="${client.id}" ${client.id == selectedClientId ? 'selected' : ''}>${client.fullName}</option>
+                                </c:forEach>
+                            </select>
                         </div>
 
                         <div>
@@ -172,15 +181,17 @@
                                 Edit Project
                             </a>
                         <% } else { %>
-                            <button type="submit" class="inline-flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-orange-600">
+                            <button type="submit" class="inline-flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-orange-600" onclick="document.getElementById('projectActionField').value='<%= defaultAction %>'">
                                 <i data-lucide="save" class="h-4 w-4"></i>
                                 <%= editMode ? "Update Project" : "Save Project" %>
                             </button>
-                            <button type="button" class="inline-flex items-center gap-2 rounded-lg border border-rose-300 bg-rose-50 px-4 py-2 text-sm font-semibold text-rose-700 transition hover:bg-rose-100">
-                                <i data-lucide="trash-2" class="h-4 w-4"></i>
-                                Delete Project
-                            </button>
-                            <button type="reset" class="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100">
+                            <% if (editMode && projectId != null && !projectId.isBlank()) { %>
+                                <button type="submit" class="inline-flex items-center gap-2 rounded-lg border border-rose-300 bg-rose-50 px-4 py-2 text-sm font-semibold text-rose-700 transition hover:bg-rose-100" onclick="document.getElementById('projectActionField').value='delete'; return confirm('Delete this project? This action cannot be undone.');">
+                                    <i data-lucide="trash-2" class="h-4 w-4"></i>
+                                    Delete Project
+                                </button>
+                            <% } %>
+                            <button type="reset" class="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100" onclick="document.getElementById('projectActionField').value='<%= defaultAction %>'">
                                 <i data-lucide="rotate-ccw" class="h-4 w-4"></i>
                                 Reset
                             </button>

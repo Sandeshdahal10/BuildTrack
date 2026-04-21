@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
     <title>Title</title>
@@ -13,7 +14,9 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-<article class="project-card fade-up rounded-xl p-5 bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all duration-300">
+<article class="project-card fade-up rounded-xl p-5 bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all duration-300"
+         data-title="${fn:toLowerCase(param.title)}"
+         data-status="${fn:toLowerCase(param.status)}">
 
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
 
