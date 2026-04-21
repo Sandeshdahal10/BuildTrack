@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
     <title>Workers - BuildTrack</title>
@@ -37,7 +39,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
                 <jsp:include page="../common/statsCard.jsp">
                     <jsp:param name="title" value="Total Workers" />
-                    <jsp:param name="value" value="52" />
+                    <jsp:param name="value" value="${empty userStats ? 0 : userStats.totalWorkers}" />
                     <jsp:param name="icon" value="users" />
                     <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-slate-100" />
                     <jsp:param name="iconClass" value="w-5 h-5 text-slate-600" />
@@ -45,7 +47,7 @@
 
                 <jsp:include page="../common/statsCard.jsp">
                     <jsp:param name="title" value="Active" />
-                    <jsp:param name="value" value="45" />
+                    <jsp:param name="value" value="${empty userStats ? 0 : userStats.totalWorkers}" />
                     <jsp:param name="icon" value="user-check" />
                     <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-green-100" />
                     <jsp:param name="iconClass" value="w-5 h-5 text-green-600" />
@@ -53,7 +55,7 @@
 
                 <jsp:include page="../common/statsCard.jsp">
                     <jsp:param name="title" value="On Leave" />
-                    <jsp:param name="value" value="4" />
+                    <jsp:param name="value" value="0" />
                     <jsp:param name="icon" value="pause-circle" />
                     <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-amber-100" />
                     <jsp:param name="iconClass" value="w-5 h-5 text-amber-600" />
@@ -61,7 +63,7 @@
 
                 <jsp:include page="../common/statsCard.jsp">
                     <jsp:param name="title" value="Deactivated" />
-                    <jsp:param name="value" value="3" />
+                    <jsp:param name="value" value="0" />
                     <jsp:param name="icon" value="user-x" />
                     <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-red-100" />
                     <jsp:param name="iconClass" value="w-5 h-5 text-red-600" />
@@ -85,43 +87,18 @@
             </div>
 
 <div id="workerList" class="flex flex-col gap-3">
-
-    <!-- Rajan -->
-    <jsp:include page="/WEB-INF/views/common/workerCard.jsp">
-        <jsp:param name="id" value="1"/>
-        <jsp:param name="name" value="Rajan Thapa"/>
-        <jsp:param name="initials" value="RT"/>
-        <jsp:param name="role" value="Mason"/>
-        <jsp:param name="project" value="Skyline Tower Complex"/>
-        <jsp:param name="projectCount" value="4"/>
-        <jsp:param name="attendance" value="92"/>
-        <jsp:param name="status" value="active"/>
-    </jsp:include>
-
-    <!-- Sunita -->
-    <jsp:include page="/WEB-INF/views/common/workerCard.jsp">
-        <jsp:param name="id" value="2"/>
-        <jsp:param name="name" value="Sunita Rai"/>
-        <jsp:param name="initials" value="SR"/>
-        <jsp:param name="role" value="Electrician"/>
-        <jsp:param name="project" value="Green Valley Residency"/>
-        <jsp:param name="projectCount" value="2"/>
-        <jsp:param name="attendance" value="88"/>
-        <jsp:param name="status" value="active"/>
-    </jsp:include>
-
-    <!-- Dipesh (on leave) -->
-    <jsp:include page="/WEB-INF/views/common/workerCard.jsp">
-        <jsp:param name="id" value="5"/>
-        <jsp:param name="name" value="Dipesh Shrestha"/>
-        <jsp:param name="initials" value="DS"/>
-        <jsp:param name="role" value="Carpenter"/>
-        <jsp:param name="project" value="Sunrise School Block A"/>
-        <jsp:param name="projectCount" value="2"/>
-        <jsp:param name="attendance" value="74"/>
-        <jsp:param name="status" value="on leave"/>
-    </jsp:include>
-
+    <c:forEach var="worker" items="${workers}">
+        <jsp:include page="/WEB-INF/views/common/workerCard.jsp">
+            <jsp:param name="id" value="${worker.id}"/>
+            <jsp:param name="name" value="${worker.fullName}"/>
+            <jsp:param name="initials" value="${fn:substring(worker.fullName, 0, 1)}"/>
+            <jsp:param name="role" value="${worker.roleDisplayName}"/>
+            <jsp:param name="project" value="Unassigned"/>
+            <jsp:param name="projectCount" value="0"/>
+            <jsp:param name="attendance" value="0"/>
+            <jsp:param name="status" value="${worker.status}"/>
+        </jsp:include>
+    </c:forEach>
 </div>
 
             <%-- Empty state --%>
@@ -129,6 +106,8 @@
                 <p style="font-size:15px;font-weight:600;color:slategray;margin:0;">No workers found</p>
                 <p style="font-size:13px;color:darkgray;margin:6px 0 0;">Try a different name, role, or status filter.</p>
             </div>
+
+            <p id="workerSummary" class="mt-4 text-sm text-slate-500">Showing ${empty workers ? 0 : workers.size()} workers</p>
 
         </main>
     </div>
@@ -189,7 +168,9 @@
             r.style.display = show ? '' : 'none';
             if (show) visible++;
         });
-        summary.textContent = 'Showing ' + visible + ' of ' + rows.length + ' workers';
+        if (summary) {
+            summary.textContent = 'Showing ' + visible + ' of ' + rows.length + ' workers';
+        }
         empty.style.display = visible === 0 ? '' : 'none';
     }
 

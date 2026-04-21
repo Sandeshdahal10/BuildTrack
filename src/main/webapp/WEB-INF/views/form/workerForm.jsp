@@ -1,7 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    String mode = request.getParameter("mode");
+    com.buildtrack.model.User worker = (com.buildtrack.model.User) request.getAttribute("worker");
+
+    String mode = (String) request.getAttribute("formMode");
+    if (mode == null || mode.isBlank()) {
+        mode = request.getParameter("mode");
+    }
     if (mode == null || mode.isBlank()) {
         mode = "create";
     }
@@ -21,11 +26,34 @@
     String lockFields = viewMode ? "readonly" : "";
     String disableInputs = viewMode ? "disabled" : "";
 
-    String fullNameValue = editMode || viewMode ? "Rajan Thapa" : "";
-    String emailValue = editMode || viewMode ? "rajan.thapa@buildtrack.com" : "";
-    String phoneValue = editMode || viewMode ? "9800000001" : "";
-    String skillValue = editMode || viewMode ? "Mason" : "";
-    String projectValue = editMode || viewMode ? "Skyline Tower Complex" : "";
+    String fullNameValue = request.getParameter("fullName");
+    if ((fullNameValue == null || fullNameValue.isBlank()) && worker != null && worker.getFullName() != null) {
+        fullNameValue = worker.getFullName();
+    }
+    if (fullNameValue == null) fullNameValue = "";
+
+    String emailValue = request.getParameter("email");
+    if ((emailValue == null || emailValue.isBlank()) && worker != null && worker.getEmail() != null) {
+        emailValue = worker.getEmail();
+    }
+    if (emailValue == null) emailValue = "";
+
+    String phoneValue = request.getParameter("phone");
+    if ((phoneValue == null || phoneValue.isBlank()) && worker != null && worker.getPhone() != null) {
+        phoneValue = worker.getPhone();
+    }
+    if (phoneValue == null) phoneValue = "";
+
+    String skillValue = request.getParameter("role");
+    if ((skillValue == null || skillValue.isBlank()) && worker != null && worker.getRoleDisplayName() != null) {
+        skillValue = worker.getRoleDisplayName();
+    }
+    if (skillValue == null) skillValue = "";
+
+    String projectValue = request.getParameter("project");
+    if (projectValue == null || projectValue.isBlank()) {
+        projectValue = "Unassigned";
+    }
 %>
 
 <html>

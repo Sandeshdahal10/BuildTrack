@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
     <title>Title</title>
@@ -63,9 +65,11 @@
         </div>
 
         <span class="text-xs font-semibold px-3 py-1 rounded-full
-            ${param.status == 'Active' 
-                ? 'bg-green-100 text-green-700' 
-                : 'bg-red-100 text-red-600'}">
+            ${fn:toLowerCase(param.status) == 'approved' || fn:toLowerCase(param.status) == 'active'
+                ? 'bg-green-100 text-green-700'
+                : (fn:toLowerCase(param.status) == 'on leave'
+                    ? 'bg-amber-100 text-amber-700'
+                    : 'bg-red-100 text-red-600')}" title="Status: ${param.status}">
             ${param.status}
         </span>
 
@@ -81,10 +85,20 @@
                 Edit
             </a>
 
-            <a href="${pageContext.request.contextPath}/admin/workers?action=deactivate&id=${param.id}"
-               class="text-xs px-3 py-1.5 bg-red-50 text-red-600 border border-red-200 rounded hover:bg-red-100">
-                Deactivate
-            </a>
+            <c:choose>
+                <c:when test="${fn:toLowerCase(param.status) == 'deactivated'}">
+                    <a href="${pageContext.request.contextPath}/admin/workers?action=activate&id=${param.id}"
+                       class="text-xs px-3 py-1.5 bg-green-50 text-green-600 border border-green-200 rounded hover:bg-green-100">
+                        Activate
+                    </a>
+                </c:when>
+                <c:otherwise>
+                    <a href="${pageContext.request.contextPath}/admin/workers?action=deactivate&id=${param.id}"
+                       class="text-xs px-3 py-1.5 bg-red-50 text-red-600 border border-red-200 rounded hover:bg-red-100">
+                        Deactivate
+                    </a>
+                </c:otherwise>
+            </c:choose>
 
         </div>
 

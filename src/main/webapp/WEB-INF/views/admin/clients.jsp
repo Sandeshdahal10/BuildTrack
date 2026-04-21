@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Clients - BuildTrack</title>
@@ -38,29 +39,29 @@
 
                 <div class="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
                     <jsp:include page="../common/statsCard.jsp">
-                        <jsp:param name="title" value="Active" />
-                        <jsp:param name="value" value="18" />
+                        <jsp:param name="title" value="Total Clients" />
+                        <jsp:param name="value" value="${empty userStats ? 0 : userStats.totalClients}" />
                         <jsp:param name="icon" value="user-check" />
                         <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-green-100" />
                         <jsp:param name="iconClass" value="w-5 h-5 text-green-600" />
                     </jsp:include>
                     <jsp:include page="../common/statsCard.jsp">
-                        <jsp:param name="title" value="New" />
-                        <jsp:param name="value" value="5" />
+                        <jsp:param name="title" value="Pending Approvals" />
+                        <jsp:param name="value" value="${empty userStats ? 0 : userStats.pendingApprovals}" />
                         <jsp:param name="icon" value="user-plus" />
                         <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-blue-100" />
                         <jsp:param name="iconClass" value="w-5 h-5 text-blue-600" />
                     </jsp:include>
                     <jsp:include page="../common/statsCard.jsp">
-                        <jsp:param name="title" value="Premium" />
-                        <jsp:param name="value" value="7" />
+                        <jsp:param name="title" value="Approved Workers" />
+                        <jsp:param name="value" value="${empty userStats ? 0 : userStats.totalWorkers}" />
                         <jsp:param name="icon" value="star" />
                         <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-amber-100" />
                         <jsp:param name="iconClass" value="w-5 h-5 text-amber-600" />
                     </jsp:include>
                     <jsp:include page="../common/statsCard.jsp">
-                        <jsp:param name="title" value="Inactive" />
-                        <jsp:param name="value" value="3" />
+                        <jsp:param name="title" value="Client Records" />
+                        <jsp:param name="value" value="${empty clients ? 0 : clients.size()}" />
                         <jsp:param name="icon" value="user-x" />
                         <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-red-100" />
                         <jsp:param name="iconClass" value="w-5 h-5 text-red-600" />
@@ -84,53 +85,19 @@
             </section>
         <section>
             <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
-                <jsp:include page="../common/ClientCard.jsp">
-                    <jsp:param name="name" value="Sandesh Dahal" />
-                    <jsp:param name="image" value="https://i.pravatar.cc/150?img=11" />
-                    <jsp:param name="status" value="Active" />
-                    <jsp:param name="statusStyle" value="bg-green-100 text-green-700" />
-                    <jsp:param name="email" value="sandesh@example.com" />
-                    <jsp:param name="phone" value="+91 99887 76655" />
-                    <jsp:param name="projectCount" value="1" />
-                    <jsp:param name="viewLink" value="${pageContext.request.contextPath}/admin/clients/1" /> 
-                    <jsp:param name="editLink" value="${pageContext.request.contextPath}/admin/clients/1/edit"/>
-                </jsp:include>
-
-                <jsp:include page="../common/ClientCard.jsp">
-                    <jsp:param name="name" value="Regan Karki" />
-                    <jsp:param name="image" value="https://i.pravatar.cc/150?img=11" />
-                    <jsp:param name="status" value="Active" />
-                    <jsp:param name="statusStyle" value="bg-green-100 text-green-700" />
-                    <jsp:param name="email" value="regan@example.com" />
-                    <jsp:param name="phone" value="+91 99887 76655" />
-                    <jsp:param name="projectCount" value="1" />
-                    <jsp:param name="viewLink" value="${pageContext.request.contextPath}/admin/clients/1" />
-                    <jsp:param name="editLink" value="${pageContext.request.contextPath}/admin/clients/2/edit"/>
-                </jsp:include>
-                <jsp:include page="../common/ClientCard.jsp">
-                    <jsp:param name="name" value="Samana Upreti" />
-                    <jsp:param name="image" value="https://i.pravatar.cc/150?img=11" />
-                    <jsp:param name="status" value="Active" />
-                    <jsp:param name="statusStyle" value="bg-green-100 text-green-700" />
-                    <jsp:param name="email" value="samana@example.com" />
-                    <jsp:param name="phone" value="+91 99887 76655" />
-                    <jsp:param name="projectCount" value="1" />
-                    <jsp:param name="viewLink" value="${pageContext.request.contextPath}/admin/clients/1" />
-                    <jsp:param name="editLink" value="${pageContext.request.contextPath}/admin/clients/3/edit"/>
-                </jsp:include>
-                <jsp:include page="../common/ClientCard.jsp">
-                    <jsp:param name="name" value="Dinisha Parajuli" />
-                    <jsp:param name="image" value="https://i.pravatar.cc/150?img=11" />
-                    <jsp:param name="status" value="Active" />
-                    <jsp:param name="statusStyle" value="bg-green-100 text-green-700" />
-                    <jsp:param name="email" value="dinisha@example.com" />
-                    <jsp:param name="phone" value="+91 99887 76655" />
-                    <jsp:param name="projectCount" value="1" />
-                    <jsp:param name="viewLink" value="${pageContext.request.contextPath}/admin/clients/1" />
-                    <jsp:param name="editLink" value="${pageContext.request.contextPath}/admin/clients/4/edit"/>
-                </jsp:include>
-
-
+                <c:forEach var="client" items="${clients}">
+                    <jsp:include page="../common/ClientCard.jsp">
+                        <jsp:param name="name" value="${client.fullName}" />
+                        <jsp:param name="image" value="https://i.pravatar.cc/150?u=${client.id}" />
+                        <jsp:param name="status" value="${client.status}" />
+                        <jsp:param name="statusStyle" value="bg-green-100 text-green-700" />
+                        <jsp:param name="email" value="${client.email}" />
+                        <jsp:param name="phone" value="${client.phone}" />
+                        <jsp:param name="projectCount" value="0" />
+                        <jsp:param name="viewLink" value="${pageContext.request.contextPath}/admin/clients/${client.id}" />
+                        <jsp:param name="editLink" value="${pageContext.request.contextPath}/admin/clients/${client.id}/edit"/>
+                    </jsp:include>
+                </c:forEach>
             </div>
         </section>
         </main>
