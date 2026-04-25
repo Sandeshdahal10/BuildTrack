@@ -47,6 +47,10 @@ public class MaterialController extends HttpServlet {
             request.setAttribute("materials", materials);
             request.setAttribute("materialStats", materialService.getMaterialStats());
             request.setAttribute("lowStockCount", materialService.getLowStockMaterials().size());
+            request.setAttribute("totalStockValue", materialService.getTotalStockValue());
+            request.setAttribute("usedThisMonth", materialService.getUsedCostThisMonth());
+            request.setAttribute("monthLabel", materialService.getCurrentMonthLabel());
+            request.setAttribute("recentUsage", materialService.getRecentUsage(6));
             request.getRequestDispatcher("/WEB-INF/views/admin/materials.jsp")
                     .forward(request, response);
             return;
@@ -89,6 +93,11 @@ public class MaterialController extends HttpServlet {
                 request.setAttribute("projectId", projectId);
                 // Also pass all materials for the "log usage" dropdown
                 request.setAttribute("materials", materialService.getAllMaterials());
+                request.setAttribute("materialStats", materialService.getMaterialStats());
+                request.setAttribute("lowStockCount", materialService.getLowStockMaterials().size());
+                request.setAttribute("totalStockValue", materialService.getTotalStockValue());
+                request.setAttribute("usedThisMonth", materialService.getUsedCostThisMonth());
+                request.setAttribute("monthLabel", materialService.getCurrentMonthLabel());
                 request.getRequestDispatcher("/WEB-INF/views/admin/materials.jsp")
                         .forward(request, response);
             }

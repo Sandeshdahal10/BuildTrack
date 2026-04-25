@@ -1,12 +1,16 @@
 package com.buildtrack.dao.admin;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.buildtrack.model.Material;
 import com.buildtrack.model.MaterialUsage;
 import com.buildtrack.util.DBUtil;
-
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MaterialDao {
 
@@ -16,9 +20,10 @@ public class MaterialDao {
         List<Material> list = new ArrayList<>();
         String sql = "SELECT * FROM materials ORDER BY name ASC";
         try (Connection conn = DBUtil.getConnection();
-             Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
-            while (rs.next()) list.add(mapMaterial(rs));
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql)) {
+            while (rs.next())
+                list.add(mapMaterial(rs));
         } catch (SQLException e) {
             System.err.println("[MaterialDAO] findAll error: " + e.getMessage());
         }
@@ -29,9 +34,10 @@ public class MaterialDao {
         List<Material> list = new ArrayList<>();
         String sql = "SELECT * FROM materials WHERE total_stock <= low_stock_threshold ORDER BY total_stock ASC";
         try (Connection conn = DBUtil.getConnection();
-             Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
-            while (rs.next()) list.add(mapMaterial(rs));
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql)) {
+            while (rs.next())
+                list.add(mapMaterial(rs));
         } catch (SQLException e) {
             System.err.println("[MaterialDAO] findLowStock error: " + e.getMessage());
         }
@@ -41,10 +47,11 @@ public class MaterialDao {
     public Material findById(int id) {
         String sql = "SELECT * FROM materials WHERE id = ?";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) return mapMaterial(rs);
+            if (rs.next())
+                return mapMaterial(rs);
         } catch (SQLException e) {
             System.err.println("[MaterialDAO] findById error: " + e.getMessage());
         }
@@ -55,7 +62,7 @@ public class MaterialDao {
         String sql = "INSERT INTO materials (name,unit,unit_price,total_stock,low_stock_threshold,description) " +
                 "VALUES (?,?,?,?,?,?)";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, m.getName());
             ps.setString(2, m.getUnit());
             ps.setBigDecimal(3, m.getUnitPrice());
@@ -64,7 +71,8 @@ public class MaterialDao {
             ps.setString(6, m.getDescription());
             ps.executeUpdate();
             ResultSet keys = ps.getGeneratedKeys();
-            if (keys.next()) return keys.getInt(1);
+            if (keys.next())
+                return keys.getInt(1);
         } catch (SQLException e) {
             System.err.println("[MaterialDAO] insert error: " + e.getMessage());
         }
@@ -75,7 +83,7 @@ public class MaterialDao {
         String sql = "UPDATE materials SET name=?,unit=?,unit_price=?,total_stock=?," +
                 "low_stock_threshold=?,description=? WHERE id=?";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, m.getName());
             ps.setString(2, m.getUnit());
             ps.setBigDecimal(3, m.getUnitPrice());
@@ -93,7 +101,7 @@ public class MaterialDao {
     public boolean delete(int id) {
         String sql = "DELETE FROM materials WHERE id = ?";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -105,9 +113,10 @@ public class MaterialDao {
     public int countAll() {
         String sql = "SELECT COUNT(*) FROM materials";
         try (Connection conn = DBUtil.getConnection();
-             Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
-            if (rs.next()) return rs.getInt(1);
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql)) {
+            if (rs.next())
+                return rs.getInt(1);
         } catch (SQLException e) {
             System.err.println("[MaterialDAO] countAll error: " + e.getMessage());
         }
@@ -117,16 +126,44 @@ public class MaterialDao {
     public int countLowStock() {
         String sql = "SELECT COUNT(*) FROM materials WHERE total_stock <= low_stock_threshold";
         try (Connection conn = DBUtil.getConnection();
-             Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
-            if (rs.next()) return rs.getInt(1);
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql)) {
+            if (rs.next())
+                return rs.getInt(1);
         } catch (SQLException e) {
             System.err.println("[MaterialDAO] countLowStock error: " + e.getMessage());
         }
         return 0;
     }
 
-    //  Stock Update (for usage deduction)
+    public java.math.BigDecimal getTotalStockValue() {
+        String sql = "SELECT COALESCE(SUM(total_stock * unit_price), 0) FROM materials";
+        try (Connection conn = DBUtil.getConnection();
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql)) {
+            if (rs.next())
+                return rs.getBigDecimal(1);
+        } catch (SQLException e) {
+            System.err.println("[MaterialDAO] getTotalStockValue error: " + e.getMessage());
+        }
+        return java.math.BigDecimal.ZERO;
+    }
+
+    public java.math.BigDecimal getUsedCostThisMonth() {
+        String sql = "SELECT COALESCE(SUM(total_cost), 0) FROM material_usage " +
+                "WHERE YEAR(usage_date) = YEAR(CURDATE()) AND MONTH(usage_date) = MONTH(CURDATE())";
+        try (Connection conn = DBUtil.getConnection();
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql)) {
+            if (rs.next())
+                return rs.getBigDecimal(1);
+        } catch (SQLException e) {
+            System.err.println("[MaterialDAO] getUsedCostThisMonth error: " + e.getMessage());
+        }
+        return java.math.BigDecimal.ZERO;
+    }
+
+    // Stock Update (for usage deduction)
 
     /** Deduct stock. Accepts external connection for transactions. */
     public boolean deductStock(Connection conn, int materialId, java.math.BigDecimal quantity) {
@@ -142,7 +179,7 @@ public class MaterialDao {
         return false;
     }
 
-    //Material Usage
+    // Material Usage
 
     public List<MaterialUsage> findUsageByProject(int projectId) {
         List<MaterialUsage> list = new ArrayList<>();
@@ -154,12 +191,34 @@ public class MaterialDao {
                 "JOIN users u ON mu.recorded_by = u.id " +
                 "WHERE mu.project_id = ? ORDER BY mu.usage_date DESC, mu.created_at DESC";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, projectId);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) list.add(mapUsage(rs));
+            while (rs.next())
+                list.add(mapUsage(rs));
         } catch (SQLException e) {
             System.err.println("[MaterialDAO] findUsageByProject error: " + e.getMessage());
+        }
+        return list;
+    }
+
+    public List<MaterialUsage> findRecentUsage(int limit) {
+        List<MaterialUsage> list = new ArrayList<>();
+        String sql = "SELECT mu.*, m.name AS material_name, m.unit AS material_unit, " +
+                "p.title AS project_name, u.full_name AS recorded_by_name " +
+                "FROM material_usage mu " +
+                "JOIN materials m ON mu.material_id = m.id " +
+                "JOIN projects p ON mu.project_id = p.id " +
+                "JOIN users u ON mu.recorded_by = u.id " +
+                "ORDER BY mu.usage_date DESC, mu.created_at DESC LIMIT ?";
+        try (Connection conn = DBUtil.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, limit);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next())
+                list.add(mapUsage(rs));
+        } catch (SQLException e) {
+            System.err.println("[MaterialDAO] findRecentUsage error: " + e.getMessage());
         }
         return list;
     }
@@ -167,10 +226,11 @@ public class MaterialDao {
     public java.math.BigDecimal getTotalCostByProject(int projectId) {
         String sql = "SELECT COALESCE(SUM(total_cost),0) FROM material_usage WHERE project_id = ?";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, projectId);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) return rs.getBigDecimal(1);
+            if (rs.next())
+                return rs.getBigDecimal(1);
         } catch (SQLException e) {
             System.err.println("[MaterialDAO] getTotalCostByProject error: " + e.getMessage());
         }
@@ -179,7 +239,8 @@ public class MaterialDao {
 
     /** Insert usage record. Accepts external connection for transactions. */
     public int insertUsage(Connection conn, MaterialUsage mu) {
-        String sql = "INSERT INTO material_usage (material_id,project_id,quantity_used,unit_cost,usage_date,recorded_by,notes) " +
+        String sql = "INSERT INTO material_usage (material_id,project_id,quantity_used,unit_cost,usage_date,recorded_by,notes) "
+                +
                 "VALUES (?,?,?,?,?,?,?)";
         try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, mu.getMaterialId());
@@ -191,7 +252,8 @@ public class MaterialDao {
             ps.setString(7, mu.getNotes());
             ps.executeUpdate();
             ResultSet keys = ps.getGeneratedKeys();
-            if (keys.next()) return keys.getInt(1);
+            if (keys.next())
+                return keys.getInt(1);
         } catch (SQLException e) {
             System.err.println("[MaterialDAO] insertUsage error: " + e.getMessage());
         }
@@ -207,7 +269,7 @@ public class MaterialDao {
                 "WHERE mu.project_id = ? GROUP BY mu.material_id, m.name, m.unit, mu.unit_cost " +
                 "ORDER BY total_cost DESC";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, projectId);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
