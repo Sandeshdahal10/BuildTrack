@@ -9,18 +9,18 @@
     // customizable colors (with defaults)
     String bgClass = request.getParameter("bgClass") != null ? request.getParameter("bgClass") : "bg-white";
     String iconWrapClass = request.getParameter("iconWrapClass");
-    if (iconWrapClass == null || iconWrapClass.isBlank()) {
+    if (iconWrapClass == null || iconWrapClass.trim().isEmpty()) {
         iconWrapClass = request.getParameter("iconBgClass");
     }
-    if (iconWrapClass == null || iconWrapClass.isBlank()) {
+    if (iconWrapClass == null || iconWrapClass.trim().isEmpty()) {
         iconWrapClass = "p-3 rounded-lg bg-slate-100";
     }
 
     String iconClass = request.getParameter("iconClass");
-    if (iconClass == null || iconClass.isBlank()) {
+    if (iconClass == null || iconClass.trim().isEmpty()) {
         iconClass = request.getParameter("iconColorClass");
     }
-    if (iconClass == null || iconClass.isBlank()) {
+    if (iconClass == null || iconClass.trim().isEmpty()) {
         iconClass = "w-5 h-5 text-slate-600";
     }
 %>

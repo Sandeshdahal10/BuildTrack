@@ -1,22 +1,27 @@
 package com.buildtrack.dao.admin;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.buildtrack.model.Payroll;
 import com.buildtrack.model.Payslip;
 import com.buildtrack.util.DBUtil;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-
 public class PayrollDao {
 
-    //  Insert / Update
+    // Insert / Update
 
     public int insert(Payroll p) {
         String sql = "INSERT INTO payroll (worker_id,month_year,total_days,half_days,daily_wage,generated_by) " +
                 "VALUES (?,?,?,?,?,?)";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, p.getWorkerId());
             ps.setString(2, p.getMonthYear());
             ps.setInt(3, p.getTotalDays());
@@ -25,7 +30,8 @@ public class PayrollDao {
             ps.setInt(6, p.getGeneratedBy());
             ps.executeUpdate();
             ResultSet keys = ps.getGeneratedKeys();
-            if (keys.next()) return keys.getInt(1);
+            if (keys.next())
+                return keys.getInt(1);
         } catch (SQLException e) {
             if (e.getErrorCode() == 1062) {
                 System.err.println("[PayrollDAO] Payroll already exists for worker/month.");
@@ -49,7 +55,8 @@ public class PayrollDao {
             ps.setInt(6, p.getGeneratedBy());
             ps.executeUpdate();
             ResultSet keys = ps.getGeneratedKeys();
-            if (keys.next()) return keys.getInt(1);
+            if (keys.next())
+                return keys.getInt(1);
         }
         return -1;
     }
@@ -57,7 +64,7 @@ public class PayrollDao {
     public boolean markAsPaid(int id) {
         String sql = "UPDATE payroll SET status='PAID', paid_at=NOW() WHERE id=? AND status='PENDING'";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -74,10 +81,11 @@ public class PayrollDao {
                 "FROM payroll pr JOIN users u ON pr.worker_id = u.id " +
                 "WHERE pr.month_year = ? ORDER BY u.full_name";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, monthYear);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) list.add(mapRow(rs));
+            while (rs.next())
+                list.add(mapRow(rs));
         } catch (SQLException e) {
             System.err.println("[PayrollDAO] findByMonth error: " + e.getMessage());
         }
@@ -88,10 +96,11 @@ public class PayrollDao {
         String sql = "SELECT pr.*, u.full_name AS worker_name, u.email AS worker_email " +
                 "FROM payroll pr JOIN users u ON pr.worker_id = u.id WHERE pr.id = ?";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) return mapRow(rs);
+            if (rs.next())
+                return mapRow(rs);
         } catch (SQLException e) {
             System.err.println("[PayrollDAO] findById error: " + e.getMessage());
         }
@@ -103,11 +112,12 @@ public class PayrollDao {
                 "FROM payroll pr JOIN users u ON pr.worker_id = u.id " +
                 "WHERE pr.worker_id = ? AND pr.month_year = ?";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, workerId);
             ps.setString(2, monthYear);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) return mapRow(rs);
+            if (rs.next())
+                return mapRow(rs);
         } catch (SQLException e) {
             System.err.println("[PayrollDAO] findByWorkerAndMonth error: " + e.getMessage());
         }
@@ -123,10 +133,11 @@ public class PayrollDao {
                 "JOIN users a ON pr.generated_by = a.id " +
                 "WHERE pr.id = ?";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) return mapPayslip(rs);
+            if (rs.next())
+                return mapPayslip(rs);
         } catch (SQLException e) {
             System.err.println("[PayrollDAO] findPayslipById error: " + e.getMessage());
         }
@@ -136,11 +147,12 @@ public class PayrollDao {
     public boolean exists(int workerId, String monthYear) {
         String sql = "SELECT COUNT(*) FROM payroll WHERE worker_id=? AND month_year=?";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, workerId);
             ps.setString(2, monthYear);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) return rs.getInt(1) > 0;
+            if (rs.next())
+                return rs.getInt(1) > 0;
         } catch (SQLException e) {
             System.err.println("[PayrollDAO] exists error: " + e.getMessage());
         }
@@ -156,18 +168,18 @@ public class PayrollDao {
             sql = "SELECT COALESCE(SUM(total_salary),0) FROM payroll WHERE month_year=?";
         }
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, monthYear);
-            if (status != null) ps.setString(2, status);
+            if (status != null)
+                ps.setString(2, status);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) return rs.getBigDecimal(1);
+            if (rs.next())
+                return rs.getBigDecimal(1);
         } catch (SQLException e) {
             System.err.println("[PayrollDAO] getTotalSalaryByMonth error: " + e.getMessage());
         }
         return java.math.BigDecimal.ZERO;
     }
-
-
 
     private Payroll mapRow(ResultSet rs) throws SQLException {
         Payroll p = new Payroll();
@@ -208,10 +220,17 @@ public class PayrollDao {
         // Format month display
         String my = rs.getString("month_year");
         if (my != null && my.length() == 7) {
-            String[] parts = my.split("-");
-            String[] months = {"January","February","March","April","May","June",
-                    "July","August","September","October","November","December"};
-            ps.setMonthYearDisplay(months[Integer.parseInt(parts[1])-1] + " " + parts[0]);
+            try {
+                String[] parts = my.split("-");
+                int monthIndex = Integer.parseInt(parts[1]);
+                String[] months = { "January", "February", "March", "April", "May", "June",
+                        "July", "August", "September", "October", "November", "December" };
+                if (monthIndex >= 1 && monthIndex <= 12) {
+                    ps.setMonthYearDisplay(months[monthIndex - 1] + " " + parts[0]);
+                }
+            } catch (RuntimeException ignored) {
+                // Keep default/empty display value when source data is malformed.
+            }
         }
         return ps;
     }
