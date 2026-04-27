@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
     <title>Title</title>
@@ -13,7 +14,9 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-<article class="project-card fade-up rounded-xl p-5 bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all duration-300">
+<article class="project-card fade-up rounded-xl p-5 bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all duration-300"
+         data-title="${fn:toLowerCase(param.title)}"
+         data-status="${fn:toLowerCase(param.status)}">
 
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
 
@@ -70,12 +73,12 @@
 
         <div class="flex gap-2">
             <a href="${param.viewLink}"
-               class="rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50">
+               class="text-center rounded-lg text-gray-600 px-4 py-2 text-sm font-medium  hover:bg-gray-50 transition">
                 View
             </a>
 
             <a href="${param.editLink}"
-               class="rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-600">
+               class="text-center rounded-lg bg-orange-500 px-4 py-2 text-sm font-medium text-white hover:bg-orange-600 transition">
                 Edit
             </a>
         </div>

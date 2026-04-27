@@ -47,57 +47,41 @@
             </section>
 
             <section class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-                <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md">
-                    <div class="flex items-start justify-between gap-4">
-                        <div>
-                            <p class="text-sm font-semibold uppercase tracking-wide text-slate-500">Active Projects</p>
-                            <p class="mt-2 text-4xl font-bold leading-none text-slate-900">12</p>
-                            <p class="mt-3 text-sm text-slate-500">+2 this month</p>
-                        </div>
-                        <span class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-amber-200 bg-amber-50 text-amber-600">
-                            <i data-lucide="briefcase-business" class="h-5 w-5"></i>
-                        </span>
-                    </div>
-                </article>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Active Projects" />
+                    <jsp:param name="value" value="10" />
+                    <jsp:param name="subtitle" value="+3 this month" />
+                    <jsp:param name="icon" value="briefcase-business" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-amber-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-amber-600" />
+                </jsp:include>
 
-                <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md">
-                    <div class="flex items-start justify-between gap-4">
-                        <div>
-                            <p class="text-sm font-semibold uppercase tracking-wide text-slate-500">Total Workers</p>
-                            <p class="mt-2 text-4xl font-bold leading-none text-slate-900">48</p>
-                            <p class="mt-3 text-sm text-slate-500">6 supervisors</p>
-                        </div>
-                        <span class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-cyan-200 bg-cyan-50 text-cyan-600">
-                            <i data-lucide="users" class="h-5 w-5"></i>
-                        </span>
-                    </div>
-                </article>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Total Workers" />
+                    <jsp:param name="value" value="52" />
+                    <jsp:param name="subtitle" value="8 supervisors" />
+                    <jsp:param name="icon" value="users" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-cyan-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-cyan-600" />
+                </jsp:include>
 
-                <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md">
-                    <div class="flex items-start justify-between gap-4">
-                        <div>
-                            <p class="text-sm font-semibold uppercase tracking-wide text-slate-500">Budget Utilization</p>
-                            <p class="mt-2 text-4xl font-bold leading-none text-slate-900">67%</p>
-                            <p class="mt-3 text-sm text-slate-500">Rs.13.9M of Rs.25M</p>
-                        </div>
-                        <span class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-amber-200 bg-amber-50 text-amber-600">
-                            <i data-lucide="badge-indian-rupee" class="h-5 w-5"></i>
-                        </span>
-                    </div>
-                </article>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Budget Utilization" />
+                    <jsp:param name="value" value="72%" />
+                    <jsp:param name="subtitle" value="Rs.18.0M of Rs.25M" />
+                    <jsp:param name="icon" value="badge-indian-rupee" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-blue-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-blue-600" />
+                </jsp:include>
 
-                <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md">
-                    <div class="flex items-start justify-between gap-4">
-                        <div>
-                            <p class="text-sm font-semibold uppercase tracking-wide text-slate-500">Pending Tasks</p>
-                            <p class="mt-2 text-4xl font-bold leading-none text-slate-900">23</p>
-                            <p class="mt-3 text-sm text-slate-500">8 high priority</p>
-                        </div>
-                        <span class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-rose-200 bg-rose-50 text-rose-600">
-                            <i data-lucide="clipboard-check" class="h-5 w-5"></i>
-                        </span>
-                    </div>
-                </article>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Pending Tasks" />
+                    <jsp:param name="value" value="17" />
+                    <jsp:param name="subtitle" value="5 high priority" />
+                    <jsp:param name="icon" value="clipboard-check" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-rose-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-rose-600" />
+                </jsp:include>
             </section>
 
             <section class="mt-6 grid grid-cols-1 gap-4 xl:grid-cols-2">

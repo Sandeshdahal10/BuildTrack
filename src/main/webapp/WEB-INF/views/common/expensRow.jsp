@@ -10,10 +10,10 @@
     <td class="p-4 text-right font-bold text-slate-800 text-sm">${param.amount}</td>
     <td class="p-4 text-center">
         <div class="flex items-center justify-center gap-2">
-            <a href="${param.editLink}" class="p-1.5  rounded bg-orange-500 hover:bg-orange-600 text-white  transition">
+            <a href="${param.editLink}" class="text-center rounded-lg bg-orange-500 px-4 py-2 text-sm font-medium text-white hover:bg-orange-600 transition">
                 Edit
             </a>
-            <button class="p-1.5 rounded bg-red-500 hover:bg-red-600 text-white  transition">
+            <button class="text-center rounded-lg bg-red-500 px-4 py-2 text-sm font-medium text-white hover:bg-red-600 transition">
 Delete
             </button>
         </div>

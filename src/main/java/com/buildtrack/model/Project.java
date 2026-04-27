@@ -1,6 +1,7 @@
 package com.buildtrack.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Date;
 import java.sql.Timestamp;
 
@@ -16,14 +17,16 @@ public class Project {
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    //For displaying only in UI
+    // For displaying only in UI
     private String ClientName;
     private int assignedWorkerCount;
-    private BigDecimal actualCost; //sum of material use * total cost
+    private BigDecimal actualCost; // sum of material use * total cost
 
-    public Project() {}
+    public Project() {
+    }
 
-    public Project(String title, String description, Integer clientId, Date startDate, Date endDate, BigDecimal totalBudget, String status){
+    public Project(String title, String description, Integer clientId, Date startDate, Date endDate,
+            BigDecimal totalBudget, String status) {
         this.title = title;
         this.description = description;
         this.clientId = clientId;
@@ -33,7 +36,7 @@ public class Project {
         this.status = status;
     }
 
-    //Getter and Setters Method
+    // Getter and Setters Method
 
     public int getId() {
         return id;
@@ -62,8 +65,9 @@ public class Project {
     public String getDescription() {
         return description;
     }
-    public void setDescription(String description){
-        this.description = this.description;
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getClientId() {
@@ -81,9 +85,11 @@ public class Project {
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
+
     public Date getEndDate() {
         return endDate;
     }
+
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
@@ -95,9 +101,11 @@ public class Project {
     public void setTotalBudget(BigDecimal totalBudget) {
         this.totalBudget = totalBudget;
     }
+
     public Timestamp getCreatedAt() {
         return createdAt;
     }
+
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
@@ -105,11 +113,12 @@ public class Project {
     public Timestamp getUpdatedAt() {
         return updatedAt;
     }
+
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
 
-    //UI displaying getter setter
+    // UI displaying getter setter
 
     public String getClientName() {
         return ClientName;
@@ -136,35 +145,43 @@ public class Project {
     }
 
     public String getStatusDisplayName() {
-        if (status == null) return "Unknown";
-        switch (status) {
-            case "PLANNED":     return "Planned";
-            case "IN_PROGRESS": return "In Progress";
-            case "COMPLETED":   return "Completed";
-            case "ON_HOLD":     return "On Hold";
-            default:            return status;
-        }
+        if (status == null)
+            return "Unknown";
+        return switch (status) {
+            case "PLANNED" -> "Planned";
+            case "IN_PROGRESS" -> "In Progress";
+            case "COMPLETED" -> "Completed";
+            case "ON_HOLD" -> "On Hold";
+            default -> status;
+        };
     }
 
     public String getStatusBadgeClass() {
-        if (status == null) return "bg-stone-100 text-stone-700";
-        switch (status) {
-            case "PLANNED":     return "bg-blue-100 text-blue-700";
-            case "IN_PROGRESS": return "bg-amber-100 text-amber-700";
-            case "COMPLETED":   return "bg-green-100 text-green-700";
-            case "ON_HOLD":     return "bg-red-100 text-red-700";
-            default:            return "bg-stone-100 text-stone-700";
-        }
+        if (status == null)
+            return "bg-stone-100 text-stone-700";
+        return switch (status) {
+            case "PLANNED" -> "bg-blue-100 text-blue-700";
+            case "IN_PROGRESS" -> "bg-amber-100 text-amber-700";
+            case "COMPLETED" -> "bg-green-100 text-green-700";
+            case "ON_HOLD" -> "bg-red-100 text-red-700";
+            default -> "bg-stone-100 text-stone-700";
+        };
     }
+
     public BigDecimal getRemainingBudget() {
-        if (totalBudget == null) return BigDecimal.ZERO;
-        if (actualCost == null) return totalBudget;
+        if (totalBudget == null)
+            return BigDecimal.ZERO;
+        if (actualCost == null)
+            return totalBudget;
         return totalBudget.subtract(actualCost);
     }
+
     public double getBudgetUsagePercent() {
-        if (totalBudget == null || totalBudget.compareTo(BigDecimal.ZERO) == 0) return 0;
-        if (actualCost == null) return 0;
+        if (totalBudget == null || totalBudget.compareTo(BigDecimal.ZERO) == 0)
+            return 0;
+        if (actualCost == null)
+            return 0;
         return actualCost.multiply(BigDecimal.valueOf(100))
-                .divide(totalBudget, 1, BigDecimal.ROUND_HALF_UP).doubleValue();
+                .divide(totalBudget, 1, RoundingMode.HALF_UP).doubleValue();
     }
 }

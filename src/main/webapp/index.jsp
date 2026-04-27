@@ -7,7 +7,6 @@
     <title>BuildTrack - Construction Management</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-50 text-slate-900 font-sans antialiased overflow-x-hidden">
     <!-- Navbar -->
@@ -15,20 +14,24 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
                 <div class="flex-shrink-0 flex items-center">
-                    <div class="bg-[#ea580c] rounded-xl p-2 mr-3 flex items-center justify-center shadow-md">
-                        <i class="fa-solid fa-compass-drafting text-white text-xl"></i>
+                    <div class="bg-[#ea580c] rounded-xl p-2 mr-3 h-10 w-10 flex items-center justify-center shadow-md">
+                        <span class="text-white text-xs font-bold tracking-wide">BT</span>
                     </div>
                     <span class="font-extrabold text-2xl text-[#ea580c] tracking-tight">BuildTrack</span>
                 </div>
-                <div>
-                   <a href="${pageContext.request.contextPath}/login" class="text-slate-600 hover:text-[#ea580c] font-semibold px-4 py-2 transition-colors">Log in <span aria-hidden="true">&rarr;</span></a>
+                <div class="hidden md:flex items-center gap-2">
+                   <a href="#home" class="text-slate-600 hover:text-[#ea580c] font-semibold px-3 py-2 transition-colors">Home</a>
+                   <a href="#features" class="text-slate-600 hover:text-[#ea580c] font-semibold px-3 py-2 transition-colors">Features</a>
+                   <a href="#services" class="text-slate-600 hover:text-[#ea580c] font-semibold px-3 py-2 transition-colors">Our Services</a>
+                   <a href="#how-it-works" class="text-slate-600 hover:text-[#ea580c] font-semibold px-3 py-2 transition-colors">How it Works</a>
+                   <a href="${pageContext.request.contextPath}/login" class="inline-flex items-center justify-center bg-[#ea580c] text-white font-semibold text-base px-6 py-2.5 rounded-lg shadow-md hover:bg-[#c2410c] hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5">Log in</a>
                 </div>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <div class="relative bg-white pt-20 pb-16 min-h-screen flex flex-col lg:flex-row items-center lg:pt-0 lg:pb-0">
+    <div id="home" class="relative bg-white pt-20 pb-16 min-h-screen flex flex-col lg:flex-row items-center lg:pt-0 lg:pb-0">
         <div class="max-w-7xl mx-auto w-full flex-grow flex flex-col justify-center">
             <div class="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32 px-4 sm:px-6 lg:px-8 xl:pr-12 pt-10">
                 <!-- Background decor for large screens -->
@@ -49,7 +52,7 @@
                         <div class="mt-8 sm:mt-10 flex flex-col sm:flex-row sm:justify-center lg:justify-start gap-4">
                             <div class="rounded-md shadow-lg">
                                 <a href="${pageContext.request.contextPath}/register" class="w-full flex items-center justify-center px-8 py-4 border border-transparent text-base font-semibold rounded-lg text-white bg-[#ea580c] hover:bg-[#c2410c] md:text-lg transition-all duration-200 transform hover:-translate-y-0.5">
-                                    <i class="fa-solid fa-user-plus mr-2"></i> Register Account
+                                    Register Account
                                 </a>
                             </div>
                         </div>
@@ -81,7 +84,7 @@
     </div>
 
     <!-- Features Section -->
-    <section class="py-20 bg-white">
+    <section id="features" class="py-20 bg-white scroll-mt-24">
          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
              <div class="text-center mb-12">
                  <span class="px-4 py-1.5 rounded-full text-xs font-bold text-orange-800 bg-orange-100 mb-6 inline-block tracking-widest uppercase shadow-sm">
@@ -99,7 +102,7 @@
                  <!-- Feature 1 -->
                  <div class="p-8 rounded-xl border border-slate-100 hover:border-orange-300 hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-white to-slate-50">
                      <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
-                         <i class="fa-solid fa-chart-gantt text-[#ea580c] text-xl"></i>
+                         <span class="text-[#ea580c] text-xs font-bold tracking-wide">PM</span>
                      </div>
                      <h3 class="text-xl font-semibold text-slate-900 mb-2">Project Management</h3>
                      <p class="text-slate-600">Plan, track, and manage multiple construction projects from a single intuitive dashboard.</p>
@@ -108,7 +111,7 @@
                  <!-- Feature 2 -->
                  <div class="p-8 rounded-xl border border-slate-100 hover:border-orange-300 hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-white to-slate-50">
                      <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
-                         <i class="fa-solid fa-people-group text-[#ea580c] text-xl"></i>
+                         <span class="text-[#ea580c] text-xs font-bold tracking-wide">WM</span>
                      </div>
                      <h3 class="text-xl font-semibold text-slate-900 mb-2">Workforce Management</h3>
                      <p class="text-slate-600">Efficiently manage workers, track attendance, assign tasks, and monitor productivity.</p>
@@ -117,7 +120,7 @@
                  <!-- Feature 3 -->
                  <div class="p-8 rounded-xl border border-slate-100 hover:border-orange-300 hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-white to-slate-50">
                      <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
-                         <i class="fa-solid fa-box text-[#ea580c] text-xl"></i>
+                         <span class="text-[#ea580c] text-xs font-bold tracking-wide">MT</span>
                      </div>
                      <h3 class="text-xl font-semibold text-slate-900 mb-2">Material Tracking</h3>
                      <p class="text-slate-600">Keep detailed records of materials, inventory management, and supplier information.</p>
@@ -126,7 +129,7 @@
                  <!-- Feature 4 -->
                  <div class="p-8 rounded-xl border border-slate-100 hover:border-orange-300 hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-white to-slate-50">
                      <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
-                         <i class="fa-solid fa-receipt text-[#ea580c] text-xl"></i>
+                         <span class="text-[#ea580c] text-xs font-bold tracking-wide">BE</span>
                      </div>
                      <h3 class="text-xl font-semibold text-slate-900 mb-2">Budget & Expense Tracking</h3>
                      <p class="text-slate-600">Monitor project budgets, track expenses, and maintain financial control across all projects.</p>
@@ -135,7 +138,7 @@
                  <!-- Feature 5 -->
                  <div class="p-8 rounded-xl border border-slate-100 hover:border-orange-300 hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-white to-slate-50">
                      <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
-                         <i class="fa-solid fa-handshake text-[#ea580c] text-xl"></i>
+                         <span class="text-[#ea580c] text-xs font-bold tracking-wide">CC</span>
                      </div>
                      <h3 class="text-xl font-semibold text-slate-900 mb-2">Client Collaboration</h3>
                      <p class="text-slate-600">Seamless communication and project updates with clients in real-time.</p>
@@ -144,7 +147,7 @@
                  <!-- Feature 6 -->
                  <div class="p-8 rounded-xl border border-slate-100 hover:border-orange-300 hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-white to-slate-50">
                      <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
-                         <i class="fa-solid fa-chart-line text-[#ea580c] text-xl"></i>
+                         <span class="text-[#ea580c] text-xs font-bold tracking-wide">AR</span>
                      </div>
                      <h3 class="text-xl font-semibold text-slate-900 mb-2">Advanced Reports</h3>
                      <p class="text-slate-600">Generate comprehensive analytics and reports to make data-driven decisions.</p>
@@ -154,7 +157,7 @@
      </section>
 
      <!-- Our Services Section -->
-     <section class="py-20 bg-gradient-to-br from-orange-50 to-white">
+     <section id="services" class="py-20 bg-gradient-to-br from-orange-50 to-white scroll-mt-24">
          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
              <div class="text-center mb-12">
                  <span class="px-4 py-1.5 rounded-full text-xs font-bold text-orange-800 bg-orange-100 mb-6 inline-block tracking-widest uppercase shadow-sm">
@@ -173,7 +176,12 @@
                  <div class="flex gap-4">
                      <div class="flex-shrink-0">
                          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white">
-                             <i class="fa-solid fa-calendar-check"></i>
+                             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                 <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+                                 <line x1="16" y1="2" x2="16" y2="6"></line>
+                                 <line x1="8" y1="2" x2="8" y2="6"></line>
+                                 <line x1="3" y1="10" x2="21" y2="10"></line>
+                             </svg>
                          </div>
                      </div>
                      <div class="pt-1">
@@ -186,7 +194,12 @@
                  <div class="flex gap-4">
                      <div class="flex-shrink-0">
                          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white">
-                             <i class="fa-solid fa-hard-hat"></i>
+                             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                 <circle cx="9" cy="8" r="3"></circle>
+                                 <path d="M3 19c0-3.3 2.7-6 6-6"></path>
+                                 <path d="M14 10l2-2 5 5-2 2-5-5z"></path>
+                                 <path d="M13 11l-2 2"></path>
+                             </svg>
                          </div>
                      </div>
                      <div class="pt-1">
@@ -199,7 +212,11 @@
                  <div class="flex gap-4">
                      <div class="flex-shrink-0">
                          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white">
-                             <i class="fa-solid fa-warehouse"></i>
+                             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                 <path d="M3 7l9-4 9 4-9 4-9-4z"></path>
+                                 <path d="M3 12l9 4 9-4"></path>
+                                 <path d="M3 17l9 4 9-4"></path>
+                             </svg>
                          </div>
                      </div>
                      <div class="pt-1">
@@ -212,7 +229,11 @@
                  <div class="flex gap-4">
                      <div class="flex-shrink-0">
                          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white">
-                             <i class="fa-solid fa-coins"></i>
+                             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                 <circle cx="12" cy="12" r="8"></circle>
+                                 <line x1="12" y1="8" x2="12" y2="16"></line>
+                                 <line x1="8" y1="12" x2="16" y2="12"></line>
+                             </svg>
                          </div>
                      </div>
                      <div class="pt-1">
@@ -225,7 +246,12 @@
                  <div class="flex gap-4">
                      <div class="flex-shrink-0">
                          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white">
-                             <i class="fa-solid fa-file-contract"></i>
+                             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                 <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                                 <line x1="7" y1="8" x2="17" y2="8"></line>
+                                 <line x1="7" y1="12" x2="12" y2="12"></line>
+                                 <circle cx="17" cy="15" r="2"></circle>
+                             </svg>
                          </div>
                      </div>
                      <div class="pt-1">
@@ -238,7 +264,10 @@
                  <div class="flex gap-4">
                      <div class="flex-shrink-0">
                          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white">
-                             <i class="fa-solid fa-headset"></i>
+                             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                 <path d="M4 12a8 8 0 0 1 8-8h4v6h4v2a8 8 0 0 1-8 8h-1"></path>
+                                 <path d="M4 20l5-4"></path>
+                             </svg>
                          </div>
                      </div>
                      <div class="pt-1">
@@ -251,7 +280,7 @@
      </section>
 
      <!-- How It Works Section -->
-     <section class="py-20 bg-white">
+     <section id="how-it-works" class="py-20 bg-white scroll-mt-24">
          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
              <div class="text-center mb-16">
                  <span class="px-4 py-1.5 rounded-full text-xs font-bold text-orange-800 bg-orange-100 mb-6 inline-block tracking-widest uppercase shadow-sm">
@@ -313,50 +342,29 @@
          </div>
      </section>
 
-     <!-- Schedule a Demo Section -->
-     <section class="py-20 bg-gradient-to-r from-[#ea580c] to-orange-600 text-white">
-         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-             <h2 class="text-4xl sm:text-5xl font-bold mb-4">
-                 Ready to Transform Your Construction Business?
-             </h2>
-             <p class="text-lg text-orange-100 mb-8 max-w-2xl mx-auto">
-                 Schedule a personalized demo with our experts to see how BuildTrack can revolutionize your project management workflow.
-             </p>
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-8">
+                <div class="max-w-xl">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-[#ea580c] rounded-xl p-2 mr-3 h-10 w-10 flex items-center justify-center shadow-md">
+                            <span class="text-white text-xs font-bold tracking-wide">BT</span>
+                        </div>
+                        <span class="font-extrabold text-2xl text-white tracking-tight">BuildTrack</span>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed">
+                        BuildTrack helps construction teams stay organized, track progress with confidence, and deliver quality projects on time.
+                    </p>
+                </div>
 
-             <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-                 <a href="${pageContext.request.contextPath}/schedule-demo.jsp" class="inline-flex items-center justify-center px-8 py-4 border border-white text-base font-semibold rounded-lg text-[#ea580c] bg-white hover:bg-orange-50 transition-all duration-200 transform hover:-translate-y-0.5 shadow-lg">
-                     <i class="fa-solid fa-calendar mr-2"></i> Schedule Demo
-                 </a>
-                 <a href="${pageContext.request.contextPath}/register" class="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-base font-semibold rounded-lg text-white hover:bg-white/10 transition-all duration-200 transform hover:-translate-y-0.5">
-                     <i class="fa-solid fa-user-plus mr-2"></i> Get Started Free
-                 </a>
-             </div>
+                <div class="flex flex-col gap-3 md:items-end">
+                    <a href="#" class="text-slate-200 hover:text-[#ea580c] font-semibold transition-colors">About Us</a>
+                    <a href="#" class="text-slate-200 hover:text-[#ea580c] font-semibold transition-colors">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-             <!-- Demo Details Grid -->
-             <div class="grid md:grid-cols-3 gap-8 mt-16 pt-12 border-t border-white/20">
-                 <div>
-                     <div class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-white/20 text-white mb-4">
-                         <i class="fa-solid fa-clock"></i>
-                     </div>
-                     <h3 class="font-semibold text-lg mb-1">30 Minutes</h3>
-                     <p class="text-orange-100 text-sm">Quick overview of key features</p>
-                 </div>
-                 <div>
-                     <div class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-white/20 text-white mb-4">
-                         <i class="fa-solid fa-user-tie"></i>
-                     </div>
-                     <h3 class="font-semibold text-lg mb-1">Expert Guide</h3>
-                     <p class="text-orange-100 text-sm">Dedicated product specialist</p>
-                 </div>
-                 <div>
-                     <div class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-white/20 text-white mb-4">
-                         <i class="fa-solid fa-check-circle"></i>
-                     </div>
-                     <h3 class="font-semibold text-lg mb-1">Free Trial</h3>
-                     <p class="text-orange-100 text-sm">No credit card required</p>
-                 </div>
-             </div>
-         </div>
-     </section>
 </body>
 </html>

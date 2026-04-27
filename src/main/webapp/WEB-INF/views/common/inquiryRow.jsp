@@ -39,7 +39,6 @@
            class="text-sm font-semibold text-blue-500 hover:text-blue-700 transition">
             Reply
         </a>
-
     </form>
 
 </div>

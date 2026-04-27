@@ -1,11 +1,61 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.Collections" %>
+<%@ page import="java.math.BigDecimal" %>
+<%@ page import="java.math.RoundingMode" %>
+<%@ page import="com.buildtrack.model.Material" %>
+<%@ page import="com.buildtrack.model.MaterialUsage" %>
+<%!
+    private String money(BigDecimal value) {
+        if (value == null) {
+            return "Rs 0.00";
+        }
+        return "Rs " + value.setScale(2, RoundingMode.HALF_UP).toPlainString();
+    }
+%>
+<%
+    List<Material> materials = (List<Material>) request.getAttribute("materials");
+    if (materials == null) {
+        materials = Collections.emptyList();
+    }
+
+    Map<String, Integer> materialStats = (Map<String, Integer>) request.getAttribute("materialStats");
+    if (materialStats == null) {
+        materialStats = Collections.emptyMap();
+    }
+
+    int totalItems = materialStats.getOrDefault("totalMaterials", materials.size());
+    int lowStockCount = request.getAttribute("lowStockCount") instanceof Integer
+            ? (Integer) request.getAttribute("lowStockCount")
+            : materialStats.getOrDefault("lowStockCount", 0);
+
+    BigDecimal totalStockValue = request.getAttribute("totalStockValue") instanceof BigDecimal
+            ? (BigDecimal) request.getAttribute("totalStockValue")
+            : BigDecimal.ZERO;
+    BigDecimal usedThisMonth = request.getAttribute("usedThisMonth") instanceof BigDecimal
+            ? (BigDecimal) request.getAttribute("usedThisMonth")
+            : BigDecimal.ZERO;
+
+    String monthLabel = request.getAttribute("monthLabel") instanceof String
+            ? ((String) request.getAttribute("monthLabel"))
+            : "THIS MONTH";
+
+    List<MaterialUsage> usageList = (List<MaterialUsage>) request.getAttribute("usageList");
+    List<MaterialUsage> recentUsage = (List<MaterialUsage>) request.getAttribute("recentUsage");
+    if (recentUsage == null) {
+        recentUsage = Collections.emptyList();
+    }
+    List<MaterialUsage> usageToRender = (usageList != null && !usageList.isEmpty()) ? usageList : recentUsage;
+
+    Object projectId = request.getAttribute("projectId");
+    String usageTitle = projectId != null ? "Usage Log (Project #" + projectId + ")" : "Recent Usage Logs";
+%>
 <html>
 <head>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <title>Material Management - BuildTrack</title>
-    <style>
-    </style>
 </head>
 <body class="h-screen overflow-hidden bg-slate-50 text-slate-900">
 
@@ -22,13 +72,13 @@
 
         <main class="flex-1 p-6">
 
-            <div class="flex items-center justify-between mb-6">
+            <div class="mb-6 flex items-center justify-between">
                 <div>
                     <h1 class="text-2xl font-bold text-slate-800">Material Management</h1>
-                    <p class="text-slate-500 mt-1">Manage inventory, stock, and usage logs.</p>
+                    <p class="mt-1 text-slate-500">Manage inventory, stock, and usage logs.</p>
                 </div>
                 <div class="flex gap-3">
-                    <a id="logUsageBtn" href="<%= request.getContextPath() %>/admin/materials?action=log-form" onclick="window.location.href='<%= request.getContextPath() %>/admin/materials?action=log-form'; return false;" class="flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+                    <a href="<%= request.getContextPath() %>/admin/materials?action=log-form" class="flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
                         <i data-lucide="clipboard-list" class="h-4 w-4"></i>
                         Log Usage
                     </a>
@@ -39,96 +89,131 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-                    <p class="text-xs font-semibold uppercase text-slate-400">Total Items</p>
-                    <p class="text-2xl font-bold text-slate-800 mt-1">24</p>
-                </div>
-                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-                    <p class="text-xs font-semibold uppercase text-slate-400">Low Stock Alerts</p>
-                    <p class="text-2xl font-bold text-slate-800 text- mt-1">3</p>
-                </div>
-                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-                    <p class="text-xs font-semibold uppercase text-slate-400">Total Stock Value</p>
-                    <p class="text-2xl font-bold text-slate-800 mt-1">Rs 12.5L</p>
-                </div>
-                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-                    <p class="text-xs font-semibold uppercase text-slate-400">Used This Month</p>
-                    <p class="text-2xl font-bold text-slate-800 mt-1">Rs 2.1L</p>
-                </div>
+            <div class="mb-6 grid grid-cols-1 gap-4 md:grid-cols-4">
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Total Items" />
+                    <jsp:param name="value" value="<%= String.valueOf(totalItems) %>" />
+                    <jsp:param name="icon" value="boxes" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-slate-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-slate-600" />
+                </jsp:include>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Low Stock Alerts" />
+                    <jsp:param name="value" value="<%= String.valueOf(lowStockCount) %>" />
+                    <jsp:param name="icon" value="triangle-alert" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-red-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-red-600" />
+                </jsp:include>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Total Stock Value" />
+                    <jsp:param name="value" value="<%= money(totalStockValue) %>" />
+                    <jsp:param name="icon" value="badge-indian-rupee" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-green-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-green-600" />
+                </jsp:include>
+                <jsp:include page="../common/statsCard.jsp">
+                    <jsp:param name="title" value="Used in <%= monthLabel %>" />
+                    <jsp:param name="value" value="<%= money(usedThisMonth) %>" />
+                    <jsp:param name="icon" value="trending-down" />
+                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-orange-100" />
+                    <jsp:param name="iconClass" value="w-5 h-5 text-orange-600" />
+                </jsp:include>
             </div>
 
-            <!-- Main Content Grid -->
-            <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 gap-6 xl:grid-cols-3">
 
-                <!-- Left Column: Material Catalogue (2/3 width) -->
-                <div class="xl:col-span-2 space-y-4">
-                    <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
-                        <div class="flex items-center justify-between mb-4">
+                <div class="space-y-4 xl:col-span-2">
+                    <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                        <div class="mb-4 flex items-center justify-between">
                             <h2 class="font-bold text-slate-800">Material Catalogue</h2>
-                            <input type="text" placeholder="Search materials..." class="rounded-lg border border-slate-300 px-3 py-1.5 text-sm outline-none focus:border-orange-300">
                         </div>
 
-                        <!-- Material List -->
                         <div class="space-y-3">
+                            <% if (materials.isEmpty()) { %>
+                            <div class="rounded-lg border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500">
+                                No materials found. Add your first material to start inventory tracking.
+                            </div>
+                            <% } %>
 
-                            <jsp:include page="../common/materialCard.jsp">
-                                <jsp:param name="name" value="Cement (PPC)" />
-                                <jsp:param name="unit" value="Bags (50kg)" />
-                                <jsp:param name="stock" value="150" />
-                                <jsp:param name="price" value="Rs 450" />
-                                <jsp:param name="totalValue" value="Rs 67,500" />
-                                <jsp:param name="status" value="In Stock" />
-                                <jsp:param name="icon" value="package" />
-                                <jsp:param name="editLink" value="${pageContext.request.contextPath}/admin/materials?action=new" />
-                            </jsp:include>
-                            <jsp:include page="../common/materialCard.jsp">
-                                <jsp:param name="name" value="Iron Rods (TMT)" />
-                                <jsp:param name="unit" value="Quintals" />
-                                <jsp:param name="stock" value="5" />
-                                <jsp:param name="price" value="Rs 7,200" />
-                                <jsp:param name="totalValue" value="Rs 36,000" />
-                                <jsp:param name="status" value="Low Stock" />
-                                <jsp:param name="icon" value="align-justify" />
-                                <jsp:param name="iconBg" value="bg-slate-200" />
-                                <jsp:param name="editLink" value="${pageContext.request.contextPath}/admin/materials?action=new" />
-                            </jsp:include>
+                            <% for (Material material : materials) {
+                                BigDecimal stock = material.getTotalStock() == null ? BigDecimal.ZERO : material.getTotalStock();
+                                BigDecimal unitPrice = material.getUnitPrice() == null ? BigDecimal.ZERO : material.getUnitPrice();
+                                BigDecimal itemTotal = stock.multiply(unitPrice);
+                                boolean outOfStock = material.isOutOfStock();
+                                boolean lowStock = !outOfStock && material.isLowStock();
+                                String stockBadgeClass = outOfStock
+                                        ? "bg-red-100 text-red-700"
+                                        : (lowStock ? "bg-amber-100 text-amber-700" : "bg-emerald-100 text-emerald-700");
+                                String stockLabel = outOfStock ? "Out of Stock" : (lowStock ? "Low Stock" : "In Stock");
+                            %>
+                            <div class="rounded-lg border border-slate-200 p-4 transition hover:shadow-sm">
+                                <div class="flex flex-col justify-between gap-4 md:flex-row md:items-center">
+                                    <div class="min-w-0">
+                                        <p class="text-base font-semibold text-slate-800"><%= material.getName() %></p>
+                                        <p class="text-xs text-slate-500">Unit: <%= material.getUnit() %></p>
+                                    </div>
 
+                                    <div class="grid grid-cols-3 gap-4 text-sm text-slate-700">
+                                        <div>
+                                            <p class="text-xs text-slate-400">In Stock</p>
+                                            <p class="font-bold"><%= stock.toPlainString() %></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-xs text-slate-400">Unit Price</p>
+                                            <p class="font-bold"><%= money(unitPrice) %></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-xs text-slate-400">Total Value</p>
+                                            <p class="font-bold text-orange-600"><%= money(itemTotal) %></p>
+                                        </div>
+                                    </div>
 
+                                    <div class="flex items-center gap-2">
+                                        <span class="rounded-full px-2.5 py-1 text-xs font-bold <%= stockBadgeClass %>"><%= stockLabel %></span>
+                                        <a href="<%= request.getContextPath() %>/admin/materials?action=edit&id=<%= material.getId() %>" class="rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50">Edit</a>
+                                        <form action="<%= request.getContextPath() %>/admin/materials?action=delete&id=<%= material.getId() %>" method="post" onsubmit="return confirm('Delete this material?');">
+                                            <button type="submit" class="rounded-lg bg-red-500 px-3 py-2 text-xs font-semibold text-white hover:bg-red-600">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <% } %>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right Column: Usage Log (1/3 width) -->
                 <div class="xl:col-span-1">
-                    <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm h-full">
-                        <h2 class="font-bold text-slate-800 mb-4">Recent Usage Logs</h2>
+                    <div class="h-full rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                        <h2 class="mb-4 font-bold text-slate-800"><%= usageTitle %></h2>
 
-                        <div class="space-y-4">
-                            <jsp:include page="../common/usageLogCard.jsp">
-                                <jsp:param name="materialName" value="Cement" />
-                                <jsp:param name="projectName" value="Skyline Tower" />
-                                <jsp:param name="quantity" value="-50 Bags" />
-                                <jsp:param name="admin" value="Rahul" />
-                                <jsp:param name="date" value="Today, 10:30 AM" />
-                                <jsp:param name="cost" value="Rs 22,500" />
-                                <jsp:param name="borderAccent" value="border-orange-400" />
-                            </jsp:include>
+                        <div class="space-y-3">
+                            <% if (usageToRender.isEmpty()) { %>
+                            <div class="rounded-lg border border-dashed border-slate-300 p-6 text-center text-sm text-slate-500">
+                                No usage records found.
+                            </div>
+                            <% } %>
 
-                            <jsp:include page="../common/usageLogCard.jsp">
-                                <jsp:param name="materialName" value="Iron Rods" />
-                                <jsp:param name="projectName" value="River Bridge" />
-                                <jsp:param name="quantity" value="-2 Quintal" />
-                                <jsp:param name="admin" value="Amit" />
-                                <jsp:param name="date" value="Yesterday" />
-                                <jsp:param name="cost" value="Rs 14,400" />
-                                <jsp:param name="borderAccent" value="border-blue-400" />
-                            </jsp:include>
+                            <% for (MaterialUsage usage : usageToRender) {
+                                String qty = usage.getQuantityUsed() == null ? "0" : usage.getQuantityUsed().toPlainString();
+                                String unit = usage.getMaterialUnit() == null ? "" : usage.getMaterialUnit();
+                            %>
+                            <div class="rounded-r-lg border-l-4 border-orange-500 bg-slate-50 p-3">
+                                <div class="flex items-start justify-between">
+                                    <div>
+                                        <p class="text-sm font-semibold text-slate-800"><%= usage.getMaterialName() %></p>
+                                        <p class="text-xs text-slate-500"><%= usage.getProjectName() %></p>
+                                    </div>
+                                    <span class="text-xs font-bold text-orange-600">-<%= qty %> <%= unit %></span>
+                                </div>
+                                <div class="mt-2 flex items-center gap-2 text-xs text-slate-500">
+                                    <span>Admin: <%= usage.getRecordedByName() %></span>
+                                    <span>•</span>
+                                    <span><%= usage.getUsageDate() %></span>
+                                </div>
+                                <p class="mt-1 text-xs font-medium text-slate-600">Cost: <%= money(usage.getTotalCost()) %></p>
+                            </div>
+                            <% } %>
                         </div>
-
-                        <button class="w-full mt-4 text-center text-sm font-semibold text-orange-600 hover:text-orange-700">
-                            View All History →
-                        </button>
                     </div>
                 </div>
 
@@ -138,16 +223,6 @@
 </div>
 
 <script>
-    function toggleModal(id) {
-        const modal = document.getElementById(id);
-        if (modal.classList.contains('hidden')) {
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-        } else {
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        }
-    }
     lucide.createIcons();
 </script>
 
