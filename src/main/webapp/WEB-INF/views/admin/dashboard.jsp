@@ -16,6 +16,7 @@
             background: conic-gradient(
                 #facc15 0deg 108deg,
                 #f59e0b 108deg 288deg,
+
                 #14b8a6 288deg 331deg,
                 #ef4444 331deg 360deg
             );
