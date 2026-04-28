@@ -1,73 +1,83 @@
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>Worker Sidebar</title>
+</head>
+<body class="h-screen overflow-hidden bg-slate-50 text-slate-900">
+
 <%
     String uri = request.getRequestURI().substring(request.getContextPath().length());
     String basePath = request.getContextPath();
 %>
 
-<aside class="w-64 min-h-screen flex flex-col border-r border-slate-300 bg-gradient-to-b from-slate-800 to-slate-900 text-white shadow-xl">
+<aside class="w-56 h-screen overflow-y-auto bg-[#0b1f4d] text-white flex flex-col border-r border-blue-900/60">
 
     <!-- Header -->
-    <div class="flex items-center gap-3 px-4 py-4 border-b border-slate-700 bg-slate-900/60">
-        <div class="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-amber-400 to-orange-500 shadow-md">
-            <svg viewBox="0 0 24 24" class="h-4 w-4 stroke-slate-900" fill="none" stroke-width="2">
-                <rect x="4" y="4" width="6" height="6" rx="1"></rect>
-                <rect x="14" y="4" width="6" height="6" rx="1"></rect>
-                <rect x="4" y="14" width="6" height="6" rx="1"></rect>
-                <rect x="14" y="14" width="6" height="6" rx="1"></rect>
-            </svg>
+    <div class="p-4 flex items-center gap-3 border-b border-blue-900/60">
+        <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
+            <i data-lucide="building-2" class="w-4 h-4 text-slate-950"></i>
         </div>
-        <span class="text-lg font-semibold">BuildTrack</span>
+        <span class="font-bold text-lg">BuildTrack</span>
     </div>
 
     <!-- Navigation -->
-    <nav class="flex-1 px-3 py-4 space-y-2 overflow-y-auto">
+    <nav class="flex-1 p-3 space-y-1">
 
         <%-- Reusable class pattern --%>
         <%
-            String activeClass = "bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-md";
-            String inactiveClass = "text-slate-300 hover:bg-slate-700/50 hover:text-white";
+            String activeNavClass = "flex items-center gap-3 px-3 py-2 rounded-lg bg-orange-500 hover:bg-red-500/10 text-white font-medium";
+            String inactiveNavClass = "flex items-center gap-3 px-3 py-2 rounded-lg text-slate-300 hover:bg-white/10 hover:text-white";
         %>
 
-        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium <%= uri.contains("/worker/dashboard") ? activeClass : inactiveClass %>"
-           href="<%= basePath %>/worker/dashboard">
+        <a href="<%= basePath %>/worker/dashboard" class="<%= uri.startsWith("/worker/dashboard") ? activeNavClass : inactiveNavClass %>">
+            <i data-lucide="home" class="w-4 h-4"></i>
             <span>Dashboard</span>
         </a>
 
-        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium <%= uri.contains("/worker/attendance") ? activeClass : inactiveClass %>"
-           href="<%= basePath %>/worker/attendance">
+        <a href="<%= basePath %>/worker/attendance" class="<%= uri.startsWith("/worker/attendance") ? activeNavClass : inactiveNavClass %>">
+            <i data-lucide="check-square" class="w-4 h-4"></i>
             <span>Attendance</span>
         </a>
 
-        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium <%= uri.contains("/worker/worklog") ? activeClass : inactiveClass %>"
-           href="<%= basePath %>/worker/worklog">
+        <a href="<%= basePath %>/worker/worklog" class="<%= uri.startsWith("/worker/worklog") ? activeNavClass : inactiveNavClass %>">
+            <i data-lucide="clipboard-list" class="w-4 h-4"></i>
             <span>Work Log</span>
         </a>
 
-        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium <%= uri.contains("/worker/payslip") ? activeClass : inactiveClass %>"
-           href="<%= basePath %>/worker/payslip">
+        <a href="<%= basePath %>/worker/payslip" class="<%= uri.startsWith("/worker/payslip") ? activeNavClass : inactiveNavClass %>">
+            <i data-lucide="wallet" class="w-4 h-4"></i>
             <span>Payslips</span>
         </a>
 
-        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium <%= uri.contains("/worker/profile") ? activeClass : inactiveClass %>"
-           href="<%= basePath %>/worker/profile">
+        <a href="<%= basePath %>/worker/profile" class="<%= uri.startsWith("/worker/profile") ? activeNavClass : inactiveNavClass %>">
+            <i data-lucide="user" class="w-4 h-4"></i>
             <span>Profile</span>
         </a>
 
     </nav>
 
     <!-- Bottom Section -->
-    <div class="px-3 py-4 border-t border-slate-700 bg-slate-900/40 space-y-2">
-
-        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-700/50 hover:text-white"
-           href="<%= basePath %>/worker/upgrade">
+    <div class="p-3 border-t border-blue-900/60">
+        <a href="<%= basePath %>/worker/upgrade" class="flex items-center gap-3 px-3 py-2 rounded-lg text-amber-400 hover:bg-amber-500/10 hover:text-amber-300">
+            <i data-lucide="zap" class="w-4 h-4"></i>
             <span>Upgrade Plan</span>
         </a>
-
-        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-red-500/20 hover:text-red-400"
-           href="<%= basePath %>/logout">
+        <a href="<%= basePath %>/logout" class="flex items-center gap-3 px-3 py-2 rounded-lg text-rose-400 hover:bg-rose-500/10 hover:text-rose-300">
+            <i data-lucide="log-out" class="w-4 h-4"></i>
             <span>Logout</span>
         </a>
-
     </div>
 
+
 </aside>
+
+<script>
+    lucide.createIcons();
+</script>
+
+</body>
+</html>
