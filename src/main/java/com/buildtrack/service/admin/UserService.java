@@ -36,6 +36,7 @@ public class UserService {
     public boolean approveUser(int id) { return userDAO.updateStatus(id, "APPROVED"); }
     public boolean deactivateUser(int id) { return userDAO.updateStatus(id, "DEACTIVATED"); }
     public boolean activateUser(int id) { return userDAO.updateStatus(id, "APPROVED"); }
+    public boolean updateStatus(int id, String status) { return userDAO.updateStatus(id, status); }
 
     //Wage Management
 

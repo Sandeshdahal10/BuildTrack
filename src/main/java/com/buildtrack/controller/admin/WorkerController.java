@@ -87,6 +87,18 @@ public class WorkerController extends HttpServlet {
                     resp.sendRedirect(req.getContextPath() + "/admin/workers/form?mode=edit&id=" + id);
                     return;
                 }
+                
+                String status = req.getParameter("status");
+                if (status != null && !status.trim().isEmpty()) {
+                    if ("Active".equalsIgnoreCase(status)) {
+                        userService.updateStatus(id, "APPROVED");
+                    } else if ("Deactivated".equalsIgnoreCase(status)) {
+                        userService.updateStatus(id, "DEACTIVATED");
+                    } else if ("Pending".equalsIgnoreCase(status)) {
+                        userService.updateStatus(id, "PENDING");
+                    }
+                }
+                
                 req.getSession().setAttribute("success", "Worker profile updated successfully.");
                 resp.sendRedirect(req.getContextPath() + "/admin/workers");
                 return;

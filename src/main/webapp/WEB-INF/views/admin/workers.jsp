@@ -53,13 +53,7 @@
                     <jsp:param name="iconClass" value="w-5 h-5 text-green-600" />
                 </jsp:include>
 
-                <jsp:include page="../common/statsCard.jsp">
-                    <jsp:param name="title" value="On Leave" />
-                    <jsp:param name="value" value="0" />
-                    <jsp:param name="icon" value="pause-circle" />
-                    <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-amber-100" />
-                    <jsp:param name="iconClass" value="w-5 h-5 text-amber-600" />
-                </jsp:include>
+
 
                 <jsp:include page="../common/statsCard.jsp">
                     <jsp:param name="title" value="Deactivated" />
@@ -80,7 +74,7 @@
                     <div style="display:flex;flex-wrap:wrap;gap:6px;">
                         <button data-filter="all"         class="wflt" style="background:darkorange;color:white;border:1px solid darkorange;border-radius:9999px;padding:5px 14px;font-size:12px;font-weight:700;cursor:pointer;">All</button>
                         <button data-filter="active"      class="wflt" style="background:white;color:slategray;border:1px solid lavender;border-radius:9999px;padding:5px 14px;font-size:12px;font-weight:700;cursor:pointer;">Active</button>
-                        <button data-filter="on leave"    class="wflt" style="background:white;color:slategray;border:1px solid lavender;border-radius:9999px;padding:5px 14px;font-size:12px;font-weight:700;cursor:pointer;">On Leave</button>
+                        <button data-filter="approved"    class="wflt" style="background:white;color:slategray;border:1px solid lavender;border-radius:9999px;padding:5px 14px;font-size:12px;font-weight:700;cursor:pointer;">Approved</button>
                         <button data-filter="deactivated" class="wflt" style="background:white;color:slategray;border:1px solid lavender;border-radius:9999px;padding:5px 14px;font-size:12px;font-weight:700;cursor:pointer;">Deactivated</button>
                     </div>
                 </div>
@@ -163,8 +157,12 @@
         var term = document.getElementById('workerSearch').value.toLowerCase().trim();
         var visible = 0;
         rows.forEach(function(r) {
-            var show = (activeF === 'all' || r.dataset.status === activeF)
-                    && (term === '' || r.dataset.name.includes(term) || r.dataset.role.includes(term) || r.dataset.project.includes(term));
+            var rStatus = r.dataset.status ? r.dataset.status.toLowerCase() : '';
+            var rName = r.dataset.name ? r.dataset.name.toLowerCase() : '';
+            var rRole = r.dataset.role ? r.dataset.role.toLowerCase() : '';
+            var rProject = r.dataset.project ? r.dataset.project.toLowerCase() : '';
+            var show = (activeF === 'all' || rStatus === activeF || (activeF === 'active' && rStatus === 'approved'))
+                    && (term === '' || rName.includes(term) || rRole.includes(term) || rProject.includes(term));
             r.style.display = show ? '' : 'none';
             if (show) visible++;
         });

@@ -67,9 +67,7 @@
         <span class="text-xs font-semibold px-3 py-1 rounded-full
             ${fn:toLowerCase(param.status) == 'approved' || fn:toLowerCase(param.status) == 'active'
                 ? 'bg-green-100 text-green-700'
-                : (fn:toLowerCase(param.status) == 'on leave'
-                    ? 'bg-amber-100 text-amber-700'
-                    : 'bg-red-100 text-red-600')}" title="Status: ${param.status}">
+                : 'bg-red-100 text-red-600'}" title="Status: ${param.status}">
             ${param.status}
         </span>
 
@@ -90,6 +88,12 @@
                     <a href="${pageContext.request.contextPath}/admin/workers?action=activate&id=${param.id}"
                        class="text-xs px-3 py-1.5 bg-green-50 text-green-600 border border-green-200 rounded hover:bg-green-100">
                         Activate
+                    </a>
+                </c:when>
+                <c:when test="${fn:toLowerCase(param.status) == 'pending'}">
+                    <a href="${pageContext.request.contextPath}/admin/workers?action=activate&id=${param.id}"
+                       class="text-xs px-3 py-1.5 bg-blue-50 text-blue-600 border border-blue-200 rounded hover:bg-blue-100">
+                        Approve
                     </a>
                 </c:when>
                 <c:otherwise>

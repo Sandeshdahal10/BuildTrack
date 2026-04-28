@@ -54,6 +54,15 @@
     if (projectValue == null || projectValue.isBlank()) {
         projectValue = "Unassigned";
     }
+
+    String statusValue = request.getParameter("status");
+    if ((statusValue == null || statusValue.isBlank()) && worker != null && worker.getStatus() != null) {
+        statusValue = worker.getStatus();
+    }
+    if (statusValue == null) statusValue = "APPROVED";
+    if (statusValue.equalsIgnoreCase("APPROVED") || statusValue.equalsIgnoreCase("ACTIVE")) statusValue = "Active";
+    else if (statusValue.equalsIgnoreCase("DEACTIVATED")) statusValue = "Deactivated";
+    else if (statusValue.equalsIgnoreCase("PENDING")) statusValue = "Pending";
 %>
 
 <html>
@@ -130,9 +139,11 @@
                         <div>
                             <label class="mb-2 block text-sm font-semibold text-slate-700">Status</label>
                             <select name="status" <%= disableInputs %> class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-orange-300 focus:ring-2 focus:ring-orange-200 <%= viewMode ? "bg-slate-100" : "" %>">
-                                <option selected>Active</option>
-                                <option>On Leave</option>
-                                <option>Deactivated</option>
+                                <option <%= "Active".equals(statusValue) ? "selected" : "" %> value="Active">Active</option>
+                                <option <%= "Deactivated".equals(statusValue) ? "selected" : "" %> value="Deactivated">Deactivated</option>
+                                <% if ("Pending".equals(statusValue)) { %>
+                                <option selected value="Pending">Pending</option>
+                                <% } %>
                             </select>
                         </div>
                     </div>
