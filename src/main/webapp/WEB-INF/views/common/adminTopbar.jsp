@@ -10,12 +10,17 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
 
-<header class="w-full bg-white border-b border-slate-200">
+<header class="w-full bg-white border-b border-slate-200 shrink-0">
   <div class="mx-auto flex h-20 w-full items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
 
-    <div class="hidden min-w-0 md:block">
-      <p class="text-xl font-semibold text-black" id="topbar-date">Monday, April 13, 2026</p>
-      <p class="mt-2 text-sm font-medium  text-black" id="topbar-time">08:48 AM</p>
+    <div class="flex items-center gap-4 min-w-0">
+      <button onclick="if(typeof toggleSidebar === 'function') toggleSidebar()" type="button" class="lg:hidden p-2 -ml-2 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition-colors">
+        <i data-lucide="menu" class="h-6 w-6"></i>
+      </button>
+      <div class="hidden md:block">
+        <p class="text-xl font-semibold text-black" id="topbar-date">Monday, April 13, 2026</p>
+        <p class="mt-2 text-sm font-medium text-black" id="topbar-time">08:48 AM</p>
+      </div>
     </div>
 
     <div class="ml-auto flex items-center gap-3 sm:gap-4">

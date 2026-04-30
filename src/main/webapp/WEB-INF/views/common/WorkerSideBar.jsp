@@ -1,83 +1,110 @@
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <title>Worker Sidebar</title>
-</head>
-<body class="h-screen overflow-hidden bg-slate-50 text-slate-900">
-
 <%
     String uri = request.getRequestURI().substring(request.getContextPath().length());
     String basePath = request.getContextPath();
 %>
 
-<aside class="w-56 h-screen overflow-y-auto bg-[#0b1f4d] text-white flex flex-col border-r border-blue-900/60">
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-slate-900/50 z-40 lg:hidden hidden transition-opacity duration-300 opacity-0" onclick="toggleSidebar()"></div>
+
+<!-- Sidebar -->
+<aside id="worker-sidebar" class="fixed lg:static top-0 left-0 z-50 w-64 h-screen overflow-y-auto bg-[#0b1f4d] text-white flex flex-col border-r border-blue-900/60 transition-transform duration-300 ease-in-out transform -translate-x-full lg:translate-x-0">
 
     <!-- Header -->
-    <div class="p-4 flex items-center gap-3 border-b border-blue-900/60">
-        <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
-            <i data-lucide="building-2" class="w-4 h-4 text-slate-950"></i>
+    <div class="p-4 flex items-center justify-between gap-3 border-b border-blue-900/60 h-20 shrink-0">
+        <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
+                <i data-lucide="building-2" class="w-4 h-4 text-slate-950"></i>
+            </div>
+            <span class="font-bold text-xl tracking-wide">BuildTrack</span>
         </div>
-        <span class="font-bold text-lg">BuildTrack</span>
+        <!-- Close button for mobile -->
+        <button onclick="toggleSidebar()" class="lg:hidden p-2 text-slate-400 hover:text-white rounded-lg hover:bg-white/10 transition-colors">
+            <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
     </div>
 
     <!-- Navigation -->
-    <nav class="flex-1 p-3 space-y-1">
+    <nav class="flex-1 p-4 space-y-1.5 overflow-y-auto">
 
         <%-- Reusable class pattern --%>
         <%
-            String activeNavClass = "flex items-center gap-3 px-3 py-2 rounded-lg bg-orange-500 hover:bg-red-500/10 text-white font-medium";
-            String inactiveNavClass = "flex items-center gap-3 px-3 py-2 rounded-lg text-slate-300 hover:bg-white/10 hover:text-white";
+            String activeNavClass = "flex items-center gap-3 px-3 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold shadow-md shadow-orange-500/20";
+            String inactiveNavClass = "flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:bg-white/10 hover:text-white transition-all font-medium";
         %>
 
         <a href="<%= basePath %>/worker/dashboard" class="<%= uri.startsWith("/worker/dashboard") ? activeNavClass : inactiveNavClass %>">
-            <i data-lucide="home" class="w-4 h-4"></i>
+            <i data-lucide="home" class="w-4.5 h-4.5"></i>
             <span>Dashboard</span>
         </a>
 
         <a href="<%= basePath %>/worker/attendance" class="<%= uri.startsWith("/worker/attendance") ? activeNavClass : inactiveNavClass %>">
-            <i data-lucide="check-square" class="w-4 h-4"></i>
+            <i data-lucide="check-square" class="w-4.5 h-4.5"></i>
             <span>Attendance</span>
         </a>
 
+        <a href="<%= basePath %>/worker/projects" class="<%= uri.startsWith("/worker/project") ? activeNavClass : inactiveNavClass %>">
+            <i data-lucide="briefcase" class="w-4.5 h-4.5"></i>
+            <span>Projects</span>
+        </a>
+
         <a href="<%= basePath %>/worker/worklog" class="<%= uri.startsWith("/worker/worklog") ? activeNavClass : inactiveNavClass %>">
-            <i data-lucide="clipboard-list" class="w-4 h-4"></i>
+            <i data-lucide="clipboard-list" class="w-4.5 h-4.5"></i>
             <span>Work Log</span>
         </a>
 
         <a href="<%= basePath %>/worker/payslip" class="<%= uri.startsWith("/worker/payslip") ? activeNavClass : inactiveNavClass %>">
-            <i data-lucide="wallet" class="w-4 h-4"></i>
+            <i data-lucide="wallet" class="w-4.5 h-4.5"></i>
             <span>Payslips</span>
         </a>
 
         <a href="<%= basePath %>/worker/profile" class="<%= uri.startsWith("/worker/profile") ? activeNavClass : inactiveNavClass %>">
-            <i data-lucide="user" class="w-4 h-4"></i>
+            <i data-lucide="user" class="w-4.5 h-4.5"></i>
             <span>Profile</span>
         </a>
 
     </nav>
 
     <!-- Bottom Section -->
-    <div class="p-3 border-t border-blue-900/60">
-        <a href="<%= basePath %>/worker/upgrade" class="flex items-center gap-3 px-3 py-2 rounded-lg text-amber-400 hover:bg-amber-500/10 hover:text-amber-300">
-            <i data-lucide="zap" class="w-4 h-4"></i>
+    <div class="p-4 border-t border-blue-900/60 shrink-0 space-y-1.5">
+        <a href="<%= basePath %>/worker/upgrade" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-amber-400 font-medium hover:bg-amber-500/10 hover:text-amber-300 transition-colors">
+            <i data-lucide="zap" class="w-4.5 h-4.5"></i>
             <span>Upgrade Plan</span>
         </a>
-        <a href="<%= basePath %>/logout" class="flex items-center gap-3 px-3 py-2 rounded-lg text-rose-400 hover:bg-rose-500/10 hover:text-rose-300">
-            <i data-lucide="log-out" class="w-4 h-4"></i>
+        <a href="<%= basePath %>/logout" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-rose-400 font-medium hover:bg-rose-500/10 hover:text-rose-300 transition-colors">
+            <i data-lucide="log-out" class="w-4.5 h-4.5"></i>
             <span>Logout</span>
         </a>
     </div>
 
-
 </aside>
 
 <script>
-    lucide.createIcons();
-</script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('worker-sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        
+        if (!sidebar || !overlay) return;
 
-</body>
-</html>
+        if (sidebar.classList.contains('-translate-x-full')) {
+            // Open sidebar
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+            // Small delay to allow display:block to apply before changing opacity for the fade-in effect
+            setTimeout(() => {
+                overlay.classList.remove('opacity-0');
+            }, 10);
+        } else {
+            // Close sidebar
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('opacity-0');
+            // Wait for transition to finish before hiding overlay
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+            }, 300);
+        }
+    }
+    
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+</script>
