@@ -12,7 +12,6 @@
     String displayName = (user != null && user.getFullName() != null && !user.getFullName().trim().isEmpty())
             ? user.getFullName()
             : "sag";
-    String basePath = request.getContextPath();
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,65 +22,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="m-0 bg-white text-slate-900">
-<div class="grid min-h-screen w-full grid-cols-[270px_minmax(0,1fr)] font-semibold max-[1100px]:grid-cols-1">
-    <aside class="flex min-h-screen flex-col border-r border-white/10 bg-[#0B1F57] text-[#d9e7ff]">
-        <div class="flex items-center gap-2.5 border-b border-white/10 px-4 py-4 font-semibold text-white">
-            <div class="grid h-10 w-10 place-items-center rounded-xl bg-amber-500 shadow-[0_8px_20px_rgba(245,158,11,0.45)]">
-                <svg viewBox="0 0 24 24" class="h-5 w-5 stroke-[#111827]" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M4 20h16"></path>
-                    <path d="M6 20V9l6-4 6 4v11"></path>
-                    <path d="M10 20v-5h4v5"></path>
-                </svg>
-            </div>
-            <span class="text-[42px] leading-none">BuildTrack</span>
-        </div>
-
-        <nav class="grid gap-1 p-3">
-            <a class="flex items-center gap-2.5 rounded-xl border border-amber-300/45 bg-[#45515c] px-3 py-2.5 text-sm font-semibold text-amber-200" href="<%= basePath %>/client/dashboard">
-                <svg viewBox="0 0 24 24" class="h-4 w-4 stroke-current" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <rect x="4" y="4" width="6" height="6" rx="1"></rect>
-                    <rect x="14" y="4" width="6" height="6" rx="1"></rect>
-                    <rect x="4" y="14" width="6" height="6" rx="1"></rect>
-                    <rect x="14" y="14" width="6" height="6" rx="1"></rect>
-                </svg>
-                <span>Dashboard</span>
-            </a>
-            <a class="flex items-center gap-2.5 rounded-xl border border-transparent px-3 py-2.5 text-sm text-[#d9e7ff]" href="<%= basePath %>/client/project">
-                <svg viewBox="0 0 24 24" class="h-4 w-4 stroke-current" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M3 7h6l2 2h10v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path>
-                    <path d="M3 7a2 2 0 0 1 2-2h4l2 2"></path>
-                </svg>
-                <span>My Projects</span>
-            </a>
-            <a class="flex items-center gap-2.5 rounded-xl border border-transparent px-3 py-2.5 text-sm text-[#d9e7ff]" href="<%= basePath %>/client/budget">
-                <svg viewBox="0 0 24 24" class="h-4 w-4 stroke-current" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M12 3v18"></path>
-                    <path d="M16 7.5c0-1.7-1.8-3-4-3s-4 1.3-4 3 1.5 2.5 4 3 4 1.3 4 3-1.8 3-4 3-4-1.3-4-3"></path>
-                </svg>
-                <span>Budget</span>
-            </a>
-            <a class="flex items-center gap-2.5 rounded-xl border border-transparent px-3 py-2.5 text-sm text-[#d9e7ff]" href="#">
-                <svg viewBox="0 0 24 24" class="h-4 w-4 stroke-current" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <circle cx="12" cy="8" r="3.5"></circle>
-                    <path d="M5 20c.8-3.5 3.5-5.5 7-5.5s6.2 2 7 5.5"></path>
-                </svg>
-                <span>Profile</span>
-            </a>
-        </nav>
-
-        <div class="mt-auto border-t border-white/10 p-3">
-            <nav class="grid gap-1">
-                <a class="flex items-center gap-2.5 rounded-xl border border-transparent px-3 py-2.5 text-sm text-[#d9e7ff]" href="<%= basePath %>/logout">
-                    <svg viewBox="0 0 24 24" class="h-4 w-4 stroke-current" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                        <path d="M16 17l5-5-5-5"></path>
-                        <path d="M21 12H9"></path>
-                    </svg>
-                    <span>Logout</span>
-                </a>
-            </nav>
-        </div>
-    </aside>
+<div class="grid min-h-screen w-full grid-cols-[224px_minmax(0,1fr)] font-semibold max-[1100px]:grid-cols-1">
+    <jsp:include page="../common/clientsidebar.jsp" />
 
     <main class="bg-white px-5 pb-7 pt-4">
         <div class="mb-3 flex items-center justify-between text-[11px] text-slate-600 max-[760px]:flex-col max-[760px]:items-start max-[760px]:gap-2.5">
