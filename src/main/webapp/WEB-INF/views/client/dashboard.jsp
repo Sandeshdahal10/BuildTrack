@@ -86,7 +86,7 @@
                     </div>
                     <span class="rounded-full border border-amber-300/60 bg-amber-50 px-2.5 py-0.5 text-[10px] font-bold text-amber-700">In Progress</span>
                 </div>
-                <div class="mb-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-300/40"><div class="h-full w-[68%] rounded-full bg-gradient-to-r from-amber-400 via-yellow-300 to-teal-400"></div></div>
+                <div class="mb-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-300/40"><div class="h-full w-[68%] rounded-full bg-yellow-400"></div></div>
                 <div class="flex justify-between text-[10px] text-slate-500">
                     <span>Budget: Rs 50.0L &nbsp;&nbsp; Spent: Rs 34.0L</span>
                     <span>68%</span>
@@ -101,7 +101,7 @@
                     </div>
                     <span class="rounded-full border border-amber-300/60 bg-amber-50 px-2.5 py-0.5 text-[10px] font-bold text-amber-700">In Progress</span>
                 </div>
-                <div class="mb-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-300/40"><div class="h-full w-[45%] rounded-full bg-gradient-to-r from-amber-400 via-yellow-300 to-teal-400"></div></div>
+                <div class="mb-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-300/40"><div class="h-full w-[45%] rounded-full bg-yellow-400"></div></div>
                 <div class="flex justify-between text-[10px] text-slate-500">
                     <span>Budget: Rs 32.0L &nbsp;&nbsp; Spent: Rs 14.4L</span>
                     <span>45%</span>
