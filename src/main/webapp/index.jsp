@@ -73,15 +73,123 @@
             </div>
         </div>
         
-        <!-- Image Side -->
+        <!-- Image Slideshow Side -->
         <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 w-full h-80 sm:h-96 lg:h-full mt-10 lg:mt-0">
-            <div class="h-full w-full relative">
+            <div id="heroSlideshow" class="h-full w-full relative overflow-hidden">
                 <!-- Nice overlay gradient -->
-                <div class="absolute inset-0 bg-[#ea580c]/10 mix-blend-multiply z-10"></div>
-                <img class="h-full w-full object-cover object-center shadow-2xl lg:shadow-none" src="assets/image/Buildtrack picture.jpg" alt="Construction site with blueprints, helmet, and tools">
+                <div class="absolute inset-0 bg-[#ea580c]/10 mix-blend-multiply z-10 pointer-events-none"></div>
+
+                <!-- Slides Container -->
+                <div id="slidesTrack" class="flex h-full transition-transform duration-700 ease-in-out" style="width: 300%;">
+                    <div class="h-full flex-shrink-0" style="width: 33.3333%;">
+                        <img class="h-full w-full object-cover object-center" src="assets/image/Buildtrack picture.jpg" alt="BuildTrack construction overview">
+                    </div>
+                    <div class="h-full flex-shrink-0" style="width: 33.3333%;">
+                        <img class="h-full w-full object-cover object-center" src="assets/image/1.jpg" alt="Construction project in progress">
+                    </div>
+                    <div class="h-full flex-shrink-0" style="width: 33.3333%;">
+                        <img class="h-full w-full object-cover object-center" src="assets/image/2.jpg" alt="Construction site management">
+                    </div>
+                </div>
+
+                <!-- Navigation Dots -->
+                <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3">
+                    <button onclick="goToSlide(0)" class="slideshow-dot active w-3 h-3 rounded-full bg-white/60 border-2 border-white shadow-md transition-all duration-300 hover:bg-white cursor-pointer" aria-label="Slide 1"></button>
+                    <button onclick="goToSlide(1)" class="slideshow-dot w-3 h-3 rounded-full bg-white/60 border-2 border-white shadow-md transition-all duration-300 hover:bg-white cursor-pointer" aria-label="Slide 2"></button>
+                    <button onclick="goToSlide(2)" class="slideshow-dot w-3 h-3 rounded-full bg-white/60 border-2 border-white shadow-md transition-all duration-300 hover:bg-white cursor-pointer" aria-label="Slide 3"></button>
+                </div>
+
+                <!-- Arrow Navigation -->
+                <button onclick="changeSlide(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center text-white hover:bg-white/40 transition-all duration-300 cursor-pointer shadow-lg" aria-label="Previous slide">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+                </button>
+                <button onclick="changeSlide(1)" class="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center text-white hover:bg-white/40 transition-all duration-300 cursor-pointer shadow-lg" aria-label="Next slide">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+                </button>
             </div>
         </div>
     </div>
+
+    <!-- Slideshow Styles -->
+    <style>
+        .slideshow-dot.active {
+            background-color: #ea580c !important;
+            border-color: #ea580c !important;
+            transform: scale(1.35);
+            box-shadow: 0 0 10px rgba(234, 88, 12, 0.5);
+        }
+    </style>
+
+    <!-- Slideshow Script -->
+    <script>
+        (function() {
+            let currentSlide = 0;
+            const totalSlides = 3;
+            const track = document.getElementById('slidesTrack');
+            const dots = document.querySelectorAll('.slideshow-dot');
+            let autoPlayInterval;
+
+            function updateSlideshow() {
+                track.style.transform = 'translateX(-' + (currentSlide * 33.3333) + '%)';
+                dots.forEach(function(dot, i) {
+                    dot.classList.toggle('active', i === currentSlide);
+                });
+            }
+
+            window.goToSlide = function(index) {
+                currentSlide = index;
+                updateSlideshow();
+                resetAutoPlay();
+            };
+
+            window.changeSlide = function(direction) {
+                currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+                updateSlideshow();
+                resetAutoPlay();
+            };
+
+            function startAutoPlay() {
+                autoPlayInterval = setInterval(function() {
+                    currentSlide = (currentSlide + 1) % totalSlides;
+                    updateSlideshow();
+                }, 5000);
+            }
+
+            function resetAutoPlay() {
+                clearInterval(autoPlayInterval);
+                startAutoPlay();
+            }
+
+            // Pause on hover
+            var slideshow = document.getElementById('heroSlideshow');
+            slideshow.addEventListener('mouseenter', function() {
+                clearInterval(autoPlayInterval);
+            });
+            slideshow.addEventListener('mouseleave', function() {
+                startAutoPlay();
+            });
+
+            // Touch/swipe support
+            var touchStartX = 0;
+            var touchEndX = 0;
+            slideshow.addEventListener('touchstart', function(e) {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+            slideshow.addEventListener('touchend', function(e) {
+                touchEndX = e.changedTouches[0].screenX;
+                var diff = touchStartX - touchEndX;
+                if (Math.abs(diff) > 50) {
+                    if (diff > 0) {
+                        window.changeSlide(1);
+                    } else {
+                        window.changeSlide(-1);
+                    }
+                }
+            }, { passive: true });
+
+            startAutoPlay();
+        })();
+    </script>
 
     <!-- Features Section -->
     <section id="features" class="py-20 bg-white scroll-mt-24">
