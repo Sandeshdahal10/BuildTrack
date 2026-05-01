@@ -118,6 +118,19 @@
             transform: scale(1.35);
             box-shadow: 0 0 10px rgba(234, 88, 12, 0.5);
         }
+
+        /* Reusable hover animation for homepage cards (Services + How it Works) */
+        .bt-hover-card {
+            transform: translateY(0);
+            box-shadow: 0 0 #0000;
+            transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, background-color 220ms ease;
+            will-change: transform, box-shadow;
+        }
+
+        .bt-hover-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 35px rgba(234, 88, 12, 0.14), 0 8px 14px rgba(15, 23, 42, 0.08);
+        }
     </style>
 
     <!-- Slideshow Script -->
@@ -279,9 +292,9 @@
                  </p>
              </div>
 
-             <div class="grid md:grid-cols-2 gap-8">
+                  <div class="grid md:grid-cols-2 gap-8">
                  <!-- Service 1 -->
-                  <div class="group flex gap-4 rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:shadow-xl hover:shadow-orange-100/70 hover:-translate-y-1 transition-all duration-300 ease-out">
+                   <div class="bt-hover-card group flex gap-4 rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:ring-orange-200">
                       <div class="flex-shrink-0">
                           <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white transition-transform duration-300 ease-out group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-200/50">
                              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -299,7 +312,7 @@
                  </div>
 
                  <!-- Service 2 -->
-                  <div class="group flex gap-4 rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:shadow-xl hover:shadow-orange-100/70 hover:-translate-y-1 transition-all duration-300 ease-out">
+                   <div class="bt-hover-card group flex gap-4 rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:ring-orange-200">
                       <div class="flex-shrink-0">
                           <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white transition-transform duration-300 ease-out group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-200/50">
                              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -317,7 +330,7 @@
                  </div>
 
                  <!-- Service 3 -->
-                  <div class="group flex gap-4 rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:shadow-xl hover:shadow-orange-100/70 hover:-translate-y-1 transition-all duration-300 ease-out">
+                   <div class="bt-hover-card group flex gap-4 rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:ring-orange-200">
                       <div class="flex-shrink-0">
                           <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white transition-transform duration-300 ease-out group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-200/50">
                              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -334,7 +347,7 @@
                  </div>
 
                  <!-- Service 4 -->
-                  <div class="group flex gap-4 rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:shadow-xl hover:shadow-orange-100/70 hover:-translate-y-1 transition-all duration-300 ease-out">
+                   <div class="bt-hover-card group flex gap-4 rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:ring-orange-200">
                       <div class="flex-shrink-0">
                           <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white transition-transform duration-300 ease-out group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-200/50">
                              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -351,7 +364,7 @@
                  </div>
 
                  <!-- Service 5 -->
-                  <div class="group flex gap-4 rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:shadow-xl hover:shadow-orange-100/70 hover:-translate-y-1 transition-all duration-300 ease-out">
+                   <div class="bt-hover-card group flex gap-4 rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:ring-orange-200">
                       <div class="flex-shrink-0">
                           <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white transition-transform duration-300 ease-out group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-200/50">
                              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -369,7 +382,7 @@
                  </div>
 
                  <!-- Service 6 -->
-                  <div class="group flex gap-4 rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:shadow-xl hover:shadow-orange-100/70 hover:-translate-y-1 transition-all duration-300 ease-out">
+                   <div class="bt-hover-card group flex gap-4 rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:ring-orange-200">
                       <div class="flex-shrink-0">
                           <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white transition-transform duration-300 ease-out group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-200/50">
                              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -404,7 +417,7 @@
 
              <div class="grid md:grid-cols-4 gap-8">
                  <!-- Step 1 -->
-                  <div class="group text-center relative rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:shadow-xl hover:shadow-orange-100/70 hover:-translate-y-1 transition-all duration-300 ease-out">
+                   <div class="bt-hover-card group text-center relative rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:ring-orange-200">
                      <div class="mb-4">
                           <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-[#ea580c] text-white text-2xl font-bold transition-transform duration-300 ease-out group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-200/50">
                              1
@@ -415,7 +428,7 @@
                  </div>
 
                  <!-- Step 2 -->
-                  <div class="group text-center relative rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:shadow-xl hover:shadow-orange-100/70 hover:-translate-y-1 transition-all duration-300 ease-out">
+                   <div class="bt-hover-card group text-center relative rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:ring-orange-200">
                      <div class="mb-4">
                           <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-[#ea580c] text-white text-2xl font-bold transition-transform duration-300 ease-out group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-200/50">
                              2
@@ -426,7 +439,7 @@
                  </div>
 
                  <!-- Step 3 -->
-                  <div class="group text-center relative rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:shadow-xl hover:shadow-orange-100/70 hover:-translate-y-1 transition-all duration-300 ease-out">
+                   <div class="bt-hover-card group text-center relative rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:ring-orange-200">
                      <div class="mb-4">
                           <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-[#ea580c] text-white text-2xl font-bold transition-transform duration-300 ease-out group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-200/50">
                              3
@@ -437,7 +450,7 @@
                  </div>
 
                  <!-- Step 4 -->
-                  <div class="group text-center relative rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:shadow-xl hover:shadow-orange-100/70 hover:-translate-y-1 transition-all duration-300 ease-out">
+                   <div class="bt-hover-card group text-center relative rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:ring-orange-200">
                      <div class="mb-4">
                           <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-[#ea580c] text-white text-2xl font-bold transition-transform duration-300 ease-out group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-200/50">
                              4
@@ -467,7 +480,7 @@
                 </div>
 
                 <div class="flex flex-col gap-3 md:items-end">
-                    <a href="#" class="text-slate-200 hover:text-[#ea580c] font-semibold transition-colors">About Us</a>
+                    <a href="${pageContext.request.contextPath}/about" class="text-slate-200 hover:text-[#ea580c] font-semibold transition-colors">About Us</a>
                     <a href="#" class="text-slate-200 hover:text-[#ea580c] font-semibold transition-colors">Contact Us</a>
                 </div>
             </div>
