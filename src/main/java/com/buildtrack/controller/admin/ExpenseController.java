@@ -52,7 +52,7 @@ public class ExpenseController extends HttpServlet {
             request.setAttribute("totalCount", totalCount);
             request.setAttribute("categories", expenseService.getValidCategories());
 
-            request.getRequestDispatcher("/WEB-INF/views/admin/expenses.jsp")
+                request.getRequestDispatcher("/WEB-INF/views/admin/expense.jsp")
                     .forward(request, response);
             return;
         }
