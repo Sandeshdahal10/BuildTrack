@@ -281,9 +281,9 @@
 
              <div class="grid md:grid-cols-2 gap-8">
                  <!-- Service 1 -->
-                 <div class="flex gap-4">
-                     <div class="flex-shrink-0">
-                         <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white">
+                  <div class="group flex gap-4 rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:shadow-xl hover:shadow-orange-100/70 hover:-translate-y-1 transition-all duration-300 ease-out">
+                      <div class="flex-shrink-0">
+                          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white transition-transform duration-300 ease-out group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-200/50">
                              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                  <rect x="3" y="4" width="18" height="18" rx="2"></rect>
                                  <line x1="16" y1="2" x2="16" y2="6"></line>
@@ -299,9 +299,9 @@
                  </div>
 
                  <!-- Service 2 -->
-                 <div class="flex gap-4">
-                     <div class="flex-shrink-0">
-                         <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white">
+                  <div class="group flex gap-4 rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:shadow-xl hover:shadow-orange-100/70 hover:-translate-y-1 transition-all duration-300 ease-out">
+                      <div class="flex-shrink-0">
+                          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white transition-transform duration-300 ease-out group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-200/50">
                              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                  <circle cx="9" cy="8" r="3"></circle>
                                  <path d="M3 19c0-3.3 2.7-6 6-6"></path>
@@ -317,9 +317,9 @@
                  </div>
 
                  <!-- Service 3 -->
-                 <div class="flex gap-4">
-                     <div class="flex-shrink-0">
-                         <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white">
+                  <div class="group flex gap-4 rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:shadow-xl hover:shadow-orange-100/70 hover:-translate-y-1 transition-all duration-300 ease-out">
+                      <div class="flex-shrink-0">
+                          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white transition-transform duration-300 ease-out group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-200/50">
                              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                  <path d="M3 7l9-4 9 4-9 4-9-4z"></path>
                                  <path d="M3 12l9 4 9-4"></path>
@@ -334,9 +334,9 @@
                  </div>
 
                  <!-- Service 4 -->
-                 <div class="flex gap-4">
-                     <div class="flex-shrink-0">
-                         <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white">
+                  <div class="group flex gap-4 rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:shadow-xl hover:shadow-orange-100/70 hover:-translate-y-1 transition-all duration-300 ease-out">
+                      <div class="flex-shrink-0">
+                          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white transition-transform duration-300 ease-out group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-200/50">
                              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                  <circle cx="12" cy="12" r="8"></circle>
                                  <line x1="12" y1="8" x2="12" y2="16"></line>
@@ -351,9 +351,9 @@
                  </div>
 
                  <!-- Service 5 -->
-                 <div class="flex gap-4">
-                     <div class="flex-shrink-0">
-                         <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white">
+                  <div class="group flex gap-4 rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:shadow-xl hover:shadow-orange-100/70 hover:-translate-y-1 transition-all duration-300 ease-out">
+                      <div class="flex-shrink-0">
+                          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white transition-transform duration-300 ease-out group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-200/50">
                              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                  <rect x="3" y="4" width="18" height="16" rx="2"></rect>
                                  <line x1="7" y1="8" x2="17" y2="8"></line>
@@ -369,9 +369,9 @@
                  </div>
 
                  <!-- Service 6 -->
-                 <div class="flex gap-4">
-                     <div class="flex-shrink-0">
-                         <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white">
+                  <div class="group flex gap-4 rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:shadow-xl hover:shadow-orange-100/70 hover:-translate-y-1 transition-all duration-300 ease-out">
+                      <div class="flex-shrink-0">
+                          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white transition-transform duration-300 ease-out group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-200/50">
                              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                  <path d="M4 12a8 8 0 0 1 8-8h4v6h4v2a8 8 0 0 1-8 8h-1"></path>
                                  <path d="M4 20l5-4"></path>
