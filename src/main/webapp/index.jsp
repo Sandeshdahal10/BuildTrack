@@ -208,7 +208,7 @@
                   <p class="text-[#ea580c] font-extrabold text-4xl sm:text-5xl tracking-tight uppercase">
                       FEATURES
                   </p>
-                 <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-3 mb-3">
+                 <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-8 mb-3">
                      Powerful Features for Modern Construction
                  </h2>
                  <p class="text-lg text-slate-600 max-w-3xl mx-auto">
@@ -281,7 +281,7 @@
                   <p class="text-[#ea580c] font-extrabold text-4xl sm:text-5xl tracking-tight uppercase">
                       Our Services
                   </p>
-                 <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-3 mb-3">
+                 <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-8 mb-3">
                      Comprehensive Construction Solutions
                  </h2>
                  <p class="text-lg text-slate-600 max-w-3xl mx-auto">
@@ -404,7 +404,7 @@
                   <p class="text-[#ea580c] font-extrabold text-4xl sm:text-5xl tracking-tight uppercase">
                       How It Works?
                   </p>
-                 <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-3 mb-3">
+                 <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-8 mb-3">
                      Getting Started is Simple
                  </h2>
                  <p class="text-lg text-slate-600 max-w-3xl mx-auto">
