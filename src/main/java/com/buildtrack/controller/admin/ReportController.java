@@ -43,7 +43,7 @@ public class ReportController extends HttpServlet {
             // ---------- Reports overview ----------
             request.setAttribute("totalMaterialCost", reportService.getTotalMaterialCost());
             request.setAttribute("totalPayrollCost", reportService.getTotalPayrollCost());
-            request.setAttribute("totalExpenses", reportService.getTotalExpenses());
+            request.setAttribute("totalExpenses", reportService.getGrandTotalExpenses());
             request.setAttribute("projects", projectService.getAllProjects());
             request.getRequestDispatcher("/WEB-INF/views/admin/reports.jsp")
                     .forward(request, response);
@@ -68,7 +68,7 @@ public class ReportController extends HttpServlet {
 
                     // Also get expense breakdown by category
                     List<Map<String, Object>> categories =
-                            reportService.getExpenseByCategory(projectId);
+                            reportService.getCombinedExpenseBreakdown(projectId);
                     request.setAttribute("expenseCategories", categories);
 
                     // Material usage summary
@@ -91,7 +91,7 @@ public class ReportController extends HttpServlet {
             case "material": {
                 int projectId = Integer.parseInt(request.getParameter("pid"));
                 List<Map<String, Object>> categories =
-                        reportService.getExpenseByCategory(projectId);
+                        reportService.getCombinedExpenseBreakdown(projectId);
                 List<MaterialUsage> usageSummary =
                         reportService.getMaterialUsageSummary(projectId);
 

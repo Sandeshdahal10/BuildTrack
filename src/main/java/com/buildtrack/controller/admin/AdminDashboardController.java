@@ -41,7 +41,7 @@ public class AdminDashboardController extends HttpServlet {
         // Financial overview
         request.setAttribute("totalMaterialCost", reportService.getTotalMaterialCost());
         request.setAttribute("totalPayrollCost", reportService.getTotalPayrollCost());
-        request.setAttribute("totalExpenses", reportService.getTotalExpenses());
+        request.setAttribute("totalExpenses", reportService.getGrandTotalExpenses());
 
         // Recent projects (top 5)
         request.setAttribute("recentProjects",
