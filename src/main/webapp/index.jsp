@@ -7,6 +7,28 @@
     <title>BuildTrack - Construction Management</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        .slideshow-dot.active {
+            background-color: #ea580c !important;
+            border-color: #ea580c !important;
+            transform: scale(1.35);
+            box-shadow: 0 0 10px rgba(234, 88, 12, 0.5);
+        }
+
+        /* Reusable hover animation for homepage cards (Services + How it Works) */
+        .bt-hover-card {
+            transform: translateY(0);
+            box-shadow: 0 0 #0000;
+            transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, background-color 220ms ease;
+            will-change: transform, box-shadow;
+        }
+
+        .bt-hover-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 35px rgba(234, 88, 12, 0.14), 0 8px 14px rgba(15, 23, 42, 0.08);
+        }
+    </style>
 </head>
 <body class="bg-gray-50 text-slate-900 font-sans antialiased overflow-x-hidden">
     <!-- Navbar -->
@@ -108,29 +130,6 @@
         </div>
     </div>
 
-    <!-- Slideshow Styles -->
-    <style>
-        .slideshow-dot.active {
-            background-color: #ea580c !important;
-            border-color: #ea580c !important;
-            transform: scale(1.35);
-            box-shadow: 0 0 10px rgba(234, 88, 12, 0.5);
-        }
-
-        /* Reusable hover animation for homepage cards (Services + How it Works) */
-        .bt-hover-card {
-            transform: translateY(0);
-            box-shadow: 0 0 #0000;
-            transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, background-color 220ms ease;
-            will-change: transform, box-shadow;
-        }
-
-        .bt-hover-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 18px 35px rgba(234, 88, 12, 0.14), 0 8px 14px rgba(15, 23, 42, 0.08);
-        }
-    </style>
-
     <!-- Slideshow Script -->
     <script>
         (function() {
@@ -206,10 +205,10 @@
     <section id="features" class="py-20 bg-white scroll-mt-24">
          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
              <div class="text-center mb-12">
-                 <span class="px-4 py-1.5 rounded-full text-xs font-bold text-orange-800 bg-orange-100 mb-6 inline-block tracking-widest uppercase shadow-sm">
-                     Features
-                 </span>
-                 <h2 class="text-4xl sm:text-5xl font-bold text-slate-900 mt-4 mb-4">
+                  <p class="text-[#ea580c] font-extrabold text-4xl sm:text-5xl tracking-tight uppercase">
+                      FEATURES
+                  </p>
+                 <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-3 mb-3">
                      Powerful Features for Modern Construction
                  </h2>
                  <p class="text-lg text-slate-600 max-w-3xl mx-auto">
@@ -279,10 +278,10 @@
      <section id="services" class="py-20 bg-gradient-to-br from-orange-50 to-white scroll-mt-24">
          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
              <div class="text-center mb-12">
-                 <span class="px-4 py-1.5 rounded-full text-xs font-bold text-orange-800 bg-orange-100 mb-6 inline-block tracking-widest uppercase shadow-sm">
-                     Our Services
-                 </span>
-                 <h2 class="text-4xl sm:text-5xl font-bold text-slate-900 mt-4 mb-4">
+                  <p class="text-[#ea580c] font-extrabold text-4xl sm:text-5xl tracking-tight uppercase">
+                      Our Services
+                  </p>
+                 <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-3 mb-3">
                      Comprehensive Construction Solutions
                  </h2>
                  <p class="text-lg text-slate-600 max-w-3xl mx-auto">
@@ -402,10 +401,10 @@
      <section id="how-it-works" class="py-20 bg-white scroll-mt-24">
          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
              <div class="text-center mb-16">
-                 <span class="px-4 py-1.5 rounded-full text-xs font-bold text-orange-800 bg-orange-100 mb-6 inline-block tracking-widest uppercase shadow-sm">
-                     How It Works
-                 </span>
-                 <h2 class="text-4xl sm:text-5xl font-bold text-slate-900 mt-4 mb-4">
+                  <p class="text-[#ea580c] font-extrabold text-4xl sm:text-5xl tracking-tight uppercase">
+                      How It Works?
+                  </p>
+                 <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-3 mb-3">
                      Getting Started is Simple
                  </h2>
                  <p class="text-lg text-slate-600 max-w-3xl mx-auto">
@@ -479,7 +478,7 @@
 
                 <div class="flex flex-col gap-3 md:items-end">
                     <a href="${pageContext.request.contextPath}/about" class="text-slate-200 hover:text-[#ea580c] font-semibold transition-colors">About Us</a>
-                    <a href="#" class="text-slate-200 hover:text-[#ea580c] font-semibold transition-colors">Contact Us</a>
+                    <a href="${pageContext.request.contextPath}/contact" class="text-slate-200 hover:text-[#ea580c] font-semibold transition-colors">Contact Us</a>
                 </div>
             </div>
         </div>

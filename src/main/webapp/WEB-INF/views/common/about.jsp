@@ -62,9 +62,9 @@
 
 <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
     <header class="mb-10">
-        <span class="px-4 py-1.5 rounded-full text-xs font-bold text-orange-800 bg-orange-100 inline-block tracking-widest uppercase shadow-sm">
-            About Us
-        </span>
+        <p class="text-[#ea580c] font-extrabold text-4xl sm:text-5xl tracking-tight uppercase">
+            ABOUT US
+        </p>
         <h1 class="text-4xl sm:text-5xl font-bold text-slate-900 mt-4 leading-tight">Built for construction teams that need clarity.</h1>
         <p class="text-lg text-slate-600 mt-4 max-w-3xl">BuildTrack is a web-based construction management system that replaces scattered updates with one source of truth across site, office, and client communication.</p>
     </header>
