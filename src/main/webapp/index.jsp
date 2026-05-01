@@ -404,9 +404,9 @@
 
              <div class="grid md:grid-cols-4 gap-8">
                  <!-- Step 1 -->
-                 <div class="text-center relative">
+                  <div class="group text-center relative rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:shadow-xl hover:shadow-orange-100/70 hover:-translate-y-1 transition-all duration-300 ease-out">
                      <div class="mb-4">
-                         <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-[#ea580c] text-white text-2xl font-bold">
+                          <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-[#ea580c] text-white text-2xl font-bold transition-transform duration-300 ease-out group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-200/50">
                              1
                          </div>
                      </div>
@@ -415,9 +415,9 @@
                  </div>
 
                  <!-- Step 2 -->
-                 <div class="text-center relative">
+                  <div class="group text-center relative rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:shadow-xl hover:shadow-orange-100/70 hover:-translate-y-1 transition-all duration-300 ease-out">
                      <div class="mb-4">
-                         <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-[#ea580c] text-white text-2xl font-bold">
+                          <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-[#ea580c] text-white text-2xl font-bold transition-transform duration-300 ease-out group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-200/50">
                              2
                          </div>
                      </div>
@@ -426,9 +426,9 @@
                  </div>
 
                  <!-- Step 3 -->
-                 <div class="text-center relative">
+                  <div class="group text-center relative rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:shadow-xl hover:shadow-orange-100/70 hover:-translate-y-1 transition-all duration-300 ease-out">
                      <div class="mb-4">
-                         <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-[#ea580c] text-white text-2xl font-bold">
+                          <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-[#ea580c] text-white text-2xl font-bold transition-transform duration-300 ease-out group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-200/50">
                              3
                          </div>
                      </div>
@@ -437,9 +437,9 @@
                  </div>
 
                  <!-- Step 4 -->
-                 <div class="text-center relative">
+                  <div class="group text-center relative rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:shadow-xl hover:shadow-orange-100/70 hover:-translate-y-1 transition-all duration-300 ease-out">
                      <div class="mb-4">
-                         <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-[#ea580c] text-white text-2xl font-bold">
+                          <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-[#ea580c] text-white text-2xl font-bold transition-transform duration-300 ease-out group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-200/50">
                              4
                          </div>
                      </div>
