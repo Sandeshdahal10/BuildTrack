@@ -20,8 +20,8 @@
 <aside class="w-56 h-screen overflow-y-auto bg-[#0b1f4d] text-white flex flex-col border-r border-blue-900/60">
 
     <div class="p-4 flex items-center gap-3 border-b border-blue-900/60">
-        <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
-            <i data-lucide="building-2" class="w-4 h-4 text-slate-950"></i>
+        <div class="w-9 h-9 flex items-center justify-center">
+            <img src="<%= basePath %>/assets/image/BuildTrackLogo.png" alt="BuildTrack" class="w-9 h-9 object-contain"/>
         </div>
         <span class="font-bold text-lg">BuildTrack</span>
     </div>

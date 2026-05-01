@@ -30,8 +30,8 @@
 </head>
 <body class="bg-gradient-to-br from-gray-100 to-gray-300 min-h-screen flex flex-col p-5">
     <div class="text-center mb-10 mt-5">
-        <div class="text-2xl font-bold text-orange-500 tracking-wide">
-            <span class="text-3xl mr-2 inline-block">⚙️</span>BuildTrack
+        <div>
+            <img src="${pageContext.request.contextPath}/assets/image/BuildTrackLogo.png" alt="BuildTrack" class="mx-auto h-14 object-contain" />
         </div>
         <div class="w-20 h-1 bg-gradient-to-r from-orange-500 to-orange-300 mx-auto mt-3 rounded"></div>
     </div>

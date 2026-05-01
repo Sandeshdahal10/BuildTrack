@@ -18,6 +18,9 @@
 <body class="m-0 min-h-screen bg-white px-4 py-4 text-slate-900 sm:px-6 sm:py-6 flex items-center justify-center">
 <main class="grid w-full max-w-[1020px] grid-cols-1 overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-[0_18px_42px_rgba(15,23,42,0.18)] md:grid-cols-[1fr_1.2fr]">
     <section class="border-b border-slate-100 bg-gradient-to-br from-orange-50 to-white px-[22px] py-[22px] md:border-b-0 md:border-r md:px-[30px] md:py-9">
+        <div class="mb-4">
+            <img src="<%= request.getContextPath() %>/assets/image/BuildTrackLogo.png" alt="BuildTrack" class="h-14 object-contain" />
+        </div>
         <h1 class="m-0 text-[32px] font-bold leading-tight text-orange-700">The Digital Monument to Project Management.</h1>
         <p class="my-4 text-[15px] leading-relaxed text-slate-600">Precision, structural integrity, and layered complexity. Register to access the master architect's dashboard.</p>
         <span class="mt-[18px] inline-block rounded-full border border-orange-100 bg-orange-50 px-[14px] py-2 text-[13px] font-bold text-orange-900">Join 1,000+ project leads</span>

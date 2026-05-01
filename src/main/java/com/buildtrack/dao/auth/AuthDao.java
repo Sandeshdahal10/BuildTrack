@@ -27,8 +27,8 @@ public class AuthDao {
      * @return true if insertion was successful, false otherwise
      */
     public boolean insertUser(User user) {
-        String sql = "INSERT INTO users (full_name, email, phone, password, role, status, daily_wage) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (full_name, email, phone, password, role, status, daily_wage, created_at, updated_at) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -36,6 +36,8 @@ public class AuthDao {
         try {
             conn = DBUtil.getConnection();
             pstmt = conn.prepareStatement(sql);
+
+            Timestamp now = new Timestamp(System.currentTimeMillis());
 
             pstmt.setString(1, user.getFullName());
             pstmt.setString(2, user.getEmail());
@@ -50,6 +52,9 @@ public class AuthDao {
                 pstmt.setNull(7, Types.DECIMAL);
             }
 
+            pstmt.setTimestamp(8, now);
+            pstmt.setTimestamp(9, now);
+
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
 
@@ -58,7 +63,9 @@ public class AuthDao {
             if (e.getErrorCode() == 1062) {
                 System.err.println("[AuthDAO] Duplicate email: " + user.getEmail());
             } else {
-                System.err.println("[AuthDAO] Insert error: " + e.getMessage());
+                System.err.println("[AuthDAO] Insert error: " + e.getMessage()
+                        + " | SQLState=" + e.getSQLState()
+                        + " | ErrorCode=" + e.getErrorCode());
             }
             return false;
         } finally {

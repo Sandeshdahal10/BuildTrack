@@ -10,13 +10,8 @@
 <aside class="w-56 min-h-screen overflow-y-auto bg-[#0b1f4d] text-white flex flex-col border-r border-blue-900/60">
 
     <div class="p-4 flex items-center gap-3 border-b border-blue-900/60">
-        <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
-            <svg viewBox="0 0 24 24" class="h-4 w-4 stroke-slate-950" fill="none" stroke-width="2" aria-hidden="true">
-                <rect x="4" y="4" width="6" height="6" rx="1"></rect>
-                <rect x="14" y="4" width="6" height="6" rx="1"></rect>
-                <rect x="4" y="14" width="6" height="6" rx="1"></rect>
-                <rect x="14" y="14" width="6" height="6" rx="1"></rect>
-            </svg>
+        <div class="w-9 h-9 flex items-center justify-center">
+            <img src="<%= basePath %>/assets/image/BuildTrackLogo.png" alt="BuildTrack" class="w-9 h-9 object-contain"/>
         </div>
         <span class="font-bold text-lg">BuildTrack</span>
     </div>

@@ -25,7 +25,9 @@
 <body class="m-0 min-h-screen bg-white px-4 py-6 text-slate-900 sm:px-6 flex items-center justify-center">
 <main class="w-full max-w-[560px] rounded-2xl bg-white p-6 shadow-[0_20px_40px_rgba(0,0,0,0.25)] sm:p-7">
     <section class="mb-6 text-center">
-        <div class="mx-auto mb-3 flex h-[76px] w-[76px] items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-sky-500 text-[26px] font-bold tracking-[1px] text-white">BT</div>
+        <div class="mx-auto mb-3 flex h-[76px] w-[76px] items-center justify-center rounded-full bg-white">
+            <img src="<%= request.getContextPath() %>/assets/image/BuildTrackLogo.png" alt="BuildTrack" class="h-[72px] w-[72px] object-contain" />
+        </div>
         <h1 class="m-0 text-[28px] font-bold text-orange-700">BuildTrack</h1>
         <p class="mt-1.5 text-sm text-slate-600">Advanced Construction Project Management</p>
     </section>

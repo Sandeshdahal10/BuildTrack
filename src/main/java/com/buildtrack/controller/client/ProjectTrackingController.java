@@ -21,7 +21,7 @@ import java.io.IOException;
 public class ProjectTrackingController extends HttpServlet {
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		if (session == null || session.getAttribute("userId") == null) {

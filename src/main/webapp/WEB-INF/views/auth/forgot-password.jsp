@@ -269,7 +269,9 @@
 %>
 <main class="auth-shell">
     <section class="brand">
-        <h1>BuildTrack</h1>
+        <div style="display:inline-block;">
+            <img src="${pageContext.request.contextPath}/assets/image/BuildTrackLogo.png" alt="BuildTrack" style="height:64px; width:auto; display:block; margin:0 auto 8px;"/>
+        </div>
         <div class="brand-line"></div>
     </section>
 
