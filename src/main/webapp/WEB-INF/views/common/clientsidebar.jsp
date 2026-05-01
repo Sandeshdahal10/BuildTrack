@@ -49,6 +49,15 @@
             <span>Budget</span>
         </a>
 
+        <a href="<%= basePath %>/client/profile" class="<%= uri.startsWith("/client/profile") ? activeNavClass : inactiveNavClass %>">
+            <svg viewBox="0 0 24 24" class="w-4 h-4 stroke-current" fill="none" stroke-width="2" aria-hidden="true">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <span>Profile</span>
+        </a>
+
+
     </nav>
 
     <div class="p-3 border-t border-blue-900/60">
