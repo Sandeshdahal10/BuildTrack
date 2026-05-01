@@ -12,6 +12,7 @@
     String displayName = (user != null && user.getFullName() != null && !user.getFullName().trim().isEmpty())
             ? user.getFullName()
             : "Client";
+    String basePath = request.getContextPath();
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +24,64 @@
 </head>
 <body class="m-0 min-h-screen bg-white text-slate-900">
 <div class="grid min-h-screen w-full grid-cols-[224px_minmax(0,1fr)] font-semibold max-[1100px]:grid-cols-1">
-    <jsp:include page="../common/clientsidebar.jsp" />
+    <aside class="w-56 min-h-screen flex flex-col border-r border-slate-300 bg-gradient-to-b from-slate-800 to-slate-900 text-white shadow-xl">
+        <div class="flex items-center gap-3 px-4 py-4 border-b border-slate-700 bg-slate-900/60">
+            <div class="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-amber-400 to-orange-500 shadow-md">
+                <svg viewBox="0 0 24 24" class="h-4 w-4 stroke-slate-900" fill="none" stroke-width="2" aria-hidden="true">
+                    <rect x="4" y="4" width="6" height="6" rx="1"></rect>
+                    <rect x="14" y="4" width="6" height="6" rx="1"></rect>
+                    <rect x="4" y="14" width="6" height="6" rx="1"></rect>
+                    <rect x="14" y="14" width="6" height="6" rx="1"></rect>
+                </svg>
+            </div>
+            <span class="text-lg font-semibold">BuildTrack</span>
+        </div>
+        <nav class="flex-1 px-3 py-4 space-y-2 overflow-y-auto">
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-700/50 hover:text-white" href="<%= basePath %>/client/dashboard">
+                <svg viewBox="0 0 24 24" class="h-4 w-4 stroke-current" fill="none" stroke-width="2" aria-hidden="true">
+                    <rect x="4" y="4" width="6" height="6" rx="1"></rect>
+                    <rect x="14" y="4" width="6" height="6" rx="1"></rect>
+                    <rect x="4" y="14" width="6" height="6" rx="1"></rect>
+                    <rect x="14" y="14" width="6" height="6" rx="1"></rect>
+                </svg>
+                <span>Dashboard</span>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-700/50 hover:text-white" href="<%= basePath %>/client/project">
+                <svg viewBox="0 0 24 24" class="h-4 w-4 stroke-current" fill="none" stroke-width="2" aria-hidden="true">
+                    <path d="M3 7h6l2 2h10v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path>
+                    <path d="M3 7a2 2 0 0 1 2-2h4l2 2"></path>
+                </svg>
+                <span>My Projects</span>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-700/50 hover:text-white" href="<%= basePath %>/client/budget">
+                <svg viewBox="0 0 24 24" class="h-4 w-4 stroke-current" fill="none" stroke-width="2" aria-hidden="true">
+                    <path d="M12 3v18"></path>
+                    <path d="M16 7.5c0-1.7-1.8-3-4-3s-4 1.3-4 3 1.5 2.5 4 3 4 1.3 4 3-1.8 3-4 3-4-1.3-4-3"></path>
+                </svg>
+                <span>Budget</span>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-700/50 hover:text-white" href="#">
+                <svg viewBox="0 0 24 24" class="h-4 w-4 stroke-current" fill="none" stroke-width="2" aria-hidden="true">
+                    <circle cx="12" cy="8" r="3.5"></circle>
+                    <path d="M5 20c.8-3.5 3.5-5.5 7-5.5s6.2 2 7 5.5"></path>
+                </svg>
+                <span>Profile</span>
+            </a>
+        </nav>
+        <div class="px-3 py-4 border-t border-slate-700 bg-slate-900/40 space-y-2">
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-700/50 hover:text-white" href="<%= basePath %>/client/upgrade">
+                <span>Upgrade Plan</span>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-red-500/20 hover:text-red-400" href="<%= basePath %>/logout">
+                <svg viewBox="0 0 24 24" class="h-4 w-4 stroke-current" fill="none" stroke-width="2" aria-hidden="true">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <path d="M16 17l5-5-5-5"></path>
+                    <path d="M21 12H9"></path>
+                </svg>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
 
     <main class="min-h-screen bg-white px-5 pb-7 pt-4">
         <div class="mb-3 flex items-center justify-between text-[11px] text-slate-600 max-[760px]:flex-col max-[760px]:items-start max-[760px]:gap-2.5">
@@ -58,31 +116,31 @@
         </div>
 
         <section class="budget-search-item rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-[0_10px_24px_rgba(15,23,42,0.08)]" data-search="budget track expenditures">
-            <h1 class="m-0 text-[34px] font-bold leading-none">Budget</h1>
+            <h1 class="m-0 text-[34px] font-semibold leading-none">Budget</h1>
             <p class="mt-1 text-xs text-slate-600">Track project expenditures and budgets</p>
         </section>
 
         <section class="mt-3.5 grid grid-cols-2 gap-3.5 max-[760px]:grid-cols-1">
             <article class="budget-search-item rounded-2xl border border-slate-200 bg-white px-5 py-4 text-slate-900 shadow-[0_12px_24px_rgba(15,23,42,0.12)]" data-search="total budget rs 82.0l">
                 <p class="m-0 text-[11px] uppercase tracking-wide text-slate-500">Total Budget</p>
-                <p class="mb-0 mt-1 text-4xl font-bold leading-none text-amber-600">Rs 82.0L</p>
+                <p class="mb-0 mt-1 text-4xl font-semibold leading-none text-slate-900">Rs 82.0L</p>
             </article>
             <article class="budget-search-item rounded-2xl border border-slate-200 bg-white px-5 py-4 text-slate-900 shadow-[0_12px_24px_rgba(15,23,42,0.12)]" data-search="total spent rs 48.4l">
                 <p class="m-0 text-[11px] uppercase tracking-wide text-slate-500">Total Spent</p>
-                <p class="mb-0 mt-1 text-4xl font-bold leading-none">Rs 48.4L</p>
+                <p class="mb-0 mt-1 text-4xl font-semibold leading-none">Rs 48.4L</p>
             </article>
             <article class="budget-search-item rounded-2xl border border-slate-200 bg-white px-5 py-4 text-slate-900 shadow-[0_12px_24px_rgba(15,23,42,0.12)]" data-search="remaining rs 33.6l">
                 <p class="m-0 text-[11px] uppercase tracking-wide text-slate-500">Remaining</p>
-                <p class="mb-0 mt-1 text-4xl font-bold leading-none text-teal-600">Rs 33.6L</p>
+                <p class="mb-0 mt-1 text-4xl font-semibold leading-none text-slate-900">Rs 33.6L</p>
             </article>
             <article class="budget-search-item rounded-2xl border border-slate-200 bg-white px-5 py-4 text-slate-900 shadow-[0_12px_24px_rgba(15,23,42,0.12)]" data-search="utilization 59 percent">
                 <p class="m-0 text-[11px] uppercase tracking-wide text-slate-500">Utilization</p>
-                <p class="mb-0 mt-1 text-4xl font-bold leading-none">59%</p>
+                <p class="mb-0 mt-1 text-4xl font-semibold leading-none">59%</p>
             </article>
         </section>
 
         <section class="budget-search-item mt-4 rounded-2xl border border-slate-200 bg-white px-5 py-4 text-slate-900 shadow-[0_12px_24px_rgba(15,23,42,0.12)]" data-search="budget vs expenditure skyline tower complex green valley residency 68 45 utilized">
-            <h2 class="mb-4 mt-0 text-lg font-bold">Budget vs Expenditure</h2>
+            <h2 class="mb-4 mt-0 text-lg font-semibold">Budget vs Expenditure</h2>
 
             <div>
                 <div class="mb-1 flex items-center justify-between text-sm">
@@ -105,7 +163,7 @@
 
         <section class="mt-4 grid grid-cols-2 gap-4 max-[1200px]:grid-cols-1">
             <article class="budget-search-item rounded-2xl border border-slate-200 bg-white p-5 text-slate-900 shadow-[0_12px_24px_rgba(15,23,42,0.12)]" data-search="cost distribution labour material equipment miscellaneous">
-                <h2 class="mb-4 mt-0 text-lg font-bold">Cost Distribution</h2>
+                <h2 class="mb-4 mt-0 text-lg font-semibold">Cost Distribution</h2>
                 <div class="flex min-h-[300px] flex-col items-center justify-center">
                     <div class="relative h-44 w-44 rounded-full" style="background: conic-gradient(#f59e0b 0deg 162deg, #14b8a6 162deg 284deg, #3b82f6 284deg 338deg, #8b5cf6 338deg 360deg);">
                         <div class="absolute left-1/2 top-1/2 h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white"></div>
@@ -120,7 +178,7 @@
             </article>
 
             <article class="budget-search-item rounded-2xl border border-slate-200 bg-white p-5 text-slate-900 shadow-[0_12px_24px_rgba(15,23,42,0.12)]" data-search="material cost breakdown cement iron rods sand bricks steel pipes paint electrical wire">
-                <h2 class="mb-4 mt-0 text-lg font-bold">Material Cost Breakdown</h2>
+                <h2 class="mb-4 mt-0 text-lg font-semibold">Material Cost Breakdown</h2>
                 <div class="overflow-x-auto">
                     <table class="w-full border-collapse text-sm">
                         <thead>

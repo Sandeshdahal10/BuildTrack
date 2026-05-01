@@ -64,7 +64,7 @@
         </div>
 
         <section class="mb-4 border-b border-slate-200 pb-4">
-            <h1 class="m-0 text-5xl font-bold leading-tight text-slate-900 max-[760px]:text-4xl">My Projects</h1>
+            <h1 class="m-0 text-5xl font-semibold leading-tight text-slate-900 max-[760px]:text-4xl">My Projects</h1>
             <p class="mt-1 text-lg text-slate-600">Detailed view of your construction projects</p>
         </section>
 
@@ -72,7 +72,7 @@
             <article class="project-card rounded-2xl border border-slate-200 bg-white p-5 text-slate-900 shadow-[0_16px_28px_rgba(15,23,42,0.15)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_20px_34px_rgba(15,23,42,0.2)]" data-search="skyline tower complex in progress 2025-01-15 2025-12-30 12 workers 50.0l">
                 <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
                     <div class="flex items-center gap-2">
-                        <h2 class="m-0 text-[34px] font-bold leading-none">Skyline Tower Complex</h2>
+                        <h2 class="m-0 text-[34px] font-semibold leading-none">Skyline Tower Complex</h2>
                         <span class="rounded-full border border-amber-300 bg-amber-100 px-3 py-1 text-xs font-bold text-amber-700">In Progress</span>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                 <div class="mt-4">
                     <div class="mb-1 flex items-center justify-between text-sm">
                         <span class="text-slate-600">Completion</span>
-                        <span class="font-bold text-amber-600">68%</span>
+                        <span class="font-semibold text-amber-600">68%</span>
                     </div>
                     <div class="h-3 w-full overflow-hidden rounded-full bg-slate-200"><div class="h-full w-[68%] rounded-full bg-gradient-to-r from-amber-400 via-yellow-300 to-teal-500"></div></div>
                 </div>
@@ -108,7 +108,7 @@
             <article class="project-card rounded-2xl border border-slate-200 bg-white p-5 text-slate-900 shadow-[0_16px_28px_rgba(15,23,42,0.15)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_20px_34px_rgba(15,23,42,0.2)]" data-search="green valley residency in progress 2025-02-01 2025-11-15 8 workers 32.0l">
                 <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
                     <div class="flex items-center gap-2">
-                        <h2 class="m-0 text-[34px] font-bold leading-none">Green Valley Residency</h2>
+                        <h2 class="m-0 text-[34px] font-semibold leading-none">Green Valley Residency</h2>
                         <span class="rounded-full border border-amber-300 bg-amber-100 px-3 py-1 text-xs font-bold text-amber-700">In Progress</span>
                     </div>
                 </div>
@@ -122,7 +122,7 @@
                 <div class="mt-4">
                     <div class="mb-1 flex items-center justify-between text-sm">
                         <span class="text-slate-600">Completion</span>
-                        <span class="font-bold text-amber-600">45%</span>
+                        <span class="font-semibold text-amber-600">45%</span>
                     </div>
                     <div class="h-3 w-full overflow-hidden rounded-full bg-slate-200"><div class="h-full w-[45%] rounded-full bg-gradient-to-r from-amber-400 via-yellow-300 to-teal-500"></div></div>
                 </div>

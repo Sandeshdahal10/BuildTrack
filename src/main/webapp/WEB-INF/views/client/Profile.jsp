@@ -74,7 +74,7 @@
 
         <!-- Profile Header -->
         <section class="rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-[0_10px_24px_rgba(15,23,42,0.08)]">
-            <h1 class="m-0 text-[34px] font-bold leading-none">Profile</h1>
+            <h1 class="m-0 text-[34px] font-semibold leading-none">Profile</h1>
             <p class="mt-1 text-xs text-slate-600">Manage your personal information</p>
         </section>
 
@@ -88,7 +88,7 @@
                     </div>
                     <!-- User Info -->
                     <div>
-                        <h2 class="m-0 text-xl font-bold"><%= displayName %></h2>
+                        <h2 class="m-0 text-xl font-semibold"><%= displayName %></h2>
                         <p class="mt-0.5 text-sm text-slate-600"><%= displayRole %> • <%= displayCompany %></p>
                         <p class="mt-1 text-xs text-slate-500">Member since <%= memberSince %></p>
                     </div>
