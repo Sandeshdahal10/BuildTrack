@@ -6,6 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - BuildTrack</title>
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* Card hover animation (match homepage feel) */
+        .bt-card {
+            transform: translateY(0);
+            transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+            will-change: transform, box-shadow;
+        }
+
+        .bt-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 35px rgba(15, 23, 42, 0.10);
+        }
+
+        .bt-card:hover .bt-card-title {
+            letter-spacing: 0.2px;
+        }
+
+        .bt-card-title {
+            transition: letter-spacing 220ms ease;
+        }
+
+        .bt-soft-glow-red:hover {
+            box-shadow: 0 18px 35px rgba(220, 38, 38, 0.14), 0 8px 14px rgba(15, 23, 42, 0.08);
+        }
+
+        .bt-soft-glow-green:hover {
+            box-shadow: 0 18px 35px rgba(22, 163, 74, 0.14), 0 8px 14px rgba(15, 23, 42, 0.08);
+        }
+
+        .bt-soft-glow-orange:hover {
+            box-shadow: 0 18px 35px rgba(234, 88, 12, 0.16), 0 8px 14px rgba(15, 23, 42, 0.08);
+        }
+    </style>
 </head>
 <body class="bg-gray-50 text-slate-900 font-sans antialiased">
 
@@ -32,19 +66,159 @@
             About Us
         </span>
         <h1 class="text-4xl sm:text-5xl font-bold text-slate-900 mt-4 leading-tight">Built for construction teams that need clarity.</h1>
-        <p class="text-lg text-slate-600 mt-4">BuildTrack is a web-based construction management system designed to bring structure to projects that are usually managed across spreadsheets, chat threads, and disconnected field notes.</p>
+        <p class="text-lg text-slate-600 mt-4 max-w-3xl">BuildTrack is a web-based construction management system that replaces scattered updates with one source of truth across site, office, and client communication.</p>
     </header>
 
-    <section class="prose prose-slate max-w-none">
-        <p>
-            Construction operations break down when information lives in too many places: project status is unclear, materials are ordered without visibility, attendance is tracked manually, and financial reporting arrives too late to prevent cost overruns. That leads to avoidable delays, payroll errors, and difficult client conversations because the numbers and the site reality are never aligned.
-        </p>
-        <p>
-            BuildTrack solves these gaps by centralizing execution around role-based access control for Admin, Worker, and Client users. Admins manage projects with clear status tracking, monitor budgets against actual expenses, and maintain reliable material and cost records. Workers can record attendance and work activity consistently, enabling payroll automation that reduces repetitive processing and improves accuracy. Clients get a dedicated dashboard for transparent monitoring, so progress, timeline changes, and cost movement are visible without back-and-forth.
-        </p>
-        <p>
-            Security and reliability are treated as core product requirements, not afterthoughts. BuildTrack uses secure authentication and session management, and its backend follows a structured Java MVC architecture with a database-driven design that keeps data consistent and auditable. The result is a system that improves accountability, reduces manual administration, and gives construction teams the operational clarity needed to deliver on time and under control.
-        </p>
+    <section class="space-y-10">
+        <!-- Comparison -->
+        <div>
+            <div class="flex items-end justify-between gap-6 mb-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900">Comparison at a glance</h2>
+                    <p class="text-slate-600 mt-1">Clear problems on the left. Clear fixes on the right.</p>
+                </div>
+                <div class="hidden sm:flex items-center gap-2 text-xs font-semibold text-slate-500">
+                    <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-rose-50 text-rose-700 ring-1 ring-rose-100">● Problem</span>
+                    <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100">● BuildTrack</span>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bt-card bt-soft-glow-red rounded-2xl bg-gradient-to-br from-rose-50 to-white ring-1 ring-rose-100 p-7">
+                    <div class="flex items-center justify-between">
+                        <h3 class="bt-card-title text-xl font-bold text-rose-800">⚠️ The Problem</h3>
+                        <span class="text-xs font-semibold text-rose-700 bg-rose-100/70 px-3 py-1 rounded-full ring-1 ring-rose-200">Common on-site</span>
+                    </div>
+                    <div class="h-px bg-rose-100 my-4"></div>
+                    <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-rose-900/90 font-medium">
+                        <li>• Scattered updates</li>
+                        <li>• Cost surprises</li>
+                        <li>• Manual payroll</li>
+                        <li>• Attendance errors</li>
+                        <li>• Material confusion</li>
+                        <li>• Weak accountability</li>
+                        <li>• Lost receipts</li>
+                        <li>• Client chasing</li>
+                    </ul>
+                    <p class="text-sm text-rose-800/80 mt-5">When work and numbers don’t match, delays and disputes follow.</p>
+                </div>
+
+                <div class="bt-card bt-soft-glow-green rounded-2xl bg-gradient-to-br from-emerald-50 to-white ring-1 ring-emerald-100 p-7">
+                    <div class="flex items-center justify-between">
+                        <h3 class="bt-card-title text-xl font-bold text-emerald-800">✅ The BuildTrack Way</h3>
+                        <span class="text-xs font-semibold text-emerald-700 bg-emerald-100/70 px-3 py-1 rounded-full ring-1 ring-emerald-200">Operational clarity</span>
+                    </div>
+                    <div class="h-px bg-emerald-100 my-4"></div>
+                    <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-emerald-900/90 font-medium">
+                        <li>• One project view</li>
+                        <li>• Status tracking</li>
+                        <li>• Budget vs actual</li>
+                        <li>• Expense logging</li>
+                        <li>• Attendance capture</li>
+                        <li>• Payroll automation</li>
+                        <li>• Material tracking</li>
+                        <li>• Client dashboard</li>
+                    </ul>
+                    <p class="text-sm text-emerald-800/80 mt-5">Transparency for clients. Control for managers. Simplicity for the field.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Who it's for -->
+        <div class="bt-card bt-soft-glow-orange rounded-2xl bg-white ring-1 ring-slate-100 p-7">
+            <h2 class="bt-card-title text-xl font-bold text-slate-900">👥 Who It’s For</h2>
+            <div class="h-px bg-slate-100 my-4"></div>
+            <div class="grid sm:grid-cols-2 gap-4 text-slate-700">
+                <div class="rounded-xl bg-slate-50 ring-1 ring-slate-100 p-4">
+                    <p class="font-semibold text-slate-900">Admins</p>
+                    <p class="text-sm text-slate-600 mt-1">Projects, budgets, payroll, reporting.</p>
+                </div>
+                <div class="rounded-xl bg-slate-50 ring-1 ring-slate-100 p-4">
+                    <p class="font-semibold text-slate-900">Workers</p>
+                    <p class="text-sm text-slate-600 mt-1">Attendance, tasks, daily execution.</p>
+                </div>
+                <div class="rounded-xl bg-slate-50 ring-1 ring-slate-100 p-4">
+                    <p class="font-semibold text-slate-900">Clients</p>
+                    <p class="text-sm text-slate-600 mt-1">Progress, transparency, confidence.</p>
+                </div>
+                <div class="rounded-xl bg-slate-50 ring-1 ring-slate-100 p-4">
+                    <p class="font-semibold text-slate-900">Project Teams</p>
+                    <p class="text-sm text-slate-600 mt-1">Single source of truth.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Visual core features -->
+        <div>
+            <div class="flex items-end justify-between gap-6 mb-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900">Core Features</h2>
+                    <p class="text-slate-600 mt-1">Built for day-to-day execution, not demos.</p>
+                </div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div class="bt-card bt-soft-glow-orange rounded-2xl bg-white ring-1 ring-slate-100 p-6">
+                    <div class="flex items-center gap-3">
+                        <div class="h-11 w-11 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center text-lg ring-1 ring-orange-200">🔐</div>
+                        <div>
+                            <p class="bt-card-title font-bold text-slate-900">Role-based access</p>
+                            <p class="text-sm text-slate-600">Admin • Worker • Client</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bt-card bt-soft-glow-orange rounded-2xl bg-white ring-1 ring-slate-100 p-6">
+                    <div class="flex items-center gap-3">
+                        <div class="h-11 w-11 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center text-lg ring-1 ring-orange-200">📊</div>
+                        <div>
+                            <p class="bt-card-title font-bold text-slate-900">Project tracking</p>
+                            <p class="text-sm text-slate-600">Clear status, fewer surprises</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bt-card bt-soft-glow-orange rounded-2xl bg-white ring-1 ring-slate-100 p-6">
+                    <div class="flex items-center gap-3">
+                        <div class="h-11 w-11 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center text-lg ring-1 ring-orange-200">👷</div>
+                        <div>
+                            <p class="bt-card-title font-bold text-slate-900">Attendance → payroll</p>
+                            <p class="text-sm text-slate-600">Automation-ready records</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bt-card bt-soft-glow-orange rounded-2xl bg-white ring-1 ring-slate-100 p-6">
+                    <div class="flex items-center gap-3">
+                        <div class="h-11 w-11 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center text-lg ring-1 ring-orange-200">🧾</div>
+                        <div>
+                            <p class="bt-card-title font-bold text-slate-900">Expenses & materials</p>
+                            <p class="text-sm text-slate-600">Track costs as they happen</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bt-card bt-soft-glow-orange rounded-2xl bg-white ring-1 ring-slate-100 p-6">
+                    <div class="flex items-center gap-3">
+                        <div class="h-11 w-11 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center text-lg ring-1 ring-orange-200">⚖️</div>
+                        <div>
+                            <p class="bt-card-title font-bold text-slate-900">Budget vs actual</p>
+                            <p class="text-sm text-slate-600">Early warning visibility</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bt-card bt-soft-glow-orange rounded-2xl bg-white ring-1 ring-slate-100 p-6">
+                    <div class="flex items-center gap-3">
+                        <div class="h-11 w-11 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center text-lg ring-1 ring-orange-200">🛡️</div>
+                        <div>
+                            <p class="bt-card-title font-bold text-slate-900">Secure by default</p>
+                            <p class="text-sm text-slate-600">Auth, sessions, MVC backend</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <div class="mt-10">
