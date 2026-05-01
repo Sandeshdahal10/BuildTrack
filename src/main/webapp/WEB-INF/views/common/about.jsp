@@ -78,48 +78,41 @@
                     <p class="text-slate-600 mt-1">Clear problems on the left. Clear fixes on the right.</p>
                 </div>
                 <div class="hidden sm:flex items-center gap-2 text-xs font-semibold text-slate-500">
-                    <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-rose-50 text-rose-700 ring-1 ring-rose-100">● Problem</span>
-                    <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100">● BuildTrack</span>
+
                 </div>
             </div>
 
             <div class="grid md:grid-cols-2 gap-8">
                 <div class="bt-card bt-soft-glow-red rounded-2xl bg-gradient-to-br from-rose-50 to-white ring-1 ring-rose-100 p-7">
                     <div class="flex items-center justify-between">
-                        <h3 class="bt-card-title text-xl font-bold text-rose-800">⚠️ The Problem</h3>
-                        <span class="text-xs font-semibold text-rose-700 bg-rose-100/70 px-3 py-1 rounded-full ring-1 ring-rose-200">Common on-site</span>
+                        <h3 class="bt-card-title text-xl font-bold text-rose-800">PROBLEMS</h3>
+
                     </div>
                     <div class="h-px bg-rose-100 my-4"></div>
-                    <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-rose-900/90 font-medium">
-                        <li>• Scattered updates</li>
-                        <li>• Cost surprises</li>
-                        <li>• Manual payroll</li>
-                        <li>• Attendance errors</li>
-                        <li>• Material confusion</li>
-                        <li>• Weak accountability</li>
-                        <li>• Lost receipts</li>
-                        <li>• Client chasing</li>
+                    <ul class="mt-2 space-y-2 text-rose-900/90 font-medium">
+                        <li class="flex items-start gap-2"><span class="mt-0.5 text-rose-500">•</span><span>Fragmented information</span></li>
+                        <li class="flex items-start gap-2"><span class="mt-0.5 text-rose-500">•</span><span>No real-time cost</span></li>
+                        <li class="flex items-start gap-2"><span class="mt-0.5 text-rose-500">•</span><span>Manual payroll errors</span></li>
+                        <li class="flex items-start gap-2"><span class="mt-0.5 text-rose-500">•</span><span>Stakeholder misalignment</span></li>
+                        <li class="flex items-start gap-2"><span class="mt-0.5 text-rose-500">•</span><span>Low accountability</span></li>
                     </ul>
-                    <p class="text-sm text-rose-800/80 mt-5">When work and numbers don’t match, delays and disputes follow.</p>
+
                 </div>
 
                 <div class="bt-card bt-soft-glow-green rounded-2xl bg-gradient-to-br from-emerald-50 to-white ring-1 ring-emerald-100 p-7">
                     <div class="flex items-center justify-between">
-                        <h3 class="bt-card-title text-xl font-bold text-emerald-800">✅ The BuildTrack Way</h3>
-                        <span class="text-xs font-semibold text-emerald-700 bg-emerald-100/70 px-3 py-1 rounded-full ring-1 ring-emerald-200">Operational clarity</span>
+                        <h3 class="bt-card-title text-xl font-bold text-emerald-800">BuildTrack Solutions</h3>
+
                     </div>
                     <div class="h-px bg-emerald-100 my-4"></div>
-                    <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-emerald-900/90 font-medium">
-                        <li>• One project view</li>
-                        <li>• Status tracking</li>
-                        <li>• Budget vs actual</li>
-                        <li>• Expense logging</li>
-                        <li>• Attendance capture</li>
-                        <li>• Payroll automation</li>
-                        <li>• Material tracking</li>
-                        <li>• Client dashboard</li>
+                    <ul class="mt-2 space-y-2 text-emerald-900/90 font-medium">
+                        <li class="flex items-start gap-2"><span class="mt-0.5 text-emerald-600">•</span><span>Centralized workspace</span></li>
+                        <li class="flex items-start gap-2"><span class="mt-0.5 text-emerald-600">•</span><span>Budget vs actual</span></li>
+                        <li class="flex items-start gap-2"><span class="mt-0.5 text-emerald-600">•</span><span>Attendance to payroll</span></li>
+                        <li class="flex items-start gap-2"><span class="mt-0.5 text-emerald-600">•</span><span>Role-based dashboards</span></li>
+                        <li class="flex items-start gap-2"><span class="mt-0.5 text-emerald-600">•</span><span>Audit-ready reporting</span></li>
                     </ul>
-                    <p class="text-sm text-emerald-800/80 mt-5">Transparency for clients. Control for managers. Simplicity for the field.</p>
+
                 </div>
             </div>
         </div>

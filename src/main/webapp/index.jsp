@@ -39,9 +39,7 @@
                 
                 <main class="mt-10 mx-auto max-w-7xl sm:mt-12 md:mt-16 lg:mt-20 xl:mt-28">
                     <div class="sm:text-center lg:text-left">
-                        <span class="px-4 py-1.5 rounded-full text-xs font-bold text-orange-800 bg-orange-100 mb-6 inline-block tracking-widest uppercase shadow-sm">
-                            Welcome to BuildTrack
-                        </span>
+
                         <h1 class="text-4xl tracking-tight font-bold text-slate-900 sm:text-5xl md:text-6xl mt-4 leading-tight">
                             <span class="block">Build with Confidence.</span>
                             <span class="block text-[#ea580c] mt-1">Track with Precision.</span>
