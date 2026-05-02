@@ -4,6 +4,7 @@ package com.buildtrack.util;
 
 import java.io.InputStream;
 import java.util.Properties;
+
 import jakarta.mail.Message;
 import jakarta.mail.PasswordAuthentication;
 import jakarta.mail.Session;
@@ -30,11 +31,11 @@ public class EmailUtil {
             }
             Properties props = new Properties();
             props.load(is);
-            SMTP_HOST = props.getProperty("smtp.host");
-            SMTP_PORT = props.getProperty("smtp.port");
-            SMTP_USERNAME = props.getProperty("smtp.username");
-            SMTP_PASSWORD = props.getProperty("smtp.password");
-            SMTP_FROM = props.getProperty("smtp.from");
+            SMTP_HOST = props.getProperty("SMTP_HOST", "smtp.gmail.com");
+            SMTP_PORT = props.getProperty("SMTP_PORT", "465");
+            SMTP_USERNAME = props.getProperty("SMTP_USER");
+            SMTP_PASSWORD = props.getProperty("SMTP_PASSWORD");
+            SMTP_FROM = props.getProperty("SMTP_FROM", SMTP_USERNAME);
         } catch (Exception e) {
             System.err.println("[EmailUtil] Error loading SMTP config:" + e.getMessage());
         }
@@ -54,13 +55,14 @@ public class EmailUtil {
             return false;
         }
         try {
-            // Configure SMTP properties
+            // Configure SMTP properties for SSL (Port 465)
             Properties mailProps = new Properties();
             mailProps.put("mail.smtp.auth", "true");
-            mailProps.put("mail.smtp.starttls.enable", "true");
+            mailProps.put("mail.smtp.ssl.enable", "true");
             mailProps.put("mail.smtp.host", SMTP_HOST);
             mailProps.put("mail.smtp.port", SMTP_PORT);
-            mailProps.put("mail.smtp.ssl.trust", SMTP_HOST);
+            mailProps.put("mail.smtp.socketFactory.port", SMTP_PORT);
+            mailProps.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 
             // Create session with authentication
             Session session = Session.getInstance(mailProps, new jakarta.mail.Authenticator() {
