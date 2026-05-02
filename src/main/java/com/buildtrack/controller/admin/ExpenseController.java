@@ -51,9 +51,10 @@ public class ExpenseController extends HttpServlet {
             request.setAttribute("recentExpenses", recentExpenses);
             request.setAttribute("totalCount", totalCount);
             request.setAttribute("categories", expenseService.getValidCategories());
+            request.setAttribute("projects", projectService.getAllProjects());
 
-                request.getRequestDispatcher("/WEB-INF/views/admin/expense.jsp")
-                    .forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/admin/expense.jsp")
+                .forward(request, response);
             return;
         }
 

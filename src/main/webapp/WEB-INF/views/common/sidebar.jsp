@@ -81,7 +81,7 @@
     </nav>
 
     <div class="p-3 border-t border-blue-900/60">
-        <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-rose-400 hover:bg-rose-500/10 hover:text-rose-300">
+        <a href="<%= basePath %>/logout" class="flex items-center gap-3 px-3 py-2 rounded-lg text-rose-400 hover:bg-rose-500/10 hover:text-rose-300">
             <i data-lucide="log-out" class="w-4 h-4"></i>
             <span>Logout</span>
         </a>

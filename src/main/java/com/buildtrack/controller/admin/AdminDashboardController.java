@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,6 +43,19 @@ public class AdminDashboardController extends HttpServlet {
         request.setAttribute("totalMaterialCost", reportService.getTotalMaterialCost());
         request.setAttribute("totalPayrollCost", reportService.getTotalPayrollCost());
         request.setAttribute("totalExpenses", reportService.getGrandTotalExpenses());
+        
+        List<Map<String, Object>> budgetVsActual = reportService.getBudgetVsActualAll();
+        request.setAttribute("budgetVsActual", budgetVsActual);
+        
+        // Calculate Total Budget and Utilized dynamically for the whole system
+        java.math.BigDecimal totalBudget = java.math.BigDecimal.ZERO;
+        java.math.BigDecimal totalUtilized = java.math.BigDecimal.ZERO;
+        for (Map<String, Object> row : budgetVsActual) {
+            totalBudget = totalBudget.add((java.math.BigDecimal) row.get("budget"));
+            totalUtilized = totalUtilized.add((java.math.BigDecimal) row.get("actualCost"));
+        }
+        request.setAttribute("globalTotalBudget", totalBudget);
+        request.setAttribute("globalTotalUtilized", totalUtilized);
 
         // Recent projects (top 5)
         request.setAttribute("recentProjects",

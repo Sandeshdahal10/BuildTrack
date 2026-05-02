@@ -39,8 +39,23 @@
               <i data-lucide="user" class="h-4 w-4"></i>
             </div>
             <div class="hidden leading-tight sm:block">
-              <p class="text-sm font-semibold text-slate-800">Rojash Thapa</p>
-              <p class="text-xs text-slate-500">Admin</p>
+              <p class="text-sm font-semibold text-slate-800">
+                <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+                <c:choose>
+                  <c:when test="${not empty sessionScope.user.fullName}">
+                    <c:out value="${sessionScope.user.fullName}" />
+                  </c:when>
+                  <c:otherwise>System Administrator</c:otherwise>
+                </c:choose>
+              </p>
+              <p class="text-xs text-slate-500">
+                <c:choose>
+                  <c:when test="${not empty sessionScope.user.role}">
+                    <c:out value="${sessionScope.user.role}" />
+                  </c:when>
+                  <c:otherwise>Admin</c:otherwise>
+                </c:choose>
+              </p>
             </div>
           </button>
         </div>

@@ -146,7 +146,7 @@
                                         : (lowStock ? "bg-amber-100 text-amber-700" : "bg-emerald-100 text-emerald-700");
                                 String stockLabel = outOfStock ? "Out of Stock" : (lowStock ? "Low Stock" : "In Stock");
                             %>
-                            <div class="rounded-lg border border-slate-200 p-4 transition hover:shadow-sm">
+                            <div id="material-card-<%= material.getId() %>" class="rounded-lg border border-slate-200 p-4 transition hover:shadow-sm">
                                 <div class="flex flex-col justify-between gap-4 md:flex-row md:items-center">
                                     <div class="min-w-0">
                                         <p class="text-base font-semibold text-slate-800"><%= material.getName() %></p>
@@ -171,9 +171,7 @@
                                     <div class="flex items-center gap-2">
                                         <span class="rounded-full px-2.5 py-1 text-xs font-bold <%= stockBadgeClass %>"><%= stockLabel %></span>
                                         <a href="<%= request.getContextPath() %>/admin/materials?action=edit&id=<%= material.getId() %>" class="rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50">Edit</a>
-                                        <form action="<%= request.getContextPath() %>/admin/materials?action=delete&id=<%= material.getId() %>" method="post" onsubmit="return confirm('Delete this material?');">
-                                            <button type="submit" class="rounded-lg bg-red-500 px-3 py-2 text-xs font-semibold text-white hover:bg-red-600">Delete</button>
-                                        </form>
+                                        <button type="button" onclick="openDeleteModal(<%= material.getId() %>)" class="rounded-lg bg-red-500 px-3 py-2 text-xs font-semibold text-white hover:bg-red-600">Delete</button>
                                     </div>
                                 </div>
                             </div>
@@ -224,6 +222,85 @@
 
 <script>
     lucide.createIcons();
+</script>
+<!-- Delete Modal -->
+<div id="deleteModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/50 backdrop-blur-sm">
+    <div class="relative w-full max-w-sm rounded-xl bg-white p-6 shadow-xl">
+        <div class="mb-4 flex items-center justify-center w-12 h-12 rounded-full bg-red-100 mx-auto">
+            <i data-lucide="alert-triangle" class="h-6 w-6 text-red-600"></i>
+        </div>
+        <h3 class="text-lg font-bold text-slate-800 text-center mb-2">Delete Material</h3>
+        <p class="text-sm text-slate-500 text-center mb-6">Are you sure you want to delete this material? This action cannot be undone.</p>
+        
+        <div class="flex gap-3 justify-center">
+            <button onclick="closeDeleteModal()" class="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">Cancel</button>
+            <button id="confirmDeleteBtn" class="rounded-lg bg-red-500 px-4 py-2 text-sm font-semibold text-white hover:bg-red-600">Delete</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let materialIdToDelete = null;
+
+    function openDeleteModal(id) {
+        materialIdToDelete = id;
+        document.getElementById('deleteModal').classList.remove('hidden');
+        document.getElementById('deleteModal').classList.add('flex');
+    }
+
+    function closeDeleteModal() {
+        materialIdToDelete = null;
+        document.getElementById('deleteModal').classList.add('hidden');
+        document.getElementById('deleteModal').classList.remove('flex');
+    }
+
+    document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
+        if (!materialIdToDelete) return;
+        
+        const btn = document.getElementById('confirmDeleteBtn');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = 'Deleting...';
+        btn.disabled = true;
+
+        try {
+            const formData = new URLSearchParams();
+            formData.append('action', 'delete');
+            formData.append('id', materialIdToDelete);
+
+            const response = await fetch('<%= request.getContextPath() %>/admin/materials', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: formData.toString()
+            });
+
+            if (response.ok) {
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                // If the element still exists in the refreshed HTML, it means deletion failed
+                if (doc.getElementById('material-card-' + materialIdToDelete)) {
+                    alert('Failed to delete material. It may have usage records.');
+                } else {
+                    const card = document.getElementById('material-card-' + materialIdToDelete);
+                    if (card) {
+                        card.remove();
+                    }
+                }
+                closeDeleteModal();
+            } else {
+                alert('Failed to delete material. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred while deleting the material.');
+        } finally {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
+    });
 </script>
 
 </body>

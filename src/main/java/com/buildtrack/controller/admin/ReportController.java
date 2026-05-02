@@ -1,7 +1,13 @@
 package com.buildtrack.controller.admin;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
 import com.buildtrack.model.Attendance;
 import com.buildtrack.model.MaterialUsage;
+import com.buildtrack.service.admin.DocumentService;
+import com.buildtrack.service.admin.InquiryService;
 import com.buildtrack.service.admin.ReportService;
 
 import jakarta.servlet.ServletException;
@@ -9,10 +15,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Admin reports — read-only aggregated views.
@@ -30,6 +32,8 @@ public class ReportController extends HttpServlet {
     private final ReportService reportService = new ReportService();
     private final com.buildtrack.service.admin.ProjectService projectService
             = new com.buildtrack.service.admin.ProjectService();
+    private final DocumentService documentService = new DocumentService();
+    private final InquiryService inquiryService = new InquiryService();
 
     // ==================== GET (all reports are read-only) ====================
 
@@ -45,6 +49,8 @@ public class ReportController extends HttpServlet {
             request.setAttribute("totalPayrollCost", reportService.getTotalPayrollCost());
             request.setAttribute("totalExpenses", reportService.getGrandTotalExpenses());
             request.setAttribute("projects", projectService.getAllProjects());
+            request.setAttribute("documents", documentService.getAllDocuments());
+            request.setAttribute("inquiries", inquiryService.getAllInquiries());
             request.getRequestDispatcher("/WEB-INF/views/admin/reports.jsp")
                     .forward(request, response);
             return;

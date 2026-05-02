@@ -138,46 +138,36 @@
 
             <div id="content-documents" class="hidden">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <jsp:include page="../common/documentCard..jsp">
-                        <jsp:param name="fileName" value="Blueprint_Final_v2.pdf" />
-                        <jsp:param name="uploadedBy" value="Amit Sharma" />
-                        <jsp:param name="date" value="12 Apr 2025" />
-                    </jsp:include>
-
-                    <jsp:include page="../common/documentCard..jsp">
-                        <jsp:param name="fileName" value="Site_Survey_Report.pdf" />
-                        <jsp:param name="uploadedBy" value="Site Engineer" />
-                        <jsp:param name="date" value="10 Apr 2025" />
-                    </jsp:include>
-
-                    <jsp:include page="../common/documentCard..jsp">
-                        <jsp:param name="fileName" value="Foundation_Plan.jpg" />
-                        <jsp:param name="uploadedBy" value="Architect" />
-                        <jsp:param name="date" value="09 Apr 2025" />
-                    </jsp:include>
+                    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+                    <c:forEach var="doc" items="${documents}">
+                        <jsp:include page="../common/documentCard..jsp">
+                            <jsp:param name="fileName" value="${doc.fileName}" />
+                            <jsp:param name="uploadedBy" value="${doc.clientName}" />
+                            <jsp:param name="date" value="${doc.uploadedAt}" />
+                        </jsp:include>
+                    </c:forEach>
+                    <c:if test="${empty documents}">
+                        <p class="text-sm text-slate-500">No documents found.</p>
+                    </c:if>
                 </div>
             </div>
 
             <div id="content-inquiries" class="hidden space-y-3">
-                <jsp:include page="../common/inquiryRow.jsp">
-                    <jsp:param name="subject" value="Wall construction quality issue" />
-                    <jsp:param name="client" value="Rahul Industries" />
-                    <jsp:param name="project" value="Shopping Mall" />
-                    <jsp:param name="date" value="Today, 10:30 AM" />
-                    <jsp:param name="status" value="Pending" />
-                    <jsp:param name="statusStyle" value="bg-amber-100 text-amber-700" />
-                    <jsp:param name="replyLink" value="#" />
-                </jsp:include>
-
-                <jsp:include page="../common/inquiryRow.jsp">
-                    <jsp:param name="subject" value="Request for additional electrical points" />
-                    <jsp:param name="client" value="Amit Sharma" />
-                    <jsp:param name="project" value="Skyline Tower" />
-                    <jsp:param name="date" value="Yesterday" />
-                    <jsp:param name="status" value="Resolved" />
-                    <jsp:param name="statusStyle" value="bg-green-100 text-green-700" />
-                    <jsp:param name="replyLink" value="#" />
-                </jsp:include>
+                <c:forEach var="inq" items="${inquiries}">
+                    <jsp:include page="../common/inquiryRow.jsp">
+                        <jsp:param name="id" value="${inq.id}" />
+                        <jsp:param name="subject" value="${inq.subject}" />
+                        <jsp:param name="client" value="${inq.clientName}" />
+                        <jsp:param name="project" value="${inq.projectTitle}" />
+                        <jsp:param name="date" value="${inq.createdAt}" />
+                        <jsp:param name="status" value="${inq.status}" />
+                        <jsp:param name="statusStyle" value="${inq.status == 'Resolved' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}" />
+                        <jsp:param name="replyLink" value="#" />
+                    </jsp:include>
+                </c:forEach>
+                <c:if test="${empty inquiries}">
+                    <p class="text-sm text-slate-500">No inquiries found.</p>
+                </c:if>
             </div>
 
         </main>
