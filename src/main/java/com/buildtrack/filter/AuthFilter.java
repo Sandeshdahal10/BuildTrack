@@ -16,7 +16,7 @@ import java.io.IOException;
  * If the user is not authenticated, they are redirected to the login page
  * with a warning message.
  */
-@WebFilter(filterName = "AuthFilter")
+@WebFilter(filterName = "AuthFilter", urlPatterns = {"/admin/*", "/worker/*", "/client/*"})
 public class AuthFilter implements Filter {
 
     @Override

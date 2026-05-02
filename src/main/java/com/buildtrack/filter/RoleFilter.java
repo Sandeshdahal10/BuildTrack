@@ -23,7 +23,7 @@ import java.io.IOException;
  * If the role doesn't match, the user is redirected to their
  * own dashboard with an unauthorized access message.
  */
-@WebFilter(filterName = "RoleFilter")
+@WebFilter(filterName = "RoleFilter", urlPatterns = {"/admin/*", "/worker/*", "/client/*"})
 public class RoleFilter implements Filter {
 
     @Override
