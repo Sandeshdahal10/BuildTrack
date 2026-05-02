@@ -1,5 +1,7 @@
 package com.buildtrack.controller.client;
 
+import com.buildtrack.model.User;
+import com.buildtrack.service.client.ClientService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -7,13 +9,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import com.buildtrack.dao.client.ClientDao;
-import com.buildtrack.model.User;
-
 import java.io.IOException;
 
 @WebServlet("/client/profile")
 public class ProfileController extends HttpServlet {
+
+    private final ClientService clientService = new ClientService();
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -29,8 +30,7 @@ public class ProfileController extends HttpServlet {
             return;
         }
         int userId = userIdObj;
-        ClientDao dao = new ClientDao();
-        User client = dao.findById(userId);
+        User client = clientService.getClientById(userId);
         request.setAttribute("client", client);
 
         request.getRequestDispatcher("/WEB-INF/views/client/Profile.jsp")
