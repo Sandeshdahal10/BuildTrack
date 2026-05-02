@@ -5,8 +5,31 @@
     <title>Projects - BuildTrack</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Subtle fade-in for project cards */
+        .fade-in {
+            animation: fadeIn 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Glass effect for cards */
+        .glass {
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(4px);
+        }
+        /* Modern button */
+        .modern-btn {
+            background: linear-gradient(90deg, #fbbf24 0%, #f59e42 100%);
+            box-shadow: 0 2px 8px 0 rgba(251,191,36,0.08);
+        }
+        .modern-btn:hover {
+            background: linear-gradient(90deg, #f59e42 0%, #fbbf24 100%);
+        }
+    </style>
 </head>
-<body class="h-screen overflow-hidden bg-slate-50 text-slate-900">
+<body class="h-screen overflow-hidden bg-gradient-to-br from-slate-50 via-slate-100 to-amber-50 text-slate-900">
 
 <div class="h-screen">
     <!-- Sidebar -->
@@ -25,17 +48,17 @@
             <!-- Page Header -->
             <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
                 <div>
-                    <h1 class="text-3xl font-bold tracking-tight text-slate-900">Projects</h1>
+                    <h1 class="text-3xl font-bold tracking-tight text-amber-600">Projects</h1>
                     <p class="text-slate-500 mt-1">Manage all construction projects</p>
                 </div>
-                <button class="flex items-center gap-2 rounded-lg bg-orange-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-orange-600 transition-colors">
+                <button class="modern-btn flex items-center gap-2 rounded-lg px-5 py-2.5 text-base font-semibold text-white shadow transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-amber-300">
                     <i data-lucide="plus" class="h-4 w-4"></i>
                     Add New Project
                 </button>
             </div>
 
             <!-- Project List -->
-            <div class="space-y-4">
+            <div class="space-y-5">
                 <c:choose>
                     <c:when test="${not empty projects}">
                         <c:forEach var="project" items="${projects}">
