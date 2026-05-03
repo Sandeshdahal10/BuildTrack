@@ -2,6 +2,9 @@ package com.buildtrack.model;
 
 import java.math.BigDecimal;
 
+/**
+ * Worker-specific view of user details and wage information.
+ */
 public class Worker {
     private int id;
     private String userId;
@@ -11,6 +14,10 @@ public class Worker {
     private String email;
     private String status;
 
-    public Worker() {}
+    /**
+     * Creates an empty worker instance.
+     */
+    public Worker() {
+    }
 
 }

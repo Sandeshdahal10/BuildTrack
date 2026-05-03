@@ -15,35 +15,62 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service layer for payroll generation and queries.
+ */
 public class PayrollService {
 
     private final PayrollDao payrollDAO = new PayrollDao();
     private final AttendanceDao attendanceDAO = new AttendanceDao();
     private final UserDao userDAO = new UserDao();
 
-    //Queries
+    // Queries
 
+    /**
+     * Returns payroll records for a month.
+     */
     public List<Payroll> getPayrollByMonth(String monthYear) {
-        if (ValidationUtil.isEmpty(monthYear)) return new ArrayList<>();
+        if (ValidationUtil.isEmpty(monthYear))
+            return new ArrayList<>();
         return payrollDAO.findByMonth(monthYear);
     }
 
-    public Payroll getPayrollById(int id) { return payrollDAO.findById(id); }
-    public Payslip getPayslipById(int id) { return payrollDAO.findPayslipById(id); }
+    /**
+     * Returns a payroll record by id.
+     */
+    public Payroll getPayrollById(int id) {
+        return payrollDAO.findById(id);
+    }
 
+    /**
+     * Returns a payslip by payroll id.
+     */
+    public Payslip getPayslipById(int id) {
+        return payrollDAO.findPayslipById(id);
+    }
+
+    /**
+     * Returns a worker payroll record for a month.
+     */
     public Payroll getWorkerPayroll(int workerId, String monthYear) {
         return payrollDAO.findByWorkerAndMonth(workerId, monthYear);
     }
 
+    /**
+     * Returns true if payroll exists for a worker and month.
+     */
     public boolean payrollExists(int workerId, String monthYear) {
         return payrollDAO.exists(workerId, monthYear);
     }
 
+    /**
+     * Returns total salary for a month, optionally filtered by status.
+     */
     public BigDecimal getTotalSalaryByMonth(String monthYear, String status) {
         return payrollDAO.getTotalSalaryByMonth(monthYear, status);
     }
 
-    //Generate Payroll
+    // Generate Payroll
 
     /**
      * Generate payroll for ALL approved workers for a given month.
@@ -59,7 +86,10 @@ public class PayrollService {
 
         // Get all approved workers with a daily wage > 0
         List<User> workers = userDAO.findByRoleAndStatus("WORKER", "APPROVED");
-        if (workers.isEmpty()) { errors.add("No approved workers found."); return errors; }
+        if (workers.isEmpty()) {
+            errors.add("No approved workers found.");
+            return errors;
+        }
 
         Connection conn = null;
         int generated = 0, skipped = 0;
@@ -117,10 +147,19 @@ public class PayrollService {
 
         } catch (SQLException e) {
             errors.add("Payroll generation failed: " + e.getMessage());
-            try { if (conn != null) conn.rollback(); } catch (SQLException ignored) {}
+            try {
+                if (conn != null)
+                    conn.rollback();
+            } catch (SQLException ignored) {
+            }
         } finally {
-            try { if (conn != null) { conn.setAutoCommit(true); conn.close(); } }
-            catch (SQLException ignored) {}
+            try {
+                if (conn != null) {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                }
+            } catch (SQLException ignored) {
+            }
         }
 
         return errors;
@@ -133,16 +172,22 @@ public class PayrollService {
         List<String> errors = new ArrayList<>();
 
         if (!monthYear.matches("\\d{4}-\\d{2}")) {
-            errors.add("Invalid month-year format."); return errors;
+            errors.add("Invalid month-year format.");
+            return errors;
         }
 
         User worker = userDAO.findById(workerId);
-        if (worker == null) { errors.add("Worker not found."); return errors; }
+        if (worker == null) {
+            errors.add("Worker not found.");
+            return errors;
+        }
         if (worker.getDailyWage() == null || worker.getDailyWage().compareTo(BigDecimal.ZERO) == 0) {
-            errors.add("Worker has no daily wage set. Please set the wage first."); return errors;
+            errors.add("Worker has no daily wage set. Please set the wage first.");
+            return errors;
         }
         if (payrollDAO.exists(workerId, monthYear)) {
-            errors.add("Payroll already exists for this worker and month."); return errors;
+            errors.add("Payroll already exists for this worker and month.");
+            return errors;
         }
 
         int[] counts = attendanceDAO.getAttendanceCounts(workerId, monthYear);
@@ -160,18 +205,29 @@ public class PayrollService {
         p.setDailyWage(worker.getDailyWage());
         p.setGeneratedBy(generatedBy);
 
-        if (payrollDAO.insert(p) == -1) errors.add("Failed to generate payroll.");
+        if (payrollDAO.insert(p) == -1)
+            errors.add("Failed to generate payroll.");
         return errors;
     }
 
-    //Mark as Paid
+    // Mark as Paid
 
+    /**
+     * Marks a payroll record as paid.
+     */
     public List<String> markAsPaid(int payrollId) {
         List<String> errors = new ArrayList<>();
         Payroll p = payrollDAO.findById(payrollId);
-        if (p == null) { errors.add("Payroll record not found."); return errors; }
-        if ("PAID".equals(p.getStatus())) { errors.add("Payroll is already marked as paid."); return errors; }
-        if (!payrollDAO.markAsPaid(payrollId)) errors.add("Failed to mark payroll as paid.");
+        if (p == null) {
+            errors.add("Payroll record not found.");
+            return errors;
+        }
+        if ("PAID".equals(p.getStatus())) {
+            errors.add("Payroll is already marked as paid.");
+            return errors;
+        }
+        if (!payrollDAO.markAsPaid(payrollId))
+            errors.add("Failed to mark payroll as paid.");
         return errors;
     }
 }

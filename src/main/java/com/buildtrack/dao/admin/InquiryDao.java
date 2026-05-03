@@ -10,19 +10,27 @@ import java.util.List;
 import com.buildtrack.model.Inquiry;
 import com.buildtrack.util.DBUtil;
 
+/**
+ * DAO for retrieving and updating client inquiries.
+ */
 public class InquiryDao {
 
+    /**
+     * Returns all inquiries with client and project display fields.
+     *
+     * @return a list of all inquiries
+     */
     public List<Inquiry> getAllInquiries() {
         List<Inquiry> inquiries = new ArrayList<>();
         String sql = "SELECT i.*, u.full_name as client_name, p.title as project_title " +
-                     "FROM inquiries i " +
-                     "JOIN users u ON i.client_id = u.id " +
-                     "JOIN projects p ON i.project_id = p.id " +
-                     "ORDER BY i.created_at DESC";
+                "FROM inquiries i " +
+                "JOIN users u ON i.client_id = u.id " +
+                "JOIN projects p ON i.project_id = p.id " +
+                "ORDER BY i.created_at DESC";
 
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 inquiries.add(mapRow(rs));
@@ -33,10 +41,18 @@ public class InquiryDao {
         return inquiries;
     }
 
+    /**
+     * Updates the reply and status for an inquiry.
+     *
+     * @param inquiryId inquiry id
+     * @param reply     admin reply text
+     * @param status    new status value
+     * @return true if update succeeded
+     */
     public boolean updateInquiryReplyAndStatus(int inquiryId, String reply, String status) {
         String sql = "UPDATE inquiries SET status = ? WHERE id = ?"; // simplified for status update demo
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, status);
             ps.setInt(2, inquiryId);
             return ps.executeUpdate() > 0;
@@ -46,6 +62,13 @@ public class InquiryDao {
         return false;
     }
 
+    /**
+     * Maps a result set row to an Inquiry.
+     *
+     * @param rs result set positioned on a row
+     * @return mapped inquiry
+     * @throws SQLException if column access fails
+     */
     private Inquiry mapRow(ResultSet rs) throws SQLException {
         Inquiry i = new Inquiry();
         i.setId(rs.getInt("id"));
@@ -57,7 +80,7 @@ public class InquiryDao {
         i.setStatus(rs.getString("status"));
         i.setCreatedAt(rs.getTimestamp("created_at"));
         i.setUpdatedAt(rs.getTimestamp("updated_at"));
-        
+
         i.setClientName(rs.getString("client_name"));
         i.setProjectTitle(rs.getString("project_title"));
         return i;

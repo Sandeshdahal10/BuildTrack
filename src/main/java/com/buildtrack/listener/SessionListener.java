@@ -19,6 +19,11 @@ public class SessionListener implements HttpSessionListener {
     /** Thread-safe counter for active sessions. */
     private static final AtomicInteger activeSessions = new AtomicInteger(0);
 
+    /**
+     * Invoked when a new session is created.
+     *
+     * @param se session event
+     */
     @Override
     public void sessionCreated(HttpSessionEvent se) {
         int count = activeSessions.incrementAndGet();
@@ -27,6 +32,11 @@ public class SessionListener implements HttpSessionListener {
                 + " | Total active sessions: " + count);
     }
 
+    /**
+     * Invoked when a session is destroyed.
+     *
+     * @param se session event
+     */
     @Override
     public void sessionDestroyed(HttpSessionEvent se) {
         HttpSession session = se.getSession();
@@ -48,6 +58,8 @@ public class SessionListener implements HttpSessionListener {
     /**
      * Returns the current number of active sessions.
      * Can be used in admin dashboard for monitoring.
+     *
+     * @return current active session count
      */
     public static int getActiveSessionCount() {
         return activeSessions.get();

@@ -25,16 +25,22 @@ public class ExpenseService {
 
     // ==================== Validation ====================
 
+    /**
+     * Validates expense input fields and returns error messages.
+     */
     private List<String> validateExpense(String projectIdStr, String category,
-                                         String amountStr, String expenseDateStr) {
+            String amountStr, String expenseDateStr) {
         List<String> errors = new ArrayList<>();
 
         // Project ID
         if (ValidationUtil.isEmpty(projectIdStr)) {
             errors.add("Project is required.");
         } else {
-            try { Integer.parseInt(projectIdStr); }
-            catch (NumberFormatException e) { errors.add("Invalid project ID."); }
+            try {
+                Integer.parseInt(projectIdStr);
+            } catch (NumberFormatException e) {
+                errors.add("Invalid project ID.");
+            }
         }
 
         // Category
@@ -43,7 +49,10 @@ public class ExpenseService {
         } else {
             boolean valid = false;
             for (String vc : VALID_CATEGORIES) {
-                if (vc.equalsIgnoreCase(category.trim())) { valid = true; break; }
+                if (vc.equalsIgnoreCase(category.trim())) {
+                    valid = true;
+                    break;
+                }
             }
             if (!valid) {
                 errors.add("Invalid category. Allowed: Transport, Rent, Permits, Utilities, Equipment, Other.");
@@ -68,8 +77,11 @@ public class ExpenseService {
         if (ValidationUtil.isEmpty(expenseDateStr)) {
             errors.add("Expense date is required.");
         } else {
-            try { Date.valueOf(expenseDateStr); }
-            catch (IllegalArgumentException e) { errors.add("Invalid date format."); }
+            try {
+                Date.valueOf(expenseDateStr);
+            } catch (IllegalArgumentException e) {
+                errors.add("Invalid date format.");
+            }
         }
 
         return errors;
@@ -77,13 +89,17 @@ public class ExpenseService {
 
     // ==================== CRUD ====================
 
+    /**
+     * Creates a new expense after validation.
+     */
     public List<String> createExpense(String projectIdStr, String category,
-                                      String description, String amountStr,
-                                      String expenseDateStr, int recordedBy) {
+            String description, String amountStr,
+            String expenseDateStr, int recordedBy) {
 
         List<String> errors = validateExpense(projectIdStr, category,
                 amountStr, expenseDateStr);
-        if (!errors.isEmpty()) return errors;
+        if (!errors.isEmpty())
+            return errors;
 
         Expense expense = new Expense();
         expense.setProjectId(Integer.parseInt(projectIdStr));
@@ -99,16 +115,23 @@ public class ExpenseService {
         return errors;
     }
 
+    /**
+     * Updates an existing expense after validation.
+     */
     public List<String> updateExpense(int id, String projectIdStr, String category,
-                                      String description, String amountStr,
-                                      String expenseDateStr) {
+            String description, String amountStr,
+            String expenseDateStr) {
 
         List<String> errors = validateExpense(projectIdStr, category,
                 amountStr, expenseDateStr);
-        if (!errors.isEmpty()) return errors;
+        if (!errors.isEmpty())
+            return errors;
 
         Expense existing = expenseDAO.findById(id);
-        if (existing == null) { errors.add("Expense not found."); return errors; }
+        if (existing == null) {
+            errors.add("Expense not found.");
+            return errors;
+        }
 
         existing.setProjectId(Integer.parseInt(projectIdStr));
         existing.setCategory(category.trim());
@@ -122,6 +145,9 @@ public class ExpenseService {
         return errors;
     }
 
+    /**
+     * Deletes an expense if it exists.
+     */
     public List<String> deleteExpense(int id) {
         List<String> errors = new ArrayList<>();
         if (expenseDAO.findById(id) == null) {
@@ -136,55 +162,91 @@ public class ExpenseService {
 
     // ==================== Read ====================
 
+    /**
+     * Returns an expense by id.
+     */
     public Expense getById(int id) {
         return expenseDAO.findById(id);
     }
 
+    /**
+     * Returns all expenses.
+     */
     public List<Expense> getAllExpenses() {
         return expenseDAO.findAll();
     }
 
+    /**
+     * Returns expenses for a project.
+     */
     public List<Expense> getExpensesByProject(int projectId) {
         return expenseDAO.findByProject(projectId);
     }
 
+    /**
+     * Returns expenses for a project in a date range.
+     */
     public List<Expense> getExpensesByProjectAndDateRange(int projectId,
-                                                          String dateFrom, String dateTo) {
+            String dateFrom, String dateTo) {
         return expenseDAO.findByProjectAndDateRange(projectId, dateFrom, dateTo);
     }
 
+    /**
+     * Returns recent expenses with a limit.
+     */
     public List<Expense> getRecentExpenses(int limit) {
         return expenseDAO.findRecent(limit);
     }
 
     // ==================== Aggregates ====================
 
+    /**
+     * Returns total expenses for a project.
+     */
     public BigDecimal getTotalByProject(int projectId) {
         return expenseDAO.getTotalByProject(projectId);
     }
 
+    /**
+     * Returns the grand total of all expenses.
+     */
     public BigDecimal getGrandTotal() {
         return expenseDAO.getGrandTotal();
     }
 
+    /**
+     * Returns category breakdown for a project.
+     */
     public List<Map<String, Object>> getCategoryBreakdown(int projectId) {
         return expenseDAO.getCategoryBreakdown(projectId);
     }
 
+    /**
+     * Returns per-project expense summary.
+     */
     public List<Map<String, Object>> getProjectExpenseSummary() {
         return expenseDAO.getProjectExpenseSummary();
     }
 
+    /**
+     * Returns total expenses for a project and month.
+     */
     public BigDecimal getTotalByProjectAndMonth(int projectId, String monthYear) {
         return expenseDAO.getTotalByProjectAndMonth(projectId, monthYear);
     }
 
+    /**
+     * Returns total expense record count.
+     */
     public int getCount() {
         return expenseDAO.countAll();
     }
 
     // ==================== Utility ====================
 
+    /**
+     * Returns allowed expense categories.
+     */
     public String[] getValidCategories() {
         return VALID_CATEGORIES;
     }

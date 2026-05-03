@@ -18,13 +18,15 @@ public class ClientDao {
 	 * Find client (user) by id. Returns null if not found.
 	 */
 	public User findById(int id) {
-		String sql = "SELECT id,full_name,email,phone,role,status,daily_wage,reset_token,reset_token_expiry,created_at,updated_at " +
+		String sql = "SELECT id,full_name,email,phone,role,status,daily_wage,reset_token,reset_token_expiry,created_at,updated_at "
+				+
 				"FROM users WHERE id = ?";
 		try (Connection conn = DBUtil.getConnection();
-			 PreparedStatement ps = conn.prepareStatement(sql)) {
+				PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()) return mapRowToUser(rs);
+			if (rs.next())
+				return mapRowToUser(rs);
 		} catch (SQLException e) {
 			System.err.println("[ClientDAO] findById error: " + e.getMessage());
 		}
@@ -37,7 +39,7 @@ public class ClientDao {
 	public boolean updateProfile(int id, String fullName, String phone) {
 		String sql = "UPDATE users SET full_name = ?, phone = ? WHERE id = ?";
 		try (Connection conn = DBUtil.getConnection();
-			 PreparedStatement ps = conn.prepareStatement(sql)) {
+				PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, fullName);
 			ps.setString(2, phone);
 			ps.setInt(3, id);
@@ -57,10 +59,11 @@ public class ClientDao {
 				"FROM projects p LEFT JOIN users u ON p.client_id = u.id " +
 				"WHERE p.client_id = ? ORDER BY p.created_at DESC";
 		try (Connection conn = DBUtil.getConnection();
-			 PreparedStatement ps = conn.prepareStatement(sql)) {
+				PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setInt(1, clientId);
 			ResultSet rs = ps.executeQuery();
-			while (rs.next()) list.add(mapRowToProject(rs, true));
+			while (rs.next())
+				list.add(mapRowToProject(rs, true));
 		} catch (SQLException e) {
 			System.err.println("[ClientDAO] findProjectsByClientId error: " + e.getMessage());
 		}
@@ -73,10 +76,11 @@ public class ClientDao {
 	public int countProjects(int clientId) {
 		String sql = "SELECT COUNT(*) FROM projects WHERE client_id = ?";
 		try (Connection conn = DBUtil.getConnection();
-			 PreparedStatement ps = conn.prepareStatement(sql)) {
+				PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setInt(1, clientId);
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()) return rs.getInt(1);
+			if (rs.next())
+				return rs.getInt(1);
 		} catch (SQLException e) {
 			System.err.println("[ClientDAO] countProjects error: " + e.getMessage());
 		}
@@ -89,10 +93,11 @@ public class ClientDao {
 	public java.math.BigDecimal totalBudgetForClient(int clientId) {
 		String sql = "SELECT COALESCE(SUM(total_budget),0) FROM projects WHERE client_id = ?";
 		try (Connection conn = DBUtil.getConnection();
-			 PreparedStatement ps = conn.prepareStatement(sql)) {
+				PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setInt(1, clientId);
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()) return rs.getBigDecimal(1);
+			if (rs.next())
+				return rs.getBigDecimal(1);
 		} catch (SQLException e) {
 			System.err.println("[ClientDAO] totalBudgetForClient error: " + e.getMessage());
 		}
@@ -100,6 +105,13 @@ public class ClientDao {
 	}
 
 	// ----------------- Helpers -----------------
+	/**
+	 * Maps a result set row to a User.
+	 *
+	 * @param rs result set positioned on a row
+	 * @return mapped user
+	 * @throws SQLException if column access fails
+	 */
 	private User mapRowToUser(ResultSet rs) throws SQLException {
 		User u = new User();
 		u.setId(rs.getInt("id"));
@@ -107,16 +119,39 @@ public class ClientDao {
 		u.setEmail(rs.getString("email"));
 		u.setPhone(rs.getString("phone"));
 		u.setPassword(rs.getString("password"));
-		try { u.setRole(com.buildtrack.model.Role.fromString(rs.getString("role"))); } catch (Exception ignored) {}
+		try {
+			u.setRole(com.buildtrack.model.Role.fromString(rs.getString("role")));
+		} catch (Exception ignored) {
+		}
 		u.setStatus(rs.getString("status"));
 		u.setDailyWage(rs.getBigDecimal("daily_wage"));
-		try { u.setResetToken(rs.getString("reset_token")); } catch (Exception ignored) {}
-		try { u.setResetTokenExpiry(rs.getTimestamp("reset_token_expiry")); } catch (Exception ignored) {}
-		try { u.setCreatedAt(rs.getTimestamp("created_at")); } catch (Exception ignored) {}
-		try { u.setUpdatedAt(rs.getTimestamp("updated_at")); } catch (Exception ignored) {}
+		try {
+			u.setResetToken(rs.getString("reset_token"));
+		} catch (Exception ignored) {
+		}
+		try {
+			u.setResetTokenExpiry(rs.getTimestamp("reset_token_expiry"));
+		} catch (Exception ignored) {
+		}
+		try {
+			u.setCreatedAt(rs.getTimestamp("created_at"));
+		} catch (Exception ignored) {
+		}
+		try {
+			u.setUpdatedAt(rs.getTimestamp("updated_at"));
+		} catch (Exception ignored) {
+		}
 		return u;
 	}
 
+	/**
+	 * Maps a result set row to a Project.
+	 *
+	 * @param rs         result set positioned on a row
+	 * @param withClient whether to populate client name
+	 * @return mapped project
+	 * @throws SQLException if column access fails
+	 */
 	private Project mapRowToProject(ResultSet rs, boolean withClient) throws SQLException {
 		Project p = new Project();
 		p.setId(rs.getInt("id"));
@@ -130,7 +165,8 @@ public class ClientDao {
 		p.setStatus(rs.getString("status"));
 		p.setCreatedAt(rs.getTimestamp("created_at"));
 		p.setUpdatedAt(rs.getTimestamp("updated_at"));
-		if (withClient) p.setClientName(rs.getString("client_name"));
+		if (withClient)
+			p.setClientName(rs.getString("client_name"));
 		return p;
 	}
 }

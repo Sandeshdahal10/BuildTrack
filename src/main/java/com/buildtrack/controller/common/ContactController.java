@@ -11,12 +11,15 @@ import java.io.IOException;
 /**
  * Public Contact page.
  *
- * GET  /contact -> renders contact form
+ * GET /contact -> renders contact form
  * POST /contact -> basic server-side validation and shows success message
  */
 @WebServlet("/contact")
 public class ContactController extends HttpServlet {
 
+    /**
+     * Handles GET requests for the contact page.
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -24,6 +27,9 @@ public class ContactController extends HttpServlet {
                 .forward(request, response);
     }
 
+    /**
+     * Handles POST submissions from the contact form.
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -65,13 +71,16 @@ public class ContactController extends HttpServlet {
         }
 
         // In a real SaaS, you'd store to DB or send to a support inbox.
-        request.setAttribute("successMessage", "Thanks — we’ve received your message. Our team will contact you shortly.");
+        request.setAttribute("successMessage",
+                "Thanks — we’ve received your message. Our team will contact you shortly.");
         request.getRequestDispatcher("/WEB-INF/views/common/contact.jsp")
                 .forward(request, response);
     }
 
+    /**
+     * Returns a trimmed string or null if input is null.
+     */
     private String trim(String v) {
         return v == null ? null : v.trim();
     }
 }
-

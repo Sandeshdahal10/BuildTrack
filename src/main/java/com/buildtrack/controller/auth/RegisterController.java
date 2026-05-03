@@ -14,8 +14,8 @@ import java.util.List;
 /**
  * Handles user registration.
  *
- * GET  /register  → Shows the registration form
- * POST /register  → Processes registration data
+ * GET /register → Shows the registration form
+ * POST /register → Processes registration data
  *
  * New users are created with status PENDING and must be
  * approved by an administrator before they can log in.
@@ -25,6 +25,9 @@ public class RegisterController extends HttpServlet {
 
     private final AuthService authService = new AuthService();
 
+    /**
+     * Renders the registration form.
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -41,17 +44,20 @@ public class RegisterController extends HttpServlet {
                 .forward(request, response);
     }
 
+    /**
+     * Processes registration and creates a pending user.
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         // Get form parameters
-        String fullName        = request.getParameter("fullName");
-        String email           = request.getParameter("email");
-        String phone           = request.getParameter("phone");
-        String password        = request.getParameter("password");
+        String fullName = request.getParameter("fullName");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+        String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
-        String role            = request.getParameter("role");
+        String role = request.getParameter("role");
 
         // Register via service
         List<String> errors = authService.register(

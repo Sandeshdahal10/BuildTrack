@@ -39,8 +39,8 @@ public class ReportDao {
                 "ORDER BY p.title";
 
         try (Connection conn = DBUtil.getConnection();
-             Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql)) {
             while (rs.next()) {
                 Map<String, Object> row = buildBudgetRow(rs);
                 list.add(row);
@@ -66,17 +66,19 @@ public class ReportDao {
                 "FROM projects p WHERE p.id = ?";
 
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, projectId);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) return buildBudgetRow(rs);
+            if (rs.next())
+                return buildBudgetRow(rs);
         } catch (SQLException e) {
             System.err.println("[ReportDAO] getBudgetVsActual error: " + e.getMessage());
         }
         return null;
     }
 
-    // ==================== Expense Category Breakdown (UPDATED) ====================
+    // ==================== Expense Category Breakdown (UPDATED)
+    // ====================
 
     /**
      * Material expense categories for a project (unchanged).
@@ -93,7 +95,7 @@ public class ReportDao {
                 "ORDER BY total_cost DESC";
 
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, projectId);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -122,7 +124,7 @@ public class ReportDao {
                 "GROUP BY category ORDER BY total_cost DESC";
 
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, projectId);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -155,6 +157,9 @@ public class ReportDao {
 
     // ==================== Payroll Summary (unchanged) ====================
 
+    /**
+     * Returns payroll summary aggregated by month.
+     */
     public List<Map<String, Object>> getPayrollSummaryByMonth() {
         List<Map<String, Object>> list = new ArrayList<>();
         String sql = "SELECT month_year, " +
@@ -166,8 +171,8 @@ public class ReportDao {
                 "GROUP BY month_year ORDER BY month_year DESC LIMIT 12";
 
         try (Connection conn = DBUtil.getConnection();
-             Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql)) {
             while (rs.next()) {
                 Map<String, Object> row = new HashMap<>();
                 row.put("monthYear", rs.getString("month_year"));
@@ -222,11 +227,12 @@ public class ReportDao {
                 "AS project_total";
 
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, projectId);
             ps.setInt(2, projectId);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) return rs.getBigDecimal(1);
+            if (rs.next())
+                return rs.getBigDecimal(1);
         } catch (SQLException e) {
             System.err.println("[ReportDAO] getProjectTotalCost error: " + e.getMessage());
         }
@@ -235,18 +241,24 @@ public class ReportDao {
 
     // ==================== Helpers ====================
 
+    /**
+     * Runs a sum query that returns a single BigDecimal.
+     */
     private BigDecimal runSumQuery(String sql) {
         try (Connection conn = DBUtil.getConnection();
-             Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
-            if (rs.next()) return rs.getBigDecimal(1);
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql)) {
+            if (rs.next())
+                return rs.getBigDecimal(1);
         } catch (SQLException e) {
             System.err.println("[ReportDAO] runSumQuery error: " + e.getMessage());
         }
         return BigDecimal.ZERO;
     }
 
-    /** Build a budget comparison row with computed fields. */
+    /**
+     * Builds a budget comparison row with computed fields.
+     */
     private Map<String, Object> buildBudgetRow(ResultSet rs) throws SQLException {
         Map<String, Object> row = new HashMap<>();
         BigDecimal budget = rs.getBigDecimal("total_budget");

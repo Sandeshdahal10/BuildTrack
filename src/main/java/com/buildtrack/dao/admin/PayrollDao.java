@@ -13,10 +13,19 @@ import com.buildtrack.model.Payroll;
 import com.buildtrack.model.Payslip;
 import com.buildtrack.util.DBUtil;
 
+/**
+ * DAO for payroll and payslip queries.
+ */
 public class PayrollDao {
 
     // Insert / Update
 
+    /**
+     * Inserts a payroll record.
+     *
+     * @param p payroll record
+     * @return generated id, or -1 if insert failed
+     */
     public int insert(Payroll p) {
         String sql = "INSERT INTO payroll (worker_id,month_year,total_days,half_days,daily_wage,generated_by) " +
                 "VALUES (?,?,?,?,?,?)";
@@ -42,7 +51,14 @@ public class PayrollDao {
         return -1;
     }
 
-    /** Insert payroll using external connection (for batch transactions). */
+    /**
+     * Inserts payroll using an external connection (for batch transactions).
+     *
+     * @param conn open connection
+     * @param p    payroll record
+     * @return generated id, or -1 if insert failed
+     * @throws SQLException if insert fails
+     */
     public int insert(Connection conn, Payroll p) throws SQLException {
         String sql = "INSERT INTO payroll (worker_id,month_year,total_days,half_days,daily_wage,generated_by) " +
                 "VALUES (?,?,?,?,?,?)";
@@ -61,6 +77,12 @@ public class PayrollDao {
         return -1;
     }
 
+    /**
+     * Marks a payroll record as paid.
+     *
+     * @param id payroll id
+     * @return true if update succeeded
+     */
     public boolean markAsPaid(int id) {
         String sql = "UPDATE payroll SET status='PAID', paid_at=NOW() WHERE id=? AND status='PENDING'";
         try (Connection conn = DBUtil.getConnection();
@@ -75,6 +97,12 @@ public class PayrollDao {
 
     // ==================== Queries ====================
 
+    /**
+     * Returns payroll records for a month.
+     *
+     * @param monthYear month (YYYY-MM)
+     * @return payroll list
+     */
     public List<Payroll> findByMonth(String monthYear) {
         List<Payroll> list = new ArrayList<>();
         String sql = "SELECT pr.*, u.full_name AS worker_name, u.email AS worker_email " +
@@ -92,6 +120,12 @@ public class PayrollDao {
         return list;
     }
 
+    /**
+     * Finds a payroll record by id.
+     *
+     * @param id payroll id
+     * @return payroll or null if not found
+     */
     public Payroll findById(int id) {
         String sql = "SELECT pr.*, u.full_name AS worker_name, u.email AS worker_email " +
                 "FROM payroll pr JOIN users u ON pr.worker_id = u.id WHERE pr.id = ?";
@@ -107,6 +141,13 @@ public class PayrollDao {
         return null;
     }
 
+    /**
+     * Finds a worker payroll record for a month.
+     *
+     * @param workerId  worker id
+     * @param monthYear month (YYYY-MM)
+     * @return payroll or null if not found
+     */
     public Payroll findByWorkerAndMonth(int workerId, String monthYear) {
         String sql = "SELECT pr.*, u.full_name AS worker_name, u.email AS worker_email " +
                 "FROM payroll pr JOIN users u ON pr.worker_id = u.id " +
@@ -124,7 +165,12 @@ public class PayrollDao {
         return null;
     }
 
-    /** Build a full Payslip DTO from payroll ID. */
+    /**
+     * Builds a full Payslip DTO from payroll id.
+     *
+     * @param id payroll id
+     * @return payslip or null if not found
+     */
     public Payslip findPayslipById(int id) {
         String sql = "SELECT pr.*, u.full_name AS worker_name, u.email AS worker_email, " +
                 "u.phone AS worker_phone, a.full_name AS admin_name " +
@@ -144,6 +190,13 @@ public class PayrollDao {
         return null;
     }
 
+    /**
+     * Checks if a payroll record exists for a worker in a month.
+     *
+     * @param workerId  worker id
+     * @param monthYear month (YYYY-MM)
+     * @return true if a record exists
+     */
     public boolean exists(int workerId, String monthYear) {
         String sql = "SELECT COUNT(*) FROM payroll WHERE worker_id=? AND month_year=?";
         try (Connection conn = DBUtil.getConnection();
@@ -159,7 +212,13 @@ public class PayrollDao {
         return false;
     }
 
-    /** Get total salary paid in a month. */
+    /**
+     * Gets total salary paid in a month.
+     *
+     * @param monthYear month (YYYY-MM)
+     * @param status    optional status filter
+     * @return total salary
+     */
     public java.math.BigDecimal getTotalSalaryByMonth(String monthYear, String status) {
         String sql;
         if (status != null) {
@@ -181,6 +240,13 @@ public class PayrollDao {
         return java.math.BigDecimal.ZERO;
     }
 
+    /**
+     * Maps a result set row to a Payroll.
+     *
+     * @param rs result set positioned on a row
+     * @return mapped payroll
+     * @throws SQLException if column access fails
+     */
     private Payroll mapRow(ResultSet rs) throws SQLException {
         Payroll p = new Payroll();
         p.setId(rs.getInt("id"));
@@ -199,6 +265,13 @@ public class PayrollDao {
         return p;
     }
 
+    /**
+     * Maps a result set row to a Payslip.
+     *
+     * @param rs result set positioned on a row
+     * @return mapped payslip
+     * @throws SQLException if column access fails
+     */
     private Payslip mapPayslip(ResultSet rs) throws SQLException {
         Payslip ps = new Payslip();
         ps.setPayrollId(rs.getInt("id"));

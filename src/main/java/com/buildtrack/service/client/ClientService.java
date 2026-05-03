@@ -12,6 +12,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Service layer for client profile, projects, and dashboard summary.
+ */
 public class ClientService {
 
 	private final ClientDao clientDAO = new ClientDao();
@@ -19,10 +22,16 @@ public class ClientService {
 
 	// Client profile
 
+	/**
+	 * Returns a client by id.
+	 */
 	public User getClientById(int id) {
 		return clientDAO.findById(id);
 	}
 
+	/**
+	 * Updates client profile details with validation.
+	 */
 	public List<String> updateProfile(int id, String fullName, String phone) {
 		List<String> errors = new ArrayList<>();
 
@@ -44,18 +53,30 @@ public class ClientService {
 
 	// Projects and budget
 
+	/**
+	 * Returns projects for a client.
+	 */
 	public List<Project> getProjectsByClientId(int clientId) {
 		return clientDAO.findProjectsByClientId(clientId);
 	}
 
+	/**
+	 * Returns project count for a client.
+	 */
 	public int countProjects(int clientId) {
 		return clientDAO.countProjects(clientId);
 	}
 
+	/**
+	 * Returns total budget for a client across projects.
+	 */
 	public BigDecimal getTotalBudgetForClient(int clientId) {
 		return clientDAO.totalBudgetForClient(clientId);
 	}
 
+	/**
+	 * Returns a dashboard summary for a client.
+	 */
 	public Map<String, Object> getDashboardSummary(int clientId) {
 		List<Project> projects = getProjectsByClientId(clientId);
 		Map<String, Object> summary = new LinkedHashMap<>();

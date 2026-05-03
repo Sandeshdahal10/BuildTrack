@@ -10,19 +10,27 @@ import java.util.List;
 import com.buildtrack.model.Document;
 import com.buildtrack.util.DBUtil;
 
+/**
+ * DAO for retrieving document metadata for admin reporting.
+ */
 public class DocumentDao {
 
+    /**
+     * Returns all documents with client and project display fields.
+     * 
+     * @return a list of all documents
+     */
     public List<Document> getAllDocuments() {
         List<Document> documents = new ArrayList<>();
         String sql = "SELECT d.*, u.full_name as client_name, p.title as project_title " +
-                     "FROM documents d " +
-                     "JOIN users u ON d.client_id = u.id " +
-                     "JOIN projects p ON d.project_id = p.id " +
-                     "ORDER BY d.uploaded_at DESC";
+                "FROM documents d " +
+                "JOIN users u ON d.client_id = u.id " +
+                "JOIN projects p ON d.project_id = p.id " +
+                "ORDER BY d.uploaded_at DESC";
 
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 documents.add(mapRow(rs));
@@ -33,6 +41,13 @@ public class DocumentDao {
         return documents;
     }
 
+    /**
+     * Maps a result set row to a Document.
+     *
+     * @param rs result set positioned on a row
+     * @return mapped document
+     * @throws SQLException if column access fails
+     */
     private Document mapRow(ResultSet rs) throws SQLException {
         Document d = new Document();
         d.setId(rs.getInt("id"));
@@ -41,7 +56,7 @@ public class DocumentDao {
         d.setFileName(rs.getString("file_name"));
         d.setFilePath(rs.getString("file_path"));
         d.setUploadedAt(rs.getTimestamp("uploaded_at"));
-        
+
         d.setClientName(rs.getString("client_name"));
         d.setProjectTitle(rs.getString("project_title"));
         return d;

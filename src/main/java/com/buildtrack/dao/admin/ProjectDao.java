@@ -8,84 +8,124 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DAO for project CRUD and worker assignments.
+ */
 public class ProjectDao {
 
-    //CRUD Operation
-    public List<Project> findAll(){
+    // CRUD Operation
+    /**
+     * Returns all projects ordered by creation date.
+     */
+    public List<Project> findAll() {
         List<Project> list = new ArrayList<>();
         String sql = "SELECT p.*, u.full_name AS client_name " +
                 "FROM projects p LEFT JOIN users u ON p.client_id = u.id " +
                 "ORDER BY p.created_at DESC";
-        try(Connection conn = DBUtil.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery()
-        ){
-            while (rs.next()) list.add(mapRow(rs, true));
+        try (Connection conn = DBUtil.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
+            while (rs.next())
+                list.add(mapRow(rs, true));
         } catch (SQLException e) {
             System.err.println("Project Dao error" + e.getMessage());
         }
         return list;
     }
-    public List<Project> findByStatus(String status){
-        List <Project> list = new ArrayList<>();
+
+    /**
+     * Returns projects filtered by status.
+     *
+     * @param status project status
+     * @return matching projects
+     */
+    public List<Project> findByStatus(String status) {
+        List<Project> list = new ArrayList<>();
         String sql = "SELECT p.*, u.full_name AS client_name " +
                 "FROM projects p LEFT JOIN users u ON p.client_id = u.id " +
                 "WHERE p.status = ? ORDER BY p.created_at DESC";
-        try(Connection conn = DBUtil.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql)
-        ){
-            ps.setString(1,status);
+        try (Connection conn = DBUtil.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, status);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) list.add(mapRow(rs, true));
+            while (rs.next())
+                list.add(mapRow(rs, true));
         } catch (SQLException e) {
             System.err.println("Project Dao findBy Status Error" + e.getMessage());
         }
         return list;
     }
+
+    /**
+     * Finds a project by id.
+     *
+     * @param id project id
+     * @return project or null if not found
+     */
     public Project findById(int id) {
         String sql = "SELECT p.*, u.full_name AS client_name " +
                 "FROM projects p LEFT JOIN users u ON p.client_id = u.id " +
                 "WHERE p.id = ?";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) return mapRow(rs, true);
+            if (rs.next())
+                return mapRow(rs, true);
         } catch (SQLException e) {
             System.err.println("[ProjectDAO] findById error: " + e.getMessage());
         }
         return null;
     }
+
+    /**
+     * Inserts a new project.
+     *
+     * @param p project to insert
+     * @return generated id, or -1 if insert failed
+     */
     public int insert(Project p) {
         String sql = "INSERT INTO projects (title,description,client_id,start_date,end_date,total_budget,status) " +
                 "VALUES (?,?,?,?,?,?,?)";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, p.getTitle());
             ps.setString(2, p.getDescription());
-            if (p.getClientId() != null) ps.setInt(3, p.getClientId());
-            else ps.setNull(3, Types.INTEGER);
+            if (p.getClientId() != null)
+                ps.setInt(3, p.getClientId());
+            else
+                ps.setNull(3, Types.INTEGER);
             ps.setDate(4, p.getStartDate());
             ps.setDate(5, p.getEndDate());
             ps.setBigDecimal(6, p.getTotalBudget());
             ps.setString(7, p.getStatus());
             ps.executeUpdate();
             ResultSet keys = ps.getGeneratedKeys();
-            if (keys.next()) return keys.getInt(1);
+            if (keys.next())
+                return keys.getInt(1);
         } catch (SQLException e) {
             System.err.println("[ProjectDAO] insert error: " + e.getMessage());
         }
         return -1;
     }
+
+    /**
+     * Updates an existing project.
+     *
+     * @param p project to update
+     * @return true if update succeeded
+     */
     public boolean update(Project p) {
         String sql = "UPDATE projects SET title=?,description=?,client_id=?,start_date=?," +
                 "end_date=?,total_budget=?,status=? WHERE id=?";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, p.getTitle());
             ps.setString(2, p.getDescription());
-            if (p.getClientId() != null) ps.setInt(3, p.getClientId());
-            else ps.setNull(3, Types.INTEGER);
+            if (p.getClientId() != null)
+                ps.setInt(3, p.getClientId());
+            else
+                ps.setNull(3, Types.INTEGER);
             ps.setDate(4, p.getStartDate());
             ps.setDate(5, p.getEndDate());
             ps.setBigDecimal(6, p.getTotalBudget());
@@ -97,10 +137,17 @@ public class ProjectDao {
         }
         return false;
     }
+
+    /**
+     * Deletes a project by id.
+     *
+     * @param id project id
+     * @return true if delete succeeded
+     */
     public boolean delete(int id) {
         String sql = "DELETE FROM projects WHERE id = ?";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -109,38 +156,50 @@ public class ProjectDao {
         return false;
     }
 
-    //Logic of Counting
+    // Logic of Counting
+    /**
+     * Returns project count for a status.
+     */
     public int countByStatus(String status) {
         String sql = "SELECT COUNT(*) FROM projects WHERE status = ?";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, status);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) return rs.getInt(1);
+            if (rs.next())
+                return rs.getInt(1);
         } catch (SQLException e) {
             System.err.println("ProjectDAO countByStatus error: " + e.getMessage());
         }
         return 0;
     }
+
+    /**
+     * Returns total project count.
+     */
     public int countAll() {
         String sql = "SELECT COUNT(*) FROM projects";
         try (Connection conn = DBUtil.getConnection();
-             Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
-            if (rs.next()) return rs.getInt(1);
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql)) {
+            if (rs.next())
+                return rs.getInt(1);
         } catch (SQLException e) {
             System.err.println("ProjectDAO countAll error: " + e.getMessage());
         }
         return 0;
     }
 
-    //Worker Assignment
+    // Worker Assignment
 
+    /**
+     * Assigns a worker to a project.
+     */
     public boolean assignWorker(int projectId, int workerId, String assignedRole) {
         String sql = "INSERT INTO project_workers (project_id,worker_id,assigned_role,assigned_date,is_active) " +
                 "VALUES (?,?,?,CURDATE(),1)";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, projectId);
             ps.setInt(2, workerId);
             ps.setString(3, assignedRole);
@@ -154,11 +213,15 @@ public class ProjectDao {
         }
         return false;
     }
+
+    /**
+     * Removes a worker from a project.
+     */
     public boolean removeWorker(int projectId, int workerId) {
         String sql = "UPDATE project_workers SET is_active=0, removed_date=CURDATE() " +
                 "WHERE project_id=? AND worker_id=? AND is_active=1";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, projectId);
             ps.setInt(2, workerId);
             return ps.executeUpdate() > 0;
@@ -168,6 +231,9 @@ public class ProjectDao {
         return false;
     }
 
+    /**
+     * Returns assigned workers for a project.
+     */
     public List<User> findAssignedWorkers(int projectId) {
         List<User> list = new ArrayList<>();
         String sql = "SELECT u.id, u.full_name, u.email, u.phone, u.role, u.status, u.daily_wage, " +
@@ -176,7 +242,7 @@ public class ProjectDao {
                 "WHERE pw.project_id = ? AND pw.is_active = 1 " +
                 "ORDER BY pw.assigned_date DESC";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, projectId);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -196,25 +262,36 @@ public class ProjectDao {
         }
         return list;
     }
+
+    /**
+     * Returns the count of active assigned workers for a project.
+     */
     public int countAssignedWorkers(int projectId) {
         String sql = "SELECT COUNT(*) FROM project_workers WHERE project_id=? AND is_active=1";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, projectId);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) return rs.getInt(1);
+            if (rs.next())
+                return rs.getInt(1);
         } catch (SQLException e) {
             System.err.println("[ProjectDAO] countAssignedWorkers error: " + e.getMessage());
         }
         return 0;
     }
 
-    /** Simple inner class for worker+role mapping. */
+    /**
+     * Simple inner class for worker+role mapping.
+     */
     public static class AssignedWorker {
         public com.buildtrack.model.User user;
         public String assignedRole;
         public Date assignedDate;
     }
+
+    /**
+     * Returns assigned workers with role and assignment date.
+     */
     public List<AssignedWorker> findAssignedWorkersWithRole(int projectId) {
         List<AssignedWorker> list = new ArrayList<>();
         String sql = "SELECT u.id, u.full_name, u.email, u.phone, u.role, u.status, u.daily_wage, " +
@@ -222,7 +299,7 @@ public class ProjectDao {
                 "FROM project_workers pw JOIN users u ON pw.worker_id = u.id " +
                 "WHERE pw.project_id = ? AND pw.is_active = 1 ORDER BY pw.assigned_date DESC";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, projectId);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -231,7 +308,8 @@ public class ProjectDao {
                 u.setId(rs.getInt("id"));
                 u.setFullName(rs.getString("full_name"));
                 u.setEmail(rs.getString("email"));
-                u.setPhone(rs.getString("phone")); u.setRole(com.buildtrack.model.Role.fromString(rs.getString("role")));
+                u.setPhone(rs.getString("phone"));
+                u.setRole(com.buildtrack.model.Role.fromString(rs.getString("role")));
                 u.setStatus(rs.getString("status"));
                 u.setDailyWage(rs.getBigDecimal("daily_wage"));
                 aw.user = u;
@@ -244,6 +322,15 @@ public class ProjectDao {
         }
         return list;
     }
+
+    /**
+     * Maps a result set row to a Project.
+     *
+     * @param rs         result set positioned on a row
+     * @param withClient whether to populate client name
+     * @return mapped project
+     * @throws SQLException if column access fails
+     */
     private Project mapRow(ResultSet rs, boolean withClient) throws SQLException {
         Project p = new Project();
         p.setId(rs.getInt("id"));
@@ -257,7 +344,8 @@ public class ProjectDao {
         p.setStatus(rs.getString("status"));
         p.setCreatedAt(rs.getTimestamp("created_at"));
         p.setUpdatedAt(rs.getTimestamp("updated_at"));
-        if (withClient) p.setClientName(rs.getString("client_name"));
+        if (withClient)
+            p.setClientName(rs.getString("client_name"));
         return p;
     }
 }

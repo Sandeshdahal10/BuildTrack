@@ -11,11 +11,17 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
+/**
+ * Client profile controller.
+ */
 @WebServlet("/client/profile")
 public class ProfileController extends HttpServlet {
 
     private final ClientService clientService = new ClientService();
 
+    /**
+     * Renders the client profile view.
+     */
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -37,4 +43,3 @@ public class ProfileController extends HttpServlet {
                 .forward(request, response);
     }
 }
-

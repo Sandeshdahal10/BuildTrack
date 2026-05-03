@@ -10,11 +10,17 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
+/**
+ * Client budget dashboard controller.
+ */
 @WebServlet("/client/budget")
 public class BudgetController extends HttpServlet {
 
 	private final ClientService clientService = new ClientService();
 
+	/**
+	 * Renders the budget summary for the logged-in client.
+	 */
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

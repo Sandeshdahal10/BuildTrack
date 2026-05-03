@@ -8,43 +8,66 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service layer for attendance operations.
+ */
 public class AttendanceService {
 
     private final AttendanceDao attendanceDAO = new AttendanceDao();
 
     // List
 
+    /**
+     * Returns attendance records for a date string.
+     */
     public List<Attendance> getAttendanceByDate(String dateStr) {
-        if (ValidationUtil.isEmpty(dateStr)) return new ArrayList<>();
+        if (ValidationUtil.isEmpty(dateStr))
+            return new ArrayList<>();
         return attendanceDAO.findByDate(Date.valueOf(dateStr));
     }
 
+    /**
+     * Returns attendance records for a project and date string.
+     */
     public List<Attendance> getAttendanceByProjectAndDate(int projectId, String dateStr) {
-        if (ValidationUtil.isEmpty(dateStr)) return new ArrayList<>();
+        if (ValidationUtil.isEmpty(dateStr))
+            return new ArrayList<>();
         return attendanceDAO.findByProjectAndDate(projectId, Date.valueOf(dateStr));
     }
 
+    /**
+     * Returns attendance history for a worker (optionally filtered by month).
+     */
     public List<Attendance> getWorkerHistory(int workerId, String monthYear) {
         return attendanceDAO.findByWorker(workerId, monthYear);
     }
 
+    /**
+     * Checks if attendance already exists for a worker on a date.
+     */
     public boolean attendanceExists(int workerId, int projectId, String dateStr) {
         return attendanceDAO.exists(workerId, projectId, Date.valueOf(dateStr));
     }
 
-    //Mark Attendance
+    // Mark Attendance
 
+    /**
+     * Marks attendance for a single worker.
+     */
     public List<String> markAttendance(int workerId, int projectId,
-                                       String dateStr, String status, String notes,
-                                       int markedBy) {
+            String dateStr, String status, String notes,
+            int markedBy) {
         List<String> errors = new ArrayList<>();
 
-        if (ValidationUtil.isEmpty(dateStr)) errors.add("Date is required.");
-        if (ValidationUtil.isEmpty(status)) errors.add("Attendance status is required.");
+        if (ValidationUtil.isEmpty(dateStr))
+            errors.add("Date is required.");
+        if (ValidationUtil.isEmpty(status))
+            errors.add("Attendance status is required.");
         else if (!status.equals("PRESENT") && !status.equals("ABSENT") && !status.equals("HALF_DAY")) {
             errors.add("Invalid attendance status.");
         }
-        if (!errors.isEmpty()) return errors;
+        if (!errors.isEmpty())
+            return errors;
 
         Attendance a = new Attendance();
         a.setWorkerId(workerId);
@@ -54,17 +77,27 @@ public class AttendanceService {
         a.setNotes(notes);
         a.setMarkedBy(markedBy);
 
-        if (!attendanceDAO.insert(a)) errors.add("Failed to mark attendance.");
+        if (!attendanceDAO.insert(a))
+            errors.add("Failed to mark attendance.");
         return errors;
     }
 
-    /** Batch mark attendance for multiple workers. Returns list of errors (one per worker). */
+    /**
+     * Batch marks attendance for multiple workers.
+     * Returns a list of errors (one per worker).
+     */
     public List<String> batchMarkAttendance(int projectId, String dateStr,
-                                            String status, int[] workerIds,
-                                            int markedBy) {
+            String status, int[] workerIds,
+            int markedBy) {
         List<String> errors = new ArrayList<>();
-        if (ValidationUtil.isEmpty(dateStr)) { errors.add("Date is required."); return errors; }
-        if (workerIds == null || workerIds.length == 0) { errors.add("No workers selected."); return errors; }
+        if (ValidationUtil.isEmpty(dateStr)) {
+            errors.add("Date is required.");
+            return errors;
+        }
+        if (workerIds == null || workerIds.length == 0) {
+            errors.add("No workers selected.");
+            return errors;
+        }
 
         for (int wid : workerIds) {
             Attendance a = new Attendance();
@@ -82,13 +115,18 @@ public class AttendanceService {
 
     // Payroll Helpers
 
-    /** Returns [presentDays, halfDays] for a worker in a month. */
+    /**
+     * Returns [presentDays, halfDays] for a worker in a month.
+     */
     public int[] getAttendanceCounts(int workerId, String monthYear) {
         return attendanceDAO.getAttendanceCounts(workerId, monthYear);
     }
 
-    //Report Helpers
+    // Report Helpers
 
+    /**
+     * Returns attendance summary for workers on a project in a month.
+     */
     public List<Attendance> getProjectWorkerSummary(int projectId, String monthYear) {
         return attendanceDAO.getProjectWorkerSummary(projectId, monthYear);
     }

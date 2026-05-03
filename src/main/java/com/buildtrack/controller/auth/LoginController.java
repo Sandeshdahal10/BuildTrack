@@ -15,14 +15,17 @@ import java.util.List;
 /**
  * Handles user login.
  *
- * GET  /login  → Shows the login form
- * POST /login  → Processes login credentials
+ * GET /login → Shows the login form
+ * POST /login → Processes login credentials
  */
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
 
     private final AuthService authService = new AuthService();
 
+    /**
+     * Renders the login form or redirects to the role dashboard.
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -41,6 +44,9 @@ public class LoginController extends HttpServlet {
                 .forward(request, response);
     }
 
+    /**
+     * Processes login credentials and creates a session on success.
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

@@ -17,6 +17,9 @@ import java.io.IOException;
 @WebServlet("/logout")
 public class LogoutController extends HttpServlet {
 
+    /**
+     * Logs out the current user and invalidates the session.
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

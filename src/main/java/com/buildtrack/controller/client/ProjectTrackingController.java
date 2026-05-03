@@ -16,12 +16,18 @@ import java.util.Map;
 
 import java.io.IOException;
 
+/**
+ * Client project tracking controller.
+ */
 @WebServlet("/client/project")
 public class ProjectTrackingController extends HttpServlet {
 
 	private final ClientService clientService = new ClientService();
 	private final ProjectTrackingService projectTrackingService = new ProjectTrackingService();
 
+	/**
+	 * Renders project tracking data for the logged-in client.
+	 */
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -57,7 +63,8 @@ public class ProjectTrackingController extends HttpServlet {
 				} else {
 					request.setAttribute("projectNotFound", true);
 				}
-			} catch (NumberFormatException ignored) {}
+			} catch (NumberFormatException ignored) {
+			}
 		}
 
 		request.getRequestDispatcher("/WEB-INF/views/client/project.jsp")

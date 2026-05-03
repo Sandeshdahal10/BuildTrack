@@ -10,29 +10,44 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Service layer for project CRUD and worker assignments.
+ */
 public class ProjectService {
 
     private final ProjectDao projectDAO = new ProjectDao();
 
-    //List
+    // List
 
+    /**
+     * Returns all projects.
+     */
     public List<Project> getAllProjects() {
         return projectDAO.findAll();
     }
 
+    /**
+     * Returns projects filtered by status.
+     */
     public List<Project> getProjectsByStatus(String status) {
         return projectDAO.findByStatus(status);
     }
 
+    /**
+     * Returns a project by id.
+     */
     public Project getProjectById(int id) {
         return projectDAO.findById(id);
     }
 
     // Create
 
+    /**
+     * Creates a project after validation.
+     */
     public List<String> createProject(String title, String description, String clientIdStr,
-                                      String startDateStr, String endDateStr,
-                                      String totalBudgetStr, String status) {
+            String startDateStr, String endDateStr,
+            String totalBudgetStr, String status) {
         List<String> errors = new ArrayList<>();
 
         if (ValidationUtil.isEmpty(title)) {
@@ -79,12 +94,17 @@ public class ProjectService {
             status = "PLANNED";
         }
 
-        if (!errors.isEmpty()) return errors;
+        if (!errors.isEmpty())
+            return errors;
 
         Integer clientId = null;
         if (!ValidationUtil.isEmpty(clientIdStr)) {
-            try { clientId = Integer.parseInt(clientIdStr); }
-            catch (NumberFormatException e) { errors.add("Invalid client ID."); return errors; }
+            try {
+                clientId = Integer.parseInt(clientIdStr);
+            } catch (NumberFormatException e) {
+                errors.add("Invalid client ID.");
+                return errors;
+            }
         }
 
         Project p = new Project();
@@ -97,15 +117,19 @@ public class ProjectService {
         p.setStatus(status);
 
         int id = projectDAO.insert(p);
-        if (id == -1) errors.add("Failed to create project. Database error.");
+        if (id == -1)
+            errors.add("Failed to create project. Database error.");
         return errors;
     }
 
-    //Update
+    // Update
 
+    /**
+     * Updates a project after validation.
+     */
     public List<String> updateProject(int id, String title, String description, String clientIdStr,
-                                      String startDateStr, String endDateStr,
-                                      String totalBudgetStr, String status) {
+            String startDateStr, String endDateStr,
+            String totalBudgetStr, String status) {
         List<String> errors = new ArrayList<>();
 
         Project existing = projectDAO.findById(id);
@@ -128,7 +152,8 @@ public class ProjectService {
             try {
                 Date start = Date.valueOf(startDateStr);
                 Date end = Date.valueOf(endDateStr);
-                if (end.before(start)) errors.add("End date cannot be before start date.");
+                if (end.before(start))
+                    errors.add("End date cannot be before start date.");
             } catch (IllegalArgumentException e) {
                 errors.add("Invalid date format.");
             }
@@ -138,7 +163,8 @@ public class ProjectService {
         if (!ValidationUtil.isEmpty(totalBudgetStr)) {
             try {
                 budget = new BigDecimal(totalBudgetStr);
-                if (budget.compareTo(BigDecimal.ZERO) < 0) errors.add("Budget cannot be negative.");
+                if (budget.compareTo(BigDecimal.ZERO) < 0)
+                    errors.add("Budget cannot be negative.");
             } catch (NumberFormatException e) {
                 errors.add("Invalid budget amount.");
             }
@@ -153,12 +179,15 @@ public class ProjectService {
             status = existing.getStatus();
         }
 
-        if (!errors.isEmpty()) return errors;
+        if (!errors.isEmpty())
+            return errors;
 
         Integer clientId = null;
         if (!ValidationUtil.isEmpty(clientIdStr)) {
-            try { clientId = Integer.parseInt(clientIdStr); }
-            catch (NumberFormatException ignored) {}
+            try {
+                clientId = Integer.parseInt(clientIdStr);
+            } catch (NumberFormatException ignored) {
+            }
         }
 
         existing.setTitle(title.trim());
@@ -169,33 +198,50 @@ public class ProjectService {
         existing.setTotalBudget(budget);
         existing.setStatus(status);
 
-        if (!projectDAO.update(existing)) errors.add("Failed to update project.");
+        if (!projectDAO.update(existing))
+            errors.add("Failed to update project.");
         return errors;
     }
 
-    //Delete
+    // Delete
 
+    /**
+     * Deletes a project after checking existence.
+     */
     public List<String> deleteProject(int id) {
         List<String> errors = new ArrayList<>();
         Project existing = projectDAO.findById(id);
-        if (existing == null) { errors.add("Project not found."); return errors; }
-        if (!projectDAO.delete(id)) errors.add("Failed to delete project. It may have linked records.");
+        if (existing == null) {
+            errors.add("Project not found.");
+            return errors;
+        }
+        if (!projectDAO.delete(id))
+            errors.add("Failed to delete project. It may have linked records.");
         return errors;
     }
 
-    //  Worker Assignment
+    // Worker Assignment
 
+    /**
+     * Assigns a worker to a project.
+     */
     public List<String> assignWorker(int projectId, int workerId, String assignedRole) {
         List<String> errors = new ArrayList<>();
-        if (projectDAO.findById(projectId) == null) errors.add("Project not found.");
-        if (ValidationUtil.isEmpty(assignedRole)) assignedRole = "Labourer";
-        if (!errors.isEmpty()) return errors;
+        if (projectDAO.findById(projectId) == null)
+            errors.add("Project not found.");
+        if (ValidationUtil.isEmpty(assignedRole))
+            assignedRole = "Labourer";
+        if (!errors.isEmpty())
+            return errors;
         if (!projectDAO.assignWorker(projectId, workerId, assignedRole)) {
             errors.add("Failed to assign worker. They may already be assigned.");
         }
         return errors;
     }
 
+    /**
+     * Removes a worker from a project.
+     */
     public List<String> removeWorker(int projectId, int workerId) {
         List<String> errors = new ArrayList<>();
         if (!projectDAO.removeWorker(projectId, workerId)) {
@@ -204,12 +250,18 @@ public class ProjectService {
         return errors;
     }
 
+    /**
+     * Returns assigned workers with roles for a project.
+     */
     public List<ProjectDao.AssignedWorker> getAssignedWorkers(int projectId) {
         return projectDAO.findAssignedWorkersWithRole(projectId);
     }
 
-    //Stats
+    // Stats
 
+    /**
+     * Returns counts of projects by status.
+     */
     public Map<String, Integer> getStatusCounts() {
         Map<String, Integer> counts = new java.util.LinkedHashMap<>();
         counts.put("total", projectDAO.countAll());

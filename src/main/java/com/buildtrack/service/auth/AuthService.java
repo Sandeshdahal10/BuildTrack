@@ -19,6 +19,9 @@ public class AuthService {
 
     private final AuthDao authDAO;
 
+    /**
+     * Creates an AuthService with a default AuthDao.
+     */
     public AuthService() {
         this.authDAO = new AuthDao();
     }
@@ -35,8 +38,8 @@ public class AuthService {
      * @return a list of error messages; empty if registration succeeds
      */
     public List<String> register(String fullName, String email, String phone,
-                                 String password, String confirmPassword,
-                                 String roleStr) {
+            String password, String confirmPassword,
+            String roleStr) {
 
         List<String> errors = new ArrayList<>();
 
@@ -69,7 +72,7 @@ public class AuthService {
                 phone.trim(),
                 hashedPassword,
                 role,
-                BigDecimal.ZERO  // daily wage set by admin later
+                BigDecimal.ZERO // daily wage set by admin later
         );
 
         // Step 6: Save to database
@@ -147,12 +150,46 @@ public class AuthService {
         private User user;
         private List<String> errors = new ArrayList<>();
 
-        public User getUser() { return user; }
-        public void setUser(User user) { this.user = user; }
+        /**
+         * Returns the authenticated user.
+         */
+        public User getUser() {
+            return user;
+        }
 
-        public List<String> getErrors() { return errors; }
-        public boolean hasErrors() { return !errors.isEmpty(); }
-        public void setErrors(List<String> errors) { this.errors = errors; }
-        public void addError(String error) { this.errors.add(error); }
+        /**
+         * Sets the authenticated user.
+         */
+        public void setUser(User user) {
+            this.user = user;
+        }
+
+        /**
+         * Returns the error list.
+         */
+        public List<String> getErrors() {
+            return errors;
+        }
+
+        /**
+         * Returns true if errors are present.
+         */
+        public boolean hasErrors() {
+            return !errors.isEmpty();
+        }
+
+        /**
+         * Sets the error list.
+         */
+        public void setErrors(List<String> errors) {
+            this.errors = errors;
+        }
+
+        /**
+         * Adds a single error message.
+         */
+        public void addError(String error) {
+            this.errors.add(error);
+        }
     }
 }
