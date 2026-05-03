@@ -162,7 +162,7 @@
                 autoPlayInterval = setInterval(function() {
                     currentSlide = (currentSlide + 1) % totalSlides;
                     updateSlideshow();
-                }, 5000);
+                }, 2000);
             }
 
             function resetAutoPlay() {
