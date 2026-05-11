@@ -16,24 +16,39 @@ import java.io.IOException;
  * for the requested URL path.
  *
  * URL → Role mapping:
- *   /admin/*  → ADMIN
- *   /worker/* → WORKER
- *   /client/* → CLIENT
+ * /admin/* → ADMIN
+ * /worker/* → WORKER
+ * /client/* → CLIENT
  *
  * If the role doesn't match, the user is redirected to their
  * own dashboard with an unauthorized access message.
  */
-@WebFilter(filterName = "RoleFilter", urlPatterns = {"/admin/*", "/worker/*", "/client/*"})
+@WebFilter(filterName = "RoleFilter", urlPatterns = { "/admin/*", "/worker/*", "/client/*" })
 public class RoleFilter implements Filter {
 
+    /**
+     * Initializes the role-based authorization filter.
+     *
+     * @param filterConfig filter configuration
+     * @throws ServletException if initialization fails
+     */
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         System.out.println("[RoleFilter] Initialized.");
     }
 
+    /**
+     * Enforces role-based access for protected routes.
+     *
+     * @param request  servlet request
+     * @param response servlet response
+     * @param chain    filter chain
+     * @throws IOException      if redirect fails
+     * @throws ServletException if downstream filter/servlet fails
+     */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
-                         FilterChain chain) throws IOException, ServletException {
+            FilterChain chain) throws IOException, ServletException {
 
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
@@ -77,6 +92,9 @@ public class RoleFilter implements Filter {
         }
     }
 
+    /**
+     * Cleans up filter resources on shutdown.
+     */
     @Override
     public void destroy() {
         System.out.println("[RoleFilter] Destroyed.");
@@ -84,9 +102,13 @@ public class RoleFilter implements Filter {
 
     /**
      * Determines the required role based on the URL path prefix.
+     *
+     * @param path servlet path
+     * @return required role, or null if no role is required
      */
     private Role getRequiredRole(String path) {
-        if (path == null) return null;
+        if (path == null)
+            return null;
 
         if (path.startsWith("/admin/")) {
             return Role.ADMIN;

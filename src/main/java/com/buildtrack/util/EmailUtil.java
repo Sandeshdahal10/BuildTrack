@@ -1,7 +1,5 @@
 package com.buildtrack.util;
 
-
-
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -12,6 +10,9 @@ import jakarta.mail.Transport;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 
+/**
+ * Utility for sending transactional emails such as password resets.
+ */
 public class EmailUtil {
     private static String SMTP_HOST;
     private static String SMTP_PORT;
@@ -21,10 +22,14 @@ public class EmailUtil {
 
     private static boolean initialized = false;
 
-    private static synchronized void init(){
-        if(initialized) return;
-        try(InputStream is = EmailUtil.class.getClassLoader().getResourceAsStream("application.properties")){
-            if(is==null){
+    /**
+     * Loads SMTP configuration from application properties once.
+     */
+    private static synchronized void init() {
+        if (initialized)
+            return;
+        try (InputStream is = EmailUtil.class.getClassLoader().getResourceAsStream("application.properties")) {
+            if (is == null) {
                 System.err.println("[EmailUtil] application.properties not found.");
                 initialized = true;
                 return;
@@ -41,16 +46,17 @@ public class EmailUtil {
         }
         initialized = true;
     }
+
     /**
      * Sends a password reset email to the given address.
      *
-     * @param toEmail    the recipient's email address
-     * @param resetLink  the full URL with the reset token
+     * @param toEmail   the recipient's email address
+     * @param resetLink the full URL with the reset token
      * @return true if the email was sent successfully, false otherwise
      */
-    public static boolean sendPasswordResetEmail(String toEmail, String resetLink){
+    public static boolean sendPasswordResetEmail(String toEmail, String resetLink) {
         init();
-        if(SMTP_HOST == null || SMTP_USERNAME == null){
+        if (SMTP_HOST == null || SMTP_USERNAME == null) {
             System.err.println("[EmailUtil] SMTP is not configured.");
             return false;
         }
@@ -89,8 +95,12 @@ public class EmailUtil {
             return false;
         }
     }
+
     /**
      * Builds the HTML content for the password reset email.
+     *
+     * @param resetLink the full URL with the reset token
+     * @return HTML email content
      */
     private static String buildResetEmailHtml(String resetLink) {
         return "<!DOCTYPE html>"

@@ -1,4 +1,5 @@
 package com.buildtrack.service.auth;
+
 import com.buildtrack.dao.auth.AuthDao;
 import com.buildtrack.model.User;
 import com.buildtrack.util.EmailUtil;
@@ -20,6 +21,9 @@ public class PasswordService {
     /** Token expiry time in milliseconds (30 minutes). */
     private static final long TOKEN_EXPIRY_MS = 30 * 60 * 1000;
 
+    /**
+     * Creates a PasswordService with a default AuthDao.
+     */
     public PasswordService() {
         this.authDAO = new AuthDao();
     }
@@ -31,8 +35,9 @@ public class PasswordService {
      * IMPORTANT: For security, this method always returns true
      * to avoid revealing whether an email exists in the system.
      *
-     * @param email      the user's email address
-     * @param baseUrl    the base URL of the application (e.g., http://localhost:8080/BuildTrack)
+     * @param email   the user's email address
+     * @param baseUrl the base URL of the application (e.g.,
+     *                http://localhost:8080/BuildTrack)
      * @return always true (even if email doesn't exist), for security
      */
     public boolean initiatePasswordReset(String email, String baseUrl) {
@@ -103,7 +108,7 @@ public class PasswordService {
      * @return a list of error messages; empty if reset succeeds
      */
     public List<String> resetPassword(String token, String newPassword,
-                                      String confirmPassword) {
+            String confirmPassword) {
 
         List<String> errors = new ArrayList<>();
 

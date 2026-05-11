@@ -11,6 +11,9 @@ public enum Role {
 
     /**
      * Checks if the given string matches any role (case-insensitive).
+     *
+     * @param value role string
+     * @return matching role or null if invalid
      */
     public static Role fromString(String value) {
         if (value == null || value.trim().isEmpty()) {
@@ -25,6 +28,8 @@ public enum Role {
 
     /**
      * Returns the lowercase string representation of the role.
+     *
+     * @return role name in lowercase
      */
     public String toLower() {
         return this.name().toLowerCase();
@@ -32,6 +37,8 @@ public enum Role {
 
     /**
      * Returns the dashboard URL path for this role.
+     *
+     * @return role-specific dashboard path
      */
     public String getDashboardPath() {
         return "/" + this.toLower() + "/dashboard";

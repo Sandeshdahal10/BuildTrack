@@ -4,6 +4,9 @@ import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
 
+/**
+ * Database utility for loading configuration and creating JDBC connections.
+ */
 public class DBUtil {
     private static String DB_URL;
     private static String DB_USERNAME;
@@ -12,8 +15,8 @@ public class DBUtil {
 
     static {
         loadConfig();
-        try{
-//            Class.forName(DB_DRIVER);
+        try {
+            // Class.forName(DB_DRIVER);
             Class.forName("com.mysql.cj.jdbc.Driver");
 
         } catch (ClassNotFoundException e) {
@@ -23,10 +26,13 @@ public class DBUtil {
         System.out.println("[DBUtil] Database utility initialized successfully.");
     }
 
-    private static void loadConfig(){
+    /**
+     * Loads database configuration from application properties.
+     */
+    private static void loadConfig() {
         Properties props = new Properties();
-        try(InputStream is = DBUtil.class.getClassLoader().getResourceAsStream("application.properties")){
-            if (is == null){
+        try (InputStream is = DBUtil.class.getClassLoader().getResourceAsStream("application.properties")) {
+            if (is == null) {
                 throw new RuntimeException("Application Properties not found while injecting.");
             }
             props.load(is);
@@ -34,36 +40,50 @@ public class DBUtil {
             DB_USERNAME = props.getProperty("db.username");
             DB_PASSWORD = props.getProperty("db.password");
             DB_DRIVER = props.getProperty("db.driver");
-            if (DB_URL == null || DB_USERNAME == null || DB_PASSWORD == null || DB_DRIVER == null){
+            if (DB_URL == null || DB_USERNAME == null || DB_PASSWORD == null || DB_DRIVER == null) {
                 throw new RuntimeException(
-                        "All credentials of database are missing in application.properties"
-                );
+                        "All credentials of database are missing in application.properties");
             }
         } catch (Exception e) {
             System.err.println("[DBUtil] Error loading config:" + e.getMessage());
-            throw new RuntimeException("Failed to load database configuration",e);
+            throw new RuntimeException("Failed to load database configuration", e);
         }
     }
+
+    /**
+     * Opens a new JDBC connection using configured credentials.
+     *
+     * @return a new JDBC connection
+     * @throws SQLException if the connection cannot be created
+     */
     public static Connection getConnection() throws SQLException {
 
-        return DriverManager.getConnection(DB_URL,DB_USERNAME,DB_PASSWORD);
+        return DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
     }
-    public static void close(Connection conn, PreparedStatement pstmt, ResultSet rs){
-        if(rs!=null){
-            try{
+
+    /**
+     * Closes JDBC resources, ignoring any close failures.
+     *
+     * @param conn  the connection to close
+     * @param pstmt the prepared statement to close
+     * @param rs    the result set to close
+     */
+    public static void close(Connection conn, PreparedStatement pstmt, ResultSet rs) {
+        if (rs != null) {
+            try {
                 rs.close();
             } catch (SQLException e) {
                 System.err.println("[DBUtil] error closing in result set." + e.getMessage());
             }
         }
-        if (pstmt !=null){
-            try{
+        if (pstmt != null) {
+            try {
                 pstmt.close();
             } catch (SQLException e) {
                 System.err.println("[DBUtil] error closing in prepared Statement." + e.getMessage());
             }
         }
-        if (conn!=null){
+        if (conn != null) {
             try {
                 conn.close();
             } catch (SQLException e) {
@@ -71,7 +91,14 @@ public class DBUtil {
             }
         }
     }
-    public static void close(Connection conn, PreparedStatement pstmt){
+
+    /**
+     * Closes a connection and prepared statement.
+     *
+     * @param conn  the connection to close
+     * @param pstmt the prepared statement to close
+     */
+    public static void close(Connection conn, PreparedStatement pstmt) {
         close(conn, pstmt, null);
     }
 }

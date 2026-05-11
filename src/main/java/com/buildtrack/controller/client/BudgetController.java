@@ -1,5 +1,6 @@
 package com.buildtrack.controller.client;
 
+import com.buildtrack.service.client.ClientService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -7,15 +8,19 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import com.buildtrack.dao.client.ClientDao;
-
-import java.math.BigDecimal;
-
 import java.io.IOException;
 
+/**
+ * Client budget dashboard controller.
+ */
 @WebServlet("/client/budget")
 public class BudgetController extends HttpServlet {
 
+	private final ClientService clientService = new ClientService();
+
+	/**
+	 * Renders the budget summary for the logged-in client.
+	 */
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -30,9 +35,8 @@ public class BudgetController extends HttpServlet {
 			return;
 		}
 		int userId = userIdObj;
-		ClientDao dao = new ClientDao();
-		BigDecimal totalBudget = dao.totalBudgetForClient(userId);
-		request.setAttribute("totalBudget", totalBudget);
+		request.setAttribute("budgetSummary", clientService.getDashboardSummary(userId));
+		request.setAttribute("totalBudget", clientService.getTotalBudgetForClient(userId));
 
 		request.getRequestDispatcher("/WEB-INF/views/client/budget.jsp")
 				.forward(request, response);

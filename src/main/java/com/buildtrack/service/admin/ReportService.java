@@ -12,23 +12,27 @@ import java.util.Map;
  * ReportService — UPDATED to include manual expenses.
  *
  * Cost structure:
- *   Project Cost   = Material Usage + Manual Expenses
- *   Grand Total     = Material + Payroll + Manual Expenses
+ * Project Cost = Material Usage + Manual Expenses
+ * Grand Total = Material + Payroll + Manual Expenses
  */
 public class ReportService {
 
     private final ReportDao reportDAO = new ReportDao();
-    private final com.buildtrack.service.admin.MaterialService materialService
-            = new com.buildtrack.service.admin.MaterialService();
-    private final com.buildtrack.service.admin.AttendanceService attendanceService
-            = new com.buildtrack.service.admin.AttendanceService();
+    private final com.buildtrack.service.admin.MaterialService materialService = new com.buildtrack.service.admin.MaterialService();
+    private final com.buildtrack.service.admin.AttendanceService attendanceService = new com.buildtrack.service.admin.AttendanceService();
 
     // ==================== Budget Reports (UPDATED) ====================
 
+    /**
+     * Returns budget vs actual for all projects.
+     */
     public List<Map<String, Object>> getBudgetVsActualAll() {
         return reportDAO.getBudgetVsActualAll();
     }
 
+    /**
+     * Returns budget vs actual for a project.
+     */
     public Map<String, Object> getBudgetVsActual(int projectId) {
         return reportDAO.getBudgetVsActual(projectId);
     }
@@ -57,22 +61,34 @@ public class ReportService {
 
     // ==================== Attendance Reports (unchanged) ====================
 
+    /**
+     * Returns attendance summary for a project and month.
+     */
     public List<Attendance> getProjectWorkerSummary(int projectId, String monthYear) {
         return attendanceService.getProjectWorkerSummary(projectId, monthYear);
     }
 
     // ==================== Payroll Reports (unchanged) ====================
 
+    /**
+     * Returns payroll summary by month.
+     */
     public List<Map<String, Object>> getPayrollSummaryByMonth() {
         return reportDAO.getPayrollSummaryByMonth();
     }
 
     // ==================== Grand Totals (UPDATED) ====================
 
+    /**
+     * Returns total material cost across all projects.
+     */
     public BigDecimal getTotalMaterialCost() {
         return reportDAO.getTotalMaterialCost();
     }
 
+    /**
+     * Returns total payroll cost across all months.
+     */
     public BigDecimal getTotalPayrollCost() {
         return reportDAO.getTotalPayrollCost();
     }
@@ -88,6 +104,9 @@ public class ReportService {
     }
 
     /** NEW: Total cost (material + manual) for a single project. */
+    /**
+     * Returns total cost for a single project.
+     */
     public BigDecimal getProjectTotalCost(int projectId) {
         return reportDAO.getProjectTotalCost(projectId);
     }

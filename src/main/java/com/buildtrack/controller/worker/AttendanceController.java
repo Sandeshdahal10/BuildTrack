@@ -7,9 +7,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Worker attendance view controller.
+ */
 @WebServlet("/worker/attendance")
 public class AttendanceController extends HttpServlet {
 
+    /**
+     * Renders the worker attendance view.
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

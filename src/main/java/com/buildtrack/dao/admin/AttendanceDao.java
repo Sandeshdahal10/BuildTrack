@@ -7,24 +7,34 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DAO for attendance records and related summary queries.
+ */
 public class AttendanceDao {
 
-    //  Insert / Update
+    // Insert / Update
 
-    /** Insert attendance. Returns true if successful. */
+    /** 
+     * Insert attendance record.
+     * 
+     * @param a the Attendance object to insert
+     * @return true if successful, false otherwise
+     */
     public boolean insert(Attendance a) {
         String sql = "INSERT INTO attendance (worker_id,project_id,attendance_date,status,notes,marked_by) " +
                 "VALUES (?,?,?,?,?,?) " +
                 "ON DUPLICATE KEY UPDATE status=VALUES(status), notes=VALUES(notes), marked_by=VALUES(marked_by)";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, a.getWorkerId());
             ps.setInt(2, a.getProjectId());
             ps.setDate(3, a.getAttendanceDate());
             ps.setString(4, a.getStatus());
             ps.setString(5, a.getNotes());
-            if (a.getMarkedBy() != null) ps.setInt(6, a.getMarkedBy());
-            else ps.setNull(6, Types.INTEGER);
+            if (a.getMarkedBy() != null)
+                ps.setInt(6, a.getMarkedBy());
+            else
+                ps.setNull(6, Types.INTEGER);
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             System.err.println("[AttendanceDAO] insert error: " + e.getMessage());
@@ -34,7 +44,12 @@ public class AttendanceDao {
 
     // Queries
 
-    /** Get attendance for all workers on a specific date. */
+    /** 
+     * Get attendance for all workers on a specific date. 
+     *
+     * @param date the date for which to retrieve attendance
+     * @return a list of Attendance records for the given date
+     */
     public List<Attendance> findByDate(Date date) {
         List<Attendance> list = new ArrayList<>();
         String sql = "SELECT a.*, u.full_name AS worker_name, p.title AS project_name, " +
@@ -45,17 +60,24 @@ public class AttendanceDao {
                 "LEFT JOIN users m ON a.marked_by = m.id " +
                 "WHERE a.attendance_date = ? ORDER BY p.title, u.full_name";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setDate(1, date);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) list.add(mapRow(rs));
+            while (rs.next())
+                list.add(mapRow(rs));
         } catch (SQLException e) {
             System.err.println("[AttendanceDAO] findByDate error: " + e.getMessage());
         }
         return list;
     }
 
-    /** Get attendance for a specific project on a date. */
+    /** 
+     * Get attendance for a specific project on a date. 
+     *
+     * @param projectId the ID of the project
+     * @param date the date for which to retrieve attendance
+     * @return a list of Attendance records
+     */
     public List<Attendance> findByProjectAndDate(int projectId, Date date) {
         List<Attendance> list = new ArrayList<>();
         String sql = "SELECT a.*, u.full_name AS worker_name, p.title AS project_name, " +
@@ -66,18 +88,25 @@ public class AttendanceDao {
                 "LEFT JOIN users m ON a.marked_by = m.id " +
                 "WHERE a.project_id = ? AND a.attendance_date = ? ORDER BY u.full_name";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, projectId);
             ps.setDate(2, date);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) list.add(mapRow(rs));
+            while (rs.next())
+                list.add(mapRow(rs));
         } catch (SQLException e) {
             System.err.println("[AttendanceDAO] findByProjectAndDate error: " + e.getMessage());
         }
         return list;
     }
 
-    /** Get attendance history for a specific worker. */
+    /** 
+     * Get attendance history for a specific worker. 
+     *
+     * @param workerId the ID of the worker
+     * @param monthYear the month and year in format YYYY-MM, or null for all history
+     * @return a list of Attendance records
+     */
     public List<Attendance> findByWorker(int workerId, String monthYear) {
         List<Attendance> list = new ArrayList<>();
         String sql;
@@ -98,24 +127,29 @@ public class AttendanceDao {
                     "WHERE a.worker_id = ? ORDER BY a.attendance_date DESC";
         }
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, workerId);
             if (monthYear != null && monthYear.matches("\\d{4}-\\d{2}")) {
                 ps.setString(2, monthYear);
             }
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) list.add(mapRow(rs));
+            while (rs.next())
+                list.add(mapRow(rs));
         } catch (SQLException e) {
             System.err.println("[AttendanceDAO] findByWorker error: " + e.getMessage());
         }
         return list;
     }
 
-    //  Payroll Calculation
+    // Payroll Calculation
 
     /**
-     * Returns [totalPresentDays, totalHalfDays] for a worker in a given month.
+     * Returns attendance counts [totalPresentDays, totalHalfDays] for a worker in a given month.
      * Index 0 = PRESENT count, Index 1 = HALF_DAY count.
+     *
+     * @param workerId the ID of the worker
+     * @param monthYear the month and year in format YYYY-MM
+     * @return an integer array containing the present and half-day counts
      */
     public int[] getAttendanceCounts(int workerId, String monthYear) {
         String sql = "SELECT status, COUNT(*) AS cnt FROM attendance " +
@@ -123,39 +157,55 @@ public class AttendanceDao {
                 "AND status IN ('PRESENT','HALF_DAY') GROUP BY status";
         int present = 0, halfDay = 0;
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, workerId);
             ps.setString(2, monthYear);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 String s = rs.getString("status");
                 int cnt = rs.getInt("cnt");
-                if ("PRESENT".equals(s)) present = cnt;
-                else if ("HALF_DAY".equals(s)) halfDay = cnt;
+                if ("PRESENT".equals(s))
+                    present = cnt;
+                else if ("HALF_DAY".equals(s))
+                    halfDay = cnt;
             }
         } catch (SQLException e) {
             System.err.println("[AttendanceDAO] getAttendanceCounts error: " + e.getMessage());
         }
-        return new int[]{present, halfDay};
+        return new int[] { present, halfDay };
     }
 
-    /** Check if attendance already exists for a worker on a date/project. */
+    /** 
+     * Check if attendance already exists for a worker on a date/project. 
+     *
+     * @param workerId the ID of the worker
+     * @param projectId the ID of the project
+     * @param date the date to check
+     * @return true if an attendance record exists, false otherwise
+     */
     public boolean exists(int workerId, int projectId, Date date) {
         String sql = "SELECT COUNT(*) FROM attendance WHERE worker_id=? AND project_id=? AND attendance_date=?";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, workerId);
             ps.setInt(2, projectId);
             ps.setDate(3, date);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) return rs.getInt(1) > 0;
+            if (rs.next())
+                return rs.getInt(1) > 0;
         } catch (SQLException e) {
             System.err.println("[AttendanceDAO] exists error: " + e.getMessage());
         }
         return false;
     }
 
-    /** Attendance summary per worker for a project in a month (for reports). */
+    /** 
+     * Attendance summary per worker for a project in a month (for reports). 
+     *
+     * @param projectId the ID of the project
+     * @param monthYear the month and year in format YYYY-MM
+     * @return a list of Attendance summaries
+     */
     public List<Attendance> getProjectWorkerSummary(int projectId, String monthYear) {
         List<Attendance> list = new ArrayList<>();
         String sql = "SELECT a.worker_id, u.full_name AS worker_name, " +
@@ -166,7 +216,7 @@ public class AttendanceDao {
                 "WHERE a.project_id = ? AND DATE_FORMAT(a.attendance_date,'%Y-%m') = ? " +
                 "GROUP BY a.worker_id, u.full_name ORDER BY u.full_name";
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, projectId);
             ps.setString(2, monthYear);
             ResultSet rs = ps.executeQuery();
@@ -175,7 +225,8 @@ public class AttendanceDao {
                 a.setWorkerId(rs.getInt("worker_id"));
                 a.setWorkerName(rs.getString("worker_name"));
                 // Store counts in notes field temporarily for the report
-                a.setNotes(rs.getInt("present_days") + "P/" + rs.getInt("half_days") + "H/" + rs.getInt("absent_days") + "A");
+                a.setNotes(rs.getInt("present_days") + "P/" + rs.getInt("half_days") + "H/" + rs.getInt("absent_days")
+                        + "A");
                 list.add(a);
             }
         } catch (SQLException e) {
@@ -184,8 +235,13 @@ public class AttendanceDao {
         return list;
     }
 
-
-
+    /**
+     * Maps a result set row to an Attendance record.
+     *
+     * @param rs result set positioned on a row
+     * @return mapped attendance record
+     * @throws SQLException if column access fails
+     */
     private Attendance mapRow(ResultSet rs) throws SQLException {
         Attendance a = new Attendance();
         a.setId(rs.getInt("id"));

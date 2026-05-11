@@ -8,9 +8,15 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+/**
+ * Client dashboard controller.
+ */
 @WebServlet("/client/dashboard")
 public class ClientDashboardController extends HttpServlet {
 
+    /**
+     * Renders the client dashboard view.
+     */
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

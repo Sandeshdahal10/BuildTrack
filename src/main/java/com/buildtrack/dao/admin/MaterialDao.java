@@ -12,10 +12,16 @@ import com.buildtrack.model.Material;
 import com.buildtrack.model.MaterialUsage;
 import com.buildtrack.util.DBUtil;
 
+/**
+ * DAO for material catalog and usage records.
+ */
 public class MaterialDao {
 
     // Material CRUD
 
+    /**
+     * Returns all materials ordered by name.
+     */
     public List<Material> findAll() {
         List<Material> list = new ArrayList<>();
         String sql = "SELECT * FROM materials ORDER BY name ASC";
@@ -30,6 +36,9 @@ public class MaterialDao {
         return list;
     }
 
+    /**
+     * Returns materials with stock at or below their low stock threshold.
+     */
     public List<Material> findLowStock() {
         List<Material> list = new ArrayList<>();
         String sql = "SELECT * FROM materials WHERE total_stock <= low_stock_threshold ORDER BY total_stock ASC";
@@ -44,6 +53,12 @@ public class MaterialDao {
         return list;
     }
 
+    /**
+     * Finds a material by id.
+     *
+     * @param id material id
+     * @return material or null if not found
+     */
     public Material findById(int id) {
         String sql = "SELECT * FROM materials WHERE id = ?";
         try (Connection conn = DBUtil.getConnection();
@@ -58,6 +73,12 @@ public class MaterialDao {
         return null;
     }
 
+    /**
+     * Inserts a new material.
+     *
+     * @param m material to insert
+     * @return generated id, or -1 if insert failed
+     */
     public int insert(Material m) {
         String sql = "INSERT INTO materials (name,unit,unit_price,total_stock,low_stock_threshold,description) " +
                 "VALUES (?,?,?,?,?,?)";
@@ -79,6 +100,12 @@ public class MaterialDao {
         return -1;
     }
 
+    /**
+     * Updates an existing material.
+     *
+     * @param m material to update
+     * @return true if update succeeded
+     */
     public boolean update(Material m) {
         String sql = "UPDATE materials SET name=?,unit=?,unit_price=?,total_stock=?," +
                 "low_stock_threshold=?,description=? WHERE id=?";
@@ -98,6 +125,12 @@ public class MaterialDao {
         return false;
     }
 
+    /**
+     * Deletes a material by id.
+     *
+     * @param id material id
+     * @return true if delete succeeded
+     */
     public boolean delete(int id) {
         String sql = "DELETE FROM materials WHERE id = ?";
         try (Connection conn = DBUtil.getConnection();
@@ -110,6 +143,9 @@ public class MaterialDao {
         return false;
     }
 
+    /**
+     * Returns total material count.
+     */
     public int countAll() {
         String sql = "SELECT COUNT(*) FROM materials";
         try (Connection conn = DBUtil.getConnection();
@@ -123,6 +159,9 @@ public class MaterialDao {
         return 0;
     }
 
+    /**
+     * Returns the count of low stock materials.
+     */
     public int countLowStock() {
         String sql = "SELECT COUNT(*) FROM materials WHERE total_stock <= low_stock_threshold";
         try (Connection conn = DBUtil.getConnection();
@@ -136,6 +175,9 @@ public class MaterialDao {
         return 0;
     }
 
+    /**
+     * Returns the total stock value across all materials.
+     */
     public java.math.BigDecimal getTotalStockValue() {
         String sql = "SELECT COALESCE(SUM(total_stock * unit_price), 0) FROM materials";
         try (Connection conn = DBUtil.getConnection();
@@ -149,6 +191,9 @@ public class MaterialDao {
         return java.math.BigDecimal.ZERO;
     }
 
+    /**
+     * Returns total usage cost for the current month.
+     */
     public java.math.BigDecimal getUsedCostThisMonth() {
         String sql = "SELECT COALESCE(SUM(total_cost), 0) FROM material_usage " +
                 "WHERE YEAR(usage_date) = YEAR(CURDATE()) AND MONTH(usage_date) = MONTH(CURDATE())";
@@ -165,7 +210,14 @@ public class MaterialDao {
 
     // Stock Update (for usage deduction)
 
-    /** Deduct stock. Accepts external connection for transactions. */
+    /**
+     * Deducts stock. Accepts external connection for transactions.
+     *
+     * @param conn       open connection
+     * @param materialId material id
+     * @param quantity   quantity to deduct
+     * @return true if stock was deducted
+     */
     public boolean deductStock(Connection conn, int materialId, java.math.BigDecimal quantity) {
         String sql = "UPDATE materials SET total_stock = total_stock - ? WHERE id = ? AND total_stock >= ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -181,6 +233,9 @@ public class MaterialDao {
 
     // Material Usage
 
+    /**
+     * Returns usage records for a project ordered by date.
+     */
     public List<MaterialUsage> findUsageByProject(int projectId) {
         List<MaterialUsage> list = new ArrayList<>();
         String sql = "SELECT mu.*, m.name AS material_name, m.unit AS material_unit, " +
@@ -202,6 +257,11 @@ public class MaterialDao {
         return list;
     }
 
+    /**
+     * Returns recent usage records across projects.
+     *
+     * @param limit max rows
+     */
     public List<MaterialUsage> findRecentUsage(int limit) {
         List<MaterialUsage> list = new ArrayList<>();
         String sql = "SELECT mu.*, m.name AS material_name, m.unit AS material_unit, " +
@@ -223,6 +283,9 @@ public class MaterialDao {
         return list;
     }
 
+    /**
+     * Returns total material usage cost for a project.
+     */
     public java.math.BigDecimal getTotalCostByProject(int projectId) {
         String sql = "SELECT COALESCE(SUM(total_cost),0) FROM material_usage WHERE project_id = ?";
         try (Connection conn = DBUtil.getConnection();
@@ -237,7 +300,13 @@ public class MaterialDao {
         return java.math.BigDecimal.ZERO;
     }
 
-    /** Insert usage record. Accepts external connection for transactions. */
+    /**
+     * Inserts a usage record using the provided connection.
+     *
+     * @param conn open connection
+     * @param mu   usage record
+     * @return generated id, or -1 if insert failed
+     */
     public int insertUsage(Connection conn, MaterialUsage mu) {
         String sql = "INSERT INTO material_usage (material_id,project_id,quantity_used,unit_cost,usage_date,recorded_by,notes) "
                 +
@@ -260,7 +329,9 @@ public class MaterialDao {
         return -1;
     }
 
-    /** Usage summary per material for a project (for reports). */
+    /**
+     * Returns usage summary per material for a project.
+     */
     public List<MaterialUsage> getUsageSummaryByProject(int projectId) {
         List<MaterialUsage> list = new ArrayList<>();
         String sql = "SELECT mu.material_id, m.name AS material_name, m.unit AS material_unit, " +
@@ -288,6 +359,13 @@ public class MaterialDao {
         return list;
     }
 
+    /**
+     * Maps a result set row to a Material.
+     *
+     * @param rs result set positioned on a row
+     * @return mapped material
+     * @throws SQLException if column access fails
+     */
     private Material mapMaterial(ResultSet rs) throws SQLException {
         Material m = new Material();
         m.setId(rs.getInt("id"));
@@ -302,6 +380,13 @@ public class MaterialDao {
         return m;
     }
 
+    /**
+     * Maps a result set row to a MaterialUsage.
+     *
+     * @param rs result set positioned on a row
+     * @return mapped usage record
+     * @throws SQLException if column access fails
+     */
     private MaterialUsage mapUsage(ResultSet rs) throws SQLException {
         MaterialUsage mu = new MaterialUsage();
         mu.setId(rs.getInt("id"));

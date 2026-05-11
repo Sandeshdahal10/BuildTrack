@@ -16,6 +16,9 @@ import java.io.IOException;
 @WebServlet("/about")
 public class AboutController extends HttpServlet {
 
+    /**
+     * Handles GET requests for the About page.
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -23,4 +26,3 @@ public class AboutController extends HttpServlet {
                 .forward(request, response);
     }
 }
-

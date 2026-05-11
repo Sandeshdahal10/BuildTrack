@@ -1,13 +1,19 @@
 package com.buildtrack.filter;
 
+import java.io.IOException;
+
 import com.buildtrack.model.User;
 
-import jakarta.servlet.*;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.io.IOException;
 
 /**
  * Authentication filter that checks if a user is logged in
@@ -16,17 +22,32 @@ import java.io.IOException;
  * If the user is not authenticated, they are redirected to the login page
  * with a warning message.
  */
-@WebFilter(filterName = "AuthFilter", urlPatterns = {"/admin/*", "/worker/*", "/client/*"})
+@WebFilter(filterName = "AuthFilter", urlPatterns = { "/admin/*", "/worker/*", "/client/*" })
 public class AuthFilter implements Filter {
 
+    /**
+     * Initializes the authentication filter.
+     *
+     * @param filterConfig filter configuration
+     * @throws ServletException if initialization fails
+     */
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         System.out.println("[AuthFilter] Initialized.");
     }
 
+    /**
+     * Ensures the request has an authenticated user before proceeding.
+     *
+     * @param request  servlet request
+     * @param response servlet response
+     * @param chain    filter chain
+     * @throws IOException      if redirect fails
+     * @throws ServletException if downstream filter/servlet fails
+     */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
-                         FilterChain chain) throws IOException, ServletException {
+            FilterChain chain) throws IOException, ServletException {
 
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
@@ -55,6 +76,9 @@ public class AuthFilter implements Filter {
         }
     }
 
+    /**
+     * Cleans up filter resources on shutdown.
+     */
     @Override
     public void destroy() {
         System.out.println("[AuthFilter] Destroyed.");

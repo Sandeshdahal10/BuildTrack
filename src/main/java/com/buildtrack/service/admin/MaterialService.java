@@ -15,24 +15,39 @@ import com.buildtrack.model.MaterialUsage;
 import com.buildtrack.util.DBUtil;
 import com.buildtrack.util.ValidationUtil;
 
+/**
+ * Service layer for material catalog and usage tracking.
+ */
 public class MaterialService {
 
     private final MaterialDao materialDAO = new MaterialDao();
 
     // Material List
 
+    /**
+     * Returns all materials.
+     */
     public List<Material> getAllMaterials() {
         return materialDAO.findAll();
     }
 
+    /**
+     * Returns materials with low stock.
+     */
     public List<Material> getLowStockMaterials() {
         return materialDAO.findLowStock();
     }
 
+    /**
+     * Returns a material by id.
+     */
     public Material getMaterialById(int id) {
         return materialDAO.findById(id);
     }
 
+    /**
+     * Creates a new material after validation.
+     */
     public List<String> createMaterial(String name, String unit, String unitPriceStr,
             String totalStockStr, String lowStockStr, String description) {
         List<String> errors = validateMaterialInput(name, unit, unitPriceStr, totalStockStr, lowStockStr);
@@ -54,6 +69,9 @@ public class MaterialService {
         return errors;
     }
 
+    /**
+     * Updates an existing material after validation.
+     */
     public List<String> updateMaterial(int id, String name, String unit, String unitPriceStr,
             String totalStockStr, String lowStockStr, String description) {
         List<String> errors = validateMaterialInput(name, unit, unitPriceStr, totalStockStr, lowStockStr);
@@ -79,6 +97,9 @@ public class MaterialService {
         return errors;
     }
 
+    /**
+     * Deletes a material if it exists.
+     */
     public List<String> deleteMaterial(int id) {
         List<String> errors = new ArrayList<>();
         if (materialDAO.findById(id) == null) {
@@ -178,36 +199,60 @@ public class MaterialService {
 
     // Usage Queries
 
+    /**
+     * Returns usage records for a project.
+     */
     public List<MaterialUsage> getUsageByProject(int projectId) {
         return materialDAO.findUsageByProject(projectId);
     }
 
+    /**
+     * Returns usage summary for a project.
+     */
     public List<MaterialUsage> getUsageSummaryByProject(int projectId) {
         return materialDAO.getUsageSummaryByProject(projectId);
     }
 
+    /**
+     * Returns recent usage records.
+     */
     public List<MaterialUsage> getRecentUsage(int limit) {
         return materialDAO.findRecentUsage(limit);
     }
 
+    /**
+     * Returns total material usage cost for a project.
+     */
     public BigDecimal getTotalCostByProject(int projectId) {
         return materialDAO.getTotalCostByProject(projectId);
     }
 
+    /**
+     * Returns total stock value across all materials.
+     */
     public BigDecimal getTotalStockValue() {
         return materialDAO.getTotalStockValue();
     }
 
+    /**
+     * Returns total usage cost for the current month.
+     */
     public BigDecimal getUsedCostThisMonth() {
         return materialDAO.getUsedCostThisMonth();
     }
 
+    /**
+     * Returns the current month label.
+     */
     public String getCurrentMonthLabel() {
         return LocalDate.now().getMonth().name();
     }
 
     // Stats
 
+    /**
+     * Returns material statistics for dashboards.
+     */
     public Map<String, Integer> getMaterialStats() {
         Map<String, Integer> stats = new java.util.LinkedHashMap<>();
         stats.put("totalMaterials", materialDAO.countAll());
@@ -217,6 +262,9 @@ public class MaterialService {
 
     // Private Helper
 
+    /**
+     * Validates material input fields and returns error messages.
+     */
     private List<String> validateMaterialInput(String name, String unit,
             String unitPriceStr, String totalStockStr,
             String lowStockStr) {
