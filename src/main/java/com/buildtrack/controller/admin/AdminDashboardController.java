@@ -48,12 +48,15 @@ public class AdminDashboardController extends HttpServlet {
         request.setAttribute("budgetVsActual", budgetVsActual);
         
         // Calculate Total Budget and Utilized dynamically for the whole system
-        java.math.BigDecimal totalBudget = java.math.BigDecimal.ZERO;
-        java.math.BigDecimal totalUtilized = java.math.BigDecimal.ZERO;
-        for (Map<String, Object> row : budgetVsActual) {
-            totalBudget = totalBudget.add((java.math.BigDecimal) row.get("budget"));
-            totalUtilized = totalUtilized.add((java.math.BigDecimal) row.get("actualCost"));
-        }
+//        java.math.BigDecimal totalBudget = java.math.BigDecimal.ZERO;
+//        java.math.BigDecimal totalUtilized = java.math.BigDecimal.ZERO;
+//        for (Map<String, Object> row : budgetVsActual) {
+//            totalBudget = totalBudget.add((java.math.BigDecimal) row.get("budget"));
+//            totalUtilized = totalUtilized.add((java.math.BigDecimal) row.get("actualCost"));
+//        }
+
+
+
         request.setAttribute("globalTotalBudget", totalBudget);
         request.setAttribute("globalTotalUtilized", totalUtilized);
 
