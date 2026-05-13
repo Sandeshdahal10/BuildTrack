@@ -34,7 +34,7 @@ public class AuthService {
      * @param phone           the user's phone number
      * @param password        the plain-text password (will be hashed)
      * @param confirmPassword the password confirmation
-     * @param roleStr         the role string (WORKER or CLIENT)
+     * @param roleStr         the role string (client-only public signup)
      * @return a list of error messages; empty if registration succeeds
      */
     public List<String> register(String fullName, String email, String phone,
@@ -59,8 +59,12 @@ public class AuthService {
             return errors;
         }
 
-        // Step 3: Parse role (already validated, but safe cast)
+        // Step 3: Parse role (public signup is client-only)
         Role role = Role.fromString(roleStr);
+        if (role != Role.CLIENT) {
+            errors.add("Only client registration is allowed through this form.");
+            return errors;
+        }
 
         // Step 4: Hash the password
         String hashedPassword = PasswordUtil.hashedPassword(password);
@@ -71,7 +75,7 @@ public class AuthService {
                 email.trim().toLowerCase(),
                 phone.trim(),
                 hashedPassword,
-                role,
+                Role.CLIENT,
                 BigDecimal.ZERO // daily wage set by admin later
         );
 
