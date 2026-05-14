@@ -65,15 +65,15 @@ public class ValidationUtil {
             errors.add("Password and confirm password do not match.");
         }
 
-        // Role validation
+        // Role validation: public registration is client-only
         if (isEmpty(role)) {
             errors.add("Please select a role.");
         } else {
             Role parsedRole = Role.fromString(role);
             if (parsedRole == null) {
                 errors.add("Invalid role selected.");
-            } else if (parsedRole == Role.ADMIN) {
-                errors.add("Admin registration is not allowed through this form.");
+            } else if (parsedRole != Role.CLIENT) {
+                errors.add("Only client registration is allowed through this form.");
             }
         }
 

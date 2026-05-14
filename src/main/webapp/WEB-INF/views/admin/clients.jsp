@@ -86,11 +86,24 @@
         <section>
             <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
                 <c:forEach var="client" items="${clients}">
+                    <c:set var="statusStyle" value="bg-slate-100 text-slate-700" />
+                    <c:choose>
+                        <c:when test="${client.status == 'APPROVED'}">
+                            <c:set var="statusStyle" value="bg-green-100 text-green-700" />
+                        </c:when>
+                        <c:when test="${client.status == 'PENDING'}">
+                            <c:set var="statusStyle" value="bg-blue-100 text-blue-700" />
+                        </c:when>
+                        <c:when test="${client.status == 'DEACTIVATED'}">
+                            <c:set var="statusStyle" value="bg-red-100 text-red-700" />
+                        </c:when>
+                    </c:choose>
                     <jsp:include page="../common/ClientCard.jsp">
+                        <jsp:param name="clientId" value="${client.id}" />
                         <jsp:param name="name" value="${client.fullName}" />
                         <jsp:param name="image" value="https://i.pravatar.cc/150?u=${client.id}" />
                         <jsp:param name="status" value="${client.status}" />
-                        <jsp:param name="statusStyle" value="bg-green-100 text-green-700" />
+                        <jsp:param name="statusStyle" value="${statusStyle}" />
                         <jsp:param name="email" value="${client.email}" />
                         <jsp:param name="phone" value="${client.phone}" />
                         <jsp:param name="projectCount" value="0" />

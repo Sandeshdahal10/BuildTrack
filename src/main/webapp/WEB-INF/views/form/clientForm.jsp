@@ -37,6 +37,7 @@
 
     String lockFields = viewMode ? "readonly" : "";
     String disableInputs = viewMode ? "disabled" : "";
+    boolean isPending = client != null && "PENDING".equalsIgnoreCase(client.getStatus());
 %>
 <html>
 <head>
@@ -112,6 +113,26 @@
 
                     <div class="flex flex-wrap items-center gap-3 border-t border-slate-200 pt-4">
                         <% if (viewMode) { %>
+                            <% if (isPending) { %>
+                                <form method="post" action="${pageContext.request.contextPath}/admin/users" class="inline-flex">
+                                    <input type="hidden" name="action" value="approve" />
+                                    <input type="hidden" name="id" value="<%= clientId == null ? "" : clientId %>" />
+                                    <input type="hidden" name="from" value="clients" />
+                                    <button type="submit" class="inline-flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-green-600">
+                                        <i data-lucide="check" class="h-4 w-4"></i>
+                                        Approve Client
+                                    </button>
+                                </form>
+                                <form method="post" action="${pageContext.request.contextPath}/admin/users" class="inline-flex">
+                                    <input type="hidden" name="action" value="deactivate" />
+                                    <input type="hidden" name="id" value="<%= clientId == null ? "" : clientId %>" />
+                                    <input type="hidden" name="from" value="clients" />
+                                    <button type="submit" class="inline-flex items-center gap-2 rounded-lg border border-red-300 bg-white px-4 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-50">
+                                        <i data-lucide="x" class="h-4 w-4"></i>
+                                        Deny Approval
+                                    </button>
+                                </form>
+                            <% } %>
                             <a href="${pageContext.request.contextPath}/admin/clients/<%= clientId == null ? "" : clientId %>/edit" class="inline-flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-orange-600">
                                 <i data-lucide="pencil" class="h-4 w-4"></i>
                                 Edit Client
