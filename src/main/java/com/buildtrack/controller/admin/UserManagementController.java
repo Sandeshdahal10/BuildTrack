@@ -125,11 +125,13 @@ public class UserManagementController extends HttpServlet {
                     request.getSession().setAttribute("errors",
                             List.of("Failed to approve user."));
                 }
-                // Redirect back to pending list
                 String from = request.getParameter("from");
                 if ("pending".equals(from)) {
                     response.sendRedirect(request.getContextPath()
                             + "/admin/users?status=PENDING");
+                } else if ("clients".equals(from)) {
+                    response.sendRedirect(request.getContextPath()
+                            + "/admin/clients");
                 } else {
                     response.sendRedirect(request.getContextPath()
                             + "/admin/users?action=view&id=" + id);
@@ -148,8 +150,14 @@ public class UserManagementController extends HttpServlet {
                     request.getSession().setAttribute("errors",
                             List.of("Failed to deactivate user."));
                 }
-                response.sendRedirect(request.getContextPath()
-                        + "/admin/users?action=view&id=" + id);
+                String from = request.getParameter("from");
+                if ("clients".equals(from)) {
+                    response.sendRedirect(request.getContextPath()
+                            + "/admin/clients");
+                } else {
+                    response.sendRedirect(request.getContextPath()
+                            + "/admin/users?action=view&id=" + id);
+                }
                 break;
             }
 
@@ -164,8 +172,14 @@ public class UserManagementController extends HttpServlet {
                     request.getSession().setAttribute("errors",
                             List.of("Failed to reactivate user."));
                 }
-                response.sendRedirect(request.getContextPath()
-                        + "/admin/users?action=view&id=" + id);
+                String from = request.getParameter("from");
+                if ("clients".equals(from)) {
+                    response.sendRedirect(request.getContextPath()
+                            + "/admin/clients");
+                } else {
+                    response.sendRedirect(request.getContextPath()
+                            + "/admin/users?action=view&id=" + id);
+                }
                 break;
             }
 
