@@ -80,8 +80,21 @@
                     <path d="M17 8h-1V6a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2zm-7-2a2 2 0 1 1 4 0v2h-4V6zm2 10a2 2 0 0 1-1-3.73V11h2v1.27A2 2 0 0 1 12 16z"/>
                 </svg>
             </span>
-            <input class="h-11 w-full rounded-[10px] border border-slate-300 bg-slate-100 pl-10 pr-3 text-sm text-slate-900 outline-none placeholder:text-slate-500 focus:border-blue-600 focus:bg-slate-200 focus:ring-4 focus:ring-blue-200" type="password" id="password" name="password"
+            <input class="h-11 w-full rounded-[10px] border border-slate-300 bg-slate-100 pl-10 pr-12 text-sm text-slate-900 outline-none placeholder:text-slate-500 focus:border-blue-600 focus:bg-slate-200 focus:ring-4 focus:ring-blue-200" type="password" id="password" name="password"
                    placeholder="Enter your password" required>
+            <button type="button" id="togglePassword" aria-label="Show password"
+                    class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700">
+                <svg id="iconEye" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                <svg id="iconEyeOff" class="hidden h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a21.77 21.77 0 0 1 5.06-5.94"></path>
+                    <path d="M1 1l22 22"></path>
+                    <path d="M9.9 4.24A9.77 9.77 0 0 1 12 4c7 0 11 7 11 7a21.82 21.82 0 0 1-4.87 5.94"></path>
+                    <path d="M14.12 14.12A3 3 0 0 1 9.88 9.88"></path>
+                </svg>
+            </button>
         </div>
 
         <label class="mb-4 mt-1 flex items-center gap-2 text-sm text-slate-700" for="rememberMe">
@@ -101,6 +114,26 @@
 
 
 </main>
+<script>
+    (function () {
+        var toggle = document.getElementById("togglePassword");
+        var passwordInput = document.getElementById("password");
+        var eye = document.getElementById("iconEye");
+        var eyeOff = document.getElementById("iconEyeOff");
+
+        if (!toggle || !passwordInput || !eye || !eyeOff) {
+            return;
+        }
+
+        toggle.addEventListener("click", function () {
+            var isPassword = passwordInput.type === "password";
+            passwordInput.type = isPassword ? "text" : "password";
+            toggle.setAttribute("aria-label", isPassword ? "Hide password" : "Show password");
+            eye.classList.toggle("hidden", isPassword);
+            eyeOff.classList.toggle("hidden", !isPassword);
+        });
+    })();
+</script>
 </body>
 </html>
 
