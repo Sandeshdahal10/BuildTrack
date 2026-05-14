@@ -1,11 +1,34 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.buildtrack.model.User" %>
+<%@ page import="com.buildtrack.model.WorkLog" %>
+<%@ page import="com.buildtrack.model.Project" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Collections" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%
     User user = (User) session.getAttribute("user");
     String displayName = (user != null && user.getFullName() != null && !user.getFullName().trim().isEmpty())
             ? user.getFullName()
             : "Worker";
     String basePath = request.getContextPath();
+
+    List<Project> assignedProjects = (List<Project>) request.getAttribute("assignedProjects");
+    if (assignedProjects == null) assignedProjects = Collections.emptyList();
+
+    List<WorkLog> workLogs = (List<WorkLog>) request.getAttribute("workLogs");
+    if (workLogs == null) workLogs = Collections.emptyList();
+
+    String currentMonth = (String) request.getAttribute("currentMonth");
+    if (currentMonth == null || currentMonth.isBlank()) {
+        currentMonth = new SimpleDateFormat("yyyy-MM").format(new java.util.Date());
+    }
+
+    String success = (String) session.getAttribute("success");
+    if (success != null) {
+        session.removeAttribute("success");
+    }
+
+    List<String> errors = (List<String>) request.getAttribute("errors");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,144 +39,130 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* Custom subtle fade-in animation for entries */
-        .fade-in {
-            animation: fadeIn 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(16px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        /* Soft glass effect for cards */
-        .glass {
-            background: rgba(255,255,255,0.85);
-            backdrop-filter: blur(4px);
-        }
-        /* Subtle shadow on hover */
-        .card-hover:hover {
-            box-shadow: 0 6px 24px 0 rgba(0,0,0,0.07), 0 1.5px 4px 0 rgba(0,0,0,0.03);
-            transform: translateY(-2px) scale(1.01);
-        }
-        /* Modern button */
-        .modern-btn {
-            background: linear-gradient(90deg, #fbbf24 0%, #f59e42 100%);
-            box-shadow: 0 2px 8px 0 rgba(251,191,36,0.08);
-        }
-        .modern-btn:hover {
-            background: linear-gradient(90deg, #f59e42 0%, #fbbf24 100%);
-        }
+        body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="bg-gradient-to-br from-slate-50 via-slate-100 to-amber-50 text-slate-900">
-<div class="grid min-h-screen w-full grid-cols-[214px_minmax(0,1fr)] max-[1100px]:grid-cols-1">
-    <!-- Sidebar -->
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-blue-200 selection:text-blue-900">
+<div class="flex min-h-screen w-full flex-col lg:flex-row relative overflow-hidden">
     <jsp:include page="../common/WorkerSideBar.jsp" />
 
-    <!-- Main Content -->
-    <main class="bg-transparent px-5 pb-7 pt-4">
-        <!-- Navbar -->
-        <jsp:include page="../common/adminTopbar.jsp" />
-
-        <!-- Title Section -->
-        <section class="rounded-2xl border border-slate-100 glass px-7 py-5 shadow mb-4 flex flex-col gap-1.5">
-            <h1 class="m-0 text-3xl font-bold leading-none tracking-tight text-amber-600">Work Log</h1>
-            <p class="mt-1 text-sm text-slate-500">Track your daily work entries</p>
-        </section>
-
-        <!-- Add Button -->
-        <div class="mb-4 flex justify-end">
-            <button class="modern-btn inline-flex items-center gap-2 rounded-lg text-white px-5 py-2.5 text-base font-semibold shadow transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-amber-300">
-                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 5v14"></path>
-                    <path d="M5 12h14"></path>
-                </svg>
-                Add Work Entry
-            </button>
+    <main class="flex-1 flex flex-col relative z-10 h-screen overflow-hidden bg-slate-50/50">
+        <div class="px-8 pt-6 pb-2 shrink-0">
+            <jsp:include page="../common/adminTopbar.jsp" />
         </div>
 
-        <!-- Work Log Entries -->
-        <div class="space-y-3">
-            <!-- Entry 1 -->
-            <article class="rounded-2xl border border-slate-100 glass px-6 py-5 shadow-sm card-hover fade-in transition-all duration-200">
-                <div class="flex items-start justify-between">
-                    <div>
-                        <div class="flex items-center gap-2 mb-1">
-                            <div class="w-9 h-9 rounded-xl bg-amber-100 flex items-center justify-center text-amber-600 font-bold text-base shadow">S</div>
-                            <h3 class="m-0 text-lg font-semibold text-slate-800 tracking-tight">Skyline Tower</h3>
-                        </div>
-                        <p class="m-0 text-[15px] text-slate-600 ml-11">Completed concrete pouring on 5th floor slab</p>
-                        <p class="m-0 text-xs text-slate-400 ml-11 mt-1">2025-01-28</p>
-                    </div>
-                    <span class="rounded-full border border-teal-200 bg-teal-50 px-3 py-0.5 text-xs font-semibold text-teal-700 whitespace-nowrap shadow-sm">Approved</span>
+        <div class="px-8 py-6 overflow-y-auto grow">
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-6">
+                    <h1 class="text-2xl font-bold text-slate-800 tracking-tight">Work Log</h1>
+                    <p class="text-sm text-slate-500 mt-1 font-medium">Submit daily progress and review your history</p>
                 </div>
-            </article>
 
-            <!-- Entry 2 -->
-            <article class="rounded-2xl border border-slate-100 glass px-6 py-5 shadow-sm card-hover fade-in transition-all duration-200">
-                <div class="flex items-start justify-between">
-                    <div>
-                        <div class="flex items-center gap-2 mb-1">
-                            <div class="w-9 h-9 rounded-xl bg-amber-100 flex items-center justify-center text-amber-600 font-bold text-base shadow">S</div>
-                            <h3 class="m-0 text-lg font-semibold text-slate-800 tracking-tight">Skyline Tower</h3>
-                        </div>
-                        <p class="m-0 text-[15px] text-slate-600 ml-11">Inspected steel reinforcement for 6th floor</p>
-                        <p class="m-0 text-xs text-slate-400 ml-11 mt-1">2025-01-27</p>
-                    </div>
-                    <span class="rounded-full border border-teal-200 bg-teal-50 px-3 py-0.5 text-xs font-semibold text-teal-700 whitespace-nowrap shadow-sm">Approved</span>
+                <% if (success != null) { %>
+                <div class="mb-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-700">
+                    <%= success %>
                 </div>
-            </article>
+                <% } %>
 
-            <!-- Entry 3 -->
-            <article class="rounded-2xl border border-slate-100 glass px-6 py-5 shadow-sm card-hover fade-in transition-all duration-200">
-                <div class="flex items-start justify-between">
-                    <div>
-                        <div class="flex items-center gap-2 mb-1">
-                            <div class="w-9 h-9 rounded-xl bg-amber-100 flex items-center justify-center text-amber-600 font-bold text-base shadow">R</div>
-                            <h3 class="m-0 text-lg font-semibold text-slate-800 tracking-tight">River Bridge</h3>
-                        </div>
-                        <p class="m-0 text-[15px] text-slate-600 ml-11">Supervised pile driving work at section B-3</p>
-                        <p class="m-0 text-xs text-slate-400 ml-11 mt-1">2025-01-26</p>
-                    </div>
-                    <span class="rounded-full border border-amber-200 bg-amber-50 px-3 py-0.5 text-xs font-semibold text-amber-700 whitespace-nowrap shadow-sm">Pending</span>
+                <% if (errors != null && !errors.isEmpty()) { %>
+                <div class="mb-5 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-medium text-rose-700">
+                    <ul class="list-disc pl-5">
+                        <% for (String error : errors) { %>
+                        <li><%= error %></li>
+                        <% } %>
+                    </ul>
                 </div>
-            </article>
+                <% } %>
 
-            <!-- Entry 4 -->
-            <article class="rounded-2xl border border-slate-100 glass px-6 py-5 shadow-sm card-hover fade-in transition-all duration-200">
-                <div class="flex items-start justify-between">
-                    <div>
-                        <div class="flex items-center gap-2 mb-1">
-                            <div class="w-9 h-9 rounded-xl bg-amber-100 flex items-center justify-center text-amber-600 font-bold text-base shadow">S</div>
-                            <h3 class="m-0 text-lg font-semibold text-slate-800 tracking-tight">Skyline Tower</h3>
+                <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+                    <section class="xl:col-span-1 bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600">
+                                <i data-lucide="file-pen-line" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-lg font-bold text-slate-800">Submit Work Log</h2>
+                                <p class="text-xs text-slate-500">Project reference, date, description</p>
+                            </div>
                         </div>
-                        <p class="m-0 text-[15px] text-slate-600 ml-11">Daily site inspection and safety check</p>
-                        <p class="m-0 text-xs text-slate-400 ml-11 mt-1">2025-01-25</p>
-                    </div>
-                    <span class="rounded-full border border-teal-200 bg-teal-50 px-3 py-0.5 text-xs font-semibold text-teal-700 whitespace-nowrap shadow-sm">Approved</span>
-                </div>
-            </article>
 
-            <!-- Entry 5 -->
-            <article class="rounded-2xl border border-slate-100 glass px-6 py-5 shadow-sm card-hover fade-in transition-all duration-200">
-                <div class="flex items-start justify-between">
-                    <div>
-                        <div class="flex items-center gap-2 mb-1">
-                            <div class="w-9 h-9 rounded-xl bg-amber-100 flex items-center justify-center text-amber-600 font-bold text-base shadow">R</div>
-                            <h3 class="m-0 text-lg font-semibold text-slate-800 tracking-tight">River Bridge</h3>
+                        <form action="<%= basePath %>/worker/worklog" method="POST" class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Project</label>
+                                <select name="projectId" required class="w-full rounded-lg border border-slate-200 bg-slate-50/70 px-3 py-2.5 text-sm outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400">
+                                    <option value="">Select project</option>
+                                    <% for (Project project : assignedProjects) { %>
+                                    <option value="<%= project.getId() %>"><%= project.getTitle() %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Date</label>
+                                <input type="date" name="date" value="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>"
+                                       class="w-full rounded-lg border border-slate-200 bg-slate-50/70 px-3 py-2.5 text-sm outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400" />
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Description</label>
+                                <textarea name="description" rows="5" placeholder="Describe the work completed today..."
+                                          class="w-full rounded-lg border border-slate-200 bg-slate-50/70 px-3 py-2.5 text-sm outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400"></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-amber-500 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-amber-600">
+                                <i data-lucide="save" class="w-4 h-4"></i>
+                                Save Work Log
+                            </button>
+                        </form>
+                    </section>
+
+                    <section class="xl:col-span-2 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                        <div class="flex items-center justify-between gap-4 border-b border-slate-200 px-6 py-4 bg-slate-50/70">
+                            <div>
+                                <h2 class="text-lg font-bold text-slate-800">History</h2>
+                                <p class="text-xs text-slate-500">Current month: <%= currentMonth %></p>
+                            </div>
+                            <form action="<%= basePath %>/worker/worklog" method="GET" class="flex items-center gap-2">
+                                <input type="month" name="month" value="<%= currentMonth %>" class="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none" />
+                                <button type="submit" class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white">Filter</button>
+                            </form>
                         </div>
-                        <p class="m-0 text-[15px] text-slate-600 ml-11">Concrete mix preparation and quality test</p>
-                        <p class="m-0 text-xs text-slate-400 ml-11 mt-1">2025-01-24</p>
-                    </div>
-                    <span class="rounded-full border border-teal-200 bg-teal-50 px-3 py-0.5 text-xs font-semibold text-teal-700 whitespace-nowrap shadow-sm">Approved</span>
+
+                        <div class="divide-y divide-slate-100">
+                            <% if (workLogs.isEmpty()) { %>
+                            <div class="px-6 py-12 text-center text-sm text-slate-400">
+                                <div class="flex flex-col items-center gap-2">
+                                    <i data-lucide="clipboard-list" class="w-10 h-10 text-slate-300"></i>
+                                    <span>No work logs found for this month.</span>
+                                </div>
+                            </div>
+                            <% } else { %>
+                                <% for (WorkLog log : workLogs) { %>
+                            <article class="px-6 py-5 hover:bg-slate-50/70 transition-colors">
+                                <div class="flex items-start justify-between gap-4">
+                                    <div>
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <h3 class="text-base font-semibold text-slate-800"><%= log.getProjectName() != null ? log.getProjectName() : ("Project #" + log.getProjectId()) %></h3>
+                                            <span class="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-500"><%= log.getLogDate() != null ? log.getLogDate().toString() : "-" %></span>
+                                        </div>
+                                        <p class="text-sm leading-6 text-slate-600"><%= log.getDescription() != null ? log.getDescription() : "-" %></p>
+                                    </div>
+                                </div>
+                            </article>
+                                <% } %>
+                            <% } %>
+                        </div>
+                    </section>
                 </div>
-            </article>
+            </div>
         </div>
     </main>
 </div>
 
-<script src="https://unpkg.com/lucide@latest"></script>
 <script>
-    lucide.createIcons();
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
 </script>
 </body>
 </html>
