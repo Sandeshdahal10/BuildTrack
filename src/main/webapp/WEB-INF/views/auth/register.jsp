@@ -177,27 +177,40 @@
 </main>
 <script>
     (function () {
-        function wireToggle(toggleId, inputId, eyeId, eyeOffId) {
-            var toggle = document.getElementById(toggleId);
-            var input = document.getElementById(inputId);
-            var eye = document.getElementById(eyeId);
-            var eyeOff = document.getElementById(eyeOffId);
+        var passwordInput = document.getElementById("password");
+        var confirmInput = document.getElementById("confirmPassword");
+        var togglePassword = document.getElementById("togglePassword");
+        var toggleConfirm = document.getElementById("toggleConfirmPassword");
+        var eyePassword = document.getElementById("iconEyePassword");
+        var eyeOffPassword = document.getElementById("iconEyeOffPassword");
+        var eyeConfirm = document.getElementById("iconEyeConfirm");
+        var eyeOffConfirm = document.getElementById("iconEyeOffConfirm");
 
-            if (!toggle || !input || !eye || !eyeOff) {
-                return;
-            }
-
-            toggle.addEventListener("click", function () {
-                var isPassword = input.type === "password";
-                input.type = isPassword ? "text" : "password";
-                toggle.setAttribute("aria-label", isPassword ? "Hide password" : "Show password");
-                eye.classList.toggle("hidden", isPassword);
-                eyeOff.classList.toggle("hidden", !isPassword);
-            });
+        if (!passwordInput || !confirmInput || !togglePassword || !toggleConfirm
+                || !eyePassword || !eyeOffPassword || !eyeConfirm || !eyeOffConfirm) {
+            return;
         }
 
-        wireToggle("togglePassword", "password", "iconEyePassword", "iconEyeOffPassword");
-        wireToggle("toggleConfirmPassword", "confirmPassword", "iconEyeConfirm", "iconEyeOffConfirm");
+        function setVisibility(show) {
+            passwordInput.type = show ? "text" : "password";
+            confirmInput.type = show ? "text" : "password";
+
+            togglePassword.setAttribute("aria-label", show ? "Hide password" : "Show password");
+            toggleConfirm.setAttribute("aria-label", show ? "Hide password" : "Show password");
+
+            eyePassword.classList.toggle("hidden", show);
+            eyeOffPassword.classList.toggle("hidden", !show);
+            eyeConfirm.classList.toggle("hidden", show);
+            eyeOffConfirm.classList.toggle("hidden", !show);
+        }
+
+        function toggleBoth() {
+            var shouldShow = passwordInput.type === "password" || confirmInput.type === "password";
+            setVisibility(shouldShow);
+        }
+
+        togglePassword.addEventListener("click", toggleBoth);
+        toggleConfirm.addEventListener("click", toggleBoth);
     })();
 </script>
 </body>
