@@ -62,6 +62,22 @@
             <jsp:include page="../common/adminTopbar.jsp" />
         </div>
 
+            <%-- Debug panel: show session info when ?debug=true --%>
+            <%
+                String showDebug = request.getParameter("debug");
+                if ("true".equals(showDebug)) {
+                    Object sessUser = session.getAttribute("user");
+                    Object userId = session.getAttribute("userId");
+                    Object userRole = session.getAttribute("userRole");
+                    Object userName = session.getAttribute("userName");
+            %>
+            <div style="background:#fff4e6;border:1px solid #f1c40f;padding:8px;border-radius:8px;margin:12px;">
+                <strong>DEBUG</strong>: session.user = <%= sessUser %> | userId = <%= userId %> | userRole = <%= userRole %> | userName = <%= userName %>
+            </div>
+            <%
+                }
+            %>
+
         <!-- CONTENT -->
         <div class="px-8 py-6 overflow-y-auto grow">
             <div class="max-w-7xl mx-auto space-y-8">

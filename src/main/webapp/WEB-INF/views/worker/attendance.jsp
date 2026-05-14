@@ -25,6 +25,8 @@
         currentMonth = new SimpleDateFormat("yyyy-MM").format(new java.util.Date());
     }
 %>
+<%--this is comment--%>
+<!-- this is pookie dinisha -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,6 +61,38 @@
                 <div class="mb-6">
                     <h1 class="text-2xl font-bold text-slate-800 tracking-tight">Attendance</h1>
                     <p class="text-sm text-slate-500 mt-1 font-medium">Track your daily attendance records</p>
+                </div>
+                
+                <!-- Mark Attendance (Worker) -->
+                <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden mb-6 p-4">
+                    <h2 class="text-lg font-bold text-slate-800 mb-3">Mark Attendance</h2>
+                    <form action="<%= basePath %>/worker/attendance" method="POST" class="grid grid-cols-1 sm:grid-cols-4 gap-3 items-end">
+                        <div>
+                            <label class="text-xs text-slate-500 font-medium">Project ID</label>
+                            <input name="projectId" type="number" placeholder="Project ID" required
+                                   class="w-full mt-1 px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm" />
+                        </div>
+                        <div>
+                            <label class="text-xs text-slate-500 font-medium">Date</label>
+                            <input name="date" type="date" value="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>"
+                                   class="w-full mt-1 px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm" />
+                        </div>
+                        <div>
+                            <label class="text-xs text-slate-500 font-medium">Status</label>
+                            <select name="status" required class="w-full mt-1 px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm">
+                                <option value="PRESENT">Present</option>
+                                <option value="ABSENT">Absent</option>
+                                <option value="HALF_DAY">Half Day</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-xs text-slate-500 font-medium">Notes (optional)</label>
+                            <div class="flex gap-2">
+                                <input name="notes" type="text" placeholder="Notes" class="w-full mt-1 px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm" />
+                                <button type="submit" class="mt-1 bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-semibold">Mark</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
 
                 <!-- Stats Cards -->
