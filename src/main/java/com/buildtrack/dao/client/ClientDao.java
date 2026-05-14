@@ -18,7 +18,7 @@ public class ClientDao {
 	 * Find client (user) by id. Returns null if not found.
 	 */
 	public User findById(int id) {
-		String sql = "SELECT id,full_name,email,phone,role,status,daily_wage,reset_token,reset_token_expiry,created_at,updated_at "
+		String sql = "SELECT id,full_name,email,phone,password,role,status,daily_wage,reset_token,reset_token_expiry,created_at,updated_at "
 				+
 				"FROM users WHERE id = ?";
 		try (Connection conn = DBUtil.getConnection();
