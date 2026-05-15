@@ -47,8 +47,8 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-20 items-center">
             <a href="${pageContext.request.contextPath}/" class="flex items-center">
-                <div class="bg-[#ea580c] rounded-xl p-2 mr-3 h-10 w-10 flex items-center justify-center shadow-md">
-                    <span class="text-white text-xs font-bold tracking-wide">BT</span>
+                <div class="bg-white rounded-xl p-2 mr-3 h-10 w-10 flex items-center justify-center shadow-md ring-1 ring-slate-100">
+                    <img src="${pageContext.request.contextPath}/assets/image/BuildTrackLogo.png" alt="BuildTrack" class="h-9 w-9 object-contain" />
                 </div>
                 <span class="font-extrabold text-2xl text-[#ea580c] tracking-tight">BuildTrack</span>
             </a>
