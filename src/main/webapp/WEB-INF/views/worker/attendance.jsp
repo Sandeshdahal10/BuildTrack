@@ -74,8 +74,9 @@
                         </div>
                         <div>
                             <label class="text-xs text-slate-500 font-medium">Date</label>
-                            <input name="date" type="date" value="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>"
-                                   class="w-full mt-1 px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm" />
+                            <input id="attendanceDate" name="date" type="date" value="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>"
+                                   readonly
+                                   class="w-full mt-1 px-3 py-2 rounded-lg border border-slate-200 bg-slate-100 text-sm text-slate-600 cursor-not-allowed" />
                         </div>
                         <div>
                             <label class="text-xs text-slate-500 font-medium">Status</label>
@@ -204,6 +205,28 @@
 </div>
 
 <script>
+    (function () {
+        var dateInput = document.getElementById("attendanceDate");
+        if (!dateInput) {
+            return;
+        }
+
+        function pad(value) {
+            return value < 10 ? "0" + value : value;
+        }
+
+        function setTodayDate() {
+            var now = new Date();
+            var today = now.getFullYear() + "-" + pad(now.getMonth() + 1) + "-" + pad(now.getDate());
+            dateInput.value = today;
+            dateInput.min = today;
+            dateInput.max = today;
+        }
+
+        setTodayDate();
+        setInterval(setTodayDate, 60 * 1000);
+    })();
+
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
     }
