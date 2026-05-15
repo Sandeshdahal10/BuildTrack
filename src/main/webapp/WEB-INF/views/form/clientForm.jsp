@@ -142,6 +142,12 @@
                                 <i data-lucide="save" class="h-4 w-4"></i>
                                 <%= submitLabel %>
                             </button>
+                            <% if (editMode && !isPending) { %>
+                                <button type="submit" form="removeClientForm" class="inline-flex items-center gap-2 rounded-lg border border-red-300 bg-white px-4 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-50">
+                                    <i data-lucide="trash-2" class="h-4 w-4"></i>
+                                    Remove Client
+                                </button>
+                            <% } %>
                             <button type="reset" class="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100">
                                 <i data-lucide="rotate-ccw" class="h-4 w-4"></i>
                                 Reset
@@ -153,6 +159,13 @@
                         </a>
                     </div>
                 </form>
+                <% if (editMode && !isPending) { %>
+                    <form id="removeClientForm" method="post" action="${pageContext.request.contextPath}/admin/users" class="hidden">
+                        <input type="hidden" name="action" value="deactivate" />
+                        <input type="hidden" name="id" value="<%= clientId == null ? "" : clientId %>" />
+                        <input type="hidden" name="from" value="clients" />
+                    </form>
+                <% } %>
             </section>
         </main>
     </div>

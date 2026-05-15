@@ -47,8 +47,8 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-20 items-center">
             <a href="${pageContext.request.contextPath}/" class="flex items-center">
-                <div class="bg-[#ea580c] rounded-xl p-2 mr-3 h-10 w-10 flex items-center justify-center shadow-md">
-                    <span class="text-white text-xs font-bold tracking-wide">BT</span>
+                <div class="bg-white rounded-xl p-2 mr-3 h-10 w-10 flex items-center justify-center shadow-md ring-1 ring-slate-100">
+                    <img src="${pageContext.request.contextPath}/assets/image/BuildTrackLogo.png" alt="BuildTrack" class="h-9 w-9 object-contain" />
                 </div>
                 <span class="font-extrabold text-2xl text-[#ea580c] tracking-tight">BuildTrack</span>
             </a>
@@ -61,6 +61,14 @@
 </nav>
 
 <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+    <div class="mb-8">
+        <a href="${pageContext.request.contextPath}/"
+           class="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#ea580c] shadow-md ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-lg">
+            <span aria-hidden="true">←</span>
+            Back to Home
+        </a>
+    </div>
+
     <header class="mb-10">
         <p class="text-[#ea580c] font-extrabold text-4xl sm:text-5xl tracking-tight uppercase">
             ABOUT US
@@ -214,12 +222,6 @@
         </div>
     </section>
 
-    <div class="mt-10">
-        <a href="${pageContext.request.contextPath}/" class="inline-flex items-center gap-2 text-[#ea580c] font-semibold hover:text-[#c2410c] transition-colors">
-            <span aria-hidden="true">←</span>
-            Back to Home
-        </a>
-    </div>
 </main>
 
 <footer class="bg-slate-900 text-slate-200 mt-10">

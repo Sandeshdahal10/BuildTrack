@@ -104,64 +104,60 @@
                 <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
 
                     <!-- Assignment Card -->
-                    <article class="xl:col-span-2 rounded-3xl bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white p-8 shadow-2xl relative overflow-hidden hover-lift group">
-                        <!-- Abstract shapes -->
-                        <div class="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-white opacity-5 rounded-full blur-2xl group-hover:opacity-10 transition-opacity duration-500"></div>
-                        <div class="absolute bottom-0 right-1/4 w-40 h-40 bg-blue-500 opacity-10 rounded-full blur-3xl"></div>
-
-                        <div class="relative z-10 flex flex-col h-full justify-between">
-                            <div>
-                                <div class="flex justify-between items-start mb-6">
-                                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs font-semibold tracking-wide uppercase text-indigo-200 backdrop-blur-md">
-                                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/></svg>
+                    <article class="xl:col-span-2 glass-card rounded-3xl p-8 shadow-xl hover-lift">
+                        <div class="flex flex-col gap-6">
+                            <div class="flex flex-wrap items-start justify-between gap-4">
+                                <div>
+                                    <div class="inline-flex items-center gap-2 rounded-full bg-orange-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-orange-700 border border-orange-100">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2"></path>
+                                        </svg>
                                         Current Assignment
                                     </div>
-                                    <button class="text-white/70 hover:text-white transition-colors bg-white/5 hover:bg-white/10 p-2 rounded-full backdrop-blur-md">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
-                                    </button>
+                                    <h2 class="mt-3 text-3xl font-bold text-slate-900">Skyline Heights Tower</h2>
+                                    <p class="mt-1 text-sm font-medium text-slate-500">Section B · Level 12</p>
                                 </div>
+                                <span class="inline-flex items-center gap-2 rounded-full bg-orange-50 px-3 py-1.5 text-xs font-semibold text-orange-700 border border-orange-200">
+                                    <span class="h-2.5 w-2.5 rounded-full bg-orange-500"></span>
+                                    Active Site
+                                </span>
+                            </div>
 
-                                <h2 class="text-3xl font-bold mb-6 leading-tight">
-                                    Skyline Heights Tower<br>
-                                    <span class="text-indigo-300 font-medium text-xl">Section B - Level 12</span>
-                                </h2>
-
-                                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
-                                    <div class="bg-white/5 border border-white/10 rounded-2xl p-4 backdrop-blur-sm">
-                                        <div class="text-indigo-200 text-xs uppercase tracking-wider mb-1.5 font-medium">Role</div>
-                                        <div class="font-semibold text-white flex items-center gap-2">
-                                            <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                                            Senior Welder
-                                        </div>
+                            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                                <div class="rounded-2xl border border-orange-100/70 bg-white/70 p-4">
+                                    <div class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Role</div>
+                                    <div class="mt-2 flex items-center gap-2 text-sm font-semibold text-slate-800">
+                                        <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                                        Senior Welder
                                     </div>
-                                    <div class="bg-white/5 border border-white/10 rounded-2xl p-4 backdrop-blur-sm">
-                                        <div class="text-indigo-200 text-xs uppercase tracking-wider mb-1.5 font-medium">Shift</div>
-                                        <div class="font-semibold text-white flex items-center gap-2">
-                                            <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                            08:00 - 17:00
-                                        </div>
+                                </div>
+                                <div class="rounded-2xl border border-orange-100/70 bg-white/70 p-4">
+                                    <div class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Shift</div>
+                                    <div class="mt-2 flex items-center gap-2 text-sm font-semibold text-slate-800">
+                                        <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        08:00 - 17:00
                                     </div>
-                                    <div class="bg-white/5 border border-white/10 rounded-2xl p-4 backdrop-blur-sm hidden sm:block">
-                                        <div class="text-indigo-200 text-xs uppercase tracking-wider mb-1.5 font-medium">Supervisor</div>
-                                        <div class="font-semibold text-white flex items-center gap-2">
-                                            <div class="w-5 h-5 rounded-full bg-gradient-to-r from-blue-400 to-indigo-500 text-[10px] flex items-center justify-center font-bold">DR</div>
-                                            D. Rogers
-                                        </div>
+                                </div>
+                                <div class="rounded-2xl border border-orange-100/70 bg-white/70 p-4">
+                                    <div class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Supervisor</div>
+                                    <div class="mt-2 flex items-center gap-2 text-sm font-semibold text-slate-800">
+                                        <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-orange-100 text-[10px] font-bold text-orange-700">DR</span>
+                                        D. Rogers
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="flex flex-col sm:flex-row items-center justify-between pt-5 border-t border-white/10 gap-5 sm:gap-0 mt-auto">
-                                <div class="flex items-center w-full sm:w-auto">
+                            <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-t border-slate-200/70 pt-5">
+                                <div class="flex items-center">
                                     <div class="flex -space-x-3">
-                                        <img class="w-10 h-10 rounded-full border-2 border-slate-900 shadow-sm" src="https://ui-avatars.com/api/?name=Alex+K&background=6366f1&color=fff" alt="Team">
-                                        <img class="w-10 h-10 rounded-full border-2 border-slate-900 shadow-sm" src="https://ui-avatars.com/api/?name=Maria+J&background=ec4899&color=fff" alt="Team">
-                                        <img class="w-10 h-10 rounded-full border-2 border-slate-900 shadow-sm" src="https://ui-avatars.com/api/?name=Sam+H&background=10b981&color=fff" alt="Team">
-                                        <div class="w-10 h-10 rounded-full border-2 border-slate-900 bg-white/10 backdrop-blur-sm flex items-center justify-center text-xs font-bold text-white">+2</div>
+                                        <img class="w-9 h-9 rounded-full border-2 border-white shadow-sm" src="https://ui-avatars.com/api/?name=Alex+K&background=6366f1&color=fff" alt="Team">
+                                        <img class="w-9 h-9 rounded-full border-2 border-white shadow-sm" src="https://ui-avatars.com/api/?name=Maria+J&background=ec4899&color=fff" alt="Team">
+                                        <img class="w-9 h-9 rounded-full border-2 border-white shadow-sm" src="https://ui-avatars.com/api/?name=Sam+H&background=10b981&color=fff" alt="Team">
+                                        <div class="w-9 h-9 rounded-full border-2 border-white bg-slate-100 text-[11px] flex items-center justify-center font-bold text-slate-700">+2</div>
                                     </div>
-                                    <div class="ml-4 text-sm text-indigo-200 font-medium">Team Members</div>
+                                    <div class="ml-4 text-sm text-slate-500 font-medium">Team Members</div>
                                 </div>
-                                <button class="w-full sm:w-auto bg-white text-slate-900 px-6 py-3 rounded-xl text-sm font-bold hover:bg-indigo-50 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all duration-300 transform group-hover:scale-105 flex items-center justify-center gap-2">
+                                <button class="w-full sm:w-auto bg-orange-600 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-orange-700 transition-colors flex items-center justify-center gap-2">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                                     View Blueprint
                                 </button>
@@ -361,3 +357,4 @@
 
 </body>
 </html>
+
