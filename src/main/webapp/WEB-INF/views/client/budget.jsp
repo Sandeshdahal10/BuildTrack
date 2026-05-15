@@ -5,14 +5,13 @@
   Time: 8:38 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="com.buildtrack.model.User" %>
 <%
     User user = (User) session.getAttribute("user");
     String displayName = (user != null && user.getFullName() != null && !user.getFullName().trim().isEmpty())
             ? user.getFullName()
             : "Client";
-    String basePath = request.getContextPath();
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,64 +23,7 @@
 </head>
 <body class="m-0 min-h-screen bg-white text-slate-900">
 <div class="grid min-h-screen w-full grid-cols-[224px_minmax(0,1fr)] font-semibold max-[1100px]:grid-cols-1">
-    <aside class="w-56 min-h-screen flex flex-col border-r border-slate-300 bg-gradient-to-b from-slate-800 to-slate-900 text-white shadow-xl">
-        <div class="flex items-center gap-3 px-4 py-4 border-b border-slate-700 bg-slate-900/60">
-            <div class="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-amber-400 to-orange-500 shadow-md">
-                <svg viewBox="0 0 24 24" class="h-4 w-4 stroke-slate-900" fill="none" stroke-width="2" aria-hidden="true">
-                    <rect x="4" y="4" width="6" height="6" rx="1"></rect>
-                    <rect x="14" y="4" width="6" height="6" rx="1"></rect>
-                    <rect x="4" y="14" width="6" height="6" rx="1"></rect>
-                    <rect x="14" y="14" width="6" height="6" rx="1"></rect>
-                </svg>
-            </div>
-            <span class="text-lg font-semibold">BuildTrack</span>
-        </div>
-        <nav class="flex-1 px-3 py-4 space-y-2 overflow-y-auto">
-            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-700/50 hover:text-white" href="<%= basePath %>/client/dashboard">
-                <svg viewBox="0 0 24 24" class="h-4 w-4 stroke-current" fill="none" stroke-width="2" aria-hidden="true">
-                    <rect x="4" y="4" width="6" height="6" rx="1"></rect>
-                    <rect x="14" y="4" width="6" height="6" rx="1"></rect>
-                    <rect x="4" y="14" width="6" height="6" rx="1"></rect>
-                    <rect x="14" y="14" width="6" height="6" rx="1"></rect>
-                </svg>
-                <span>Dashboard</span>
-            </a>
-            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-700/50 hover:text-white" href="<%= basePath %>/client/project">
-                <svg viewBox="0 0 24 24" class="h-4 w-4 stroke-current" fill="none" stroke-width="2" aria-hidden="true">
-                    <path d="M3 7h6l2 2h10v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path>
-                    <path d="M3 7a2 2 0 0 1 2-2h4l2 2"></path>
-                </svg>
-                <span>My Projects</span>
-            </a>
-            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-700/50 hover:text-white" href="<%= basePath %>/client/budget">
-                <svg viewBox="0 0 24 24" class="h-4 w-4 stroke-current" fill="none" stroke-width="2" aria-hidden="true">
-                    <path d="M12 3v18"></path>
-                    <path d="M16 7.5c0-1.7-1.8-3-4-3s-4 1.3-4 3 1.5 2.5 4 3 4 1.3 4 3-1.8 3-4 3-4-1.3-4-3"></path>
-                </svg>
-                <span>Budget</span>
-            </a>
-            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-700/50 hover:text-white" href="#">
-                <svg viewBox="0 0 24 24" class="h-4 w-4 stroke-current" fill="none" stroke-width="2" aria-hidden="true">
-                    <circle cx="12" cy="8" r="3.5"></circle>
-                    <path d="M5 20c.8-3.5 3.5-5.5 7-5.5s6.2 2 7 5.5"></path>
-                </svg>
-                <span>Profile</span>
-            </a>
-        </nav>
-        <div class="px-3 py-4 border-t border-slate-700 bg-slate-900/40 space-y-2">
-            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-700/50 hover:text-white" href="<%= basePath %>/client/upgrade">
-                <span>Upgrade Plan</span>
-            </a>
-            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-red-500/20 hover:text-red-400" href="<%= basePath %>/logout">
-                <svg viewBox="0 0 24 24" class="h-4 w-4 stroke-current" fill="none" stroke-width="2" aria-hidden="true">
-                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                    <path d="M16 17l5-5-5-5"></path>
-                    <path d="M21 12H9"></path>
-                </svg>
-                <span>Logout</span>
-            </a>
-        </div>
-    </aside>
+    <jsp:include page="../common/clientsidebar.jsp" />
 
     <main class="min-h-screen bg-white px-5 pb-7 pt-4">
         <div class="mb-3 flex items-center justify-between text-[11px] text-slate-600 max-[760px]:flex-col max-[760px]:items-start max-[760px]:gap-2.5">

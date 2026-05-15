@@ -1,5 +1,6 @@
 package com.buildtrack.controller.client;
 
+import com.buildtrack.model.User;
 import com.buildtrack.service.client.ClientService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -35,8 +36,15 @@ public class BudgetController extends HttpServlet {
 			return;
 		}
 		int userId = userIdObj;
-		request.setAttribute("budgetSummary", clientService.getDashboardSummary(userId));
-		request.setAttribute("totalBudget", clientService.getTotalBudgetForClient(userId));
+		User client = clientService.getClientById(userId);
+		request.setAttribute("client", client);
+		request.setAttribute("displayName",
+				client != null && client.getFullName() != null && !client.getFullName().trim().isEmpty()
+						? client.getFullName().trim()
+						: "Client");
+		java.util.Map<String, Object> budgetOverview = clientService.getBudgetOverview(userId);
+		request.setAttribute("budgetOverview", budgetOverview);
+		request.setAttribute("budgetSummary", budgetOverview);
 
 		request.getRequestDispatcher("/WEB-INF/views/client/budget.jsp")
 				.forward(request, response);
