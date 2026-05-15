@@ -108,8 +108,10 @@ public class ProjectTrackingDao {
 	 */
 	public List<Map<String, Object>> findExpensesForProject(int projectId) {
 		List<Map<String, Object>> list = new ArrayList<>();
-		String sql = "SELECT id, category, amount, notes, recorded_by, created_at FROM expenses " +
-				"WHERE project_id = ? ORDER BY created_at DESC";
+		String sql = "SELECT e.id, e.category, e.amount, e.notes, e.recorded_by, e.created_at, " +
+				"u.full_name AS recorded_by_name " +
+				"FROM expenses e LEFT JOIN users u ON e.recorded_by = u.id " +
+				"WHERE e.project_id = ? ORDER BY e.created_at DESC";
 		try (Connection conn = DBUtil.getConnection();
 			 PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setInt(1, projectId);
@@ -121,6 +123,7 @@ public class ProjectTrackingDao {
 				row.put("amount", rs.getBigDecimal("amount"));
 				row.put("notes", rs.getString("notes"));
 				row.put("recordedBy", rs.getInt("recorded_by"));
+				row.put("recordedByName", rs.getString("recorded_by_name"));
 				row.put("createdAt", rs.getTimestamp("created_at"));
 				list.add(row);
 			}

@@ -42,28 +42,40 @@ public class ProjectTrackingController extends HttpServlet {
 			return;
 		}
 		int userId = userIdObj;
-		List<Project> projects = clientService.getProjectsByClientId(userId);
+		Map<String, Object> summary = clientService.getDashboardSummary(userId);
+		@SuppressWarnings("unchecked")
+		List<Project> projects = (List<Project>) summary.getOrDefault("projects", List.of());
 		request.setAttribute("projects", projects);
-		request.setAttribute("summary", clientService.getDashboardSummary(userId));
+		request.setAttribute("summary", summary);
 
-		// If a project id is provided, fetch detailed tracking data for that project
 		String pidStr = request.getParameter("id");
-		if (pidStr != null && !pidStr.trim().isEmpty()) {
+		boolean projectRequested = pidStr != null && !pidStr.trim().isEmpty();
+		Integer selectedProjectId = null;
+		if (projectRequested) {
 			try {
-				int pid = Integer.parseInt(pidStr);
-				Project project = projectTrackingService.getProjectOverviewForClient(pid, userId);
-				if (project != null) {
-					List<MaterialUsage> materials = projectTrackingService.getMaterialUsageForProject(pid);
-					List<Map<String, Object>> expenses = projectTrackingService.getExpensesForProject(pid);
-					int timeProgress = projectTrackingService.getTimeProgressPercent(pid);
-					request.setAttribute("selectedProject", project);
-					request.setAttribute("materials", materials);
-					request.setAttribute("expenses", expenses);
-					request.setAttribute("timeProgress", timeProgress);
-				} else {
-					request.setAttribute("projectNotFound", true);
-				}
+				selectedProjectId = Integer.parseInt(pidStr);
 			} catch (NumberFormatException ignored) {
+				request.setAttribute("projectNotFound", true);
+			}
+		}
+
+		if (!projectRequested && selectedProjectId == null && !projects.isEmpty()) {
+			selectedProjectId = projects.get(0).getId();
+		}
+
+		if (selectedProjectId != null) {
+			Project project = projectTrackingService.getProjectOverviewForClient(selectedProjectId, userId);
+			if (project != null) {
+				List<MaterialUsage> materials = projectTrackingService.getMaterialUsageForProject(selectedProjectId);
+				List<Map<String, Object>> expenses = projectTrackingService.getExpensesForProject(selectedProjectId);
+				int timeProgress = projectTrackingService.getTimeProgressPercent(selectedProjectId);
+				request.setAttribute("selectedProject", project);
+				request.setAttribute("selectedProjectId", selectedProjectId);
+				request.setAttribute("materials", materials);
+				request.setAttribute("expenses", expenses);
+				request.setAttribute("timeProgress", timeProgress);
+			} else {
+				request.setAttribute("projectNotFound", true);
 			}
 		}
 
