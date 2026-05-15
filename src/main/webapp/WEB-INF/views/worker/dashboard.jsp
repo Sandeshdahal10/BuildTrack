@@ -1,5 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.buildtrack.model.User" %>
+<%@ page import="com.buildtrack.model.Project" %>
+<%@ page import="com.buildtrack.model.WorkLog" %>
+<%@ page import="java.util.List" %>
 <%
     User user = (User) session.getAttribute("user");
     String displayName = (user != null && user.getFullName() != null && !user.getFullName().trim().isEmpty())
@@ -101,6 +104,10 @@
                 </section>
 
                 <!-- Top Grid -->
+                <%
+                    List<Project> assignedProjects = (List<Project>) request.getAttribute("assignedProjects");
+                    Project currentProject = (assignedProjects != null && !assignedProjects.isEmpty()) ? assignedProjects.get(0) : null;
+                %>
                 <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
 
                     <!-- Assignment Card -->
@@ -114,8 +121,8 @@
                                         </svg>
                                         Current Assignment
                                     </div>
-                                    <h2 class="mt-3 text-3xl font-bold text-slate-900">Skyline Heights Tower</h2>
-                                    <p class="mt-1 text-sm font-medium text-slate-500">Section B · Level 12</p>
+                                    <h2 class="mt-3 text-3xl font-bold text-slate-900"><%= (currentProject != null) ? currentProject.getTitle() : "No current assignment" %></h2>
+                                    <p class="mt-1 text-sm font-medium text-slate-500"><%= (currentProject != null && currentProject.getStatus()!=null) ? currentProject.getStatus() : "-" %></p>
                                 </div>
                                 <span class="inline-flex items-center gap-2 rounded-full bg-orange-50 px-3 py-1.5 text-xs font-semibold text-orange-700 border border-orange-200">
                                     <span class="h-2.5 w-2.5 rounded-full bg-orange-500"></span>
@@ -127,22 +134,19 @@
                                 <div class="rounded-2xl border border-orange-100/70 bg-white/70 p-4">
                                     <div class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Role</div>
                                     <div class="mt-2 flex items-center gap-2 text-sm font-semibold text-slate-800">
-                                        <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                                        Senior Welder
+                                        <%= (currentProject != null) ? "Assigned" : "-" %>
                                     </div>
                                 </div>
                                 <div class="rounded-2xl border border-orange-100/70 bg-white/70 p-4">
-                                    <div class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Shift</div>
+                                    <div class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Duration</div>
                                     <div class="mt-2 flex items-center gap-2 text-sm font-semibold text-slate-800">
-                                        <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                        08:00 - 17:00
+                                        <%= (currentProject != null) ? ((currentProject.getStartDate()!=null?currentProject.getStartDate():"-") + " → " + (currentProject.getEndDate()!=null?currentProject.getEndDate():"-")) : "-" %>
                                     </div>
                                 </div>
                                 <div class="rounded-2xl border border-orange-100/70 bg-white/70 p-4">
-                                    <div class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Supervisor</div>
+                                    <div class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Status</div>
                                     <div class="mt-2 flex items-center gap-2 text-sm font-semibold text-slate-800">
-                                        <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-orange-100 text-[10px] font-bold text-orange-700">DR</span>
-                                        D. Rogers
+                                        <%= (currentProject != null && currentProject.getStatus() != null) ? currentProject.getStatus() : "-" %>
                                     </div>
                                 </div>
                             </div>
@@ -300,48 +304,34 @@
                                 </tr>
                                 </thead>
                                 <tbody class="divide-y divide-slate-100">
+                                <%
+                                    List<WorkLog> recentLogs = (List<WorkLog>) request.getAttribute("recentLogs");
+                                    if (recentLogs != null && !recentLogs.isEmpty()) {
+                                        for (WorkLog wl : recentLogs) {
+                                %>
                                 <tr class="hover:bg-white transition-colors">
                                     <td class="py-4 px-6 font-semibold text-slate-800 flex items-center gap-3">
                                         <div class="w-2.5 h-2.5 rounded-full bg-slate-300 shadow-sm"></div>
-                                        Apr 24
+                                        <%= (wl.getLogDate() != null) ? wl.getLogDate().toString() : "-" %>
                                     </td>
-                                    <td class="py-4 px-6 font-medium text-slate-600">Structural welding</td>
-                                    <td class="py-4 px-6 text-center font-semibold text-slate-700">8h 15m</td>
-                                    <td class="py-4 px-6">
-                                        <span class="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-1.5 rounded-lg text-xs font-bold shadow-sm">
-                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                            Approved
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-white transition-colors">
-                                    <td class="py-4 px-6 font-semibold text-slate-800 flex items-center gap-3">
-                                        <div class="w-2.5 h-2.5 rounded-full bg-slate-300 shadow-sm"></div>
-                                        Apr 23
-                                    </td>
-                                    <td class="py-4 px-6 font-medium text-slate-600">Site inspection</td>
-                                    <td class="py-4 px-6 text-center font-semibold text-slate-700">7h 45m</td>
-                                    <td class="py-4 px-6">
-                                        <span class="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-1.5 rounded-lg text-xs font-bold shadow-sm">
-                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                            Approved
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-white transition-colors">
-                                    <td class="py-4 px-6 font-semibold text-slate-800 flex items-center gap-3">
-                                        <div class="w-2.5 h-2.5 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.6)] animate-pulse"></div>
-                                        Apr 22
-                                    </td>
-                                    <td class="py-4 px-6 font-medium text-slate-600">Joint welding</td>
-                                    <td class="py-4 px-6 text-center font-semibold text-slate-700">9h 30m</td>
+                                    <td class="py-4 px-6 font-medium text-slate-600"><%= (wl.getDescription()!=null)? wl.getDescription() : (wl.getProjectName()!=null?wl.getProjectName():"-") %></td>
+                                    <td class="py-4 px-6 text-center font-semibold text-slate-700">-</td>
                                     <td class="py-4 px-6">
                                         <span class="inline-flex items-center gap-1.5 bg-amber-50 text-amber-700 border border-amber-200 px-2.5 py-1.5 rounded-lg text-xs font-bold shadow-sm">
-                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                            Pending
+                                            <%= (wl.getStatus()!=null)? wl.getStatus(): "Pending" %>
                                         </span>
                                     </td>
                                 </tr>
+                                <%
+                                        }
+                                    } else {
+                                %>
+                                <tr>
+                                    <td colspan="4" class="py-6 px-6 text-center text-sm text-slate-500">No recent work logs.</td>
+                                </tr>
+                                <%
+                                    }
+                                %>
                                 </tbody>
                             </table>
                         </div>
