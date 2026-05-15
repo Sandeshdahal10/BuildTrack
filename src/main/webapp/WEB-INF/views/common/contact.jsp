@@ -56,10 +56,13 @@
 <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
     <div class="max-w-xl mx-auto">
         <header class="mb-8">
-            <a href="${pageContext.request.contextPath}/" class="inline-flex items-center gap-2 text-[#ea580c] font-semibold hover:text-[#c2410c] transition-colors">
-                <span aria-hidden="true">←</span>
-                Back to Home
-            </a>
+            <div class="mb-6">
+                <a href="${pageContext.request.contextPath}/"
+                   class="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#ea580c] shadow-md ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-lg">
+                    <span aria-hidden="true">←</span>
+                    Back to Home
+                </a>
+            </div>
             <p class="text-[#ea580c] font-extrabold text-4xl sm:text-5xl tracking-tight uppercase mt-5">CONTACT US</p>
             <p class="text-slate-600 mt-3">Send your details and we’ll get back to you.</p>
         </header>
@@ -376,10 +379,4 @@
                         <option value="Algeria">Algeria</option>
                         <option value="American Samoa">American Samoa</option>
                         <option value="Andorra">Andorra</option>
-                        <option value="Angola">Angola</option>
-                        <option value="Anguilla">Anguilla</option>
-                        <option value="Antarctica">Antarctica</option>
-                        <option value="Antigua and Barbuda">Antigua and Barbuda</option>
-                        <option value="Argentina">Argentina</option>
-                        <option value="Armenia">Armenia</option>
 
