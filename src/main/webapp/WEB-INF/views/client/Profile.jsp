@@ -8,22 +8,26 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.buildtrack.model.User" %>
 <%
-    User user = (User) session.getAttribute("user");
-    String displayName = (user != null && user.getFullName() != null && !user.getFullName().trim().isEmpty())
-            ? user.getFullName()
-            : "Client";
-    String displayEmail = (user != null && user.getEmail() != null && !user.getEmail().trim().isEmpty())
-            ? user.getEmail()
-            : "email@example.com";
-    String displayPhone = (user != null && user.getPhone() != null && !user.getPhone().trim().isEmpty())
-            ? user.getPhone()
-            : "Not provided";
-    String displayRole = (user != null && user.getRole() != null)
-            ? "Client"
-            : "Unknown";
-    String displayCompany = "BuildTrack Construction";
-    String memberSince = "January 2025";
-    int activeProjects = 2;
+     User user = (User) session.getAttribute("user");
+     String displayName = (user != null && user.getFullName() != null && !user.getFullName().trim().isEmpty())
+             ? user.getFullName()
+             : "Client";
+     String displayEmail = (user != null && user.getEmail() != null && !user.getEmail().trim().isEmpty())
+             ? user.getEmail()
+             : "email@example.com";
+     String displayPhone = (user != null && user.getPhone() != null && !user.getPhone().trim().isEmpty())
+             ? user.getPhone()
+             : "Not provided";
+     String displayRole = (user != null && user.getRole() != null)
+             ? "Client"
+             : "Unknown";
+     String displayCompany = "BuildTrack Construction";
+     String memberSince = "January 2025";
+     int activeProjects = 2;
+    java.util.List<String> profileErrors = null;
+    if (request.getAttribute("errors") instanceof java.util.List) {
+        profileErrors = (java.util.List<String>) request.getAttribute("errors");
+    }
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -87,6 +91,21 @@
             <p class="mt-1 text-xs text-slate-600">Manage your personal information</p>
         </section>
 
+        <% if (profileErrors != null && !profileErrors.isEmpty()) { %>
+        <div class="mt-3 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+            <ul class="m-0 list-disc pl-5">
+                <% for (String error : profileErrors) { %>
+                <li><%= error %></li>
+                <% } %>
+            </ul>
+        </div>
+        <% } %>
+        <% if (request.getAttribute("success") != null) { %>
+        <div class="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+            <%= request.getAttribute("success") %>
+        </div>
+        <% } %>
+
         <!-- Profile Card -->
         <section class="mt-3.5 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-[0_10px_24px_rgba(15,23,42,0.08)]">
             <div class="flex items-start justify-between gap-5">
@@ -103,7 +122,7 @@
                     </div>
                 </div>
                 <!-- Edit Button -->
-                <button class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 hover:border-slate-300">
+                <button id="editProfileButton" type="button" class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 hover:border-slate-300">
                     <svg viewBox="0 0 24 24" class="h-4 w-4 stroke-current" fill="none" stroke-width="2" aria-hidden="true">
                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                         <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
@@ -113,6 +132,7 @@
             </div>
 
             <!-- Profile Details Grid -->
+            <form id="profileForm" method="POST" action="<%= request.getContextPath() %>/client/profile">
             <div class="mt-6 grid grid-cols-2 gap-8 border-t border-slate-200 pt-6 max-[760px]:grid-cols-1">
                 <!-- Full Name -->
                 <div>
@@ -122,7 +142,8 @@
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                             <circle cx="12" cy="7" r="4"></circle>
                         </svg>
-                        <span class="text-sm font-semibold"><%= displayName %></span>
+                        <input id="profileFullName" name="fullName" type="text" value="<%= displayName %>" data-original="<%= displayName %>" data-editable="true" disabled
+                               class="w-full bg-transparent text-sm font-semibold text-slate-700 outline-none" />
                     </div>
                 </div>
 
@@ -134,7 +155,8 @@
                             <rect x="2" y="4" width="20" height="16" rx="2"></rect>
                             <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
                         </svg>
-                        <span class="text-sm font-semibold"><%= displayEmail %></span>
+                        <input type="text" value="<%= displayEmail %>" disabled
+                               class="w-full bg-transparent text-sm font-semibold text-slate-700 outline-none" />
                     </div>
                 </div>
 
@@ -145,7 +167,8 @@
                         <svg viewBox="0 0 24 24" class="h-4 w-4 text-slate-400" fill="none" stroke-width="2" stroke="currentColor" aria-hidden="true">
                             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                         </svg>
-                        <span class="text-sm font-semibold"><%= displayPhone %></span>
+                        <input id="profilePhone" name="phone" type="text" value="<%= displayPhone %>" data-original="<%= displayPhone %>" data-editable="true" disabled
+                               class="w-full bg-transparent text-sm font-semibold text-slate-700 outline-none" />
                     </div>
                 </div>
 
@@ -161,6 +184,15 @@
                     </div>
                 </div>
             </div>
+            <div id="profileActions" class="mt-6 hidden flex flex-wrap items-center gap-3">
+                <button type="submit" class="inline-flex items-center gap-2 rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-white hover:bg-amber-600">
+                    Save Changes
+                </button>
+                <button id="cancelProfileEdit" type="button" class="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+                    Cancel
+                </button>
+            </div>
+            </form>
         </section>
     </main>
 </div>
@@ -254,6 +286,46 @@
                 if (event.key === "Escape") {
                     closeUserMenu();
                 }
+            });
+        }
+
+        var editButton = document.getElementById("editProfileButton");
+        var actions = document.getElementById("profileActions");
+        var cancelButton = document.getElementById("cancelProfileEdit");
+        var editableInputs = Array.prototype.slice.call(document.querySelectorAll("[data-editable='true']"));
+
+        function setEditing(isEditing) {
+            editableInputs.forEach(function (input) {
+                input.disabled = !isEditing;
+                input.classList.toggle("bg-slate-100", isEditing);
+                input.classList.toggle("rounded-md", isEditing);
+                input.classList.toggle("px-2", isEditing);
+                input.classList.toggle("py-1.5", isEditing);
+                input.classList.toggle("border", isEditing);
+                input.classList.toggle("border-slate-200", isEditing);
+            });
+            if (actions) {
+                actions.classList.toggle("hidden", !isEditing);
+            }
+            if (editButton) {
+                editButton.classList.toggle("hidden", isEditing);
+            }
+        }
+
+        if (editButton) {
+            editButton.addEventListener("click", function () {
+                setEditing(true);
+            });
+        }
+
+        if (cancelButton) {
+            cancelButton.addEventListener("click", function () {
+                editableInputs.forEach(function (input) {
+                    if (input.dataset.original) {
+                        input.value = input.dataset.original;
+                    }
+                });
+                setEditing(false);
             });
         }
     })();
