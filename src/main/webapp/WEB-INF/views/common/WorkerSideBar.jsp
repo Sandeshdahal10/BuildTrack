@@ -7,7 +7,7 @@
 <div id="sidebar-overlay" class="fixed inset-0 bg-slate-900/50 z-40 lg:hidden hidden transition-opacity duration-300 opacity-0" onclick="toggleSidebar()"></div>
 
 <!-- Sidebar -->
-<aside id="worker-sidebar" class="fixed lg:static top-0 left-0 z-50 w-64 h-screen overflow-y-auto bg-[#0b1f4d] text-white flex flex-col border-r border-blue-900/60 transition-transform duration-300 ease-in-out transform -translate-x-full lg:translate-x-0">
+<aside id="worker-sidebar" class="fixed lg:static top-0 left-0 z-50 w-56 h-screen overflow-y-auto bg-[#0b1f4d] text-white flex flex-col border-r border-blue-900/60 transition-transform duration-300 ease-in-out transform -translate-x-full lg:translate-x-0">
 
     <!-- Header -->
     <div class="p-4 flex items-center justify-between gap-3 border-b border-blue-900/60 h-20 shrink-0">
