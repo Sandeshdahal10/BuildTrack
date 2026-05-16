@@ -18,7 +18,7 @@
     <div style="margin-left:224px;flex:1;display:flex;flex-direction:column;overflow-y:auto;height:100vh;">
 
         <div style="position:sticky;top:0;z-index:20;">
-            <jsp:include page="../common/adminTopbar.jsp" />
+            <jsp:include page="../common/Topbar.jsp" />
         </div>
 
         <main style="flex:1;padding:32px;">

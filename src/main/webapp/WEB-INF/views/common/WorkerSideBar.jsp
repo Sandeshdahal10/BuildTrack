@@ -66,10 +66,6 @@
 
     <!-- Bottom Section -->
     <div class="p-4 border-t border-blue-900/60 shrink-0 space-y-1.5">
-        <a href="<%= basePath %>/worker/upgrade" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-amber-400 font-medium hover:bg-amber-500/10 hover:text-amber-300 transition-colors">
-            <i data-lucide="zap" class="w-4.5 h-4.5"></i>
-            <span>Upgrade Plan</span>
-        </a>
         <a href="<%= basePath %>/logout" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-rose-400 font-medium hover:bg-rose-500/10 hover:text-rose-300 transition-colors">
             <i data-lucide="log-out" class="w-4.5 h-4.5"></i>
             <span>Logout</span>

@@ -99,7 +99,7 @@
     <div class="ml-56 flex flex-1 flex-col overflow-y-auto">
 
         <div class="sticky top-0 z-10 border-b border-slate-200 bg-white">
-            <jsp:include page="../common/adminTopbar.jsp" />
+            <jsp:include page="../common/Topbar.jsp" />
         </div>
 
         <main class="flex-1 p-6">

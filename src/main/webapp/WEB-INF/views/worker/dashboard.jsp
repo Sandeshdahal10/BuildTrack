@@ -62,7 +62,7 @@
 
         <!-- TOP NAVBAR -->
         <div class="px-8 pt-6 pb-2 shrink-0">
-            <jsp:include page="../common/adminTopbar.jsp" />
+            <jsp:include page="../common/Topbar.jsp" />
         </div>
 
             <%-- Debug panel: show session info when ?debug=true --%>

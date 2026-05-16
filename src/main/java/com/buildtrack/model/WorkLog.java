@@ -13,6 +13,7 @@ public class WorkLog {
     private int projectId;
     private Date logDate;
     private String description;
+    private String status;
     private Timestamp createdAt;
 
     // Display fields
@@ -57,6 +58,14 @@ public class WorkLog {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Timestamp getCreatedAt() {

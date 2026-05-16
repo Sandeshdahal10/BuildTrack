@@ -106,7 +106,7 @@
 
     <div class="ml-56 flex h-screen min-w-0 flex-1 flex-col overflow-y-auto">
         <div class="sticky top-0 z-20">
-            <jsp:include page="../common/adminTopbar.jsp" />
+            <jsp:include page="../common/Topbar.jsp" />
         </div>
 
         <main class="flex-1 p-4 sm:p-6 lg:p-8">

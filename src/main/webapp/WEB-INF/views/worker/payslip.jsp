@@ -25,7 +25,7 @@
     <main class="flex-1 flex flex-col relative z-10 h-screen overflow-hidden bg-slate-50">
         <!-- Navbar -->
         <div class="px-8 pt-6 pb-2 shrink-0">
-            <jsp:include page="../common/adminTopbar.jsp" />
+            <jsp:include page="../common/Topbar.jsp" />
         </div>
 
         <!-- CONTENT -->
