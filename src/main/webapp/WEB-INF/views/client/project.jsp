@@ -78,7 +78,7 @@
         </section>
 
         <section id="projectList" class="grid gap-4">
-            <article class="project-card rounded-2xl border border-slate-200 bg-white p-5 text-slate-900 shadow-[0_16px_28px_rgba(15,23,42,0.15)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_20px_34px_rgba(15,23,42,0.2)]" data-search="skyline tower complex in progress 2025-01-15 2025-12-30 12 workers 50.0l">
+            <article class="project-card rounded-2xl border border-slate-200 bg-white p-5 text-slate-900 shadow-[0_16px_28px_rgba(15,23,42,0.15)] transition duration-200" data-search="skyline tower complex in progress 2025-01-15 2025-12-30 12 workers 50.0l">
                 <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
                     <div class="flex items-center gap-2">
                         <h2 class="m-0 text-[34px] font-semibold leading-none">Skyline Tower Complex</h2>
@@ -114,7 +114,7 @@
                 </a>
             </article>
 
-            <article class="project-card rounded-2xl border border-slate-200 bg-white p-5 text-slate-900 shadow-[0_16px_28px_rgba(15,23,42,0.15)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_20px_34px_rgba(15,23,42,0.2)]" data-search="green valley residency in progress 2025-02-01 2025-11-15 8 workers 32.0l">
+            <article class="project-card rounded-2xl border border-slate-200 bg-white p-5 text-slate-900 shadow-[0_16px_28px_rgba(15,23,42,0.15)] transition duration-200" data-search="green valley residency in progress 2025-02-01 2025-11-15 8 workers 32.0l">
                 <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
                     <div class="flex items-center gap-2">
                         <h2 class="m-0 text-[34px] font-semibold leading-none">Green Valley Residency</h2>

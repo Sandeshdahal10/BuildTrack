@@ -66,25 +66,25 @@
             </div>
         </div>
 
-        <section class="dashboard-search-item rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-[0_10px_24px_rgba(15,23,42,0.08)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_16px_30px_rgba(15,23,42,0.12)]" data-search="welcome dashboard <%= displayName %> stay updated construction projects">
+        <section class="dashboard-search-item rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-[0_10px_24px_rgba(15,23,42,0.08)] transition duration-200" data-search="welcome dashboard <%= displayName %> stay updated construction projects">
             <h1 class="m-0 text-[34px] font-semibold leading-none">Welcome, <%= displayName %></h1>
             <p class="mt-1 text-xs text-slate-600">Stay updated on your construction projects.</p>
         </section>
 
         <section class="mt-3.5 grid grid-cols-2 gap-3.5 max-[760px]:grid-cols-1">
-            <article class="dashboard-search-item rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-[0_10px_24px_rgba(15,23,42,0.08)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_16px_30px_rgba(15,23,42,0.12)]" data-search="active projects 2 both on track">
+            <article class="dashboard-search-item rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-[0_10px_24px_rgba(15,23,42,0.08)] transition duration-200" data-search="active projects 2 both on track">
                 <p class="m-0 text-[11px] uppercase tracking-wide text-slate-600">Active Projects</p>
                 <p class="mb-0 mt-1 text-4xl font-semibold leading-none">2</p>
                 <p class="m-0 text-[11px] text-slate-500">Both on track</p>
             </article>
-            <article class="dashboard-search-item rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-[0_10px_24px_rgba(15,23,42,0.08)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_16px_30px_rgba(15,23,42,0.12)]" data-search="budget spent rs 48.4l rs 82.0l 59 utilized">
+            <article class="dashboard-search-item rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-[0_10px_24px_rgba(15,23,42,0.08)] transition duration-200" data-search="budget spent rs 48.4l rs 82.0l 59 utilized">
                 <p class="m-0 text-[11px] uppercase tracking-wide text-slate-600">Budget Spent</p>
                 <p class="mb-0 mt-1 text-[40px] font-semibold leading-none">Rs 48.4L / Rs 82.0L</p>
                 <p class="m-0 text-[11px] text-slate-500">59% utilized</p>
             </article>
         </section>
 
-        <section class="dashboard-search-item mt-3.5 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-[0_10px_24px_rgba(15,23,42,0.08)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_16px_30px_rgba(15,23,42,0.12)]" data-search="your projects skyline tower complex green valley residency in progress workers budget spent">
+        <section class="dashboard-search-item mt-3.5 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-[0_10px_24px_rgba(15,23,42,0.08)] transition duration-200" data-search="your projects skyline tower complex green valley residency in progress workers budget spent">
             <h2 class="mb-3.5 mt-0 text-base font-semibold">Your Projects</h2>
 
             <div>
@@ -118,7 +118,7 @@
             </div>
         </section>
 
-        <section class="dashboard-search-item mt-3.5 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-[0_10px_24px_rgba(15,23,42,0.08)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_16px_30px_rgba(15,23,42,0.12)]" data-search="recent updates skyline completion monthly progress report budget review green valley exterior">
+        <section class="dashboard-search-item mt-3.5 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-[0_10px_24px_rgba(15,23,42,0.08)] transition duration-200" data-search="recent updates skyline completion monthly progress report budget review green valley exterior">
             <h2 class="mb-3.5 mt-0 text-base font-semibold">Recent Updates</h2>
             <ul class="m-0 grid list-none gap-4 p-0">
                 <li class="grid grid-cols-[18px_minmax(0,1fr)] gap-2.5">
