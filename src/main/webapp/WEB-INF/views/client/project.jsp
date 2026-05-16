@@ -89,7 +89,7 @@
                 <div class="mt-3 flex flex-wrap items-center gap-5 text-sm text-slate-500">
                     <span>2025-01-15 - 2025-12-30</span>
                     <span>12 workers</span>
-                    <span>&#8377;50.0L</span>
+                    <span>NPR 50.0L</span>
                 </div>
 
                 <div class="mt-4">
@@ -125,7 +125,7 @@
                 <div class="mt-3 flex flex-wrap items-center gap-5 text-sm text-slate-500">
                     <span>2025-02-01 - 2025-11-15</span>
                     <span>8 workers</span>
-                    <span>&#8377;32.0L</span>
+                    <span>NPR 32.0L</span>
                 </div>
 
                 <div class="mt-4">

@@ -74,15 +74,15 @@
         <section class="mt-3.5 grid grid-cols-2 gap-3.5 max-[760px]:grid-cols-1">
             <article class="budget-search-item rounded-2xl border border-slate-200 bg-white px-5 py-4 text-slate-900 shadow-[0_12px_24px_rgba(15,23,42,0.12)]" data-search="total budget rs 82.0l">
                 <p class="m-0 text-[11px] uppercase tracking-wide text-slate-500">Total Budget</p>
-                <p class="mb-0 mt-1 text-4xl font-semibold leading-none text-slate-900">Rs 82.0L</p>
+                <p class="mb-0 mt-1 text-4xl font-semibold leading-none text-slate-900">NPR 82.0L</p>
             </article>
             <article class="budget-search-item rounded-2xl border border-slate-200 bg-white px-5 py-4 text-slate-900 shadow-[0_12px_24px_rgba(15,23,42,0.12)]" data-search="total spent rs 48.4l">
                 <p class="m-0 text-[11px] uppercase tracking-wide text-slate-500">Total Spent</p>
-                <p class="mb-0 mt-1 text-4xl font-semibold leading-none">Rs 48.4L</p>
+                <p class="mb-0 mt-1 text-4xl font-semibold leading-none">NPR 48.4L</p>
             </article>
             <article class="budget-search-item rounded-2xl border border-slate-200 bg-white px-5 py-4 text-slate-900 shadow-[0_12px_24px_rgba(15,23,42,0.12)]" data-search="remaining rs 33.6l">
                 <p class="m-0 text-[11px] uppercase tracking-wide text-slate-500">Remaining</p>
-                <p class="mb-0 mt-1 text-4xl font-semibold leading-none text-slate-900">Rs 33.6L</p>
+                <p class="mb-0 mt-1 text-4xl font-semibold leading-none text-slate-900">NPR 33.6L</p>
             </article>
             <article class="budget-search-item rounded-2xl border border-slate-200 bg-white px-5 py-4 text-slate-900 shadow-[0_12px_24px_rgba(15,23,42,0.12)]" data-search="utilization 59 percent">
                 <p class="m-0 text-[11px] uppercase tracking-wide text-slate-500">Utilization</p>
@@ -96,7 +96,7 @@
             <div>
                 <div class="mb-1 flex items-center justify-between text-sm">
                     <span class="font-semibold">Skyline Tower Complex</span>
-                    <span class="text-slate-500">Rs 34.0L / Rs 50.0L</span>
+                    <span class="text-slate-500">NPR 34.0L / NPR 50.0L</span>
                 </div>
                 <div class="h-3 w-full overflow-hidden rounded-full bg-slate-200"><div class="h-full w-[68%] rounded-full bg-gradient-to-r from-amber-400 via-yellow-300 to-teal-500"></div></div>
                 <p class="mt-1 text-xs text-slate-500">68% utilized</p>
@@ -105,7 +105,7 @@
             <div class="mt-4">
                 <div class="mb-1 flex items-center justify-between text-sm">
                     <span class="font-semibold">Green Valley Residency</span>
-                    <span class="text-slate-500">Rs 14.4L / Rs 32.0L</span>
+                    <span class="text-slate-500">NPR 14.4L / NPR 32.0L</span>
                 </div>
                 <div class="h-3 w-full overflow-hidden rounded-full bg-slate-200"><div class="h-full w-[45%] rounded-full bg-gradient-to-r from-amber-400 via-yellow-300 to-teal-500"></div></div>
                 <p class="mt-1 text-xs text-slate-500">45% utilized</p>
@@ -140,13 +140,13 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="border-b border-slate-100"><td class="px-2 py-2">Cement</td><td class="px-2 py-2">1,200 bags</td><td class="px-2 py-2 font-semibold">Rs 4,56,000</td></tr>
-                        <tr class="border-b border-slate-100"><td class="px-2 py-2">Iron Rods</td><td class="px-2 py-2">5,000 kg</td><td class="px-2 py-2 font-semibold"> Rs 2,75,000</td></tr>
-                        <tr class="border-b border-slate-100"><td class="px-2 py-2">Sand</td><td class="px-2 py-2">30 cu.m</td><td class="px-2 py-2 font-semibold">Rs 36,000</td></tr>
-                        <tr class="border-b border-slate-100"><td class="px-2 py-2">Bricks</td><td class="px-2 py-2">25,000 pcs</td><td class="px-2 py-2 font-semibold">Rs 2,00,000</td></tr>
-                        <tr class="border-b border-slate-100"><td class="px-2 py-2">Steel Pipes</td><td class="px-2 py-2">80 pcs</td><td class="px-2 py-2 font-semibold">Rs 6,800</td></tr>
-                        <tr class="border-b border-slate-100"><td class="px-2 py-2">Paint</td><td class="px-2 py-2">25 cans</td><td class="px-2 py-2 font-semibold">Rs 70,000</td></tr>
-                        <tr><td class="px-2 py-2">Electrical Wire</td><td class="px-2 py-2">2,000 m</td><td class="px-2 py-2 font-semibold">Rs 30,000</td></tr>
+                        <tr class="border-b border-slate-100"><td class="px-2 py-2">Cement</td><td class="px-2 py-2">1,200 bags</td><td class="px-2 py-2 font-semibold">NPR 4,56,000</td></tr>
+                        <tr class="border-b border-slate-100"><td class="px-2 py-2">Iron Rods</td><td class="px-2 py-2">5,000 kg</td><td class="px-2 py-2 font-semibold">NPR 2,75,000</td></tr>
+                        <tr class="border-b border-slate-100"><td class="px-2 py-2">Sand</td><td class="px-2 py-2">30 cu.m</td><td class="px-2 py-2 font-semibold">NPR 36,000</td></tr>
+                        <tr class="border-b border-slate-100"><td class="px-2 py-2">Bricks</td><td class="px-2 py-2">25,000 pcs</td><td class="px-2 py-2 font-semibold">NPR 2,00,000</td></tr>
+                        <tr class="border-b border-slate-100"><td class="px-2 py-2">Steel Pipes</td><td class="px-2 py-2">80 pcs</td><td class="px-2 py-2 font-semibold">NPR 6,800</td></tr>
+                        <tr class="border-b border-slate-100"><td class="px-2 py-2">Paint</td><td class="px-2 py-2">25 cans</td><td class="px-2 py-2 font-semibold">NPR 70,000</td></tr>
+                        <tr><td class="px-2 py-2">Electrical Wire</td><td class="px-2 py-2">2,000 m</td><td class="px-2 py-2 font-semibold">NPR 30,000</td></tr>
                         </tbody>
                     </table>
                 </div>

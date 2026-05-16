@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -95,7 +94,7 @@
                         <jsp:param name="statusRaw" value="${project.status}"/>
                         <jsp:param name="progress" value="${project.status == 'COMPLETED' ? 100 : (project.status == 'IN_PROGRESS' ? 60 : (project.status == 'ON_HOLD' ? 30 : 10))}"/>
                         <jsp:param name="workers" value="${project.assignedWorkerCount}"/>
-                        <jsp:param name="budget" value="Rs ${project.totalBudget}"/>
+                        <jsp:param name="budget" value="NPR ${project.totalBudget}"/>
                         <jsp:param name="startDate" value="${project.startDate}"/>
                         <jsp:param name="endDate" value="${empty project.endDate ? '-' : project.endDate}"/>
                         <jsp:param name="viewLink" value="${pageContext.request.contextPath}/admin/projects/form?mode=view&amp;id=${project.id}"/>

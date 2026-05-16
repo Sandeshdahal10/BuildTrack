@@ -52,7 +52,7 @@
                                 </div>
                             </div>
                             <div class="flex items-center justify-between sm:flex-col sm:items-end gap-2 sm:gap-1">
-                                <p class="text-xl font-bold text-slate-900">Rs. 45,000</p>
+                                <p class="text-xl font-bold text-slate-900">NPR 45,000</p>
                                 <a href="#" class="inline-flex items-center gap-1.5 text-amber-600 text-sm font-bold hover:text-amber-700 hover:underline">
                                     <i data-lucide="download" class="w-4 h-4"></i> Download PDF
                                 </a>
@@ -73,7 +73,7 @@
                                 </div>
                             </div>
                             <div class="flex items-center justify-between sm:flex-col sm:items-end gap-2 sm:gap-1">
-                                <p class="text-xl font-bold text-slate-900">Rs. 42,500</p>
+                                <p class="text-xl font-bold text-slate-900">NPR 42,500</p>
                                 <a href="#" class="inline-flex items-center gap-1.5 text-amber-600 text-sm font-bold hover:text-amber-700 hover:underline">
                                     <i data-lucide="download" class="w-4 h-4"></i> Download PDF
                                 </a>
@@ -94,7 +94,7 @@
                                 </div>
                             </div>
                             <div class="flex items-center justify-between sm:flex-col sm:items-end gap-2 sm:gap-1">
-                                <p class="text-xl font-bold text-slate-900">Rs. 40,000</p>
+                                <p class="text-xl font-bold text-slate-900">NPR 40,000</p>
                                 <a href="#" class="inline-flex items-center gap-1.5 text-amber-600 text-sm font-bold hover:text-amber-700 hover:underline">
                                     <i data-lucide="download" class="w-4 h-4"></i> Download PDF
                                 </a>

@@ -9,9 +9,9 @@
 <%!
     private String money(BigDecimal value) {
         if (value == null) {
-            return "Rs 0.00";
+            return "NPR 0.00";
         }
-        return "Rs " + value.setScale(2, RoundingMode.HALF_UP).toPlainString();
+        return "NPR " + value.setScale(2, RoundingMode.HALF_UP).toPlainString();
     }
 %>
 <%

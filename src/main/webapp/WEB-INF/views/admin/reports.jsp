@@ -35,14 +35,14 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
                 <jsp:include page="../common/statsCard.jsp">
                     <jsp:param name="title" value="Total Budget" />
-                    <jsp:param name="value" value="Rs 60L" />
+                    <jsp:param name="value" value="NPR 60L" />
                     <jsp:param name="icon" value="calculator" />
                     <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-slate-100" />
                     <jsp:param name="iconClass" value="w-5 h-5 text-slate-600" />
                 </jsp:include>
                 <jsp:include page="../common/statsCard.jsp">
                     <jsp:param name="title" value="Utilized" />
-                    <jsp:param name="value" value="Rs 31.4L" />
+                    <jsp:param name="value" value="NPR 31.4L" />
                     <jsp:param name="icon" value="trending-up" />
                     <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-orange-100" />
                     <jsp:param name="iconClass" value="w-5 h-5 text-orange-600" />
@@ -76,7 +76,7 @@
                         <div>
                             <div class="flex justify-between text-xs mb-1 text-slate-600">
                                 <span>Material</span>
-                                <span class="font-bold">Rs 12L / Rs 15L</span>
+                                <span class="font-bold">NPR 12L / NPR 15L</span>
                             </div>
                             <div class="w-full bg-slate-100 rounded-full h-2">
                                 <div class="bg-orange-500 h-2 rounded-full" style="width: 80%"></div>
@@ -85,7 +85,7 @@
                         <div>
                             <div class="flex justify-between text-xs mb-1 text-slate-600">
                                 <span>Labour</span>
-                                <span class="font-bold">Rs 5L / Rs 6L</span>
+                                <span class="font-bold">NPR 5L / NPR 6L</span>
                             </div>
                             <div class="w-full bg-slate-100 rounded-full h-2">
                                 <div class="bg-orange-500 h-2 rounded-full" style="width: 83%"></div>
@@ -94,7 +94,7 @@
                         <div>
                             <div class="flex justify-between text-xs mb-1 text-red-600">
                                 <span>Equipment</span>
-                                <span class="font-bold">Rs 2.5L / Rs 1.5L (Over)</span>
+                                <span class="font-bold">NPR 2.5L / NPR 1.5L (Over)</span>
                             </div>
                             <div class="w-full bg-slate-100 rounded-full h-2">
                                 <div class="bg-orange-500 h-2 rounded-full" style="width: 100%"></div>
@@ -118,17 +118,17 @@
                             <tr class="border-b border-slate-50">
                                 <td class="py-2">Cement</td>
                                 <td>500 Bags</td>
-                                <td class="font-medium">Rs 2.25L</td>
+                                <td class="font-medium">NPR 2.25L</td>
                             </tr>
                             <tr class="border-b border-slate-50">
                                 <td class="py-2">Steel Rods</td>
                                 <td>20 Tons</td>
-                                <td class="font-medium">Rs 6.0L</td>
+                                <td class="font-medium">NPR 6.0L</td>
                             </tr>
                             <tr>
                                 <td class="py-2">Bricks</td>
                                 <td>50,000</td>
-                                <td class="font-medium">Rs 4.0L</td>
+                                <td class="font-medium">NPR 4.0L</td>
                             </tr>
                             </tbody>
                         </table>

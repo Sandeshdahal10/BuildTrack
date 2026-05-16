@@ -69,7 +69,7 @@
                                 <jsp:param name="statusRaw" value="${project.status}"/>
                                 <jsp:param name="progress" value="${project.status == 'COMPLETED' ? 100 : (project.status == 'IN_PROGRESS' ? 60 : (project.status == 'ON_HOLD' ? 30 : 10))}"/>
                                 <jsp:param name="workers" value="${project.assignedWorkerCount}"/>
-                                <jsp:param name="budget" value="Rs ${project.totalBudget}"/>
+                                <jsp:param name="budget" value="NPR ${project.totalBudget}"/>
                                 <jsp:param name="startDate" value="${project.startDate}"/>
                                 <jsp:param name="endDate" value="${empty project.endDate ? '-' : project.endDate}"/>
                                 <jsp:param name="viewLink" value="${pageContext.request.contextPath}/worker/projects/form?mode=view&amp;id=${project.id}"/>
@@ -85,7 +85,7 @@
                             <jsp:param name="status" value="In Progress"/>
                             <jsp:param name="progress" value="68"/>
                             <jsp:param name="workers" value="12"/>
-                            <jsp:param name="budget" value="Rs 50.0L"/>
+                            <jsp:param name="budget" value="NPR 50.0L"/>
                             <jsp:param name="startDate" value="2025-01-15"/>
                             <jsp:param name="endDate" value="2025-12-30"/>
                             <jsp:param name="viewLink" value="#"/>
@@ -98,7 +98,7 @@
                             <jsp:param name="status" value="In Progress"/>
                             <jsp:param name="progress" value="88"/>
                             <jsp:param name="workers" value="8"/>
-                            <jsp:param name="budget" value="Rs 32.0L"/>
+                            <jsp:param name="budget" value="NPR 32.0L"/>
                             <jsp:param name="startDate" value="2025-02-01"/>
                             <jsp:param name="endDate" value="2025-11-15"/>
                             <jsp:param name="viewLink" value="#"/>
@@ -111,7 +111,7 @@
                             <jsp:param name="status" value="In Progress"/>
                             <jsp:param name="progress" value="25"/>
                             <jsp:param name="workers" value="15"/>
-                            <jsp:param name="budget" value="Rs 80.0L"/>
+                            <jsp:param name="budget" value="NPR 80.0L"/>
                             <jsp:param name="startDate" value="2025-03-10"/>
                             <jsp:param name="endDate" value="2026-03-10"/>
                             <jsp:param name="viewLink" value="#"/>
@@ -124,7 +124,7 @@
                             <jsp:param name="status" value="Completed"/>
                             <jsp:param name="progress" value="100"/>
                             <jsp:param name="workers" value="20"/>
-                            <jsp:param name="budget" value="Rs 120.0L"/>
+                            <jsp:param name="budget" value="NPR 120.0L"/>
                             <jsp:param name="startDate" value="2024-06-01"/>
                             <jsp:param name="endDate" value="2025-02-28"/>
                             <jsp:param name="viewLink" value="#"/>

@@ -83,7 +83,7 @@
                 <jsp:include page="../common/statsCard.jsp">
                     <jsp:param name="title" value="Budget Utilization" />
                     <jsp:param name="value" value="${String.format('%.1f', budgetPct)}%" />
-                    <jsp:param name="subtitle" value="Rs.${globalTotalUtilized} of Rs.${globalTotalBudget}" />
+                    <jsp:param name="subtitle" value="NPR ${globalTotalUtilized} of NPR ${globalTotalBudget}" />
                     <jsp:param name="icon" value="badge-indian-rupee" />
                     <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-blue-100" />
                     <jsp:param name="iconClass" value="w-5 h-5 text-blue-600" />

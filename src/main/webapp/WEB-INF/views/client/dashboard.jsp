@@ -79,7 +79,7 @@
             </article>
             <article class="dashboard-search-item rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-[0_10px_24px_rgba(15,23,42,0.08)] transition duration-200" data-search="budget spent rs 48.4l rs 82.0l 59 utilized">
                 <p class="m-0 text-[11px] uppercase tracking-wide text-slate-600">Budget Spent</p>
-                <p class="mb-0 mt-1 text-[40px] font-semibold leading-none">Rs 48.4L / Rs 82.0L</p>
+                <p class="mb-0 mt-1 text-[40px] font-semibold leading-none">NPR 48.4L / NPR 82.0L</p>
                 <p class="m-0 text-[11px] text-slate-500">59% utilized</p>
             </article>
         </section>
@@ -97,7 +97,7 @@
                 </div>
                 <div class="mb-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-300/40"><div class="h-full w-[68%] rounded-full bg-yellow-400"></div></div>
                 <div class="flex justify-between text-[10px] text-slate-500">
-                    <span>Budget: Rs 50.0L &nbsp;&nbsp; Spent: Rs 34.0L</span>
+                    <span>Budget: NPR 50.0L &nbsp;&nbsp; Spent: NPR 34.0L</span>
                     <span>68%</span>
                 </div>
             </div>
@@ -112,7 +112,7 @@
                 </div>
                 <div class="mb-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-300/40"><div class="h-full w-[45%] rounded-full bg-yellow-400"></div></div>
                 <div class="flex justify-between text-[10px] text-slate-500">
-                    <span>Budget: Rs 32.0L &nbsp;&nbsp; Spent: Rs 14.4L</span>
+                    <span>Budget: NPR 32.0L &nbsp;&nbsp; Spent: NPR 14.4L</span>
                     <span>45%</span>
                 </div>
             </div>

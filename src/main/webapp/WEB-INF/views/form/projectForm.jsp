@@ -149,7 +149,7 @@
                         </div>
 
                         <div>
-                            <label class="mb-2 block text-sm font-semibold text-slate-700">Total Budget (Rs)</label>
+                            <label class="mb-2 block text-sm font-semibold text-slate-700">Total Budget (NPR)</label>
                             <input name="totalBudget" type="number" value="<%= projectBudgetValue %>" placeholder="5000000" <%= lockFields %> class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-orange-300 focus:ring-2 focus:ring-orange-200 <%= viewMode ? "bg-slate-100" : "" %>" />
                         </div>
 

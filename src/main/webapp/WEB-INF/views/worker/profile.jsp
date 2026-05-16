@@ -12,7 +12,7 @@
     String phone = (user != null && user.getPhone() != null) ? user.getPhone() : "-";
     String role = (user != null) ? user.getRoleDisplayName() : "Worker";
     String status = (user != null && user.getStatus() != null) ? user.getStatus() : "UNKNOWN";
-    String dailyWage = (user != null && user.getDailyWage() != null) ? "Rs. " + user.getDailyWage().toPlainString() : "-";
+    String dailyWage = (user != null && user.getDailyWage() != null) ? "NPR " + user.getDailyWage().toPlainString() : "-";
     String joinedDate = (user != null && user.getCreatedAt() != null)
             ? new SimpleDateFormat("MMMM dd, yyyy").format(user.getCreatedAt())
             : "-";

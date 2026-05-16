@@ -9,8 +9,8 @@
 <%@ page import="com.buildtrack.model.Payslip" %>
 <%!
     private String money(BigDecimal value) {
-        if (value == null) return "Rs 0.00";
-        return "Rs " + value.setScale(2, RoundingMode.HALF_UP).toPlainString();
+        if (value == null) return "NPR 0.00";
+        return "NPR " + value.setScale(2, RoundingMode.HALF_UP).toPlainString();
     }
 
     private BigDecimal safeSalary(Payroll payroll) {

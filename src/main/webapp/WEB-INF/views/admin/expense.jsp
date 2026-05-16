@@ -39,28 +39,28 @@
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
                         <jsp:include page="../common/statsCard.jsp">
                             <jsp:param name="title" value="Total Expenses" />
-                            <jsp:param name="value" value="Rs 31.4L" />
+                            <jsp:param name="value" value="NPR 31.4L" />
                             <jsp:param name="icon" value="trending-down" />
                             <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-red-100" />
                             <jsp:param name="iconClass" value="w-5 h-5 text-red-600" />
                         </jsp:include>
                         <jsp:include page="../common/statsCard.jsp">
                             <jsp:param name="title" value="Material Costs" />
-                            <jsp:param name="value" value="Rs 15.8L" />
+                            <jsp:param name="value" value="NPR 15.8L" />
                             <jsp:param name="icon" value="package" />
                             <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-orange-100" />
                             <jsp:param name="iconClass" value="w-5 h-5 text-orange-600" />
                         </jsp:include>
                         <jsp:include page="../common/statsCard.jsp">
                             <jsp:param name="title" value="Labour Costs" />
-                            <jsp:param name="value" value="Rs 10.6L" />
+                            <jsp:param name="value" value="NPR 10.6L" />
                             <jsp:param name="icon" value="users" />
                             <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-blue-100" />
                             <jsp:param name="iconClass" value="w-5 h-5 text-blue-600" />
                         </jsp:include>
                         <jsp:include page="../common/statsCard.jsp">
                             <jsp:param name="title" value="Misc / Equip" />
-                            <jsp:param name="value" value="Rs 5.0L" />
+                            <jsp:param name="value" value="NPR 5.0L" />
                             <jsp:param name="icon" value="briefcase" />
                             <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-purple-100" />
                             <jsp:param name="iconClass" value="w-5 h-5 text-purple-600" />
@@ -100,7 +100,7 @@
                                     <jsp:param name="category" value="Material" />
                                     <jsp:param name="categoryStyle" value="bg-orange-100 text-orange-700" />
                                     <jsp:param name="description" value="Cement Purchase (50 Bags)" />
-                                    <jsp:param name="amount" value="Rs 22,500" />
+                                    <jsp:param name="amount" value="NPR 22,500" />
                                     <jsp:param name="editLink" value="#" />
                                 </jsp:include>
 
@@ -110,7 +110,7 @@
                                     <jsp:param name="category" value="Labour" />
                                     <jsp:param name="categoryStyle" value="bg-blue-100 text-blue-700" />
                                     <jsp:param name="description" value="Weekly Wages Payment" />
-                                    <jsp:param name="amount" value="Rs 45,000" />
+                                    <jsp:param name="amount" value="NPR 45,000" />
                                     <jsp:param name="editLink" value="#" />
                                 </jsp:include>
 
@@ -120,7 +120,7 @@
                                     <jsp:param name="category" value="Equipment" />
                                     <jsp:param name="categoryStyle" value="bg-purple-100 text-purple-700" />
                                     <jsp:param name="description" value="Crane Rental (2 Days)" />
-                                    <jsp:param name="amount" value="Rs 18,000" />
+                                    <jsp:param name="amount" value="NPR 18,000" />
                                     <jsp:param name="editLink" value="#" />
                                 </jsp:include>
                             </tbody>
@@ -157,7 +157,7 @@
                         </select>
                     </div>
                     <div>
-                        <label class="text-sm font-medium text-slate-700">Amount (Rs)</label>
+                        <label class="text-sm font-medium text-slate-700">Amount (NPR)</label>
                         <input type="number"
                             class="w-full mt-1 rounded-lg border border-slate-300 p-2.5 text-sm outline-none focus:border-orange-300">
                     </div>
