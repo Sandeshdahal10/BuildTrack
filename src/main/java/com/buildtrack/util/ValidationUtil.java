@@ -137,6 +137,27 @@ public class ValidationUtil {
     }
 
     /**
+     * Validates client profile update fields.
+     */
+    public static List<String> validateProfileUpdate(String fullName, String phone) {
+        List<String> errors = new ArrayList<>();
+
+        if (isEmpty(fullName)) {
+            errors.add("Full name is required.");
+        } else if (!NAME_PATTERN.matcher(fullName).matches()) {
+            errors.add("Full name must contain only letters, spaces, hyphens, or dots (2-100 characters).");
+        }
+
+        if (isEmpty(phone)) {
+            errors.add("Phone is required.");
+        } else if (!PHONE_PATTERN.matcher(phone).matches()) {
+            errors.add("Phone number must be 7-20 digits and may include +, -, spaces, or parentheses.");
+        }
+
+        return errors;
+    }
+
+    /**
      * Checks if a string is null or empty/whitespace.
      */
     public static boolean isEmpty(String value) {

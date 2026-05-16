@@ -38,19 +38,15 @@ public class ClientService {
 	 * Updates client profile details with validation.
 	 */
 	public List<String> updateProfile(int id, String fullName, String phone) {
-		List<String> errors = new ArrayList<>();
-
-		if (ValidationUtil.isEmpty(fullName)) {
-			errors.add("Full name is required.");
-		}
-		if (ValidationUtil.isEmpty(phone)) {
-			errors.add("Phone is required.");
-		}
+		List<String> errors = ValidationUtil.validateProfileUpdate(fullName, phone);
 		if (!errors.isEmpty()) {
 			return errors;
 		}
 
-		if (!clientDAO.updateProfile(id, fullName.trim(), phone.trim())) {
+		String normalizedFullName = ValidationUtil.sanitize(fullName);
+		String normalizedPhone = ValidationUtil.sanitize(phone);
+
+		if (!clientDAO.updateProfile(id, normalizedFullName, normalizedPhone)) {
 			errors.add("Failed to update profile.");
 		}
 		return errors;

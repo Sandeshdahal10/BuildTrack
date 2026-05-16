@@ -37,7 +37,7 @@ public class ClientDao {
 	 * Update client's profile (full name and phone).
 	 */
 	public boolean updateProfile(int id, String fullName, String phone) {
-		String sql = "UPDATE users SET full_name = ?, phone = ? WHERE id = ?";
+		String sql = "UPDATE users SET full_name = ?, phone = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?";
 		try (Connection conn = DBUtil.getConnection();
 				PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, fullName);
