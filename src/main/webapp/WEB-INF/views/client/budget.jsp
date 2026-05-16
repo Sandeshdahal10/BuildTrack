@@ -22,10 +22,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="m-0 min-h-screen bg-white text-slate-900">
-<div class="grid min-h-screen w-full grid-cols-[224px_minmax(0,1fr)] font-semibold max-[1100px]:grid-cols-1">
-    <jsp:include page="../common/clientsidebar.jsp" />
+<div class="h-screen flex font-semibold">
+    <div class="fixed inset-y-0 left-0 w-56 border-r border-blue-900/60 bg-[#0b1f4d]">
+        <jsp:include page="../common/clientsidebar.jsp" />
+    </div>
 
-    <main class="min-h-screen bg-white px-5 pb-7 pt-4">
+    <main class="ml-56 flex-1 overflow-y-auto bg-white px-5 pb-7 pt-4">
         <div class="mb-3 flex items-center justify-between text-[11px] text-slate-600 max-[760px]:flex-col max-[760px]:items-start max-[760px]:gap-2.5">
             <div>Friday, April 17, 2026</div>
             <div class="flex items-center gap-2.5 max-[760px]:w-full max-[760px]:flex-wrap">
