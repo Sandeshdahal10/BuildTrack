@@ -73,19 +73,8 @@
             <span>Reports</span>
         </a>
 
-        <a href="<%= basePath %>/admin/settings" class="<%= uri.startsWith("/admin/settings") ? activeNavClass : inactiveNavClass %>">
-            <i data-lucide="settings" class="w-4 h-4"></i>
-            <span>Settings</span>
-        </a>
-
     </nav>
 
-    <div class="p-3 border-t border-blue-900/60">
-        <a href="<%= basePath %>/logout" class="flex items-center gap-3 px-3 py-2 rounded-lg text-rose-400 hover:bg-rose-500/10 hover:text-rose-300">
-            <i data-lucide="log-out" class="w-4 h-4"></i>
-            <span>Logout</span>
-        </a>
-    </div>
 
 </aside>
 

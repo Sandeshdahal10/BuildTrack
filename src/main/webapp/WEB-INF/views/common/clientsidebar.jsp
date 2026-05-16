@@ -44,27 +44,6 @@
             <span>Budget</span>
         </a>
 
-        <a href="<%= basePath %>/client/profile" class="<%= uri.startsWith("/client/profile") ? activeNavClass : inactiveNavClass %>">
-            <svg viewBox="0 0 24 24" class="w-4 h-4 stroke-current" fill="none" stroke-width="2" aria-hidden="true">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-            </svg>
-            <span>Profile</span>
-        </a>
-
-
     </nav>
 
-    <div class="p-3 border-t border-blue-900/60">
-        <a href="<%= basePath %>/logout" class="flex items-center gap-3 px-3 py-2 rounded-lg text-rose-400 hover:bg-rose-500/10 hover:text-rose-300">
-            <svg viewBox="0 0 24 24" class="w-4 h-4 stroke-current" fill="none" stroke-width="2" aria-hidden="true">
-                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                <path d="M16 17l5-5-5-5"></path>
-                <path d="M21 12H9"></path>
-            </svg>
-            <span>Logout</span>
-        </a>
-    </div>
-
 </aside>
-
