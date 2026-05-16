@@ -10,9 +10,6 @@
       <div class="mx-auto flex h-20 w-full items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
 
         <div class="hidden min-w-0 md:flex items-center gap-3">
-          <div class="h-12 w-12 flex items-center justify-center">
-            <img src="<%= request.getContextPath() %>/assets/image/BuildTrackLogo.png" alt="BuildTrack" class="h-10 object-contain" />
-          </div>
           <div class="hidden min-w-0 md:block">
             <p class="text-xl font-semibold text-black" id="topbar-date">Monday, April 13, 2026</p>
             <p class="mt-2 text-sm font-medium  text-black" id="topbar-time">08:48 AM</p>
