@@ -59,13 +59,29 @@
             </button>
 
             <div id="user-menu-dropdown" class="absolute right-0 mt-2 hidden w-48 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg z-50">
-              <c:if test="${sessionScope.user.role == 'WORKER'}">
-                <a href="<%= request.getContextPath() %>/worker/profile"
-                  class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50">
-                  <i data-lucide="user" class="h-4 w-4 text-slate-500"></i>
-                  Profile
-                </a>
-              </c:if>
+              <c:choose>
+                <c:when test="${sessionScope.user.role == 'WORKER'}">
+                  <a href="<%= request.getContextPath() %>/worker/profile"
+                    class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50">
+                    <i data-lucide="user" class="h-4 w-4 text-slate-500"></i>
+                    Profile
+                  </a>
+                </c:when>
+                <c:when test="${sessionScope.user.role == 'ADMIN'}">
+                  <a href="<%= request.getContextPath() %>/admin/profile"
+                    class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50">
+                    <i data-lucide="user" class="h-4 w-4 text-slate-500"></i>
+                    Profile
+                  </a>
+                </c:when>
+                <c:when test="${sessionScope.user.role == 'CLIENT'}">
+                  <a href="<%= request.getContextPath() %>/client/profile"
+                    class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50">
+                    <i data-lucide="user" class="h-4 w-4 text-slate-500"></i>
+                    Profile
+                  </a>
+                </c:when>
+              </c:choose>
               <a href="<%= request.getContextPath() %>/logout"
                 class="flex items-center gap-2 px-4 py-2.5 text-sm text-rose-600 hover:bg-rose-50">
                 <i data-lucide="log-out" class="h-4 w-4"></i>

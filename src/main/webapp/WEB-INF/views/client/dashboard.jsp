@@ -50,9 +50,18 @@
                     </ul>
                 </div>
                 </div>
-                <div class="flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-2 py-1">
-                    <div class="grid h-6 w-6 place-items-center rounded-full bg-amber-300 text-[11px] font-bold text-slate-700"><%= displayName.substring(0, 1).toUpperCase() %></div>
-                    <span class="text-xs text-slate-900"><%= displayName %></span>
+                <div class="relative">
+                    <button id="userMenuButton" class="flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-2 py-1 text-left" type="button" aria-haspopup="true" aria-expanded="false">
+                        <div class="grid h-6 w-6 place-items-center rounded-full bg-amber-300 text-[11px] font-bold text-slate-700"><%= displayName.substring(0, 1).toUpperCase() %></div>
+                        <span class="text-xs text-slate-900"><%= displayName %></span>
+                        <svg class="ml-1 h-3.5 w-3.5 text-slate-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.188l3.71-3.956a.75.75 0 111.08 1.04l-4.24 4.52a.75.75 0 01-1.08 0l-4.24-4.52a.75.75 0 01.02-1.06z" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                    <div id="userMenu" class="absolute right-0 mt-2 hidden w-40 overflow-hidden rounded-xl border border-slate-200 bg-white text-xs shadow-lg">
+                        <a href="<%= request.getContextPath() %>/client/profile" class="flex items-center gap-2 px-3 py-2 text-slate-700 hover:bg-slate-50">Profile</a>
+                        <a href="<%= request.getContextPath() %>/logout" class="flex items-center gap-2 px-3 py-2 text-rose-600 hover:bg-rose-50">Log Out</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -206,6 +215,34 @@
                 notificationBadge.classList.add("hidden");
                 markAllReadButton.textContent = "All caught up";
                 markAllReadButton.disabled = true;
+            });
+        }
+
+        var userMenuButton = document.getElementById("userMenuButton");
+        var userMenu = document.getElementById("userMenu");
+
+        function closeUserMenu() {
+            userMenu.classList.add("hidden");
+            userMenuButton.setAttribute("aria-expanded", "false");
+        }
+
+        if (userMenuButton && userMenu) {
+            userMenuButton.addEventListener("click", function (event) {
+                event.stopPropagation();
+                userMenu.classList.toggle("hidden");
+                userMenuButton.setAttribute("aria-expanded", userMenu.classList.contains("hidden") ? "false" : "true");
+            });
+
+            document.addEventListener("click", function (event) {
+                if (!userMenu.contains(event.target) && event.target !== userMenuButton) {
+                    closeUserMenu();
+                }
+            });
+
+            document.addEventListener("keydown", function (event) {
+                if (event.key === "Escape") {
+                    closeUserMenu();
+                }
             });
         }
     })();
