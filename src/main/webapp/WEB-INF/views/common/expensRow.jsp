@@ -7,15 +7,25 @@
         </span>
     </td>
     <td class="p-4 text-slate-600 text-sm">${param.description}</td>
-    <td class="p-4 text-right font-bold text-slate-800 text-sm">${param.amount}</td>
+    <td class="p-4 text-right font-bold text-slate-885 text-sm">${param.amount}</td>
     <td class="p-4 text-center">
         <div class="flex items-center justify-center gap-2">
-            <a href="${param.editLink}" class="text-center rounded-lg bg-orange-500 px-4 py-2 text-sm font-medium text-white hover:bg-orange-600 transition">
+            <button type="button" 
+                    data-id="${param.id}"
+                    data-project-id="${param.projectId}"
+                    data-category="${param.category}"
+                    data-amount="${param.amountRaw}"
+                    data-date="${param.date}"
+                    data-desc="${param.description}"
+                    onclick="openEditModal(this)"
+                    class="text-center rounded-lg bg-orange-500 px-4 py-2 text-sm font-medium text-white hover:bg-orange-600 transition edit-expense-btn">
                 Edit
-            </a>
-            <button class="text-center rounded-lg bg-red-500 px-4 py-2 text-sm font-medium text-white hover:bg-red-600 transition">
-Delete
             </button>
+            <form method="POST" action="${pageContext.request.contextPath}/admin/expenses?action=delete&id=${param.id}" class="inline" onsubmit="return confirm('Are you sure you want to delete this expense?');">
+                <button type="submit" class="text-center rounded-lg bg-red-500 px-4 py-2 text-sm font-medium text-white hover:bg-red-600 transition">
+                    Delete
+                </button>
+            </form>
         </div>
     </td>
 </tr>

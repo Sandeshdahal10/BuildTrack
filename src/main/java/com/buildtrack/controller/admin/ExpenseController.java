@@ -62,24 +62,13 @@ public class ExpenseController extends HttpServlet {
 
             case "add": {
                 // ========== ADD FORM ==========
-                request.setAttribute("projects", projectService.getAllProjects());
-                request.setAttribute("categories", expenseService.getValidCategories());
-                request.getRequestDispatcher("/WEB-INF/views/admin/expense-add.jsp")
-                        .forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/admin/expenses");
                 break;
             }
 
             case "edit": {
                 // ========== EDIT FORM ==========
-                int id = Integer.parseInt(request.getParameter("id"));
-                Expense expense = expenseService.getById(id);
-                if (expense == null) { response.sendError(404, "Expense not found"); return; }
-
-                request.setAttribute("expense", expense);
-                request.setAttribute("projects", projectService.getAllProjects());
-                request.setAttribute("categories", expenseService.getValidCategories());
-                request.getRequestDispatcher("/WEB-INF/views/admin/expense-add.jsp")
-                        .forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/admin/expenses");
                 break;
             }
 
@@ -168,9 +157,20 @@ public class ExpenseController extends HttpServlet {
                 if (!errors.isEmpty()) {
                     request.setAttribute("errors", errors);
                     preserveForm(request);
-                    request.setAttribute("projects", projectService.getAllProjects());
+                    
+                    BigDecimal grandTotal = expenseService.getGrandTotal();
+                    List<Map<String, Object>> projectSummary = expenseService.getProjectExpenseSummary();
+                    List<Expense> recentExpenses = expenseService.getRecentExpenses(10);
+                    int totalCount = expenseService.getCount();
+
+                    request.setAttribute("grandTotal", grandTotal);
+                    request.setAttribute("projectSummary", projectSummary);
+                    request.setAttribute("recentExpenses", recentExpenses);
+                    request.setAttribute("totalCount", totalCount);
                     request.setAttribute("categories", expenseService.getValidCategories());
-                    request.getRequestDispatcher("/WEB-INF/views/admin/expense-add.jsp")
+                    request.setAttribute("projects", projectService.getAllProjects());
+
+                    request.getRequestDispatcher("/WEB-INF/views/admin/expense.jsp")
                             .forward(request, response);
                 } else {
                     request.getSession().setAttribute("success",
@@ -196,9 +196,20 @@ public class ExpenseController extends HttpServlet {
                 if (!errors.isEmpty()) {
                     request.setAttribute("errors", errors);
                     request.setAttribute("expense", expenseService.getById(id));
-                    request.setAttribute("projects", projectService.getAllProjects());
+                    
+                    BigDecimal grandTotal = expenseService.getGrandTotal();
+                    List<Map<String, Object>> projectSummary = expenseService.getProjectExpenseSummary();
+                    List<Expense> recentExpenses = expenseService.getRecentExpenses(10);
+                    int totalCount = expenseService.getCount();
+
+                    request.setAttribute("grandTotal", grandTotal);
+                    request.setAttribute("projectSummary", projectSummary);
+                    request.setAttribute("recentExpenses", recentExpenses);
+                    request.setAttribute("totalCount", totalCount);
                     request.setAttribute("categories", expenseService.getValidCategories());
-                    request.getRequestDispatcher("/WEB-INF/views/admin/expense-add.jsp")
+                    request.setAttribute("projects", projectService.getAllProjects());
+
+                    request.getRequestDispatcher("/WEB-INF/views/admin/expense.jsp")
                             .forward(request, response);
                 } else {
                     request.getSession().setAttribute("success",
