@@ -73,11 +73,14 @@ public class ProjectTrackingController extends HttpServlet {
 				List<MaterialUsage> materials = projectTrackingService.getMaterialUsageForProject(selectedProjectId);
 				List<Map<String, Object>> expenses = projectTrackingService.getExpensesForProject(selectedProjectId);
 				int timeProgress = projectTrackingService.getTimeProgressPercent(selectedProjectId);
+				List<com.buildtrack.model.ProjectDocument> projectDocuments = new com.buildtrack.service.admin.ProjectService().getDocumentsByProjectId(selectedProjectId);
+
 				request.setAttribute("selectedProject", project);
 				request.setAttribute("selectedProjectId", selectedProjectId);
 				request.setAttribute("materials", materials);
 				request.setAttribute("expenses", expenses);
 				request.setAttribute("timeProgress", timeProgress);
+				request.setAttribute("projectDocuments", projectDocuments);
 			} else {
 				request.setAttribute("projectNotFound", true);
 			}

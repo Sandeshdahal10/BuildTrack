@@ -34,6 +34,33 @@ public class ProjectDao {
     }
 
     /**
+     * Returns all projects assigned to a specific worker with client details and worker counts.
+     */
+    public List<Project> findAssignedProjectsForWorker(int workerId) {
+        List<Project> list = new ArrayList<>();
+        String sql = "SELECT p.*, u.full_name AS client_name, " +
+                "COALESCE((SELECT COUNT(*) FROM project_workers pw2 WHERE pw2.project_id = p.id AND pw2.is_active = 1),0) AS assigned_count " +
+                "FROM project_workers pw " +
+                "JOIN projects p ON pw.project_id = p.id " +
+                "LEFT JOIN users u ON p.client_id = u.id " +
+                "WHERE pw.worker_id = ? AND pw.is_active = 1 " +
+                "ORDER BY p.created_at DESC";
+        try (Connection conn = DBUtil.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, workerId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Project p = mapRow(rs, true);
+                p.setAssignedWorkerCount(rs.getInt("assigned_count"));
+                list.add(p);
+            }
+        } catch (SQLException e) {
+            System.err.println("[ProjectDAO] findAssignedProjectsForWorker error: " + e.getMessage());
+        }
+        return list;
+    }
+
+    /**
      * Returns projects filtered by status.
      *
      * @param status project status

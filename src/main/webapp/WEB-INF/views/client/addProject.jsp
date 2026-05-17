@@ -186,12 +186,7 @@
             <!-- Document Upload -->
             <div class="mb-8">
                 <label for="document" class="mb-1 block text-sm font-semibold text-slate-700">Project Document (Optional)</label>
-                <div class="rounded-lg border-2 border-dashed border-slate-300 p-6 text-center hover:border-slate-400">
-                    <svg class="mx-auto mb-2 h-8 w-8 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path>
-                        <polyline points="17 8 12 3 7 8"></polyline>
-                        <line x1="12" y1="3" x2="12" y2="15"></line>
-                    </svg>
+                <div class="rounded-lg border-2 border-dashed border-slate-300 p-6 text-center hover:border-slate-400" id="uploadAreaContainer">
                     <input
                         type="file"
                         id="document"
@@ -200,13 +195,41 @@
                         class="hidden"
                         aria-label="Upload project document"
                     />
-                    <label for="document" class="cursor-pointer">
-                        <span class="font-semibold text-blue-600 hover:text-blue-700">Click to upload</span>
-                        <span class="text-slate-600"> or drag and drop</span>
-                    </label>
-                    <p class="mt-1 text-xs text-slate-500">
-                        PDF, DOC, DOCX, JPG, PNG • Max 5 MB
-                    </p>
+                    
+                    <!-- Default upload prompt -->
+                    <div id="uploadDefaultPrompt">
+                        <svg class="mx-auto mb-2 h-8 w-8 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        <label for="document" class="cursor-pointer">
+                            <span class="font-semibold text-blue-600 hover:text-blue-700">Click to upload</span>
+                            <span class="text-slate-600"> or drag and drop</span>
+                        </label>
+                        <p class="mt-1 text-xs text-slate-500">
+                            PDF, DOC, DOCX, JPG, PNG • Max 5 MB
+                        </p>
+                    </div>
+                    
+                    <!-- File selected preview card -->
+                    <div id="uploadSelectedCard" class="hidden max-w-md mx-auto mt-2 flex items-center justify-between border border-slate-200 bg-slate-50 rounded-xl p-4 text-left">
+                        <div class="flex items-center gap-3 min-w-0 flex-1">
+                            <div id="filePreviewBadge" class="w-10 h-10 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs uppercase shrink-0">
+                                PDF
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <p id="selectedFileName" class="text-sm font-semibold text-slate-800 truncate" title=""></p>
+                                <p id="selectedFileInfo" class="text-xs text-slate-500"></p>
+                            </div>
+                        </div>
+                        <button type="button" id="clearFileSelectionBtn" class="text-slate-400 hover:text-rose-600 transition p-2 shrink-0" title="Remove document">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -248,9 +271,15 @@
 
     // File upload handling
     const documentInput = document.getElementById('document');
-    const uploadArea = documentInput.parentElement.parentElement;
+    const uploadArea = document.getElementById('uploadAreaContainer');
+    const defaultPrompt = document.getElementById('uploadDefaultPrompt');
+    const selectedCard = document.getElementById('uploadSelectedCard');
+    const fileNameEl = document.getElementById('selectedFileName');
+    const fileInfoEl = document.getElementById('selectedFileInfo');
+    const filePreviewBadge = document.getElementById('filePreviewBadge');
+    const clearFileBtn = document.getElementById('clearFileSelectionBtn');
 
-    if (documentInput) {
+    if (documentInput && uploadArea) {
         ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
             uploadArea.addEventListener(eventName, preventDefaults, false);
         });
@@ -272,18 +301,59 @@
             });
         });
 
+        function handleFileDisplay(files) {
+            if (files && files.length > 0) {
+                const file = files[0];
+                const fileName = file.name;
+                const fileSize = (file.size / 1024 / 1024).toFixed(2);
+                
+                // Extract clean extension for the icon badge
+                const dotIndex = fileName.lastIndexOf('.');
+                let ext = dotIndex !== -1 ? fileName.substring(dotIndex + 1).toUpperCase() : 'FILE';
+                if (ext.length > 4) ext = ext.substring(0, 4);
+                
+                // Map extension to full display type
+                let fileTypeDesc = 'Document';
+                if (['JPG', 'JPEG', 'PNG', 'GIF'].includes(ext)) {
+                    fileTypeDesc = 'Image';
+                } else if (ext === 'PDF') {
+                    fileTypeDesc = 'PDF Document';
+                } else if (['DOC', 'DOCX'].includes(ext)) {
+                    fileTypeDesc = 'Word Document';
+                }
+
+                fileNameEl.textContent = fileName;
+                fileNameEl.title = fileName;
+                fileInfoEl.textContent = `${fileSize} MB \xe2\x80\xa2 ${fileTypeDesc}`;
+                filePreviewBadge.textContent = ext;
+
+                // Toggle display cards
+                defaultPrompt.classList.add('hidden');
+                selectedCard.classList.remove('hidden');
+            } else {
+                fileNameEl.textContent = '';
+                fileInfoEl.textContent = '';
+                defaultPrompt.classList.remove('hidden');
+                selectedCard.classList.add('hidden');
+            }
+        }
+
         uploadArea.addEventListener('drop', (e) => {
             const dt = e.dataTransfer;
             const files = dt.files;
             documentInput.files = files;
+            handleFileDisplay(files);
         });
 
         documentInput.addEventListener('change', function () {
-            if (this.files.length > 0) {
-                const fileName = this.files[0].name;
-                const label = uploadArea.querySelector('label');
-                label.innerHTML = `<span class="text-green-600 font-semibold">✓ ${fileName} selected</span>`;
-            }
+            handleFileDisplay(this.files);
+        });
+
+        clearFileBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            documentInput.value = ''; // Clear actual input file list
+            handleFileDisplay(null);
         });
     }
 

@@ -77,19 +77,7 @@
 
             </div>
 
-            <div class="w-full">
 
-                <div class="flex justify-between text-xs mb-1">
-                    <span class="text-slate-500">Progress</span>
-                    <span class="font-bold text-orange-600">${param.progress}%</span>
-                </div>
-
-                <div class="h-2 rounded-full bg-slate-100 overflow-hidden">
-                    <div class="h-2 rounded-full bg-orange-500"
-                         style="width: ${param.progress}%"></div>
-                </div>
-
-            </div>
 
         </div>
 
@@ -107,10 +95,12 @@
                 </form>
             </c:if>
 
-            <a href="${param.viewLink}"
-               class="text-center rounded-lg text-gray-600 px-4 py-2 text-sm font-medium hover:bg-gray-50 transition border border-gray-200">
-                View
-            </a>
+            <c:if test="${not fn:contains(param.viewLink, '/worker/')}">
+                <a href="${param.viewLink}"
+                   class="text-center rounded-lg text-gray-600 px-4 py-2 text-sm font-medium hover:bg-gray-50 transition border border-gray-200">
+                    View
+                </a>
+            </c:if>
 
             <c:if test="${fn:contains(param.editLink, '/admin/')}">
                 <a href="${param.editLink}"

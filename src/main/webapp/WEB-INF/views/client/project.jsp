@@ -334,18 +334,7 @@
                                                         <span>NPR ${p.totalBudget}</span>
                                                     </div>
 
-                                                    <div class="mt-4">
-                                                        <div class="mb-1 flex items-center justify-between text-sm">
-                                                            <span class="text-slate-600">Completion</span>
-                                                            <span
-                                                                class="font-semibold text-amber-600">${progress}%</span>
-                                                        </div>
-                                                        <div
-                                                            class="h-3 w-full overflow-hidden rounded-full bg-slate-200">
-                                                            <div class="h-full rounded-full bg-gradient-to-r from-amber-400 via-yellow-300 to-teal-500"
-                                                                style="width: ${progress}%"></div>
-                                                        </div>
-                                                    </div>
+
 
                                                     <a href="<%= request.getContextPath() %>/client/project?id=${p.id}"
                                                         class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-amber-600 hover:text-amber-700">
