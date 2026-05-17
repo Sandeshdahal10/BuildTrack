@@ -108,7 +108,7 @@
                     required
                     placeholder="e.g., Skyline Tower Complex"
                     value="<%= (formData != null && formData.get("title") != null) ? formData.get("title") : "" %>"
-                    class="w-full rounded-lg border border-slate-300 px-4 py-2 text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    class="w-full rounded-lg border border-slate-300 px-4 py-2 text-slate-900 placeholder:text-slate-400 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
                 />
                 <p class="mt-1 text-xs text-slate-500">Maximum 100 characters</p>
             </div>
@@ -123,7 +123,7 @@
                     required
                     rows="4"
                     placeholder="Provide a detailed description of the project..."
-                    class="w-full rounded-lg border border-slate-300 px-4 py-2 text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    class="w-full rounded-lg border border-slate-300 px-4 py-2 text-slate-900 placeholder:text-slate-400 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
                 ><%= (formData != null && formData.get("description") != null) ? formData.get("description") : "" %></textarea>
                 <p class="mt-1 text-xs text-slate-500">Maximum 500 characters</p>
             </div>
@@ -140,7 +140,7 @@
                     required
                     placeholder="e.g., 5000000"
                     value="<%= (formData != null && formData.get("budget") != null) ? formData.get("budget") : "" %>"
-                    class="w-full rounded-lg border border-slate-300 px-4 py-2 text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    class="w-full rounded-lg border border-slate-300 px-4 py-2 text-slate-900 placeholder:text-slate-400 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
                 />
                 <p class="mt-1 text-xs text-slate-500">Enter amount in NPR</p>
             </div>
@@ -156,7 +156,7 @@
                         name="startDate"
                         required
                         value="<%= (formData != null && formData.get("startDate") != null) ? formData.get("startDate") : "" %>"
-                        class="w-full rounded-lg border border-slate-300 px-4 py-2 text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                        class="w-full rounded-lg border border-slate-300 px-4 py-2 text-slate-900 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
                     />
                 </div>
 
@@ -169,7 +169,7 @@
                         name="endDate"
                         required
                         value="<%= (formData != null && formData.get("endDate") != null) ? formData.get("endDate") : "" %>"
-                        class="w-full rounded-lg border border-slate-300 px-4 py-2 text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                        class="w-full rounded-lg border border-slate-300 px-4 py-2 text-slate-900 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
                     />
                 </div>
             </div>
@@ -204,7 +204,7 @@
                             <line x1="12" y1="3" x2="12" y2="15"></line>
                         </svg>
                         <label for="document" class="cursor-pointer">
-                            <span class="font-semibold text-blue-600 hover:text-blue-700">Click to upload</span>
+                            <span class="font-semibold text-orange-500 hover:text-orange-600">Click to upload</span>
                             <span class="text-slate-600"> or drag and drop</span>
                         </label>
                         <p class="mt-1 text-xs text-slate-500">
@@ -215,7 +215,7 @@
                     <!-- File selected preview card -->
                     <div id="uploadSelectedCard" class="hidden max-w-md mx-auto mt-2 flex items-center justify-between border border-slate-200 bg-slate-50 rounded-xl p-4 text-left">
                         <div class="flex items-center gap-3 min-w-0 flex-1">
-                            <div id="filePreviewBadge" class="w-10 h-10 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs uppercase shrink-0">
+                            <div id="filePreviewBadge" class="w-10 h-10 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-xs uppercase shrink-0">
                                 PDF
                             </div>
                             <div class="min-w-0 flex-1">
@@ -237,13 +237,13 @@
             <div class="flex gap-4">
                 <button
                     type="submit"
-                    class="rounded-lg bg-blue-600 px-6 py-2 font-semibold text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    class="rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold shadow-md shadow-orange-500/10 px-6 py-2.5 transition duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
                 >
                     Create Project
                 </button>
                 <a
                     href="<%= request.getContextPath() %>/client/project"
-                    class="rounded-lg border border-slate-300 px-6 py-2 font-semibold text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-300 focus:ring-offset-2"
+                    class="rounded-xl border border-slate-300 px-6 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-300 focus:ring-offset-2 transition duration-200"
                 >
                     Cancel
                 </a>
@@ -291,13 +291,13 @@
 
         ['dragenter', 'dragover'].forEach(eventName => {
             uploadArea.addEventListener(eventName, () => {
-                uploadArea.classList.add('bg-blue-50');
+                uploadArea.classList.add('bg-orange-50');
             });
         });
 
         ['dragleave', 'drop'].forEach(eventName => {
             uploadArea.addEventListener(eventName, () => {
-                uploadArea.classList.remove('bg-blue-50');
+                uploadArea.classList.remove('bg-orange-50');
             });
         });
 
