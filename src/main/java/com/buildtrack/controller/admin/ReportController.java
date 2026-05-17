@@ -41,16 +41,59 @@ public class ReportController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        // Calculate and set global overview statistics
+        List<com.buildtrack.model.Project> allProjects = projectService.getAllProjects();
+        request.setAttribute("projects", allProjects);
+        request.setAttribute("totalMaterialCost", reportService.getTotalMaterialCost());
+        request.setAttribute("totalPayrollCost", reportService.getTotalPayrollCost());
+        request.setAttribute("totalExpenses", reportService.getGrandTotalExpenses());
+        
+        List<com.buildtrack.model.Document> allDocs = documentService.getAllDocuments();
+        request.setAttribute("documents", allDocs);
+        request.setAttribute("totalDocuments", allDocs.size());
+
+        List<com.buildtrack.model.Inquiry> allInquiries = inquiryService.getAllInquiries();
+        request.setAttribute("inquiries", allInquiries);
+        
+        java.math.BigDecimal totalBudget = java.math.BigDecimal.ZERO;
+        for (com.buildtrack.model.Project p : allProjects) {
+            if (p.getTotalBudget() != null) {
+                totalBudget = totalBudget.add(p.getTotalBudget());
+            }
+        }
+        request.setAttribute("totalBudget", totalBudget);
+
+        int pendingInquiries = 0;
+        for (com.buildtrack.model.Inquiry inq : allInquiries) {
+            if ("PENDING".equalsIgnoreCase(inq.getStatus())) {
+                pendingInquiries++;
+            }
+        }
+        request.setAttribute("pendingInquiries", pendingInquiries);
+
         String action = request.getParameter("action");
 
         if (action == null) {
-            // ---------- Reports overview ----------
-            request.setAttribute("totalMaterialCost", reportService.getTotalMaterialCost());
-            request.setAttribute("totalPayrollCost", reportService.getTotalPayrollCost());
-            request.setAttribute("totalExpenses", reportService.getGrandTotalExpenses());
-            request.setAttribute("projects", projectService.getAllProjects());
-            request.setAttribute("documents", documentService.getAllDocuments());
-            request.setAttribute("inquiries", inquiryService.getAllInquiries());
+            // Default to the first project if available and no project was specified
+            String pidStr = request.getParameter("pid");
+            int projectId = -1;
+            if (pidStr != null && !pidStr.isEmpty()) {
+                projectId = Integer.parseInt(pidStr);
+            } else if (!allProjects.isEmpty()) {
+                projectId = allProjects.get(0).getId();
+            }
+
+            if (projectId != -1) {
+                Map<String, Object> report = reportService.getBudgetVsActual(projectId);
+                if (report != null) {
+                    request.setAttribute("singleReport", report);
+                    request.setAttribute("projectId", projectId);
+                    request.setAttribute("projectTitle", report.get("title"));
+                    request.setAttribute("expenseCategories", reportService.getCombinedExpenseBreakdown(projectId));
+                    request.setAttribute("usageSummary", reportService.getMaterialUsageSummary(projectId));
+                }
+            }
+
             request.getRequestDispatcher("/WEB-INF/views/admin/reports.jsp")
                     .forward(request, response);
             return;
@@ -87,7 +130,6 @@ public class ReportController extends HttpServlet {
                     request.setAttribute("budgetReports", reports);
                 }
 
-                request.setAttribute("projects", projectService.getAllProjects());
                 request.getRequestDispatcher("/WEB-INF/views/admin/reports.jsp")
                         .forward(request, response);
                 break;
@@ -104,7 +146,6 @@ public class ReportController extends HttpServlet {
                 request.setAttribute("projectId", projectId);
                 request.setAttribute("expenseCategories", categories);
                 request.setAttribute("usageSummary", usageSummary);
-                request.setAttribute("projects", projectService.getAllProjects());
                 request.getRequestDispatcher("/WEB-INF/views/admin/reports.jsp")
                         .forward(request, response);
                 break;
@@ -121,7 +162,6 @@ public class ReportController extends HttpServlet {
                 request.setAttribute("projectId", projectId);
                 request.setAttribute("monthYear", monthYear);
                 request.setAttribute("attendanceSummary", summary);
-                request.setAttribute("projects", projectService.getAllProjects());
                 request.getRequestDispatcher("/WEB-INF/views/admin/reports.jsp")
                         .forward(request, response);
                 break;

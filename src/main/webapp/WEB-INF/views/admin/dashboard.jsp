@@ -136,33 +136,93 @@
                 </article>
 
                 <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                    <%
+                        java.util.List<java.util.Map<String, Object>> budgetVsActualList = 
+                            (java.util.List<java.util.Map<String, Object>>) request.getAttribute("budgetVsActual");
+                        java.math.BigDecimal globalMax = java.math.BigDecimal.ONE;
+                        if (budgetVsActualList != null) {
+                            int count = 0;
+                            for (java.util.Map<String, Object> row : budgetVsActualList) {
+                                if (count >= 5) break;
+                                java.math.BigDecimal b = (java.math.BigDecimal) row.get("budget");
+                                java.math.BigDecimal a = (java.math.BigDecimal) row.get("actualCost");
+                                if (b != null && b.compareTo(globalMax) > 0) {
+                                    globalMax = b;
+                                }
+                                if (a != null && a.compareTo(globalMax) > 0) {
+                                    globalMax = a;
+                                }
+                                count++;
+                            }
+                        }
+                        request.setAttribute("chartGlobalMax", globalMax);
+                    %>
                     <div class="flex justify-between items-center">
-                        <h2 class="text-base font-semibold text-slate-900">Budget vs Actual</h2>
-                        <div class="flex gap-3 text-xs">
-                            <span class="flex items-center gap-1"><span class="h-2 w-2 bg-amber-500 rounded-full"></span> Budget</span>
-                            <span class="flex items-center gap-1"><span class="h-2 w-2 bg-teal-500 rounded-full"></span> Actual</span>
+                        <h2 class="text-base font-bold text-slate-800 flex items-center gap-1.5">
+                            <svg viewBox="0 0 24 24" class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"></path></svg>
+                            Budget vs Actual Expenses
+                        </h2>
+                        <div class="flex gap-4 text-xs font-bold">
+                            <span class="flex items-center gap-1.5"><span class="h-2.5 w-2.5 bg-amber-500 rounded-full"></span> Budget</span>
+                            <span class="flex items-center gap-1.5"><span class="h-2.5 w-2.5 bg-teal-500 rounded-full"></span> Actual</span>
                         </div>
                     </div>
-                    <div class="budget-grid mt-5 rounded-xl border border-slate-200 p-4">
-                        <div class="grid h-48 grid-cols-5 items-end gap-3">
-                            <c:forEach var="row" items="${budgetVsActual}" end="4">
-                                <c:set var="maxVal" value="${row.totalBudget > row.actualCost ? row.totalBudget : row.actualCost}" />
-                                <c:set var="bH" value="${maxVal > 0 ? (row.totalBudget / maxVal) * 100 : 0}" />
-                                <c:set var="aH" value="${maxVal > 0 ? (row.actualCost / maxVal) * 100 : 0}" />
-                                <div class="flex items-end justify-center gap-1 group relative" title="Budget: ${row.totalBudget} | Actual: ${row.actualCost}">
-                                    <span class="w-4 sm:w-6 rounded-t bg-amber-500" style="height: ${bH}%;"></span>
-                                    <span class="w-4 sm:w-6 rounded-t bg-teal-500" style="height: ${aH}%;"></span>
-                                </div>
-                            </c:forEach>
-                            <c:if test="${empty budgetVsActual}">
-                                <div class="col-span-5 text-center text-slate-400 text-sm mt-20">No financial data available</div>
-                            </c:if>
+
+                    <div class="mt-6 flex h-60 gap-4">
+                        <!-- Y-Axis labels -->
+                        <div class="flex flex-col justify-between text-[10px] font-bold text-slate-400 pb-8 select-none">
+                            <span>NPR <fmt:formatNumber value="${chartGlobalMax}" type="number" maxFractionDigits="0"/></span>
+                            <span>NPR <fmt:formatNumber value="${chartGlobalMax * 0.75}" type="number" maxFractionDigits="0"/></span>
+                            <span>NPR <fmt:formatNumber value="${chartGlobalMax * 0.5}" type="number" maxFractionDigits="0"/></span>
+                            <span>NPR <fmt:formatNumber value="${chartGlobalMax * 0.25}" type="number" maxFractionDigits="0"/></span>
+                            <span>0</span>
                         </div>
-                    </div>
-                    <div class="mt-3 grid grid-cols-5 text-center text-xs text-slate-500 truncate">
-                        <c:forEach var="row" items="${budgetVsActual}" end="4">
-                           <span class="truncate px-1" title="${row.title}">${row.title}</span>
-                        </c:forEach>
+
+                        <!-- Main chart area -->
+                        <div class="flex-1 flex flex-col w-0">
+                            <div class="budget-grid flex-1 border-b border-l border-slate-200/80 rounded-br relative flex items-end justify-around px-2 pb-1 gap-2 min-h-0">
+                                <c:forEach var="row" items="${budgetVsActual}" end="4">
+                                    <c:set var="bH" value="${chartGlobalMax > 0 ? (row.budget / chartGlobalMax) * 100 : 0}" />
+                                    <c:set var="aH" value="${chartGlobalMax > 0 ? (row.actualCost / chartGlobalMax) * 100 : 0}" />
+                                    
+                                    <div class="flex items-end justify-center gap-1.5 group relative h-full flex-1 max-w-[80px]">
+                                        <!-- Budget Bar -->
+                                        <div class="w-5 sm:w-6 bg-gradient-to-t from-amber-600 to-amber-400 rounded-t shadow-sm transition-all duration-300 group-hover:scale-x-105 group-hover:brightness-105" style="height: ${bH}%;"></div>
+                                        <!-- Actual Bar -->
+                                        <div class="w-5 sm:w-6 bg-gradient-to-t from-teal-600 to-teal-400 rounded-t shadow-sm transition-all duration-300 group-hover:scale-x-105 group-hover:brightness-105" style="height: ${aH}%;"></div>
+
+                                        <!-- Custom Tooltip -->
+                                        <div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-slate-800 text-white rounded-lg p-2.5 text-[10px] font-bold shadow-lg pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-30 whitespace-nowrap border border-slate-700/50">
+                                            <p class="text-slate-200 border-b border-slate-700 pb-1 mb-1 font-extrabold truncate max-w-[150px]">${row.title}</p>
+                                            <div class="space-y-0.5">
+                                                <p class="flex items-center justify-between gap-4">
+                                                    <span class="text-amber-400">Budget:</span> 
+                                                    <span>NPR <fmt:formatNumber value="${row.budget}" type="number" groupingUsed="true" maxFractionDigits="0"/></span>
+                                                </p>
+                                                <p class="flex items-center justify-between gap-4">
+                                                    <span class="text-teal-400">Spent:</span> 
+                                                    <span>NPR <fmt:formatNumber value="${row.actualCost}" type="number" groupingUsed="true" maxFractionDigits="0"/></span>
+                                                </p>
+                                                <p class="flex items-center justify-between gap-4 border-t border-slate-700 pt-1 mt-1">
+                                                    <span class="text-slate-400">Utilized:</span> 
+                                                    <span class="${row.usagePercent > 100 ? 'text-rose-400' : 'text-emerald-400'}"><fmt:formatNumber value="${row.usagePercent}" maxFractionDigits="1"/>%</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </c:forEach>
+                                <c:if test="${empty budgetVsActual}">
+                                    <div class="absolute inset-0 flex items-center justify-center text-slate-400 text-xs font-bold">No financial data available</div>
+                                </c:if>
+                            </div>
+
+                            <!-- X-Axis Labels -->
+                            <div class="flex justify-around text-[10px] font-bold text-slate-400 pt-2 text-center select-none truncate">
+                                <c:forEach var="row" items="${budgetVsActual}" end="4">
+                                    <span class="flex-1 truncate px-1 max-w-[80px]" title="${row.title}">${row.title}</span>
+                                </c:forEach>
+                            </div>
+                        </div>
                     </div>
                 </article>
 

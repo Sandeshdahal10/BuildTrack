@@ -20,12 +20,22 @@ public class InquiryController extends HttpServlet {
             throws ServletException, IOException {
         String inquiryIdStr = request.getParameter("inquiryId");
         String status = request.getParameter("status");
+        String reply = request.getParameter("reply");
 
         if (inquiryIdStr != null && status != null) {
             int inquiryId = Integer.parseInt(inquiryIdStr);
-            inquiryService.updateInquiry(inquiryId, null, status.toUpperCase()); // Using exact DB enum values
+            String uppercaseStatus = status.toUpperCase();
+            
+            if (reply != null) {
+                reply = reply.trim();
+                if (reply.isEmpty()) {
+                    reply = null;
+                }
+            }
+            
+            inquiryService.updateInquiry(inquiryId, reply, uppercaseStatus);
         }
         
-        response.sendRedirect(request.getContextPath() + "/admin/reports");
+        response.sendRedirect(request.getContextPath() + "/admin/reports?tab=inquiries");
     }
 }

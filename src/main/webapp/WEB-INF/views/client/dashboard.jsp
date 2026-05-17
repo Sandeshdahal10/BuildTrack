@@ -7,6 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.buildtrack.model.User" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
     User user = (User) session.getAttribute("user");
     String displayName = (user != null && user.getFullName() != null && !user.getFullName().trim().isEmpty())
@@ -91,84 +93,74 @@
             <p class="mt-1 text-xs text-slate-600">Stay updated on your construction projects.</p>
         </section>
 
-        <section class="mt-3.5 grid grid-cols-2 gap-3.5 max-[760px]:grid-cols-1">
-            <article class="dashboard-search-item rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-[0_10px_24px_rgba(15,23,42,0.08)] transition duration-200" data-search="active projects 2 both on track">
-                <p class="m-0 text-[11px] uppercase tracking-wide text-slate-600">Active Projects</p>
-                <p class="mb-0 mt-1 text-4xl font-semibold leading-none">2</p>
-                <p class="m-0 text-[11px] text-slate-500">Both on track</p>
+        <section class="mt-3.5 grid grid-cols-1 md:grid-cols-2 gap-3.5">
+            <article class="dashboard-search-item rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-[0_8px_20px_rgba(15,23,42,0.04)] hover:shadow transition duration-200" data-search="active projects ${dashboardSummary.activeProjects}">
+                <p class="m-0 text-[11px] font-bold uppercase tracking-wider text-slate-400">Active Projects</p>
+                <p class="mb-0 mt-1.5 text-3xl font-black text-slate-800">${dashboardSummary.activeProjects}</p>
+                <p class="m-0 mt-1 text-[11px] text-slate-500 font-semibold">Out of ${dashboardSummary.totalProjects} total projects</p>
             </article>
-            <article class="dashboard-search-item rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-[0_10px_24px_rgba(15,23,42,0.08)] transition duration-200" data-search="budget spent rs 48.4l rs 82.0l 59 utilized">
-                <p class="m-0 text-[11px] uppercase tracking-wide text-slate-600">Budget Spent</p>
-                <p class="mb-0 mt-1 text-[40px] font-semibold leading-none">NPR 48.4L / NPR 82.0L</p>
-                <p class="m-0 text-[11px] text-slate-500">59% utilized</p>
+            <article class="dashboard-search-item rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-[0_8px_20px_rgba(15,23,42,0.04)] hover:shadow transition duration-200" data-search="budget spent ${dashboardSummary.totalSpent} total ${dashboardSummary.totalBudget} ${dashboardSummary.utilizationPercent} percent utilized">
+                <p class="m-0 text-[11px] font-bold uppercase tracking-wider text-slate-400">Budget Spent</p>
+                <p class="mb-0 mt-1.5 text-2xl font-black text-slate-800">
+                    NPR <fmt:formatNumber value="${dashboardSummary.totalSpent}" type="number" groupingUsed="true" maxFractionDigits="0"/> 
+                    / NPR <fmt:formatNumber value="${dashboardSummary.totalBudget}" type="number" groupingUsed="true" maxFractionDigits="0"/>
+                </p>
+                <p class="m-0 mt-1 text-[11px] text-orange-500 font-bold"><fmt:formatNumber value="${dashboardSummary.utilizationPercent}" maxFractionDigits="1"/>% utilized</p>
             </article>
         </section>
 
-        <section class="dashboard-search-item mt-3.5 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-[0_10px_24px_rgba(15,23,42,0.08)] transition duration-200" data-search="your projects skyline tower complex green valley residency in progress workers budget spent">
-            <h2 class="mb-3.5 mt-0 text-base font-semibold">Your Projects</h2>
+        <section class="dashboard-search-item mt-3.5 rounded-2xl border border-slate-200 bg-white px-5 py-5 shadow-[0_10px_24px_rgba(15,23,42,0.04)] transition duration-200" data-search="your projects <c:forEach var='p' items='${dashboardSummary.projects}'><c:out value='${p.title}'/> </c:forEach>">
+            <h2 class="mb-4 mt-0 text-base font-bold text-slate-800 flex items-center gap-1.5">
+                <svg viewBox="0 0 24 24" class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                Your Projects
+            </h2>
 
-            <div>
-                <div class="mb-2 flex items-center justify-between">
-                    <div>
-                        <p class="m-0 text-sm font-semibold">Skyline Tower Complex</p>
-                        <p class="mt-0.5 text-[11px] text-slate-600">12 workers assigned</p>
+            <c:if test="${empty dashboardSummary.projects}">
+                <div class="py-10 text-center text-xs text-slate-400">
+                    <p class="font-bold text-slate-500 text-sm">No projects registered yet.</p>
+                    <p class="mt-1">Click the "Request New Project" button on the sidebar to get started!</p>
+                </div>
+            </c:if>
+            <c:forEach var="p" items="${dashboardSummary.projects}" varStatus="loop">
+                <div class="${loop.index > 0 ? 'mt-6 border-t border-slate-100 pt-5' : ''}">
+                    <div class="mb-2 flex items-center justify-between flex-wrap gap-2">
+                        <div>
+                            <p class="m-0 text-sm font-bold text-slate-800">${p.title}</p>
+                            <p class="mt-0.5 text-[10px] text-slate-500 font-bold">${p.assignedWorkerCount} workers active</p>
+                        </div>
+                        <span class="font-bold text-[9px] uppercase tracking-wider px-2.5 py-0.5 rounded-full ${p.statusBadgeClass}">${p.statusDisplayName}</span>
                     </div>
-                    <span class="rounded-full border border-amber-300/60 bg-amber-50 px-2.5 py-0.5 text-[10px] font-bold text-amber-700">In Progress</span>
-                </div>
-                <div class="mb-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-300/40"><div class="h-full w-[68%] rounded-full bg-yellow-400"></div></div>
-                <div class="flex justify-between text-[10px] text-slate-500">
-                    <span>Budget: NPR 50.0L &nbsp;&nbsp; Spent: NPR 34.0L</span>
-                    <span>68%</span>
-                </div>
-            </div>
-
-            <div class="mt-4 border-t border-slate-200 pt-4">
-                <div class="mb-2 flex items-center justify-between">
-                    <div>
-                        <p class="m-0 text-sm font-semibold">Green Valley Residency</p>
-                        <p class="mt-0.5 text-[11px] text-slate-600">8 workers assigned</p>
+                    <div class="mb-2 h-2 w-full overflow-hidden rounded-full bg-slate-100 shadow-inner">
+                        <div class="h-full rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-emerald-500 transition-all duration-500" style="width: ${p.budgetUsagePercent > 100 ? 100 : p.budgetUsagePercent}%"></div>
                     </div>
-                    <span class="rounded-full border border-amber-300/60 bg-amber-50 px-2.5 py-0.5 text-[10px] font-bold text-amber-700">In Progress</span>
+                    <div class="flex justify-between text-[11px] text-slate-500 font-bold">
+                        <span>Budget: NPR <fmt:formatNumber value="${p.totalBudget}" type="number" maxFractionDigits="0"/> &nbsp;•&nbsp; Spent: NPR <fmt:formatNumber value="${p.actualCost}" type="number" maxFractionDigits="0"/></span>
+                        <span class="text-orange-500"><fmt:formatNumber value="${p.budgetUsagePercent}" maxFractionDigits="1"/>%</span>
+                    </div>
                 </div>
-                <div class="mb-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-300/40"><div class="h-full w-[45%] rounded-full bg-yellow-400"></div></div>
-                <div class="flex justify-between text-[10px] text-slate-500">
-                    <span>Budget: NPR 32.0L &nbsp;&nbsp; Spent: NPR 14.4L</span>
-                    <span>45%</span>
-                </div>
-            </div>
+            </c:forEach>
         </section>
 
-        <section class="dashboard-search-item mt-3.5 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-[0_10px_24px_rgba(15,23,42,0.08)] transition duration-200" data-search="recent updates skyline completion monthly progress report budget review green valley exterior">
-            <h2 class="mb-3.5 mt-0 text-base font-semibold">Recent Updates</h2>
+        <section class="dashboard-search-item mt-3.5 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-[0_10px_24px_rgba(15,23,42,0.04)] transition duration-200" data-search="recent updates <c:forEach var='u' items='${dashboardSummary.recentUpdates}'><c:out value='${u.message}'/> </c:forEach>">
+            <h2 class="mb-3.5 mt-0 text-base font-bold text-slate-800 flex items-center gap-1.5">
+                <svg viewBox="0 0 24 24" class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg>
+                Recent Updates
+            </h2>
             <ul class="m-0 grid list-none gap-4 p-0">
-                <li class="grid grid-cols-[18px_minmax(0,1fr)] gap-2.5">
-                    <span class="mt-[3px] h-3 w-3 rounded-full border border-slate-300 bg-teal-400"></span>
-                    <div>
-                        <p class="m-0 text-[13px]">Skyline Tower reached 68% completion milestone</p>
-                        <p class="mt-0.5 text-[10px] text-slate-500">2 hours ago</p>
-                    </div>
-                </li>
-                <li class="grid grid-cols-[18px_minmax(0,1fr)] gap-2.5">
-                    <span class="mt-[3px] h-3 w-3 rounded-full border border-slate-300 bg-slate-400"></span>
-                    <div>
-                        <p class="m-0 text-[13px]">Monthly progress report for January is ready</p>
-                        <p class="mt-0.5 text-[10px] text-slate-500">1 day ago</p>
-                    </div>
-                </li>
-                <li class="grid grid-cols-[18px_minmax(0,1fr)] gap-2.5">
-                    <span class="mt-[3px] h-3 w-3 rounded-full border border-slate-300 bg-amber-600"></span>
-                    <div>
-                        <p class="m-0 text-[13px]">Budget review meeting scheduled for Feb 5</p>
-                        <p class="mt-0.5 text-[10px] text-slate-500">2 days ago</p>
-                    </div>
-                </li>
-                <li class="grid grid-cols-[18px_minmax(0,1fr)] gap-2.5">
-                    <span class="mt-[3px] h-3 w-3 rounded-full border border-slate-300 bg-slate-400"></span>
-                    <div>
-                        <p class="m-0 text-[13px]">Green Valley exterior work started</p>
-                        <p class="mt-0.5 text-[10px] text-slate-500">3 days ago</p>
-                    </div>
-                </li>
+                <c:forEach var="update" items="${dashboardSummary.recentUpdates}">
+                    <li class="grid grid-cols-[18px_minmax(0,1fr)] gap-2.5 border-l-2 border-slate-100 pl-3">
+                        <span class="mt-[5px] h-2.5 w-2.5 rounded-full border border-white bg-orange-500 ring-4 ring-orange-50"></span>
+                        <div>
+                            <p class="m-0 text-xs font-semibold text-slate-700">${update.message}</p>
+                            <p class="mt-0.5 text-[9px] font-bold text-slate-400">
+                                <fmt:formatDate value="${update.updatedAt}" pattern="MMM d, yyyy h:mm a"/>
+                            </p>
+                        </div>
+                    </li>
+                </c:forEach>
+                <c:if test="${empty dashboardSummary.recentUpdates}">
+                    <li class="py-4 text-center text-xs text-slate-400">No recent updates logged yet.</li>
+                </c:if>
             </ul>
         </section>
         <p id="emptySearchState" class="mt-4 hidden rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-600">No dashboard results matched your search.</p>
