@@ -117,10 +117,20 @@ public class UserManagementController extends HttpServlet {
             // ---------- Approve a pending user ----------
             case "approve": {
                 int id = Integer.parseInt(request.getParameter("id"));
+                User user = userService.getUserById(id);
                 boolean success = userService.approveUser(id);
                 if (success) {
                     request.getSession().setAttribute("success",
                             "User approved successfully.");
+                    if (user != null) {
+                        new Thread(() -> {
+                            try {
+                                com.buildtrack.util.EmailUtil.sendApprovalEmail(user.getEmail(), user.getFullName(), user.getRoleDisplayName());
+                            } catch (Exception e) {
+                                System.err.println("[UserManagementController] Error sending approval email: " + e.getMessage());
+                            }
+                        }).start();
+                    }
                 } else {
                     request.getSession().setAttribute("errors",
                             List.of("Failed to approve user."));
