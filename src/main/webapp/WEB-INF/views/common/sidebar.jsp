@@ -42,13 +42,7 @@
         </button>
     </div>
 
-    <!-- User Persona Badge (Displays role dynamically) -->
-    <div class="px-4 py-3 bg-blue-950/40 border-b border-blue-900/40 flex items-center gap-2.5">
-        <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span class="text-[10px] uppercase tracking-wider font-extrabold text-slate-400">
-            <%= (role != null) ? role.name() : "GUEST" %> Portal
-        </span>
-    </div>
+
 
     <!-- Navigation Content -->
     <nav class="flex-1 p-3.5 space-y-1.5 overflow-y-auto">
