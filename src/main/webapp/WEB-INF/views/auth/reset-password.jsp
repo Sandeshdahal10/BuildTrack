@@ -75,7 +75,7 @@
                         class="w-full px-4 py-3 bg-gray-100 rounded text-sm text-gray-800 transition-colors duration-300 focus:bg-gray-200 focus:outline-none placeholder-gray-400"
                         placeholder="••••••••••••"
                         required
-                        minlength="12"
+                        minlength="8"
                     >
                 </div>
                 <div class="password-strength flex gap-1 mt-2" id="strengthMeter">
@@ -83,7 +83,7 @@
                     <div class="strength-bar"></div>
                     <div class="strength-bar"></div>
                 </div>
-                <p class="text-xs text-gray-500 mt-2 leading-relaxed">Min. 12 characters including symbols.</p>
+                <p class="text-xs text-gray-500 mt-2 leading-relaxed">Min. 8 characters including symbols.</p>
             </div>
 
             <!-- Confirm Password Field -->
@@ -97,7 +97,7 @@
                         class="w-full px-4 py-3 bg-gray-100 rounded text-sm text-gray-800 transition-colors duration-300 focus:bg-gray-200 focus:outline-none placeholder-gray-400"
                         placeholder="••••••••••••"
                         required
-                        minlength="12"
+                        minlength="8"
                     >
                 </div>
             </div>
@@ -141,8 +141,8 @@
         function calculatePasswordStrength(password) {
             let strength = 0;
 
+            if (password.length >= 8) strength++;
             if (password.length >= 12) strength++;
-            if (password.length >= 16) strength++;
             if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
             if (/\d/.test(password)) strength++;
             if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) strength++;
@@ -177,9 +177,9 @@
                 return false;
             }
 
-            if (newPassword.length < 12) {
+            if (newPassword.length < 8) {
                 e.preventDefault();
-                alert('Password must be at least 12 characters long!');
+                alert('Password must be at least 8 characters long!');
                 return false;
             }
 

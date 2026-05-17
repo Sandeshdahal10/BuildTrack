@@ -41,7 +41,7 @@
         <jsp:include page="../common/clientsidebar.jsp" />
     </div>
 
-    <main class="ml-0 md:ml-56 w-full max-w-full overflow-hidden flex-1 flex-1 overflow-y-auto bg-white px-5 pb-7 pt-4">
+    <main class="ml-0 md:ml-56 overflow-hidden flex-1 overflow-y-auto bg-white px-5 pb-7 pt-4">
         <div class="mb-3 flex items-center justify-between text-[11px] text-slate-600 max-[760px]:flex-col max-[760px]:items-start max-[760px]:gap-2.5">
             <div>Friday, April 17, 2026</div>
             <div class="flex items-center gap-2.5 max-[760px]:w-full max-[760px]:flex-wrap">

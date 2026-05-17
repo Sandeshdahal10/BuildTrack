@@ -37,7 +37,7 @@
         <jsp:include page="../common/clientsidebar.jsp" />
     </div>
 
-    <main class="ml-0 md:ml-56 w-full max-w-full overflow-hidden flex-1 flex-1 overflow-y-auto bg-white px-5 pb-7 pt-4">
+    <main class="ml-0 md:ml-56 overflow-hidden flex-1 overflow-y-auto bg-white px-5 pb-7 pt-4">
         <!-- Header -->
         <div class="mb-4 flex items-center justify-between text-xs text-slate-600 max-[760px]:flex-col max-[760px]:items-start max-[760px]:gap-2.5">
             <div>

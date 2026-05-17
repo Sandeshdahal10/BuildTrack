@@ -55,7 +55,7 @@
         <jsp:include page="../common/sidebar.jsp" />
     </div>
 
-    <div class="ml-0 md:ml-56 flex h-screen min-w-0 flex-1 flex-col overflow-y-auto w-full max-w-full">
+    <div class="ml-0 md:ml-56 flex h-screen min-w-0 flex-1 flex-col overflow-y-auto">
         <div class="sticky top-0 z-20">
             <jsp:include page="../common/Topbar.jsp" />
         </div>
