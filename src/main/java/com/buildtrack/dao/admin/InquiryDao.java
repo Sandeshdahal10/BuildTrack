@@ -50,16 +50,68 @@ public class InquiryDao {
      * @return true if update succeeded
      */
     public boolean updateInquiryReplyAndStatus(int inquiryId, String reply, String status) {
-        String sql = "UPDATE inquiries SET status = ? WHERE id = ?"; // simplified for status update demo
+        String sql = "UPDATE inquiries SET status = ?, admin_reply = ? WHERE id = ?"; // changed to also update admin_reply
         try (Connection conn = DBUtil.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, status);
-            ps.setInt(2, inquiryId);
+            ps.setString(2, reply);
+            ps.setInt(3, inquiryId);
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
+    }
+
+    /**
+     * Inserts a new inquiry.
+     *
+     * @param inquiry the Inquiry to insert
+     * @return true if inserted successfully
+     */
+    public boolean insertInquiry(Inquiry inquiry) {
+        String sql = "INSERT INTO inquiries (client_id, project_id, subject, message, status) VALUES (?, ?, ?, ?, 'PENDING')";
+        try (Connection conn = DBUtil.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, inquiry.getClientId());
+            ps.setInt(2, inquiry.getProjectId());
+            ps.setString(3, inquiry.getSubject());
+            ps.setString(4, inquiry.getMessage());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * Returns inquiries for a specific client.
+     *
+     * @param clientId the client's ID
+     * @return a list of inquiries
+     */
+    public List<Inquiry> getInquiriesByClientId(int clientId) {
+        List<Inquiry> inquiries = new ArrayList<>();
+        String sql = "SELECT i.*, u.full_name as client_name, p.title as project_title " +
+                "FROM inquiries i " +
+                "JOIN users u ON i.client_id = u.id " +
+                "JOIN projects p ON i.project_id = p.id " +
+                "WHERE i.client_id = ? " +
+                "ORDER BY i.created_at DESC";
+
+        try (Connection conn = DBUtil.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            ps.setInt(1, clientId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    inquiries.add(mapRow(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return inquiries;
     }
 
     /**

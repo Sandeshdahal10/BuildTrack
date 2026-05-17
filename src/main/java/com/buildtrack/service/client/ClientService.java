@@ -1,6 +1,10 @@
 package com.buildtrack.service.client;
 
 import com.buildtrack.dao.client.ClientDao;
+import com.buildtrack.dao.admin.DocumentDao;
+import com.buildtrack.dao.admin.InquiryDao;
+import com.buildtrack.model.Document;
+import com.buildtrack.model.Inquiry;
 import com.buildtrack.model.MaterialUsage;
 import com.buildtrack.model.Project;
 import com.buildtrack.model.User;
@@ -23,6 +27,8 @@ import java.util.Map;
 public class ClientService {
 
 	private final ClientDao clientDAO = new ClientDao();
+	private final DocumentDao documentDAO = new DocumentDao();
+	private final InquiryDao inquiryDAO = new InquiryDao();
 	private final ProjectTrackingService projectTrackingService = new ProjectTrackingService();
 
 	// Client profile
@@ -403,5 +409,25 @@ public class ClientService {
 		}
 		long days = duration.toDays();
 		return days + " day" + (days == 1 ? "" : "s") + " ago";
+	}
+
+	// Document Management
+	
+	public List<Document> getDocumentsByClient(int clientId) {
+		return documentDAO.getDocumentsByClientId(clientId);
+	}
+
+	public boolean saveDocument(Document document) {
+		return documentDAO.insertDocument(document);
+	}
+
+	// Inquiry Management
+	
+	public List<Inquiry> getInquiriesByClient(int clientId) {
+		return inquiryDAO.getInquiriesByClientId(clientId);
+	}
+
+	public boolean submitInquiry(Inquiry inquiry) {
+		return inquiryDAO.insertInquiry(inquiry);
 	}
 }
