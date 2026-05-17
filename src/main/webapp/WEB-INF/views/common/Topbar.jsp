@@ -14,36 +14,46 @@
         headerNotifications = headerNotifDao.getNotificationsByUserId(currentHeaderUserId);
         headerUnreadCount = headerNotifDao.getUnreadCount(currentHeaderUserId);
     }
+
+    // Check if the current page is a dashboard page
+    String currentHeaderUri = request.getRequestURI();
+    String headerContextPath = request.getContextPath();
+    String relativeHeaderUri = (currentHeaderUri != null && headerContextPath != null && currentHeaderUri.length() >= headerContextPath.length()) 
+        ? currentHeaderUri.substring(headerContextPath.length()) 
+        : "";
+    boolean isDashboard = relativeHeaderUri.endsWith("/dashboard") || relativeHeaderUri.contains("/dashboard.jsp");
 %>
 
   <%-- Created by IntelliJ IDEA. User: sande Date: 4/12/2026 Time: 8:48 AM To change this template use File | Settings |
     File Templates. --%>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-
+ 
     <header class="w-full bg-white border-b border-slate-200 relative z-40">
       <div class="mx-auto flex h-20 w-full items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-
+ 
         <!-- Hamburger menu for mobile -->
         <button id="mobile-menu-btn" type="button" class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-slate-500 hover:bg-slate-100 focus:outline-none">
           <i data-lucide="menu" class="h-6 w-6"></i>
         </button>
-
+ 
         <div class="hidden min-w-0 md:flex items-center gap-3">
           <div class="hidden min-w-0 md:block">
             <p class="text-xl font-semibold text-black" id="topbar-date">Monday, April 13, 2026</p>
             <p class="mt-2 text-sm font-medium  text-black" id="topbar-time">08:48 AM</p>
           </div>
         </div>
-
+ 
         <div class="ml-auto flex items-center gap-3 sm:gap-4">
-
+ 
+          <% if (!isDashboard) { %>
           <div class="relative hidden sm:block">
             <i data-lucide="search"
               class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"></i>
             <input type="text" placeholder="Search..."
               class="h-11 w-56 rounded-xl border border-slate-300 bg-white pl-10 pr-4 text-sm text-slate-900 placeholder:text-slate-500 outline-none transition focus:border-amber-400/60 focus:ring-2 focus:ring-amber-400/20 lg:w-72" />
           </div>
+          <% } %>
 
           <div class="relative">
             <button type="button" id="topbarNotificationButton"
