@@ -29,16 +29,12 @@
             background-color: #f8fafc;
         }
         .glass-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
         }
         .gradient-text {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #ea580c;
         }
         .hover-lift {
             /* hover lift effect disabled */
@@ -49,10 +45,6 @@
 <body class="text-slate-800 antialiased selection:bg-blue-200 selection:text-blue-900">
 
 <div class="flex min-h-screen w-full flex-col lg:flex-row relative overflow-hidden">
-    <!-- Decorative background elements -->
-    <div class="absolute top-[-10%] left-[-10%] w-[30rem] h-[30rem] bg-blue-400 rounded-full mix-blend-multiply filter blur-[100px] opacity-20"></div>
-    <div class="absolute top-[20%] right-[-10%] w-[30rem] h-[30rem] bg-purple-400 rounded-full mix-blend-multiply filter blur-[100px] opacity-20"></div>
-    <div class="absolute bottom-[-10%] left-[20%] w-[30rem] h-[30rem] bg-indigo-400 rounded-full mix-blend-multiply filter blur-[100px] opacity-20"></div>
 
     <!-- Sidebar -->
     <jsp:include page="../common/WorkerSideBar.jsp" />
@@ -61,7 +53,7 @@
     <main class="flex-1 flex flex-col relative z-10 h-screen overflow-hidden">
 
         <!-- TOP NAVBAR -->
-        <div class="px-8 pt-6 pb-2 shrink-0">
+        <div class="w-full shrink-0">
             <jsp:include page="../common/Topbar.jsp" />
         </div>
 
@@ -86,18 +78,18 @@
             <div class="max-w-7xl mx-auto space-y-8">
 
                 <!-- Welcome Section -->
-                <section class="glass-card rounded-3xl px-8 py-8 flex flex-col md:flex-row items-center justify-between">
+                <section class="glass-card rounded-xl px-6 py-6 flex flex-col md:flex-row items-center justify-between">
                     <div>
-                        <h1 class="text-4xl font-extrabold tracking-tight mb-2">
+                        <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-1">
                             Welcome back, <span class="gradient-text"><%= displayName %></span>
                         </h1>
-                        <p class="text-slate-500 font-medium text-lg">
+                        <p class="text-slate-500 font-medium text-sm">
                             Here is what's happening with your assignments today.
                         </p>
                     </div>
                     <div class="mt-4 md:mt-0">
-                        <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-100/80 backdrop-blur-sm text-green-700 font-semibold text-sm shadow-sm border border-green-200">
-                            <span class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span>
+                        <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-50 text-green-700 font-semibold text-xs border border-green-200 shadow-sm">
+                            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
                             Active Site
                         </span>
                     </div>
@@ -111,7 +103,7 @@
                 <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
 
                     <!-- Assignment Card -->
-                    <article class="xl:col-span-2 glass-card rounded-3xl p-8 shadow-xl hover-lift">
+                    <article class="xl:col-span-2 glass-card rounded-xl p-6 hover-lift">
                         <div class="flex flex-col gap-6">
                             <div class="flex flex-wrap items-start justify-between gap-4">
                                 <div>
@@ -131,36 +123,34 @@
                             </div>
 
                             <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                                <div class="rounded-2xl border border-orange-100/70 bg-white/70 p-4">
-                                    <div class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Role</div>
-                                    <div class="mt-2 flex items-center gap-2 text-sm font-semibold text-slate-800">
-                                        <%= (currentProject != null) ? "Assigned" : "-" %>
-                                    </div>
-                                </div>
-                                <div class="rounded-2xl border border-orange-100/70 bg-white/70 p-4">
-                                    <div class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Duration</div>
-                                    <div class="mt-2 flex items-center gap-2 text-sm font-semibold text-slate-800">
-                                        <%= (currentProject != null) ? ((currentProject.getStartDate()!=null?currentProject.getStartDate():"-") + " → " + (currentProject.getEndDate()!=null?currentProject.getEndDate():"-")) : "-" %>
-                                    </div>
-                                </div>
-                                <div class="rounded-2xl border border-orange-100/70 bg-white/70 p-4">
-                                    <div class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Status</div>
-                                    <div class="mt-2 flex items-center gap-2 text-sm font-semibold text-slate-800">
-                                        <%= (currentProject != null && currentProject.getStatus() != null) ? currentProject.getStatus() : "-" %>
-                                    </div>
-                                </div>
+                                 <div class="rounded-xl border border-slate-100 bg-slate-50 p-4">
+                                     <div class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Role</div>
+                                     <div class="mt-2 flex items-center gap-2 text-sm font-semibold text-slate-800">
+                                         <%= (currentProject != null) ? "Assigned" : "-" %>
+                                     </div>
+                                 </div>
+                                 <div class="rounded-xl border border-slate-100 bg-slate-50 p-4">
+                                     <div class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Duration</div>
+                                     <div class="mt-2 flex items-center gap-2 text-sm font-semibold text-slate-800">
+                                         <%= (currentProject != null) ? ((currentProject.getStartDate()!=null?currentProject.getStartDate():"-") + " → " + (currentProject.getEndDate()!=null?currentProject.getEndDate():"-")) : "-" %>
+                                     </div>
+                                 </div>
+                                 <div class="rounded-xl border border-slate-100 bg-slate-50 p-4">
+                                     <div class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Status</div>
+                                     <div class="mt-2 flex items-center gap-2 text-sm font-semibold text-slate-800">
+                                         <%= (currentProject != null && currentProject.getStatus() != null) ? currentProject.getStatus() : "-" %>
+                                     </div>
+                                 </div>
                             </div>
-
-
                         </div>
                     </article>
 
                     <!-- Status with DONUT -->
-                    <article class="glass-card rounded-3xl p-8 shadow-xl flex flex-col justify-between hover-lift">
+                    <article class="glass-card rounded-2xl p-6 flex flex-col justify-between hover-lift">
                         <div>
                             <div class="flex justify-between items-center mb-6">
                                 <h3 class="text-lg font-bold text-slate-800">Today's Status</h3>
-                                <span class="bg-indigo-100/50 text-indigo-700 p-2 rounded-xl backdrop-blur-sm">
+                                <span class="bg-indigo-50 text-indigo-700 p-2 rounded-xl border border-indigo-100">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 </span>
                             </div>
@@ -184,23 +174,23 @@
                 <div class="grid grid-cols-1 xl:grid-cols-3 gap-8 pb-8">
 
                     <!-- Work Log -->
-                    <article class="xl:col-span-3 glass-card rounded-3xl p-8 shadow-xl hover-lift">
+                    <article class="xl:col-span-3 glass-card rounded-2xl p-6 hover-lift">
                         <div class="flex justify-between items-center mb-6">
                             <div class="flex items-center gap-3">
-                                <div class="w-12 h-12 rounded-2xl bg-purple-100 flex items-center justify-center text-purple-600 shadow-inner">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                                <div class="w-10 h-10 rounded-xl bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-600 shadow-inner">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
                                 </div>
-                                <h3 class="text-xl font-bold text-slate-800">Recent Work Log</h3>
+                                <h3 class="text-lg font-bold text-slate-800">Recent Work Log</h3>
                             </div>
-                            <a href="<%= basePath %>/worker/worklog" class="group flex items-center text-indigo-600 text-sm font-semibold hover:text-indigo-800 transition-colors bg-indigo-50/80 backdrop-blur-sm px-4 py-2 rounded-xl shadow-sm border border-indigo-100">
+                            <a href="<%= basePath %>/worker/worklog" class="group flex items-center text-indigo-600 text-xs font-semibold hover:text-indigo-800 transition-colors bg-indigo-50 px-3 py-1.5 rounded-lg shadow-sm border border-indigo-100">
                                 View All
-                                <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                <svg class="w-3.5 h-3.5 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                             </a>
                         </div>
 
-                        <div class="overflow-hidden rounded-2xl border border-slate-200/60 bg-white/60 backdrop-blur-md shadow-sm">
+                        <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
                             <table class="w-full text-sm text-left">
-                                <thead class="bg-slate-50/80 text-slate-500 font-semibold uppercase text-xs tracking-wider border-b border-slate-200/60">
+                                <thead class="bg-slate-50 text-slate-500 font-semibold uppercase text-xs tracking-wider border-b border-slate-200">
                                 <tr>
                                     <th class="py-4 px-6 rounded-tl-2xl">Date</th>
                                     <th class="py-4 px-6">Activity</th>

@@ -47,7 +47,7 @@
     <jsp:include page="../common/WorkerSideBar.jsp" />
 
     <main class="flex-1 flex flex-col relative z-10 h-screen overflow-hidden bg-slate-50/50">
-        <div class="px-8 pt-6 pb-2 shrink-0">
+        <div class="w-full shrink-0">
             <jsp:include page="../common/Topbar.jsp" />
         </div>
 
