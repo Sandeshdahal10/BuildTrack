@@ -45,7 +45,7 @@
 
 <div class="flex min-h-screen w-full flex-col lg:flex-row relative overflow-hidden">
     <!-- Sidebar -->
-    <jsp:include page="../common/WorkerSideBar.jsp" />
+    <jsp:include page="../common/sidebar.jsp" />
 
     <!-- Main Area -->
     <main class="flex-1 flex flex-col relative z-10 h-screen overflow-hidden bg-slate-50/50">

@@ -35,7 +35,7 @@
 <body class="m-0 min-h-screen bg-slate-50 text-slate-900">
 <div class="h-screen flex font-semibold">
     <div id="sidebar-container" class="fixed inset-y-0 left-0 z-50 w-56 transform -translate-x-full transition-transform duration-300 md:translate-x-0 border-r border-blue-900/60 bg-[#0b1f4d]">
-        <jsp:include page="../common/clientsidebar.jsp" />
+        <jsp:include page="../common/sidebar.jsp" />
     </div>
 
     <main class="ml-0 md:ml-56 overflow-hidden flex-1 overflow-y-auto bg-slate-50 px-5 pb-7 pt-4 flex flex-col">

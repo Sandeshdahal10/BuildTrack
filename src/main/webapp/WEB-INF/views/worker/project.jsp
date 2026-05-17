@@ -30,7 +30,7 @@
 
 <div class="flex min-h-screen w-full flex-col lg:flex-row relative overflow-hidden">
     <!-- Sidebar included directly to avoid wrapper and margin mismatch -->
-    <jsp:include page="../common/WorkerSideBar.jsp" />
+    <jsp:include page="../common/sidebar.jsp" />
 
     <!-- Main Content Area -->
     <main class="flex-1 flex flex-col relative z-10 h-screen overflow-hidden bg-slate-50/50">

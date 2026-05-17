@@ -20,7 +20,7 @@
 <body class="bg-slate-50 text-slate-800 antialiased selection:bg-blue-200 selection:text-blue-900">
 <div class="flex min-h-screen w-full flex-col lg:flex-row relative overflow-hidden">
     <!-- Sidebar -->
-    <jsp:include page="../common/WorkerSideBar.jsp" />
+    <jsp:include page="../common/sidebar.jsp" />
 
     <!-- Main Content -->
     <main class="flex-1 flex flex-col relative z-10 h-screen overflow-hidden bg-slate-50">
