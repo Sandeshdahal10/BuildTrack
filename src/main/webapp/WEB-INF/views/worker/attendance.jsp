@@ -25,8 +25,7 @@
         currentMonth = new SimpleDateFormat("yyyy-MM").format(new java.util.Date());
     }
 %>
-<%--this is comment--%>
-<!-- this is pookie dinisha -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
