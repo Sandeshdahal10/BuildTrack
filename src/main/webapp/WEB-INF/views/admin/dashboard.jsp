@@ -32,11 +32,11 @@
 </head>
 <body class="h-screen overflow-hidden bg-slate-50 text-slate-900">
 <div class="h-screen">
-    <div class="fixed inset-y-0 left-0 z-30 w-56">
+    <div id="sidebar-container" class="fixed inset-y-0 left-0 z-50 w-56 transform -translate-x-full transition-transform duration-300 md:translate-x-0">
         <jsp:include page="../common/sidebar.jsp" />
     </div>
 
-    <div class="ml-56 flex h-screen min-w-0 flex-1 flex-col overflow-y-auto">
+    <div class="ml-0 md:ml-56 flex h-screen min-w-0 flex-1 flex-col overflow-y-auto">
         <div class="sticky top-0 z-20">
             <jsp:include page="../common/Topbar.jsp" />
         </div>
@@ -104,16 +104,21 @@
                     <h2 class="text-base font-semibold text-slate-900">Project Status</h2>
                     <div class="mt-5 flex items-center justify-center">
                         <c:set var="tot" value="${projectStats['total'] > 0 ? projectStats['total'] : 1}" />
-                        <c:set var="p1" value="${(projectStats['PLANNED'] != null ? projectStats['PLANNED'] : 0) * 360 / tot}" />
-                        <c:set var="p2" value="${(projectStats['IN_PROGRESS'] != null ? projectStats['IN_PROGRESS'] : 0) * 360 / tot}" />
-                        <c:set var="p3" value="${(projectStats['COMPLETED'] != null ? projectStats['COMPLETED'] : 0) * 360 / tot}" />
+                        <c:set var="pPlanned" value="${(projectStats['PLANNED'] != null ? projectStats['PLANNED'] : 0) * 360 / tot}" />
+                        <c:set var="pApproved" value="${(projectStats['APPROVED'] != null ? projectStats['APPROVED'] : 0) * 360 / tot}" />
+                        <c:set var="pDenied" value="${(projectStats['DENIED'] != null ? projectStats['DENIED'] : 0) * 360 / tot}" />
+                        <c:set var="pInProgress" value="${(projectStats['IN_PROGRESS'] != null ? projectStats['IN_PROGRESS'] : 0) * 360 / tot}" />
+                        <c:set var="pCompleted" value="${(projectStats['COMPLETED'] != null ? projectStats['COMPLETED'] : 0) * 360 / tot}" />
+                        <c:set var="pOnHold" value="${(projectStats['ON_HOLD'] != null ? projectStats['ON_HOLD'] : 0) * 360 / tot}" />
                         
                         <div class="relative h-36 w-36 rounded-full border border-slate-200"
                              style="background: conic-gradient(
-                                 #facc15 0deg ${p1}deg,
-                                 #f59e0b ${p1}deg ${p1+p2}deg,
-                                 #14b8a6 ${p1+p2}deg ${p1+p2+p3}deg,
-                                 #ef4444 ${p1+p2+p3}deg 360deg
+                                 #facc15 0deg ${pPlanned}deg,
+                                 #22c55e ${pPlanned}deg ${pPlanned + pApproved}deg,
+                                 #ef4444 ${pPlanned + pApproved}deg ${pPlanned + pApproved + pDenied}deg,
+                                 #f59e0b ${pPlanned + pApproved + pDenied}deg ${pPlanned + pApproved + pDenied + pInProgress}deg,
+                                 #14b8a6 ${pPlanned + pApproved + pDenied + pInProgress}deg ${pPlanned + pApproved + pDenied + pInProgress + pCompleted}deg,
+                                 #6b7280 ${pPlanned + pApproved + pDenied + pInProgress + pCompleted}deg 360deg
                              );">
                             <div class="absolute inset-4 rounded-full bg-white border border-slate-100 flex items-center justify-center">
                                 <span class="font-bold text-slate-700">${projectStats['total']}</span>
@@ -122,9 +127,11 @@
                     </div>
                     <div class="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-slate-600">
                         <span class="inline-flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-full bg-yellow-400"></span>Planned (${projectStats['PLANNED'] != null ? projectStats['PLANNED'] : 0})</span>
+                        <span class="inline-flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span>Approved (${projectStats['APPROVED'] != null ? projectStats['APPROVED'] : 0})</span>
+                        <span class="inline-flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-full bg-red-500"></span>Denied (${projectStats['DENIED'] != null ? projectStats['DENIED'] : 0})</span>
                         <span class="inline-flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-full bg-amber-500"></span>In Progress (${projectStats['IN_PROGRESS'] != null ? projectStats['IN_PROGRESS'] : 0})</span>
                         <span class="inline-flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-full bg-teal-500"></span>Completed (${projectStats['COMPLETED'] != null ? projectStats['COMPLETED'] : 0})</span>
-                        <span class="inline-flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-full bg-red-500"></span>On Hold (${projectStats['ON_HOLD'] != null ? projectStats['ON_HOLD'] : 0})</span>
+                        <span class="inline-flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-full bg-gray-500"></span>On Hold (${projectStats['ON_HOLD'] != null ? projectStats['ON_HOLD'] : 0})</span>
                     </div>
                 </article>
 

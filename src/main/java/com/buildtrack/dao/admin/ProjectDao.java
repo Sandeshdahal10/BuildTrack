@@ -139,6 +139,26 @@ public class ProjectDao {
     }
 
     /**
+     * Updates the status of an existing project.
+     *
+     * @param id project id
+     * @param status new status
+     * @return true if update succeeded
+     */
+    public boolean updateStatus(int id, String status) {
+        String sql = "UPDATE projects SET status=? WHERE id=?";
+        try (Connection conn = DBUtil.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, status);
+            ps.setInt(2, id);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("[ProjectDAO] updateStatus error: " + e.getMessage());
+        }
+        return false;
+    }
+
+    /**
      * Deletes a project by id.
      *
      * @param id project id
@@ -319,6 +339,33 @@ public class ProjectDao {
             }
         } catch (SQLException e) {
             System.err.println("[ProjectDAO] findAssignedWorkersWithRole error: " + e.getMessage());
+        }
+        return list;
+    }
+
+    /**
+     * Returns documents for a project.
+     */
+    public List<com.buildtrack.model.ProjectDocument> getDocumentsByProjectId(int projectId) {
+        List<com.buildtrack.model.ProjectDocument> list = new ArrayList<>();
+        String sql = "SELECT * FROM project_documents WHERE project_id = ? ORDER BY uploaded_at DESC";
+        try (Connection conn = DBUtil.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, projectId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                com.buildtrack.model.ProjectDocument doc = new com.buildtrack.model.ProjectDocument();
+                doc.setId(rs.getInt("id"));
+                doc.setProjectId(rs.getInt("project_id"));
+                doc.setClientId(rs.getInt("client_id"));
+                doc.setFileName(rs.getString("file_name"));
+                doc.setFilePath(rs.getString("file_path"));
+                doc.setFileType(rs.getString("file_type"));
+                doc.setFileSize(rs.getLong("file_size"));
+                list.add(doc);
+            }
+        } catch (SQLException e) {
+            System.err.println("[ProjectDAO] getDocumentsByProjectId error: " + e.getMessage());
         }
         return list;
     }

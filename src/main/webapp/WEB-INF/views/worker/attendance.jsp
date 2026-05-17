@@ -68,9 +68,13 @@
                     <h2 class="text-lg font-bold text-slate-800 mb-3">Mark Attendance</h2>
                     <form action="<%= basePath %>/worker/attendance" method="POST" class="grid grid-cols-1 sm:grid-cols-4 gap-3 items-end">
                         <div>
-                            <label class="text-xs text-slate-500 font-medium">Project ID</label>
-                            <input name="projectId" type="number" placeholder="Project ID" required
-                                   class="w-full mt-1 px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm" />
+                            <label class="text-xs text-slate-500 font-medium">Project Name</label>
+                            <select name="projectId" required class="w-full mt-1 px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm">
+                                <option value="">Select Project</option>
+                                <c:forEach var="p" items="${assignedProjects}">
+                                    <option value="${p.id}">${p.title}</option>
+                                </c:forEach>
+                            </select>
                         </div>
                         <div>
                             <label class="text-xs text-slate-500 font-medium">Date</label>

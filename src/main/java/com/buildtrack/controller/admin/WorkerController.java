@@ -55,12 +55,19 @@ public class WorkerController extends HttpServlet {
         if ("/form".equals(pathInfo) || "/form/".equals(pathInfo) || "form".equalsIgnoreCase(view)) {
             if (idParam != null && !idParam.isBlank()) {
                 try {
-                    User worker = userService.getUserById(Integer.parseInt(idParam));
+                    int id = Integer.parseInt(idParam);
+                    User worker = userService.getUserById(id);
                     req.setAttribute("worker", worker);
+                    
+                    List<com.buildtrack.model.Project> assignedProjects = new com.buildtrack.dao.worker.WorkLogDao().findAssignedProjects(id);
+                    if (assignedProjects != null && !assignedProjects.isEmpty()) {
+                        req.setAttribute("assignedProjectId", assignedProjects.get(0).getId());
+                    }
                 } catch (NumberFormatException ignored) {
                     // Render empty form when id is invalid.
                 }
             }
+            req.setAttribute("projects", new com.buildtrack.service.admin.ProjectService().getAllProjects());
             req.setAttribute("formMode", mode);
             req.getRequestDispatcher("/WEB-INF/views/form/workerForm.jsp").forward(req, resp);
             return;
@@ -97,6 +104,26 @@ public class WorkerController extends HttpServlet {
                     } else if ("Pending".equalsIgnoreCase(status)) {
                         userService.updateStatus(id, "PENDING");
                     }
+                }
+                
+                String dailyWageStr = req.getParameter("dailyWage");
+                if (dailyWageStr != null && !dailyWageStr.trim().isEmpty()) {
+                    List<String> wageErrors = userService.setDailyWage(id, dailyWageStr);
+                    if (!wageErrors.isEmpty()) {
+                        req.getSession().setAttribute("errors", wageErrors);
+                        resp.sendRedirect(req.getContextPath() + "/admin/workers/form?mode=edit&id=" + id);
+                        return;
+                    }
+                }
+                
+                String projectIdStr = req.getParameter("projectId");
+                if (projectIdStr != null && !projectIdStr.trim().isEmpty()) {
+                    try {
+                        int projectId = Integer.parseInt(projectIdStr);
+                        // Delete previous assignments if needed? Or just assign. 
+                        // The ProjectService.assignWorker ignores if already assigned.
+                        new com.buildtrack.service.admin.ProjectService().assignWorker(projectId, id, "Worker");
+                    } catch (NumberFormatException ignored) {}
                 }
                 
                 req.getSession().setAttribute("success", "Worker profile updated successfully.");

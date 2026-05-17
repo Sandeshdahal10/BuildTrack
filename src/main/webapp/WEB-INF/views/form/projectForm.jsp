@@ -100,11 +100,11 @@
 </head>
 <body class="h-screen overflow-hidden bg-slate-50 text-slate-900">
 <div class="h-screen">
-    <div class="fixed inset-y-0 left-0 z-30 w-56">
+    <div id="sidebar-container" class="fixed inset-y-0 left-0 z-50 w-56 transform -translate-x-full transition-transform duration-300 md:translate-x-0">
         <jsp:include page="../common/sidebar.jsp" />
     </div>
 
-    <div class="ml-56 flex h-screen min-w-0 flex-1 flex-col overflow-y-auto">
+    <div class="ml-0 md:ml-56 flex h-screen min-w-0 flex-1 flex-col overflow-y-auto w-full max-w-full">
         <div class="sticky top-0 z-20">
             <jsp:include page="../common/Topbar.jsp" />
         </div>
@@ -198,6 +198,27 @@
                         <% } %>
                     </div>
                 </form>
+                
+                <c:if test="${not empty projectDocuments}">
+                    <div class="mt-8 border-t border-slate-200 pt-6">
+                        <h3 class="text-lg font-bold text-slate-800 mb-4">Project Documents</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <c:forEach var="doc" items="${projectDocuments}">
+                                <div class="flex items-start gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4">
+                                    <div class="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-600">
+                                        <i data-lucide="file-text" class="h-5 w-5"></i>
+                                    </div>
+                                    <div class="min-w-0 flex-1">
+                                        <p class="truncate text-sm font-semibold text-slate-900" title="${doc.fileName}">${doc.fileName}</p>
+                                        <p class="text-xs text-slate-500">${doc.fileSize / 1024} KB</p>
+                                        <a href="<%= request.getContextPath() %>/${doc.filePath}" target="_blank" class="mt-2 inline-block text-xs font-medium text-orange-600 hover:text-orange-700">View Document &rarr;</a>
+                                    </div>
+                                </div>
+                            </c:forEach>
+                        </div>
+                    </div>
+                </c:if>
+                
             </section>
         </main>
     </div>

@@ -32,7 +32,37 @@ public class PayrollService {
     public List<Payroll> getPayrollByMonth(String monthYear) {
         if (ValidationUtil.isEmpty(monthYear))
             return new ArrayList<>();
-        return payrollDAO.findByMonth(monthYear);
+        
+        List<Payroll> generatedPayrolls = payrollDAO.findByMonth(monthYear);
+        
+        java.util.Set<Integer> generatedWorkerIds = new java.util.HashSet<>();
+        for (Payroll p : generatedPayrolls) {
+            generatedWorkerIds.add(p.getWorkerId());
+        }
+
+        List<User> allWorkers = userDAO.findByRoleAndStatus("WORKER", "APPROVED");
+        List<Payroll> allPayrolls = new ArrayList<>(generatedPayrolls);
+
+        for (User worker : allWorkers) {
+            if (generatedWorkerIds.contains(worker.getId())) continue;
+            
+            int[] counts = attendanceDAO.getAttendanceCounts(worker.getId(), monthYear);
+            int presentDays = counts[0];
+            int halfDays = counts[1];
+
+            Payroll dummy = new Payroll();
+            dummy.setId(-1);
+            dummy.setWorkerId(worker.getId());
+            dummy.setWorkerName(worker.getFullName());
+            dummy.setWorkerEmail(worker.getEmail());
+            dummy.setMonthYear(monthYear);
+            dummy.setTotalDays(presentDays);
+            dummy.setHalfDays(halfDays);
+            dummy.setDailyWage(worker.getDailyWage() != null ? worker.getDailyWage() : BigDecimal.ZERO);
+            dummy.setStatus("UNGENERATED");
+            allPayrolls.add(dummy);
+        }
+        return allPayrolls;
     }
 
     /**
@@ -47,6 +77,13 @@ public class PayrollService {
      */
     public Payslip getPayslipById(int id) {
         return payrollDAO.findPayslipById(id);
+    }
+
+    /**
+     * Returns all payslips for a specific worker.
+     */
+    public List<Payslip> getAllPayslipsByWorkerId(int workerId) {
+        return payrollDAO.findAllPayslipsByWorkerId(workerId);
     }
 
     /**
@@ -99,13 +136,6 @@ public class PayrollService {
             conn.setAutoCommit(false);
 
             for (User worker : workers) {
-                // Skip workers with no daily wage set
-                if (worker.getDailyWage() == null
-                        || worker.getDailyWage().compareTo(BigDecimal.ZERO) == 0) {
-                    skipped++;
-                    continue;
-                }
-
                 // Skip if payroll already exists
                 if (payrollDAO.exists(worker.getId(), monthYear)) {
                     skipped++;
@@ -117,18 +147,12 @@ public class PayrollService {
                 int presentDays = counts[0];
                 int halfDays = counts[1];
 
-                // Skip workers with zero attendance
-                if (presentDays == 0 && halfDays == 0) {
-                    skipped++;
-                    continue;
-                }
-
                 Payroll p = new Payroll();
                 p.setWorkerId(worker.getId());
                 p.setMonthYear(monthYear);
                 p.setTotalDays(presentDays);
                 p.setHalfDays(halfDays);
-                p.setDailyWage(worker.getDailyWage());
+                p.setDailyWage(worker.getDailyWage() != null ? worker.getDailyWage() : BigDecimal.ZERO);
                 p.setGeneratedBy(generatedBy);
 
                 int id = payrollDAO.insert(conn, p);
@@ -181,10 +205,7 @@ public class PayrollService {
             errors.add("Worker not found.");
             return errors;
         }
-        if (worker.getDailyWage() == null || worker.getDailyWage().compareTo(BigDecimal.ZERO) == 0) {
-            errors.add("Worker has no daily wage set. Please set the wage first.");
-            return errors;
-        }
+
         if (payrollDAO.exists(workerId, monthYear)) {
             errors.add("Payroll already exists for this worker and month.");
             return errors;
@@ -192,17 +213,13 @@ public class PayrollService {
 
         int[] counts = attendanceDAO.getAttendanceCounts(workerId, monthYear);
         int presentDays = counts[0], halfDays = counts[1];
-        if (presentDays == 0 && halfDays == 0) {
-            errors.add("No attendance records found for this worker in " + monthYear + ".");
-            return errors;
-        }
 
         Payroll p = new Payroll();
         p.setWorkerId(workerId);
         p.setMonthYear(monthYear);
         p.setTotalDays(presentDays);
         p.setHalfDays(halfDays);
-        p.setDailyWage(worker.getDailyWage());
+        p.setDailyWage(worker.getDailyWage() != null ? worker.getDailyWage() : BigDecimal.ZERO);
         p.setGeneratedBy(generatedBy);
 
         if (payrollDAO.insert(p) == -1)

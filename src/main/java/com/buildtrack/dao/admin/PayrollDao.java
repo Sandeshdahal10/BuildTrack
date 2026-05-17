@@ -191,6 +191,32 @@ public class PayrollDao {
     }
 
     /**
+     * Finds all payslips for a specific worker.
+     *
+     * @param workerId worker id
+     * @return list of payslips
+     */
+    public List<Payslip> findAllPayslipsByWorkerId(int workerId) {
+        List<Payslip> list = new ArrayList<>();
+        String sql = "SELECT pr.*, u.full_name AS worker_name, u.email AS worker_email, " +
+                "u.phone AS worker_phone, a.full_name AS admin_name " +
+                "FROM payroll pr " +
+                "JOIN users u ON pr.worker_id = u.id " +
+                "JOIN users a ON pr.generated_by = a.id " +
+                "WHERE pr.worker_id = ? ORDER BY pr.month_year DESC";
+        try (Connection conn = DBUtil.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, workerId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next())
+                list.add(mapPayslip(rs));
+        } catch (SQLException e) {
+            System.err.println("[PayrollDAO] findAllPayslipsByWorkerId error: " + e.getMessage());
+        }
+        return list;
+    }
+
+    /**
      * Checks if a payroll record exists for a worker in a month.
      *
      * @param workerId  worker id

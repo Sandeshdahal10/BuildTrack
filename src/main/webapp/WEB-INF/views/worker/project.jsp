@@ -33,12 +33,12 @@
 
 <div class="h-screen">
     <!-- Sidebar -->
-    <div class="fixed inset-y-0 left-0 z-30 w-56">
+    <div id="sidebar-container" class="fixed inset-y-0 left-0 z-50 w-56 transform -translate-x-full transition-transform duration-300 md:translate-x-0">
         <jsp:include page="../common/WorkerSideBar.jsp" />
     </div>
 
     <!-- Main Content -->
-    <div class="ml-56 flex h-screen min-w-0 flex-1 flex-col overflow-y-auto">
+    <div class="ml-0 md:ml-56 flex h-screen min-w-0 flex-1 flex-col overflow-y-auto w-full max-w-full">
         <!-- Top Bar -->
         <div class="sticky top-0 z-20">
             <jsp:include page="../common/Topbar.jsp" />

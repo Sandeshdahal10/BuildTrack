@@ -247,6 +247,8 @@ public class Project {
             return "Unknown";
         return switch (status) {
             case "PLANNED" -> "Planned";
+            case "APPROVED" -> "Approved";
+            case "DENIED" -> "Denied";
             case "IN_PROGRESS" -> "In Progress";
             case "COMPLETED" -> "Completed";
             case "ON_HOLD" -> "On Hold";
@@ -262,6 +264,8 @@ public class Project {
             return "bg-stone-100 text-stone-700";
         return switch (status) {
             case "PLANNED" -> "bg-blue-100 text-blue-700";
+            case "APPROVED" -> "bg-green-100 text-green-700";
+            case "DENIED" -> "bg-red-100 text-red-700";
             case "IN_PROGRESS" -> "bg-amber-100 text-amber-700";
             case "COMPLETED" -> "bg-green-100 text-green-700";
             case "ON_HOLD" -> "bg-red-100 text-red-700";

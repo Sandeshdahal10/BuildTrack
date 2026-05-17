@@ -92,11 +92,11 @@
 <body class="h-screen overflow-hidden bg-slate-50 text-slate-900">
 
 <div class="h-screen flex">
-    <div class="fixed inset-y-0 left-0 w-56 border-r border-slate-200 bg-white">
+    <div id="sidebar-container" class="fixed inset-y-0 left-0 z-50 w-56 transform -translate-x-full transition-transform duration-300 md:translate-x-0 border-r border-slate-200 bg-white">
         <jsp:include page="../common/sidebar.jsp" />
     </div>
 
-    <div class="ml-56 flex flex-1 flex-col overflow-y-auto">
+    <div class="ml-0 md:ml-56 w-full max-w-full overflow-hidden flex-1 flex flex-1 flex-col overflow-y-auto">
 
         <div class="sticky top-0 z-10 border-b border-slate-200 bg-white">
             <jsp:include page="../common/Topbar.jsp" />
@@ -202,11 +202,12 @@
 
                 <% for (Payroll p : displayPayrolls) {
                     String effectiveDays = String.valueOf(p.getTotalDays() + (p.getHalfDays() * 0.5));
+                    boolean ungenerated = "UNGENERATED".equals(p.getStatus());
                     boolean paid = "PAID".equals(p.getStatus());
-                    String statusDisplay = paid ? "Paid" : "Pending";
-                    String statusBadgeClass = paid
-                            ? "bg-green-100 text-green-700"
-                            : "bg-amber-100 text-amber-700";
+                    String statusDisplay = ungenerated ? "Not Generated" : (paid ? "Paid" : "Pending");
+                    String statusBadgeClass = ungenerated 
+                            ? "bg-slate-100 text-slate-700" 
+                            : (paid ? "bg-green-100 text-green-700" : "bg-amber-100 text-amber-700");
                     BigDecimal salary = safeSalary(p);
                 %>
                 <div class="flex flex-col justify-between gap-4 rounded-xl border border-slate-200 bg-white p-4 md:flex-row md:items-center">
@@ -233,6 +234,15 @@
                     <div class="flex items-center gap-3">
                         <span class="rounded-full px-3 py-1 text-xs font-bold <%= statusBadgeClass %>"><%= statusDisplay %></span>
 
+                        <% if (ungenerated) { %>
+                        <form action="<%= request.getContextPath() %>/admin/payroll?action=generate-single" method="POST" class="m-0">
+                            <input type="hidden" name="workerId" value="<%= p.getWorkerId() %>">
+                            <input type="hidden" name="monthYear" value="<%= monthYear %>">
+                            <button type="submit" class="rounded-lg bg-orange-500 px-3 py-1.5 text-xs font-bold text-white hover:bg-orange-600 transition" title="Generate for Worker">
+                                Generate
+                            </button>
+                        </form>
+                        <% } else { %>
                         <a href="<%= request.getContextPath() %>/admin/payroll?action=payslip&id=<%= p.getId() %>" class="rounded-lg border border-slate-200 p-2 text-slate-500 transition hover:bg-slate-50 hover:text-slate-700" title="View Payslip">
                             <i data-lucide="file-text" class="h-4 w-4"></i>
                         </a>
@@ -242,11 +252,12 @@
                             <i data-lucide="check-circle" class="h-4 w-4"></i>
                         </button>
                         <% } else { %>
-                        <form action="<%= request.getContextPath() %>/admin/payroll?action=mark-paid&id=<%= p.getId() %>&my=<%= monthYear %>" method="POST">
+                        <form action="<%= request.getContextPath() %>/admin/payroll?action=mark-paid&id=<%= p.getId() %>&my=<%= monthYear %>" method="POST" class="m-0">
                             <button type="submit" class="rounded-lg bg-green-500 p-2 text-white transition hover:bg-green-600" title="Process Payment">
                                 <i data-lucide="check-circle" class="h-4 w-4"></i>
                             </button>
                         </form>
+                        <% } %>
                         <% } %>
                     </div>
                 </div>

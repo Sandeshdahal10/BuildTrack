@@ -23,11 +23,11 @@
 </head>
 <body class="m-0 min-h-screen bg-white text-slate-900">
 <div class="h-screen flex font-semibold">
-    <div class="fixed inset-y-0 left-0 w-56 border-r border-blue-900/60 bg-[#0b1f4d]">
+    <div id="sidebar-container" class="fixed inset-y-0 left-0 z-50 w-56 transform -translate-x-full transition-transform duration-300 md:translate-x-0 border-r border-blue-900/60 bg-[#0b1f4d]">
         <jsp:include page="../common/clientsidebar.jsp" />
     </div>
 
-    <main class="ml-56 flex-1 overflow-y-auto bg-white px-5 pb-7 pt-4">
+    <main class="ml-0 md:ml-56 w-full max-w-full overflow-hidden flex-1 flex-1 overflow-y-auto bg-white px-5 pb-7 pt-4">
         <div class="mb-3 flex items-center justify-between text-[11px] text-slate-600 max-[760px]:flex-col max-[760px]:items-start max-[760px]:gap-2.5">
             <div>Friday, April 17, 2026</div>
             <div class="flex items-center gap-2.5 max-[760px]:w-full max-[760px]:flex-wrap">

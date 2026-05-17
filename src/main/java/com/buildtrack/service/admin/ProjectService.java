@@ -86,8 +86,8 @@ public class ProjectService {
 
         // Validate status
         if (!ValidationUtil.isEmpty(status)) {
-            if (!status.equals("PLANNED") && !status.equals("IN_PROGRESS")
-                    && !status.equals("COMPLETED") && !status.equals("ON_HOLD")) {
+            if (!status.equals("PLANNED") && !status.equals("APPROVED") && !status.equals("DENIED")
+                    && !status.equals("IN_PROGRESS") && !status.equals("COMPLETED") && !status.equals("ON_HOLD")) {
                 errors.add("Invalid project status.");
             }
         } else {
@@ -171,8 +171,8 @@ public class ProjectService {
         }
 
         if (!ValidationUtil.isEmpty(status)) {
-            if (!status.equals("PLANNED") && !status.equals("IN_PROGRESS")
-                    && !status.equals("COMPLETED") && !status.equals("ON_HOLD")) {
+            if (!status.equals("PLANNED") && !status.equals("APPROVED") && !status.equals("DENIED")
+                    && !status.equals("IN_PROGRESS") && !status.equals("COMPLETED") && !status.equals("ON_HOLD")) {
                 errors.add("Invalid project status.");
             }
         } else {
@@ -200,6 +200,29 @@ public class ProjectService {
 
         if (!projectDAO.update(existing))
             errors.add("Failed to update project.");
+        return errors;
+    }
+
+    /**
+     * Updates the status of an existing project.
+     */
+    public List<String> updateProjectStatus(int id, String status) {
+        List<String> errors = new ArrayList<>();
+        Project existing = projectDAO.findById(id);
+        if (existing == null) {
+            errors.add("Project not found.");
+            return errors;
+        }
+
+        if (!status.equals("PLANNED") && !status.equals("APPROVED") && !status.equals("DENIED")
+                && !status.equals("IN_PROGRESS") && !status.equals("COMPLETED") && !status.equals("ON_HOLD")) {
+            errors.add("Invalid project status.");
+            return errors;
+        }
+
+        if (!projectDAO.updateStatus(id, status)) {
+            errors.add("Failed to update project status.");
+        }
         return errors;
     }
 
@@ -257,6 +280,13 @@ public class ProjectService {
         return projectDAO.findAssignedWorkersWithRole(projectId);
     }
 
+    /**
+     * Returns documents for a project.
+     */
+    public List<com.buildtrack.model.ProjectDocument> getDocumentsByProjectId(int projectId) {
+        return projectDAO.getDocumentsByProjectId(projectId);
+    }
+
     // Stats
 
     /**
@@ -266,6 +296,8 @@ public class ProjectService {
         Map<String, Integer> counts = new java.util.LinkedHashMap<>();
         counts.put("total", projectDAO.countAll());
         counts.put("PLANNED", projectDAO.countByStatus("PLANNED"));
+        counts.put("APPROVED", projectDAO.countByStatus("APPROVED"));
+        counts.put("DENIED", projectDAO.countByStatus("DENIED"));
         counts.put("IN_PROGRESS", projectDAO.countByStatus("IN_PROGRESS"));
         counts.put("COMPLETED", projectDAO.countByStatus("COMPLETED"));
         counts.put("ON_HOLD", projectDAO.countByStatus("ON_HOLD"));

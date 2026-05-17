@@ -9,6 +9,11 @@
     <header class="w-full bg-white border-b border-slate-200 relative z-40">
       <div class="mx-auto flex h-20 w-full items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
 
+        <!-- Hamburger menu for mobile -->
+        <button id="mobile-menu-btn" type="button" class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-slate-500 hover:bg-slate-100 focus:outline-none">
+          <i data-lucide="menu" class="h-6 w-6"></i>
+        </button>
+
         <div class="hidden min-w-0 md:flex items-center gap-3">
           <div class="hidden min-w-0 md:block">
             <p class="text-xl font-semibold text-black" id="topbar-date">Monday, April 13, 2026</p>
@@ -160,4 +165,20 @@
           }
         });
       })();
+
+      // Mobile sidebar toggle logic
+      document.addEventListener("DOMContentLoaded", function() {
+        var mobileBtn = document.getElementById("mobile-menu-btn");
+        var sidebarContainer = document.getElementById("sidebar-container");
+        
+        if (mobileBtn) {
+          mobileBtn.addEventListener("click", function() {
+            if (sidebarContainer) {
+              sidebarContainer.classList.toggle("-translate-x-full");
+            } else if (typeof toggleSidebar === 'function') {
+              toggleSidebar();
+            }
+          });
+        }
+      });
     </script>

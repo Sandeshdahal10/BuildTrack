@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
@@ -27,7 +28,28 @@
                     ${param.title}
                 </h3>
 
-                <span class="text-xs font-bold rounded-full px-2 py-0.5 bg-slate-100 text-slate-700">
+                <c:set var="badgeClass" value="bg-slate-100 text-slate-700" />
+                <c:choose>
+                    <c:when test="${param.statusRaw == 'PLANNED'}">
+                        <c:set var="badgeClass" value="bg-blue-100 text-blue-700" />
+                    </c:when>
+                    <c:when test="${param.statusRaw == 'APPROVED'}">
+                        <c:set var="badgeClass" value="bg-green-100 text-green-700" />
+                    </c:when>
+                    <c:when test="${param.statusRaw == 'DENIED'}">
+                        <c:set var="badgeClass" value="bg-red-100 text-red-700" />
+                    </c:when>
+                    <c:when test="${param.statusRaw == 'IN_PROGRESS'}">
+                        <c:set var="badgeClass" value="bg-amber-100 text-amber-700" />
+                    </c:when>
+                    <c:when test="${param.statusRaw == 'COMPLETED'}">
+                        <c:set var="badgeClass" value="bg-teal-100 text-teal-700" />
+                    </c:when>
+                    <c:when test="${param.statusRaw == 'ON_HOLD'}">
+                        <c:set var="badgeClass" value="bg-rose-100 text-rose-700" />
+                    </c:when>
+                </c:choose>
+                <span class="text-xs font-bold rounded-full px-2 py-0.5 ${badgeClass}">
                     ${param.status}
                 </span>
             </div>
@@ -71,16 +93,31 @@
 
         </div>
 
-        <div class="flex gap-2">
+        <div class="flex flex-wrap items-center gap-3 mt-4 md:mt-0">
+            <c:if test="${param.statusRaw == 'PLANNED' && fn:contains(param.viewLink, '/admin/')}">
+                <form action="${pageContext.request.contextPath}/admin/projects" method="POST" class="m-0">
+                    <input type="hidden" name="action" value="approve">
+                    <input type="hidden" name="projectId" value="${param.projectId}">
+                    <button type="submit" class="text-center rounded-lg bg-green-500 px-4 py-2 text-sm font-medium text-white hover:bg-green-600 transition">Approve</button>
+                </form>
+                <form action="${pageContext.request.contextPath}/admin/projects" method="POST" class="m-0">
+                    <input type="hidden" name="action" value="deny">
+                    <input type="hidden" name="projectId" value="${param.projectId}">
+                    <button type="submit" class="text-center rounded-lg bg-red-500 px-4 py-2 text-sm font-medium text-white hover:bg-red-600 transition">Deny</button>
+                </form>
+            </c:if>
+
             <a href="${param.viewLink}"
-               class="text-center rounded-lg text-gray-600 px-4 py-2 text-sm font-medium  hover:bg-gray-50 transition">
+               class="text-center rounded-lg text-gray-600 px-4 py-2 text-sm font-medium hover:bg-gray-50 transition border border-gray-200">
                 View
             </a>
 
-            <a href="${param.editLink}"
-               class="text-center rounded-lg bg-orange-500 px-4 py-2 text-sm font-medium text-white hover:bg-orange-600 transition">
-                Edit
-            </a>
+            <c:if test="${fn:contains(param.editLink, '/admin/')}">
+                <a href="${param.editLink}"
+                   class="text-center rounded-lg bg-orange-500 px-4 py-2 text-sm font-medium text-white hover:bg-orange-600 transition">
+                    Edit
+                </a>
+            </c:if>
         </div>
 
     </div>

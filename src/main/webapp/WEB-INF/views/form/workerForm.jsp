@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%
     com.buildtrack.model.User worker = (com.buildtrack.model.User) request.getAttribute("worker");
@@ -50,10 +51,8 @@
     }
     if (skillValue == null) skillValue = "";
 
-    String projectValue = request.getParameter("project");
-    if (projectValue == null || projectValue.isBlank()) {
-        projectValue = "Unassigned";
-    }
+    Integer assignedProjectId = (Integer) request.getAttribute("assignedProjectId");
+    java.util.List<com.buildtrack.model.Project> projects = (java.util.List<com.buildtrack.model.Project>) request.getAttribute("projects");
 
     String statusValue = request.getParameter("status");
     if ((statusValue == null || statusValue.isBlank()) && worker != null && worker.getStatus() != null) {
@@ -63,6 +62,12 @@
     if (statusValue.equalsIgnoreCase("APPROVED") || statusValue.equalsIgnoreCase("ACTIVE")) statusValue = "Active";
     else if (statusValue.equalsIgnoreCase("DEACTIVATED")) statusValue = "Deactivated";
     else if (statusValue.equalsIgnoreCase("PENDING")) statusValue = "Pending";
+
+    String dailyWageValue = request.getParameter("dailyWage");
+    if ((dailyWageValue == null || dailyWageValue.isBlank()) && worker != null && worker.getDailyWage() != null) {
+        dailyWageValue = worker.getDailyWage().toPlainString();
+    }
+    if (dailyWageValue == null) dailyWageValue = "0.00";
 %>
 
 <html>
@@ -73,11 +78,11 @@
 </head>
 <body class="h-screen overflow-hidden bg-slate-50 text-slate-900">
 <div class="h-screen">
-    <div class="fixed inset-y-0 left-0 z-30 w-56">
+    <div id="sidebar-container" class="fixed inset-y-0 left-0 z-50 w-56 transform -translate-x-full transition-transform duration-300 md:translate-x-0">
         <jsp:include page="../common/sidebar.jsp" />
     </div>
 
-    <div class="ml-56 flex h-screen min-w-0 flex-1 flex-col overflow-y-auto">
+    <div class="ml-0 md:ml-56 flex h-screen min-w-0 flex-1 flex-col overflow-y-auto w-full max-w-full">
         <div class="sticky top-0 z-20">
             <jsp:include page="../common/Topbar.jsp" />
         </div>
@@ -128,7 +133,16 @@
 
                         <div>
                             <label class="mb-2 block text-sm font-semibold text-slate-700">Assigned Project</label>
-                            <input type="text" name="project" value="<%= projectValue %>" placeholder="Enter project name" <%= lockFields %> class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-orange-300 focus:ring-2 focus:ring-orange-200 <%= viewMode ? "bg-slate-100" : "" %>" />
+                            <select name="projectId" <%= disableInputs %> class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-orange-300 focus:ring-2 focus:ring-orange-200 <%= viewMode ? "bg-slate-100" : "" %>">
+                                <option value="">Unassigned</option>
+                                <% if (projects != null) {
+                                    for (com.buildtrack.model.Project p : projects) {
+                                        boolean isSelected = (assignedProjectId != null && assignedProjectId.equals(p.getId()));
+                                %>
+                                        <option value="<%= p.getId() %>" <%= isSelected ? "selected" : "" %>><%= p.getTitle() %></option>
+                                <%  }
+                                } %>
+                            </select>
                         </div>
 
                         <div>
@@ -145,6 +159,11 @@
                                 <option selected value="Pending">Pending</option>
                                 <% } %>
                             </select>
+                        </div>
+
+                        <div>
+                            <label class="mb-2 block text-sm font-semibold text-slate-700">Daily Wage (NPR)</label>
+                            <input type="number" step="0.01" min="0" name="dailyWage" value="<%= dailyWageValue %>" placeholder="Enter daily wage" <%= lockFields %> class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-orange-300 focus:ring-2 focus:ring-orange-200 <%= viewMode ? "bg-slate-100" : "" %>" />
                         </div>
                     </div>
 

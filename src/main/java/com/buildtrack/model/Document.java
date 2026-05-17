@@ -82,6 +82,9 @@ public class Document {
      * Returns the storage path for the file.
      */
     public String getFilePath() {
+        if (filePath != null) {
+            return filePath.replace('\\', '/');
+        }
         return filePath;
     }
 

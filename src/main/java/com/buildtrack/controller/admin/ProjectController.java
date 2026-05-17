@@ -55,6 +55,8 @@ public class ProjectController extends HttpServlet {
                 }
 
                 request.setAttribute("project", p);
+                request.setAttribute("assignedWorkers", projectService.getAssignedWorkers(id));
+                request.setAttribute("projectDocuments", projectService.getDocumentsByProjectId(id));
                 request.setAttribute("formMode", mode.toLowerCase());
                 request.setAttribute("clients", userService.getClients());
                 request.getRequestDispatcher("/WEB-INF/views/form/projectForm.jsp")
@@ -110,6 +112,7 @@ public class ProjectController extends HttpServlet {
                 }
                 request.setAttribute("project", p);
                 request.setAttribute("assignedWorkers", projectService.getAssignedWorkers(id));
+                request.setAttribute("projectDocuments", projectService.getDocumentsByProjectId(id));
                 request.setAttribute("formMode", "view");
                 request.getRequestDispatcher("/WEB-INF/views/form/projectForm.jsp")
                         .forward(request, response);
@@ -230,6 +233,24 @@ public class ProjectController extends HttpServlet {
                 }
                 response.sendRedirect(request.getContextPath()
                         + "/admin/projects?action=view&id=" + projectId);
+            }
+
+            case "approve" -> {
+                int projectId = Integer.parseInt(request.getParameter("projectId"));
+                List<String> errors = projectService.updateProjectStatus(projectId, "APPROVED");
+                if (!errors.isEmpty()) {
+                    request.getSession().setAttribute("errors", errors);
+                }
+                response.sendRedirect(request.getContextPath() + "/admin/projects?approved=true");
+            }
+
+            case "deny" -> {
+                int projectId = Integer.parseInt(request.getParameter("projectId"));
+                List<String> errors = projectService.updateProjectStatus(projectId, "DENIED");
+                if (!errors.isEmpty()) {
+                    request.getSession().setAttribute("errors", errors);
+                }
+                response.sendRedirect(request.getContextPath() + "/admin/projects?denied=true");
             }
 
             default -> response.sendRedirect(request.getContextPath() + "/admin/projects");

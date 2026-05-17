@@ -50,12 +50,16 @@ public class AttendanceController extends HttpServlet {
         int totalRecorded = records != null ? records.size() : 0;
         int absent = Math.max(0, totalRecorded - present - halfDay);
 
+        // Fetch projects assigned to this worker
+        List<com.buildtrack.model.Project> assignedProjects = new com.buildtrack.dao.worker.WorkLogDao().findAssignedProjects(user.getId());
+
         request.setAttribute("records", records);
         request.setAttribute("totalDays", totalRecorded);
         request.setAttribute("presentCount", present);
         request.setAttribute("absentCount", absent);
         request.setAttribute("halfDayCount", halfDay);
         request.setAttribute("currentMonth", month);
+        request.setAttribute("assignedProjects", assignedProjects);
 
         request.getRequestDispatcher("/WEB-INF/views/worker/attendance.jsp")
                 .forward(request, response);
