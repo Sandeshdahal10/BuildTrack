@@ -1,5 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-    <html>
+<%@ page import="java.util.List" %>
+<%@ page import="java.math.BigDecimal" %>
+<%@ page import="com.buildtrack.model.Project" %>
+<%@ page import="com.buildtrack.model.Expense" %>
+<%
+    List<Project> projectsList = (List<Project>) request.getAttribute("projects");
+    List<Expense> recentExpensesList = (List<Expense>) request.getAttribute("recentExpenses");
+    BigDecimal grandTotal = (BigDecimal) request.getAttribute("grandTotal");
+    String displayGrandTotal = (grandTotal != null) ? "NPR " + grandTotal.toString() : "NPR 0";
+%>
+<html>
 
     <head>
         <script src="https://cdn.tailwindcss.com"></script>
@@ -39,7 +49,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
                         <jsp:include page="../common/statsCard.jsp">
                             <jsp:param name="title" value="Total Expenses" />
-                            <jsp:param name="value" value="NPR 31.4L" />
+                            <jsp:param name="value" value="<%= displayGrandTotal %>" />
                             <jsp:param name="icon" value="trending-down" />
                             <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-red-100" />
                             <jsp:param name="iconClass" value="w-5 h-5 text-red-600" />
@@ -71,7 +81,12 @@
                         class="bg-white border border-slate-200 rounded-xl p-4 mb-4 shadow-sm flex flex-wrap gap-3 items-center">
                         <select
                             class="rounded-lg border border-slate-300 p-2 text-sm bg-white outline-none focus:border-orange-300">
-                            <option>All Projects</option>
+                            <option value="">All Projects</option>
+                            <% if (projectsList != null) { %>
+                                <% for (Project p : projectsList) { %>
+                                    <option value="<%= p.getId() %>"><%= p.getTitle() %></option>
+                                <% } %>
+                            <% } %>
                         </select>
                         <select
                             class="rounded-lg border border-slate-300 p-2 text-sm bg-white outline-none focus:border-orange-300">
@@ -94,35 +109,23 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <jsp:include page="../common/expensRow.jsp">
-                                    <jsp:param name="date" value="12 Apr 2025" />
-                                    <jsp:param name="project" value="Skyline Tower" />
-                                    <jsp:param name="category" value="Material" />
-                                    <jsp:param name="categoryStyle" value="bg-orange-100 text-orange-700" />
-                                    <jsp:param name="description" value="Cement Purchase (50 Bags)" />
-                                    <jsp:param name="amount" value="NPR 22,500" />
-                                    <jsp:param name="editLink" value="#" />
-                                </jsp:include>
-
-                                <jsp:include page="../common/expensRow.jsp">
-                                    <jsp:param name="date" value="11 Apr 2025" />
-                                    <jsp:param name="project" value="Green Valley" />
-                                    <jsp:param name="category" value="Labour" />
-                                    <jsp:param name="categoryStyle" value="bg-blue-100 text-blue-700" />
-                                    <jsp:param name="description" value="Weekly Wages Payment" />
-                                    <jsp:param name="amount" value="NPR 45,000" />
-                                    <jsp:param name="editLink" value="#" />
-                                </jsp:include>
-
-                                <jsp:include page="../common/expensRow.jsp">
-                                    <jsp:param name="date" value="10 Apr 2025" />
-                                    <jsp:param name="project" value="River Bridge" />
-                                    <jsp:param name="category" value="Equipment" />
-                                    <jsp:param name="categoryStyle" value="bg-purple-100 text-purple-700" />
-                                    <jsp:param name="description" value="Crane Rental (2 Days)" />
-                                    <jsp:param name="amount" value="NPR 18,000" />
-                                    <jsp:param name="editLink" value="#" />
-                                </jsp:include>
+                                <% if (recentExpensesList != null && !recentExpensesList.isEmpty()) { %>
+                                    <% for (Expense exp : recentExpensesList) { %>
+                                        <jsp:include page="../common/expensRow.jsp">
+                                            <jsp:param name="date" value="<%= exp.getExpenseDate() != null ? exp.getExpenseDate().toString() : \"-\" %>" />
+                                            <jsp:param name="project" value="<%= exp.getProjectName() != null ? exp.getProjectName() : \"-\" %>" />
+                                            <jsp:param name="category" value="<%= exp.getCategory() != null ? exp.getCategory() : \"Other\" %>" />
+                                            <jsp:param name="categoryStyle" value="<%= exp.getCategoryBadgeClass() %>" />
+                                            <jsp:param name="description" value="<%= exp.getDescription() != null ? exp.getDescription() : \"-\" %>" />
+                                            <jsp:param name="amount" value="<%= \"NPR \" + (exp.getAmount() != null ? exp.getAmount().toString() : \"0\") %>" />
+                                            <jsp:param name="editLink" value="#" />
+                                        </jsp:include>
+                                    <% } %>
+                                <% } else { %>
+                                    <tr>
+                                        <td colspan="6" class="p-4 text-center text-slate-500 text-sm">No expenses logged yet.</td>
+                                    </tr>
+                                <% } %>
                             </tbody>
                         </table>
                     </div>
@@ -138,39 +141,54 @@
                     <button onclick="toggleModal('expenseModal')" class="text-slate-400 hover:text-slate-600"><i
                             data-lucide="x" class="w-5 h-5"></i></button>
                 </div>
-                <form class="space-y-4">
+                <form method="POST" action="<%= request.getContextPath() %>/admin/expenses?action=create" class="space-y-4">
                     <div>
-                        <label class="text-sm font-medium text-slate-700">Project</label>
-                        <select
+                        <label class="text-sm font-medium text-slate-700">Project <span class="text-rose-500">*</span></label>
+                        <select name="projectId" required
                             class="w-full mt-1 rounded-lg border border-slate-300 p-2.5 text-sm outline-none focus:border-orange-300 bg-white">
-                            <option>Skyline Tower</option>
-                            <option>Green Valley</option>
+                            <% if (projectsList != null && !projectsList.isEmpty()) { %>
+                                <% for (Project p : projectsList) { %>
+                                    <option value="<%= p.getId() %>"><%= p.getTitle() %></option>
+                                <% } %>
+                            <% } else { %>
+                                <option value="">No Active Projects Found</option>
+                            <% } %>
                         </select>
                     </div>
                     <div>
-                        <label class="text-sm font-medium text-slate-700">Category</label>
-                        <select
+                        <label class="text-sm font-medium text-slate-700">Category <span class="text-rose-500">*</span></label>
+                        <select name="category" required
                             class="w-full mt-1 rounded-lg border border-slate-300 p-2.5 text-sm outline-none focus:border-orange-300 bg-white">
-                            <option>Material</option>
-                            <option>Labour</option>
-                            <option>Equipment</option>
+                            <option value="Material">Material</option>
+                            <option value="Labour">Labour</option>
+                            <option value="Equipment">Equipment</option>
+                            <option value="Rent">Rent</option>
+                            <option value="Transport">Transport</option>
+                            <option value="Utilities">Utilities</option>
+                            <option value="Permits">Permits</option>
+                            <option value="Other">Other</option>
                         </select>
                     </div>
                     <div>
-                        <label class="text-sm font-medium text-slate-700">Amount (NPR)</label>
-                        <input type="number"
+                        <label class="text-sm font-medium text-slate-700">Amount (NPR) <span class="text-rose-500">*</span></label>
+                        <input type="number" name="amount" min="0.01" step="0.01" required
                             class="w-full mt-1 rounded-lg border border-slate-300 p-2.5 text-sm outline-none focus:border-orange-300">
                     </div>
                     <div>
-                        <label class="text-sm font-medium text-slate-700">Description</label>
-                        <textarea rows="2"
+                        <label class="text-sm font-medium text-slate-700">Expense Date <span class="text-rose-500">*</span></label>
+                        <input type="date" name="expenseDate" required
+                            class="w-full mt-1 rounded-lg border border-slate-300 p-2.5 text-sm outline-none focus:border-orange-300">
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-slate-700">Description <span class="text-rose-500">*</span></label>
+                        <textarea name="description" rows="2" required
                             class="w-full mt-1 rounded-lg border border-slate-300 p-2.5 text-sm outline-none focus:border-orange-300"></textarea>
                     </div>
                     <div class="flex gap-3 pt-2">
                         <button type="button" onclick="toggleModal('expenseModal')"
                             class="flex-1 rounded-lg border border-slate-300 py-2.5 text-sm font-semibold text-slate-700">Cancel</button>
                         <button type="submit"
-                            class="flex-1 rounded-lg bg-orange-500 py-2.5 text-sm font-semibold text-white">Save</button>
+                            class="flex-1 rounded-lg bg-orange-500 py-2.5 text-sm font-semibold text-white hover:bg-orange-600">Save</button>
                     </div>
                 </form>
             </div>
