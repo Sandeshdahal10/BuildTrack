@@ -55,7 +55,6 @@
 
         <!-- CONTENT -->
         <div class="px-8 py-6 overflow-y-auto grow">
-            <div class="max-w-7xl mx-auto">
 
                 <!-- Header -->
                 <div class="mb-6">
@@ -203,7 +202,6 @@
                     </div>
                 </div>
 
-            </div>
         </div>
     </main>
 </div>

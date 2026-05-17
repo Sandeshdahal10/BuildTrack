@@ -12,6 +12,20 @@
     String displayName = (user != null && user.getFullName() != null && !user.getFullName().trim().isEmpty())
             ? user.getFullName()
             : "sag";
+
+    Integer currentClientUserId = null;
+    if (session.getAttribute("userId") != null) {
+        currentClientUserId = (Integer) session.getAttribute("userId");
+    } else if (user != null) {
+        currentClientUserId = user.getId();
+    }
+    java.util.List<com.buildtrack.model.Notification> clientHeaderNotifications = new java.util.ArrayList<>();
+    int clientHeaderUnreadCount = 0;
+    if (currentClientUserId != null) {
+        com.buildtrack.dao.NotificationDao headerNotifDao = new com.buildtrack.dao.NotificationDao();
+        clientHeaderNotifications = headerNotifDao.getNotificationsByUserId(currentClientUserId);
+        clientHeaderUnreadCount = headerNotifDao.getUnreadCount(currentClientUserId);
+    }
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,17 +52,21 @@
                         <path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 0 0-12 0v3.2a2 2 0 0 1-.6 1.4L4 17h5"></path>
                         <path d="M9 17a3 3 0 0 0 6 0"></path>
                     </svg>
-                    <span id="notificationBadge" class="absolute -right-0.5 -top-0.5 min-w-[14px] rounded-full border border-white bg-amber-500 px-0.5 text-center text-[9px] font-bold leading-3 text-slate-800">1</span>
+                    <span id="notificationBadge" class="absolute -right-0.5 -top-0.5 min-w-[14px] rounded-full border border-white bg-amber-500 px-0.5 text-center text-[9px] font-bold leading-3 text-slate-800 <%= clientHeaderUnreadCount == 0 ? "hidden" : "" %>"><%= clientHeaderUnreadCount %></span>
                 </button>
                 <div id="notificationMenu" class="absolute right-0 top-9 z-20 hidden w-72 rounded-xl border border-slate-200 bg-white p-3 shadow-lg">
                     <div class="mb-2 flex items-center justify-between">
                         <p class="m-0 text-sm font-semibold text-slate-900">Notifications</p>
-                        <button id="markAllReadButton" class="text-xs font-semibold text-amber-600" type="button">Mark all read</button>
+                        <button id="markAllReadButton" class="text-xs font-semibold text-amber-600 <%= clientHeaderUnreadCount == 0 ? "hidden" : "" %>" type="button">Mark all read</button>
                     </div>
-                    <ul class="m-0 list-none space-y-2 p-0 text-xs text-slate-600">
-                        <li class="rounded-lg bg-slate-50 px-2.5 py-2">Skyline Tower reached 68% completion.</li>
-                        <li class="rounded-lg bg-slate-50 px-2.5 py-2">Green Valley progress report submitted.</li>
-                        <li class="rounded-lg bg-slate-50 px-2.5 py-2">Budget review meeting on Feb 5.</li>
+                    <ul class="m-0 list-none space-y-2 p-0 text-xs text-slate-600 max-h-60 overflow-y-auto">
+                        <% if (clientHeaderNotifications.isEmpty()) { %>
+                            <li class="rounded-lg bg-slate-50 px-2.5 py-2 text-center text-slate-400">No new notifications.</li>
+                        <% } else { %>
+                            <% for (com.buildtrack.model.Notification n : clientHeaderNotifications) { %>
+                                <li class="rounded-lg <%= n.isRead() ? "bg-slate-50 text-slate-500" : "bg-amber-50/70 text-slate-800 font-medium" %> px-2.5 py-2 border-b border-slate-100 last:border-b-0"><%= n.getMessage() %></li>
+                            <% } %>
+                        <% } %>
                     </ul>
                 </div>
                 </div>
@@ -214,9 +232,15 @@
 
         if (markAllReadButton && notificationBadge) {
             markAllReadButton.addEventListener("click", function () {
-                notificationBadge.classList.add("hidden");
-                markAllReadButton.textContent = "All caught up";
-                markAllReadButton.disabled = true;
+                fetch('<%= request.getContextPath() %>/notifications/mark-read', { method: 'POST' })
+                    .then(response => {
+                        notificationBadge.classList.add("hidden");
+                        markAllReadButton.textContent = "All caught up";
+                        markAllReadButton.disabled = true;
+                        document.querySelectorAll("#notificationMenu li").forEach(li => {
+                            li.className = "rounded-lg bg-slate-50 text-slate-500 px-2.5 py-2 border-b border-slate-100 last:border-b-0";
+                        });
+                    });
             });
         }
 

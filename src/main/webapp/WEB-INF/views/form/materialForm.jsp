@@ -1,15 +1,25 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.buildtrack.model.Material" %>
+<%@ page import="com.buildtrack.model.Project" %>
 <%@ page import="java.util.List" %>
 <%
     Material material = (Material) request.getAttribute("material");
     String idAttr = (String) request.getAttribute("id");
     boolean editMode = material != null || (idAttr != null && !idAttr.isBlank());
 
+    List<Project> projects = (List<Project>) request.getAttribute("projects");
+    if (projects == null) {
+        projects = java.util.Collections.emptyList();
+    }
+
     Integer materialId = material != null ? material.getId() : null;
     if (materialId == null && idAttr != null && !idAttr.isBlank()) {
-    materialId = Integer.parseInt(idAttr);
+        materialId = Integer.parseInt(idAttr);
     }
+
+    String projectIdValue = request.getAttribute("projectId") != null
+        ? (String) request.getAttribute("projectId")
+        : (material != null && material.getProjectId() != null ? String.valueOf(material.getProjectId()) : "");
 
     String nameValue = request.getAttribute("name") != null
         ? (String) request.getAttribute("name")
@@ -41,7 +51,7 @@
 <body class="h-screen overflow-hidden bg-slate-50 text-slate-900">
 
 <div class="h-screen">
-    <div id="sidebar-container" class="fixed inset-y-0 left-0 z-50 w-56 transform -translate-x-full transition-transform duration-300 md:translate-x-0">
+    <div id="sidebar-container" class="fixed inset-y-0 left-0 z-50 w-56 transform -translate-x-full transition-transform duration-300 md:translate-x-0 border-r border-slate-200 bg-white">
         <jsp:include page="../common/sidebar.jsp" />
     </div>
 
@@ -81,6 +91,19 @@
                     <% } %>
 
                     <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+                        <div class="md:col-span-2">
+                            <label class="mb-2 block text-sm font-semibold text-slate-700">Project <span class="text-slate-400 font-normal">(Optional - select to link to a project)</span></label>
+                            <select name="projectId"
+                                    class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm outline-none transition focus:border-orange-300 focus:ring-2 focus:ring-orange-200">
+                                <option value="">General Inventory (No Project)</option>
+                                <% for (Project p : projects) { %>
+                                <option value="<%= p.getId() %>" <%= String.valueOf(p.getId()).equals(projectIdValue) ? "selected" : "" %>>
+                                    <%= p.getTitle() %> (ID: <%= p.getId() %>)
+                                </option>
+                                <% } %>
+                            </select>
+                        </div>
+
                         <div class="md:col-span-2">
                             <label class="mb-2 block text-sm font-semibold text-slate-700">Material Name <span class="text-red-500">*</span></label>
                             <input type="text" name="name" placeholder="e.g., Cement (OPC 53)"

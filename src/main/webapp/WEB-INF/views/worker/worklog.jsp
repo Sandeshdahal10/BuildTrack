@@ -52,7 +52,6 @@
         </div>
 
         <div class="px-8 py-6 overflow-y-auto grow">
-            <div class="max-w-7xl mx-auto">
                 <div class="mb-6">
                     <h1 class="text-2xl font-bold text-slate-800 tracking-tight">Work Log</h1>
                     <p class="text-sm text-slate-500 mt-1 font-medium">Submit daily progress and review your history</p>
@@ -154,7 +153,6 @@
                         </div>
                     </section>
                 </div>
-            </div>
         </div>
     </main>
 </div>

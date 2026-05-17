@@ -41,7 +41,6 @@
 
         <!-- CONTENT -->
         <div class="px-8 py-6 overflow-y-auto grow">
-            <div class="max-w-7xl mx-auto">
                 <!-- Page Header -->
                 <div class="mb-6">
                     <h1 class="text-2xl font-bold text-slate-800 tracking-tight">Projects</h1>
@@ -80,7 +79,6 @@
                         </c:otherwise>
                     </c:choose>
                 </div>
-            </div>
         </div>
     </main>
 </div>

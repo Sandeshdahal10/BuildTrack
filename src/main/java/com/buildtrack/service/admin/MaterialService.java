@@ -49,7 +49,7 @@ public class MaterialService {
      * Creates a new material after validation.
      */
     public List<String> createMaterial(String name, String unit, String unitPriceStr,
-            String totalStockStr, String lowStockStr, String description) {
+            String totalStockStr, String lowStockStr, String description, String projectIdStr) {
         List<String> errors = validateMaterialInput(name, unit, unitPriceStr, totalStockStr, lowStockStr);
         if (!errors.isEmpty())
             return errors;
@@ -64,6 +64,12 @@ public class MaterialService {
                 : new BigDecimal(lowStockStr));
         m.setDescription(description != null ? description.trim() : null);
 
+        if (projectIdStr != null && !projectIdStr.isBlank()) {
+            try {
+                m.setProjectId(Integer.parseInt(projectIdStr.trim()));
+            } catch (NumberFormatException ignored) {}
+        }
+
         if (materialDAO.insert(m) == -1)
             errors.add("Failed to add material.");
         return errors;
@@ -73,7 +79,7 @@ public class MaterialService {
      * Updates an existing material after validation.
      */
     public List<String> updateMaterial(int id, String name, String unit, String unitPriceStr,
-            String totalStockStr, String lowStockStr, String description) {
+            String totalStockStr, String lowStockStr, String description, String projectIdStr) {
         List<String> errors = validateMaterialInput(name, unit, unitPriceStr, totalStockStr, lowStockStr);
         Material existing = materialDAO.findById(id);
         if (existing == null) {
@@ -91,6 +97,14 @@ public class MaterialService {
                 ? new BigDecimal("10")
                 : new BigDecimal(lowStockStr));
         existing.setDescription(description != null ? description.trim() : null);
+
+        if (projectIdStr != null && !projectIdStr.isBlank()) {
+            try {
+                existing.setProjectId(Integer.parseInt(projectIdStr.trim()));
+            } catch (NumberFormatException ignored) {}
+        } else {
+            existing.setProjectId(null);
+        }
 
         if (!materialDAO.update(existing))
             errors.add("Failed to update material.");

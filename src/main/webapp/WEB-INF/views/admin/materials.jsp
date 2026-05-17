@@ -64,7 +64,7 @@
         <jsp:include page="../common/sidebar.jsp" />
     </div>
 
-    <div class="ml-0 md:ml-56 w-full max-w-full overflow-hidden flex-1 flex flex-1 flex-col overflow-y-auto">
+    <div class="ml-0 md:ml-56 flex h-screen min-w-0 flex-1 flex-col overflow-y-auto">
 
         <div class="sticky top-0 z-10 border-b border-slate-200 bg-white">
             <jsp:include page="../common/Topbar.jsp" />
@@ -78,7 +78,7 @@
                     <p class="mt-1 text-slate-500">Manage inventory, stock, and usage logs.</p>
                 </div>
                 <div class="flex gap-3">
-                    <a href="<%= request.getContextPath() %>/admin/materials?action=log-form" class="flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+                    <a href="<%= request.getContextPath() %>/admin/materials?action=log-form<%= projectId != null ? "&pid=" + projectId : "" %>" class="flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
                         <i data-lucide="clipboard-list" class="h-4 w-4"></i>
                         Log Usage
                     </a>
@@ -149,7 +149,19 @@
                             <div id="material-card-<%= material.getId() %>" class="rounded-lg border border-slate-200 p-4 transition hover:shadow-sm">
                                 <div class="flex flex-col justify-between gap-4 md:flex-row md:items-center">
                                     <div class="min-w-0">
-                                        <p class="text-base font-semibold text-slate-800"><%= material.getName() %></p>
+                                        <div class="flex flex-wrap items-center gap-2 mb-1">
+                                            <p class="text-base font-semibold text-slate-800"><%= material.getName() %></p>
+                                            <% if (material.getProjectId() != null && material.getProjectName() != null) { %>
+                                            <span class="inline-flex items-center gap-1 rounded bg-blue-50 px-1.5 py-0.5 text-[10px] font-medium text-blue-600 ring-1 ring-inset ring-blue-500/10">
+                                                <i data-lucide="building" class="h-3 w-3"></i>
+                                                <%= material.getProjectName() %>
+                                            </span>
+                                            <% } else { %>
+                                            <span class="inline-flex items-center gap-1 rounded bg-slate-100 px-1.5 py-0.5 text-[10px] font-medium text-slate-600 ring-1 ring-inset ring-slate-500/10">
+                                                General Inventory
+                                            </span>
+                                            <% } %>
+                                        </div>
                                         <p class="text-xs text-slate-500">Unit: <%= material.getUnit() %></p>
                                     </div>
 

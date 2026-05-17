@@ -11,7 +11,7 @@
 
         <body class="h-screen overflow-hidden bg-slate-50 text-slate-900">
 
-            <div class="h-screen flex">
+            <div class="h-screen">
                 <!-- Sidebar -->
                 <div id="sidebar-container"
                     class="fixed inset-y-0 left-0 z-50 w-56 transform -translate-x-full transition-transform duration-300 md:translate-x-0 border-r border-slate-200 bg-white">
@@ -19,8 +19,7 @@
                 </div>
 
                 <!-- Main Content -->
-                <div
-                    class="ml-0 md:ml-56 w-full max-w-full overflow-hidden flex-1 flex flex-1 flex-col overflow-y-auto">
+                <div class="ml-0 md:ml-56 flex h-screen min-w-0 flex-1 flex-col overflow-y-auto">
 
                     <!-- Top Bar -->
                     <div class="sticky top-0 z-10 border-b border-slate-200 bg-white">

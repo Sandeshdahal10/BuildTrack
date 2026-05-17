@@ -220,7 +220,19 @@ public class ProjectService {
             return errors;
         }
 
-        if (!projectDAO.updateStatus(id, status)) {
+        if (projectDAO.updateStatus(id, status)) {
+            if (existing.getClientId() != null) {
+                String message = "";
+                if ("APPROVED".equals(status)) {
+                    message = "Your project request '" + existing.getTitle() + "' has been approved by the Admin.";
+                } else if ("DENIED".equals(status)) {
+                    message = "Your project request '" + existing.getTitle() + "' has been rejected by the Admin.";
+                }
+                if (!message.isEmpty()) {
+                    new com.buildtrack.dao.NotificationDao().addNotification(existing.getClientId(), message);
+                }
+            }
+        } else {
             errors.add("Failed to update project status.");
         }
         return errors;
@@ -250,13 +262,16 @@ public class ProjectService {
      */
     public List<String> assignWorker(int projectId, int workerId, String assignedRole) {
         List<String> errors = new ArrayList<>();
-        if (projectDAO.findById(projectId) == null)
+        Project project = projectDAO.findById(projectId);
+        if (project == null)
             errors.add("Project not found.");
         if (ValidationUtil.isEmpty(assignedRole))
             assignedRole = "Labourer";
         if (!errors.isEmpty())
             return errors;
-        if (!projectDAO.assignWorker(projectId, workerId, assignedRole)) {
+        if (projectDAO.assignWorker(projectId, workerId, assignedRole)) {
+            new com.buildtrack.dao.NotificationDao().addNotification(workerId, "New project added: " + project.getTitle());
+        } else {
             errors.add("Failed to assign worker. They may already be assigned.");
         }
         return errors;

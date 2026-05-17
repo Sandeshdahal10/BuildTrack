@@ -8,25 +8,23 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.buildtrack.model.User" %>
 <%
-     User user = (User) session.getAttribute("user");
-     String displayName = (user != null && user.getFullName() != null && !user.getFullName().trim().isEmpty())
-             ? user.getFullName()
-             : "Client";
-     String displayEmail = (user != null && user.getEmail() != null && !user.getEmail().trim().isEmpty())
-             ? user.getEmail()
-             : "email@example.com";
-     String displayPhone = (user != null && user.getPhone() != null && !user.getPhone().trim().isEmpty())
-             ? user.getPhone()
-             : "Not provided";
-     String displayRole = (user != null && user.getRole() != null)
-             ? "Client"
-             : "Unknown";
-     String displayCompany = "BuildTrack Construction";
-     String memberSince = "January 2025";
-     int activeProjects = 2;
-    java.util.List<String> profileErrors = null;
-    if (request.getAttribute("errors") instanceof java.util.List) {
-        profileErrors = (java.util.List<String>) request.getAttribute("errors");
+    User user = (User) session.getAttribute("user");
+    String displayName = (user != null && user.getFullName() != null && !user.getFullName().trim().isEmpty())
+            ? user.getFullName()
+            : "Client";
+
+    Integer currentClientUserId = null;
+    if (session.getAttribute("userId") != null) {
+        currentClientUserId = (Integer) session.getAttribute("userId");
+    } else if (user != null) {
+        currentClientUserId = user.getId();
+    }
+    java.util.List<com.buildtrack.model.Notification> clientHeaderNotifications = new java.util.ArrayList<>();
+    int clientHeaderUnreadCount = 0;
+    if (currentClientUserId != null) {
+        com.buildtrack.dao.NotificationDao headerNotifDao = new com.buildtrack.dao.NotificationDao();
+        clientHeaderNotifications = headerNotifDao.getNotificationsByUserId(currentClientUserId);
+        clientHeaderUnreadCount = headerNotifDao.getUnreadCount(currentClientUserId);
     }
 %>
 <!DOCTYPE html>
@@ -57,18 +55,22 @@
                             <path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 0 0-12 0v3.2a2 2 0 0 1-.6 1.4L4 17h5"></path>
                             <path d="M9 17a3 3 0 0 0 6 0"></path>
                         </svg>
-                        <span id="notificationBadge" class="absolute -right-0.5 -top-0.5 min-w-[14px] rounded-full border border-white bg-amber-500 px-0.5 text-center text-[9px] font-bold leading-3 text-slate-800">3</span>
+                        <span id="notificationBadge" class="absolute -right-0.5 -top-0.5 min-w-[14px] rounded-full border border-white bg-amber-500 px-0.5 text-center text-[9px] font-bold leading-3 text-slate-800 <%= clientHeaderUnreadCount == 0 ? "hidden" : "" %>"><%= clientHeaderUnreadCount %></span>
                     </button>
                     <div id="notificationMenu" class="absolute right-0 top-9 z-20 hidden w-72 rounded-xl border border-slate-200 bg-white p-3 shadow-lg">
                         <div class="mb-2 flex items-center justify-between">
                             <p class="m-0 text-sm font-semibold text-slate-900">Notifications</p>
-                            <button id="markAllReadButton" class="text-xs font-semibold text-amber-600" type="button">Mark all read</button>
+                            <button id="markAllReadButton" class="text-xs font-semibold text-amber-600 <%= clientHeaderUnreadCount == 0 ? "hidden" : "" %>" type="button">Mark all read</button>
                         </div>
-                        <ul class="m-0 list-none space-y-2 p-0 text-xs text-slate-600">
-                            <li class="rounded-lg bg-slate-50 px-2.5 py-2">Your profile has been updated successfully.</li>
-                            <li class="rounded-lg bg-slate-50 px-2.5 py-2">New message from admin team.</li>
-                            <li class="rounded-lg bg-slate-50 px-2.5 py-2">Payment invoice ready for download.</li>
-                        </ul>
+                        <ul class="m-0 list-none space-y-2 p-0 text-xs text-slate-600 max-h-60 overflow-y-auto">
+                        <% if (clientHeaderNotifications.isEmpty()) { %>
+                            <li class="rounded-lg bg-slate-50 px-2.5 py-2 text-center text-slate-400">No new notifications.</li>
+                        <% } else { %>
+                            <% for (com.buildtrack.model.Notification n : clientHeaderNotifications) { %>
+                                <li class="rounded-lg <%= n.isRead() ? "bg-slate-50 text-slate-500" : "bg-amber-50/70 text-slate-800 font-medium" %> px-2.5 py-2 border-b border-slate-100 last:border-b-0"><%= n.getMessage() %></li>
+                            <% } %>
+                        <% } %>
+                    </ul>
                     </div>
                 </div>
                 <div class="relative">
@@ -257,9 +259,15 @@
 
         if (markAllReadButton && notificationBadge) {
             markAllReadButton.addEventListener("click", function () {
-                notificationBadge.classList.add("hidden");
-                markAllReadButton.textContent = "All caught up";
-                markAllReadButton.disabled = true;
+                fetch('<%= request.getContextPath() %>/notifications/mark-read', { method: 'POST' })
+                    .then(response => {
+                        notificationBadge.classList.add("hidden");
+                        markAllReadButton.textContent = "All caught up";
+                        markAllReadButton.disabled = true;
+                        document.querySelectorAll("#notificationMenu li").forEach(li => {
+                            li.className = "rounded-lg bg-slate-50 text-slate-500 px-2.5 py-2 border-b border-slate-100 last:border-b-0";
+                        });
+                    });
             });
         }
 

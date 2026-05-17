@@ -24,7 +24,7 @@ public class MaterialDao {
      */
     public List<Material> findAll() {
         List<Material> list = new ArrayList<>();
-        String sql = "SELECT * FROM materials ORDER BY name ASC";
+        String sql = "SELECT m.*, p.title AS project_name FROM materials m LEFT JOIN projects p ON m.project_id = p.id ORDER BY m.name ASC";
         try (Connection conn = DBUtil.getConnection();
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(sql)) {
@@ -41,7 +41,7 @@ public class MaterialDao {
      */
     public List<Material> findLowStock() {
         List<Material> list = new ArrayList<>();
-        String sql = "SELECT * FROM materials WHERE total_stock <= low_stock_threshold ORDER BY total_stock ASC";
+        String sql = "SELECT m.*, p.title AS project_name FROM materials m LEFT JOIN projects p ON m.project_id = p.id WHERE m.total_stock <= m.low_stock_threshold ORDER BY m.total_stock ASC";
         try (Connection conn = DBUtil.getConnection();
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(sql)) {
@@ -60,7 +60,7 @@ public class MaterialDao {
      * @return material or null if not found
      */
     public Material findById(int id) {
-        String sql = "SELECT * FROM materials WHERE id = ?";
+        String sql = "SELECT m.*, p.title AS project_name FROM materials m LEFT JOIN projects p ON m.project_id = p.id WHERE m.id = ?";
         try (Connection conn = DBUtil.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -80,8 +80,8 @@ public class MaterialDao {
      * @return generated id, or -1 if insert failed
      */
     public int insert(Material m) {
-        String sql = "INSERT INTO materials (name,unit,unit_price,total_stock,low_stock_threshold,description) " +
-                "VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO materials (name,unit,unit_price,total_stock,low_stock_threshold,description,project_id) " +
+                "VALUES (?,?,?,?,?,?,?)";
         try (Connection conn = DBUtil.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, m.getName());
@@ -90,6 +90,11 @@ public class MaterialDao {
             ps.setBigDecimal(4, m.getTotalStock());
             ps.setBigDecimal(5, m.getLowStockThreshold());
             ps.setString(6, m.getDescription());
+            if (m.getProjectId() != null) {
+                ps.setInt(7, m.getProjectId());
+            } else {
+                ps.setNull(7, java.sql.Types.INTEGER);
+            }
             ps.executeUpdate();
             ResultSet keys = ps.getGeneratedKeys();
             if (keys.next())
@@ -108,7 +113,7 @@ public class MaterialDao {
      */
     public boolean update(Material m) {
         String sql = "UPDATE materials SET name=?,unit=?,unit_price=?,total_stock=?," +
-                "low_stock_threshold=?,description=? WHERE id=?";
+                "low_stock_threshold=?,description=?,project_id=? WHERE id=?";
         try (Connection conn = DBUtil.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, m.getName());
@@ -117,7 +122,12 @@ public class MaterialDao {
             ps.setBigDecimal(4, m.getTotalStock());
             ps.setBigDecimal(5, m.getLowStockThreshold());
             ps.setString(6, m.getDescription());
-            ps.setInt(7, m.getId());
+            if (m.getProjectId() != null) {
+                ps.setInt(7, m.getProjectId());
+            } else {
+                ps.setNull(7, java.sql.Types.INTEGER);
+            }
+            ps.setInt(8, m.getId());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             System.err.println("[MaterialDAO] update error: " + e.getMessage());
@@ -377,6 +387,10 @@ public class MaterialDao {
         m.setDescription(rs.getString("description"));
         m.setCreatedAt(rs.getTimestamp("created_at"));
         m.setUpdatedAt(rs.getTimestamp("updated_at"));
+        m.setProjectId(rs.getObject("project_id") != null ? rs.getInt("project_id") : null);
+        try {
+            m.setProjectName(rs.getString("project_name"));
+        } catch (SQLException ignored) {}
         return m;
     }
 

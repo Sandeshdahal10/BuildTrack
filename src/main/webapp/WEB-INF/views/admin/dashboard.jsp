@@ -32,7 +32,7 @@
 </head>
 <body class="h-screen overflow-hidden bg-slate-50 text-slate-900">
 <div class="h-screen">
-    <div id="sidebar-container" class="fixed inset-y-0 left-0 z-50 w-56 transform -translate-x-full transition-transform duration-300 md:translate-x-0">
+    <div id="sidebar-container" class="fixed inset-y-0 left-0 z-50 w-56 transform -translate-x-full transition-transform duration-300 md:translate-x-0 border-r border-slate-200 bg-white">
         <jsp:include page="../common/sidebar.jsp" />
     </div>
 

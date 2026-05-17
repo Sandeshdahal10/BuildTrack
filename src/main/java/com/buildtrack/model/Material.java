@@ -17,6 +17,8 @@ public class Material {
     private String description;
     private Timestamp createdAt;
     private Timestamp updatedAt;
+    private Integer projectId;
+    private String projectName;
 
     /**
      * Creates an empty material instance.
@@ -186,5 +188,21 @@ public class Material {
      */
     public boolean isOutOfStock() {
         return totalStock != null && totalStock.compareTo(BigDecimal.ZERO) <= 0;
+    }
+
+    public Integer getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Integer projectId) {
+        this.projectId = projectId;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 }

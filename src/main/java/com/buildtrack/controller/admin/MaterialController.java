@@ -6,6 +6,7 @@ import java.util.List;
 import com.buildtrack.model.Material;
 import com.buildtrack.model.MaterialUsage;
 import com.buildtrack.service.admin.MaterialService;
+import com.buildtrack.dao.admin.ProjectDao;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -31,6 +32,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class MaterialController extends HttpServlet {
 
     private final MaterialService materialService = new MaterialService();
+    private final ProjectDao projectDao = new ProjectDao();
 
     // ==================== GET ====================
 
@@ -60,12 +62,14 @@ public class MaterialController extends HttpServlet {
 
             // ---------- New material form ----------
             case "new" -> {
+                request.setAttribute("projects", projectDao.findAll());
                 request.getRequestDispatcher("/WEB-INF/views/form/materialForm.jsp")
                         .forward(request, response);
             }
 
             // ---------- Edit material form ----------
             case "edit" -> {
+                request.setAttribute("projects", projectDao.findAll());
                 String idParam = request.getParameter("id");
                 if (idParam != null && !idParam.isBlank()) {
                     try {
@@ -105,6 +109,11 @@ public class MaterialController extends HttpServlet {
             // ---------- Log usage form ----------
             case "log-form", "logform", "log_usage", "logusage" -> {
                 request.setAttribute("materials", materialService.getAllMaterials());
+                request.setAttribute("projects", projectDao.findAll());
+                String pidParam = request.getParameter("pid");
+                if (pidParam != null && !pidParam.isBlank()) {
+                    request.setAttribute("projectId", pidParam);
+                }
                 request.getRequestDispatcher("/WEB-INF/views/form/logUsageForm.jsp")
                         .forward(request, response);
             }
@@ -131,15 +140,18 @@ public class MaterialController extends HttpServlet {
 
             // ---------- Create material ----------
             case "create" -> {
+                String projectId = request.getParameter("projectId");
                 List<String> errors = materialService.createMaterial(
                         request.getParameter("name"),
                         request.getParameter("unit"),
                         request.getParameter("unitPrice"),
                         request.getParameter("totalStock"),
                         request.getParameter("lowStockThreshold"),
-                        request.getParameter("description"));
+                        request.getParameter("description"),
+                        projectId);
                 if (!errors.isEmpty()) {
                     request.setAttribute("errors", errors);
+                    request.setAttribute("projects", projectDao.findAll());
                     preserveMaterialForm(request);
                     request.getRequestDispatcher("/WEB-INF/views/form/materialForm.jsp")
                             .forward(request, response);
@@ -152,6 +164,7 @@ public class MaterialController extends HttpServlet {
             // ---------- Update material ----------
             case "update" -> {
                 int id = Integer.parseInt(request.getParameter("id"));
+                String projectId = request.getParameter("projectId");
                 List<String> errors = materialService.updateMaterial(
                         id,
                         request.getParameter("name"),
@@ -159,10 +172,12 @@ public class MaterialController extends HttpServlet {
                         request.getParameter("unitPrice"),
                         request.getParameter("totalStock"),
                         request.getParameter("lowStockThreshold"),
-                        request.getParameter("description"));
+                        request.getParameter("description"),
+                        projectId);
                 if (!errors.isEmpty()) {
                     request.setAttribute("errors", errors);
                     request.setAttribute("id", String.valueOf(id));
+                    request.setAttribute("projects", projectDao.findAll());
                     preserveMaterialForm(request);
                     request.getRequestDispatcher("/WEB-INF/views/form/materialForm.jsp")
                             .forward(request, response);
@@ -190,29 +205,60 @@ public class MaterialController extends HttpServlet {
                 int adminId = (int) request.getSession().getAttribute("userId");
 
                 String projectIdParam = request.getParameter("projectId");
-                List<String> errors = materialService.logUsage(
-                        Integer.parseInt(request.getParameter("materialId")),
-                        Integer.parseInt(projectIdParam),
-                        request.getParameter("quantity"),
-                        request.getParameter("usageDate"),
-                        adminId,
-                        request.getParameter("notes"));
+                String materialIdParam = request.getParameter("materialId");
+                
+                List<String> errors = new java.util.ArrayList<>();
+                int projectId = -1;
+                int materialId = -1;
+
+                if (projectIdParam == null || projectIdParam.isBlank()) {
+                    errors.add("Project is required.");
+                } else {
+                    try {
+                        projectId = Integer.parseInt(projectIdParam);
+                        if (projectDao.findById(projectId) == null) {
+                            errors.add("Project not found.");
+                        }
+                    } catch (NumberFormatException e) {
+                        errors.add("Invalid project selection.");
+                    }
+                }
+
+                if (materialIdParam == null || materialIdParam.isBlank()) {
+                    errors.add("Material is required.");
+                } else {
+                    try {
+                        materialId = Integer.parseInt(materialIdParam);
+                    } catch (NumberFormatException e) {
+                        errors.add("Invalid material selection.");
+                    }
+                }
+
+                if (errors.isEmpty()) {
+                    errors = materialService.logUsage(
+                            materialId,
+                            projectId,
+                            request.getParameter("quantity"),
+                            request.getParameter("usageDate"),
+                            adminId,
+                            request.getParameter("notes"));
+                }
 
                 if (!errors.isEmpty()) {
                     request.setAttribute("errors", errors);
                     request.setAttribute("projectId", projectIdParam);
-                    request.setAttribute("materialId", request.getParameter("materialId"));
+                    request.setAttribute("materialId", materialIdParam);
                     request.setAttribute("quantity", request.getParameter("quantity"));
                     request.setAttribute("usageDate", request.getParameter("usageDate"));
                     request.setAttribute("notes", request.getParameter("notes"));
                     request.setAttribute("materials", materialService.getAllMaterials());
+                    request.setAttribute("projects", projectDao.findAll());
                     request.getRequestDispatcher("/WEB-INF/views/form/logUsageForm.jsp")
                             .forward(request, response);
                 } else {
                     request.getSession().setAttribute("success",
                             "Material usage logged successfully. Stock has been deducted.");
                     // Redirect back to the usage view for this project
-                    int projectId = Integer.parseInt(projectIdParam);
                     response.sendRedirect(request.getContextPath()
                             + "/admin/materials?action=usage&pid=" + projectId);
                 }
@@ -232,5 +278,6 @@ public class MaterialController extends HttpServlet {
         request.setAttribute("totalStock", request.getParameter("totalStock"));
         request.setAttribute("lowStockThreshold", request.getParameter("lowStockThreshold"));
         request.setAttribute("description", request.getParameter("description"));
+        request.setAttribute("projectId", request.getParameter("projectId"));
     }
 }

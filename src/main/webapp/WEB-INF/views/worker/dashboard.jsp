@@ -74,8 +74,7 @@
             %>
 
         <!-- CONTENT -->
-        <div class="px-8 py-6 overflow-y-auto grow">
-            <div class="max-w-7xl mx-auto space-y-8">
+        <div class="px-8 py-6 overflow-y-auto grow space-y-8">
 
                 <!-- Welcome Section -->
                 <section class="glass-card rounded-xl px-6 py-6 flex flex-col md:flex-row items-center justify-between">
@@ -234,7 +233,6 @@
 
                 </div>
 
-            </div>
         </div>
 
     </main>

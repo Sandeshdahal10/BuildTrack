@@ -31,7 +31,6 @@
 
         <!-- CONTENT -->
         <div class="px-8 py-6 overflow-y-auto grow">
-            <div class="max-w-7xl mx-auto">
                 <!-- Title Section -->
                 <section class="rounded-2xl border border-slate-200 bg-white px-6 py-5 shadow-sm mb-6">
                     <h1 class="m-0 text-3xl font-extrabold leading-none tracking-tight text-slate-900">Payslips</h1>
@@ -73,7 +72,6 @@
                         </c:otherwise>
                     </c:choose>
                 </div>
-            </div>
         </div>
     </main>
 </div>
