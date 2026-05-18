@@ -36,22 +36,7 @@
 </head>
 <body class="bg-gray-50 text-slate-900 font-sans antialiased">
 
-<nav class="bg-white/80 backdrop-blur-md border-b border-slate-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-20 items-center">
-            <a href="${pageContext.request.contextPath}/" class="flex items-center">
-                <div class="bg-white rounded-xl p-2 mr-3 h-10 w-10 flex items-center justify-center shadow-md ring-1 ring-slate-100">
-                    <img src="${pageContext.request.contextPath}/assets/image/BuildTrackLogo.png" alt="BuildTrack" class="h-9 w-9 object-contain" />
-                </div>
-                <span class="font-extrabold text-2xl text-[#ea580c] tracking-tight">BuildTrack</span>
-            </a>
-            <a href="${pageContext.request.contextPath}/login"
-               class="inline-flex items-center justify-center bg-[#ea580c] text-white font-semibold text-base px-6 py-2.5 rounded-lg shadow-md hover:bg-[#c2410c] hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5">
-                Log in
-            </a>
-        </div>
-    </div>
-</nav>
+<%@ include file="/WEB-INF/views/common/navbar.jsp" %>
 
 <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
     <div class="max-w-xl mx-auto">
@@ -379,4 +364,27 @@
                         <option value="Algeria">Algeria</option>
                         <option value="American Samoa">American Samoa</option>
                         <option value="Andorra">Andorra</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="message" class="block text-sm font-semibold text-slate-700 mb-1">Message</label>
+                    <textarea id="message" name="message" rows="5" required
+                              class="bt-field w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder-slate-400"
+                              placeholder="Tell us how we can help"></textarea>
+                </div>
+
+                <button type="submit"
+                        class="w-full inline-flex items-center justify-center rounded-xl bg-[#ea580c] px-6 py-3 text-base font-semibold text-white shadow-md transition hover:bg-[#c2410c]">
+                    Send Message
+                </button>
+            </form>
+        </div>
+    </div>
+</main>
+
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+
+</body>
+</html>
 

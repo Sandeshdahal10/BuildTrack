@@ -31,26 +31,7 @@
     </style>
 </head>
 <body class="bg-gray-50 text-slate-900 font-sans antialiased overflow-x-hidden">
-    <!-- Navbar -->
-    <nav class="absolute w-full z-20 top-0 left-0 bg-white/80 backdrop-blur-md border-b border-slate-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20 items-center">
-                <div class="flex-shrink-0 flex items-center">
-                    <div class="bg-white rounded-xl p-2 mr-3 h-10 w-10 flex items-center justify-center shadow-md ring-1 ring-slate-100">
-                        <img src="${pageContext.request.contextPath}/assets/image/BuildTrackLogo.png" alt="BuildTrack" class="h-9 w-9 object-contain" />
-                    </div>
-                    <span class="font-extrabold text-2xl text-[#ea580c] tracking-tight">BuildTrack</span>
-                </div>
-                <div class="hidden md:flex items-center gap-2">
-                   <a href="#home" class="text-slate-600 hover:text-[#ea580c] font-semibold px-3 py-2 transition-colors">Home</a>
-                   <a href="#features" class="text-slate-600 hover:text-[#ea580c] font-semibold px-3 py-2 transition-colors">Features</a>
-                   <a href="#services" class="text-slate-600 hover:text-[#ea580c] font-semibold px-3 py-2 transition-colors">Our Services</a>
-                   <a href="#how-it-works" class="text-slate-600 hover:text-[#ea580c] font-semibold px-3 py-2 transition-colors">How it Works</a>
-                   <a href="${pageContext.request.contextPath}/login" class="inline-flex items-center justify-center bg-[#ea580c] text-white font-semibold text-base px-6 py-2.5 rounded-lg shadow-md hover:bg-[#c2410c] hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5">Log in</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <%@ include file="/WEB-INF/views/common/navbar.jsp" %>
 
     <!-- Hero Section -->
     <div id="home" class="relative bg-white pt-20 pb-16 min-h-screen flex flex-col lg:flex-row items-center lg:pt-0 lg:pb-0">
@@ -427,7 +408,7 @@
                  <!-- Step 2 -->
                    <div class="bt-hover-card group text-center relative rounded-xl bg-white/70 ring-1 ring-slate-100 p-6 hover:bg-white hover:ring-orange-200">
                      <div class="mb-4">
-                          <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-[#ea580c] text-white text-2xl font-bold transition-transform duration-300 ease-out group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-200/50">
+                          <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-[#ea580c] text-white text-2xl font-bold transition-transform duration-300 ease-out group-hover:scale-110 group_hover:shadow-lg group-hover:shadow-orange-200/50">
                              2
                          </div>
                      </div>
@@ -460,29 +441,7 @@
          </div>
      </section>
 
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-8">
-                <div class="max-w-xl">
-                    <div class="flex items-center mb-4">
-                        <div class="bg-white rounded-xl p-2 mr-3 h-10 w-10 flex items-center justify-center shadow-md ring-1 ring-white/10">
-                            <img src="${pageContext.request.contextPath}/assets/image/BuildTrackLogo.png" alt="BuildTrack" class="h-9 w-9 object-contain" />
-                        </div>
-                        <span class="font-extrabold text-2xl text-white tracking-tight">BuildTrack</span>
-                    </div>
-                    <p class="text-slate-300 leading-relaxed">
-                        BuildTrack helps construction teams stay organized, track progress with confidence, and deliver quality projects on time.
-                    </p>
-                </div>
-
-                <div class="flex flex-col gap-3 md:items-end">
-                    <a href="${pageContext.request.contextPath}/about" class="text-slate-200 hover:text-[#ea580c] font-semibold transition-colors">About Us</a>
-                    <a href="${pageContext.request.contextPath}/contact" class="text-slate-200 hover:text-[#ea580c] font-semibold transition-colors">Contact Us</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 
 </body>
 </html>

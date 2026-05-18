@@ -43,22 +43,7 @@
 </head>
 <body class="bg-gray-50 text-slate-900 font-sans antialiased">
 
-<nav class="bg-white/80 backdrop-blur-md border-b border-slate-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-20 items-center">
-            <a href="${pageContext.request.contextPath}/" class="flex items-center">
-                <div class="bg-white rounded-xl p-2 mr-3 h-10 w-10 flex items-center justify-center shadow-md ring-1 ring-slate-100">
-                    <img src="${pageContext.request.contextPath}/assets/image/BuildTrackLogo.png" alt="BuildTrack" class="h-9 w-9 object-contain" />
-                </div>
-                <span class="font-extrabold text-2xl text-[#ea580c] tracking-tight">BuildTrack</span>
-            </a>
-            <a href="${pageContext.request.contextPath}/login"
-               class="inline-flex items-center justify-center bg-[#ea580c] text-white font-semibold text-base px-6 py-2.5 rounded-lg shadow-md hover:bg-[#c2410c] hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5">
-                Log in
-            </a>
-        </div>
-    </div>
-</nav>
+<%@ include file="/WEB-INF/views/common/navbar.jsp" %>
 
 <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
     <div class="mb-8">
@@ -224,11 +209,7 @@
 
 </main>
 
-<footer class="bg-slate-900 text-slate-200 mt-10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <p class="text-slate-300">© ${pageContext.request.serverName} BuildTrack. All rights reserved.</p>
-    </div>
-</footer>
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 
 </body>
 </html>
