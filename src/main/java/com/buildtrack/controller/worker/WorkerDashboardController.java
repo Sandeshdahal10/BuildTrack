@@ -13,7 +13,7 @@ import java.util.List;
 import com.buildtrack.model.User;
 import com.buildtrack.model.Project;
 import com.buildtrack.dao.admin.AttendanceDao;
-import com.buildtrack.service.worker.WorkerService;
+import com.buildtrack.service.worker.WorkLogService;
 
 @WebServlet("/worker/dashboard")
 public class WorkerDashboardController extends HttpServlet {
@@ -29,15 +29,15 @@ public class WorkerDashboardController extends HttpServlet {
         }
 
         // Prepare services/daos
-        WorkerService workerService = new WorkerService();
+        WorkLogService workLogService = new WorkLogService();
         AttendanceDao attendanceDao = new AttendanceDao();
 
         // Current month in YYYY-MM
         String month = LocalDate.now().toString().substring(0, 7);
 
         // Assigned projects and recent logs
-        List<Project> assignedProjects = workerService.getAssignedProjects(user.getId());
-        List<com.buildtrack.model.WorkLog> recentLogs = workerService.getWorkerLogs(user.getId(), month);
+        List<Project> assignedProjects = workLogService.getAssignedProjects(user.getId());
+        List<com.buildtrack.model.WorkLog> recentLogs = workLogService.getWorkerLogs(user.getId(), month);
 
         // Attendance summary (present, half-day)
         int[] attendanceCounts = attendanceDao.getAttendanceCounts(user.getId(), month);
