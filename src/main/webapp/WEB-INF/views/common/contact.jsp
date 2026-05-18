@@ -1,390 +1,630 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - BuildTrack</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!DOCTYPE html>
+    <html lang="en">
 
-    <style>
-        .bt-field {
-            transition: box-shadow 200ms ease, border-color 200ms ease, transform 200ms ease;
-        }
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Contact Us - BuildTrack</title>
+        <script src="https://cdn.tailwindcss.com"></script>
 
-        .bt-field:focus {
-            outline: none;
-            border-color: rgba(234, 88, 12, 0.75);
-            box-shadow: 0 0 0 4px rgba(234, 88, 12, 0.18);
-        }
+        <style>
+            .bt-field {
+                transition: box-shadow 200ms ease, border-color 200ms ease, transform 200ms ease;
+            }
 
-        .bt-card {
-            transform: translateY(0);
-            transition: transform 220ms ease, box-shadow 220ms ease;
-            will-change: transform, box-shadow;
-        }
+            .bt-field:focus {
+                outline: none;
+                border-color: rgba(234, 88, 12, 0.75);
+                box-shadow: 0 0 0 4px rgba(234, 88, 12, 0.18);
+            }
 
-        .bt-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 18px 35px rgba(234, 88, 12, 0.14), 0 8px 14px rgba(15, 23, 42, 0.08);
-        }
+            .bt-card {
+                box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.04), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+            }
 
-        .bt-select {
-            background-image: none; /* keep Tailwind look consistent */
-        }
-    </style>
-</head>
-<body class="bg-gray-50 text-slate-900 font-sans antialiased">
+            .bt-select {
+                background-image: none;
+                /* keep Tailwind look consistent */
+            }
+        </style>
+    </head>
 
-<%@ include file="/WEB-INF/views/common/navbar.jsp" %>
+    <body class="bg-gray-50 text-slate-900 font-sans antialiased">
 
-<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-    <div class="max-w-xl mx-auto">
-        <header class="mb-8">
-            <div class="mb-6">
-                <a href="${pageContext.request.contextPath}/"
-                   class="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#ea580c] shadow-md ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-lg">
-                    <span aria-hidden="true">←</span>
-                    Back to Home
-                </a>
-            </div>
-            <p class="text-[#ea580c] font-extrabold text-4xl sm:text-5xl tracking-tight uppercase mt-5">CONTACT US</p>
-            <p class="text-slate-600 mt-3">Send your details and we’ll get back to you.</p>
-        </header>
+        <%@ include file="/WEB-INF/views/common/navbar.jsp" %>
 
-        <div class="bt-card bg-white rounded-2xl ring-1 ring-slate-100 shadow-sm p-8">
-            <% String successMessage = (String) request.getAttribute("successMessage"); %>
-            <% if (successMessage != null) { %>
-                <div class="mb-6 rounded-xl bg-emerald-50 ring-1 ring-emerald-100 px-4 py-3 text-emerald-800 font-medium">
-                    <%= successMessage %>
-                </div>
-            <% } %>
-
-            <form method="post" action="${pageContext.request.contextPath}/contact" class="space-y-5">
-
-                <div>
-                    <label for="name" class="block text-sm font-semibold text-slate-700 mb-1">Name</label>
-                    <input id="name" name="name" type="text"
-                           value="<%= request.getAttribute("name") != null ? request.getAttribute("name") : "" %>"
-                           class="bt-field w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder-slate-400"
-                           placeholder="Your full name" required>
-                    <% if (request.getAttribute("nameError") != null) { %>
-                        <p class="mt-1 text-sm text-rose-600"><%= request.getAttribute("nameError") %></p>
-                    <% } %>
-                </div>
-
-                <div>
-                    <label for="contact" class="block text-sm font-semibold text-slate-700 mb-1">Contact</label>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <div class="sm:col-span-1">
-                            <label for="dialCode" class="sr-only">Country code</label>
-                            <select id="dialCode" name="dialCode"
-                                    class="bt-field bt-select w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900">
-                                <option value="">Code</option>
-                                <option value="+93">Afghanistan (+93)</option>
-                                <option value="+355">Albania (+355)</option>
-                                <option value="+213">Algeria (+213)</option>
-                                <option value="+1-684">American Samoa (+1-684)</option>
-                                <option value="+376">Andorra (+376)</option>
-                                <option value="+244">Angola (+244)</option>
-                                <option value="+1-264">Anguilla (+1-264)</option>
-                                <option value="+672">Antarctica (+672)</option>
-                                <option value="+1-268">Antigua and Barbuda (+1-268)</option>
-                                <option value="+54">Argentina (+54)</option>
-                                <option value="+374">Armenia (+374)</option>
-                                <option value="+297">Aruba (+297)</option>
-                                <option value="+61">Australia (+61)</option>
-                                <option value="+43">Austria (+43)</option>
-                                <option value="+994">Azerbaijan (+994)</option>
-                                <option value="+1-242">Bahamas (+1-242)</option>
-                                <option value="+973">Bahrain (+973)</option>
-                                <option value="+880">Bangladesh (+880)</option>
-                                <option value="+1-246">Barbados (+1-246)</option>
-                                <option value="+375">Belarus (+375)</option>
-                                <option value="+32">Belgium (+32)</option>
-                                <option value="+501">Belize (+501)</option>
-                                <option value="+229">Benin (+229)</option>
-                                <option value="+1-441">Bermuda (+1-441)</option>
-                                <option value="+975">Bhutan (+975)</option>
-                                <option value="+591">Bolivia (+591)</option>
-                                <option value="+387">Bosnia and Herzegovina (+387)</option>
-                                <option value="+267">Botswana (+267)</option>
-                                <option value="+55">Brazil (+55)</option>
-                                <option value="+246">British Indian Ocean Territory (+246)</option>
-                                <option value="+1-284">British Virgin Islands (+1-284)</option>
-                                <option value="+673">Brunei (+673)</option>
-                                <option value="+359">Bulgaria (+359)</option>
-                                <option value="+226">Burkina Faso (+226)</option>
-                                <option value="+257">Burundi (+257)</option>
-                                <option value="+855">Cambodia (+855)</option>
-                                <option value="+237">Cameroon (+237)</option>
-                                <option value="+1">Canada (+1)</option>
-                                <option value="+238">Cape Verde (+238)</option>
-                                <option value="+1-345">Cayman Islands (+1-345)</option>
-                                <option value="+236">Central African Republic (+236)</option>
-                                <option value="+235">Chad (+235)</option>
-                                <option value="+56">Chile (+56)</option>
-                                <option value="+86">China (+86)</option>
-                                <option value="+61">Christmas Island (+61)</option>
-                                <option value="+61">Cocos (Keeling) Islands (+61)</option>
-                                <option value="+57">Colombia (+57)</option>
-                                <option value="+269">Comoros (+269)</option>
-                                <option value="+682">Cook Islands (+682)</option>
-                                <option value="+506">Costa Rica (+506)</option>
-                                <option value="+385">Croatia (+385)</option>
-                                <option value="+53">Cuba (+53)</option>
-                                <option value="+599">Curaçao (+599)</option>
-                                <option value="+357">Cyprus (+357)</option>
-                                <option value="+420">Czechia (+420)</option>
-                                <option value="+243">DR Congo (+243)</option>
-                                <option value="+45">Denmark (+45)</option>
-                                <option value="+253">Djibouti (+253)</option>
-                                <option value="+1-767">Dominica (+1-767)</option>
-                                <option value="+1-809">Dominican Republic (+1-809)</option>
-                                <option value="+1-829">Dominican Republic (+1-829)</option>
-                                <option value="+1-849">Dominican Republic (+1-849)</option>
-                                <option value="+670">East Timor (+670)</option>
-                                <option value="+593">Ecuador (+593)</option>
-                                <option value="+20">Egypt (+20)</option>
-                                <option value="+503">El Salvador (+503)</option>
-                                <option value="+240">Equatorial Guinea (+240)</option>
-                                <option value="+291">Eritrea (+291)</option>
-                                <option value="+372">Estonia (+372)</option>
-                                <option value="+268">Eswatini (+268)</option>
-                                <option value="+251">Ethiopia (+251)</option>
-                                <option value="+500">Falkland Islands (+500)</option>
-                                <option value="+298">Faroe Islands (+298)</option>
-                                <option value="+679">Fiji (+679)</option>
-                                <option value="+358">Finland (+358)</option>
-                                <option value="+33">France (+33)</option>
-                                <option value="+594">French Guiana (+594)</option>
-                                <option value="+689">French Polynesia (+689)</option>
-                                <option value="+241">Gabon (+241)</option>
-                                <option value="+220">Gambia (+220)</option>
-                                <option value="+995">Georgia (+995)</option>
-                                <option value="+49">Germany (+49)</option>
-                                <option value="+233">Ghana (+233)</option>
-                                <option value="+350">Gibraltar (+350)</option>
-                                <option value="+30">Greece (+30)</option>
-                                <option value="+299">Greenland (+299)</option>
-                                <option value="+1-473">Grenada (+1-473)</option>
-                                <option value="+590">Guadeloupe (+590)</option>
-                                <option value="+1-671">Guam (+1-671)</option>
-                                <option value="+502">Guatemala (+502)</option>
-                                <option value="+44-1481">Guernsey (+44-1481)</option>
-                                <option value="+224">Guinea (+224)</option>
-                                <option value="+245">Guinea-Bissau (+245)</option>
-                                <option value="+592">Guyana (+592)</option>
-                                <option value="+509">Haiti (+509)</option>
-                                <option value="+504">Honduras (+504)</option>
-                                <option value="+852">Hong Kong (+852)</option>
-                                <option value="+36">Hungary (+36)</option>
-                                <option value="+354">Iceland (+354)</option>
-                                <option value="+91">India (+91)</option>
-                                <option value="+62">Indonesia (+62)</option>
-                                <option value="+98">Iran (+98)</option>
-                                <option value="+964">Iraq (+964)</option>
-                                <option value="+353">Ireland (+353)</option>
-                                <option value="+44-1624">Isle of Man (+44-1624)</option>
-                                <option value="+972">Israel (+972)</option>
-                                <option value="+39">Italy (+39)</option>
-                                <option value="+225">Ivory Coast (+225)</option>
-                                <option value="+1-876">Jamaica (+1-876)</option>
-                                <option value="+81">Japan (+81)</option>
-                                <option value="+44-1534">Jersey (+44-1534)</option>
-                                <option value="+962">Jordan (+962)</option>
-                                <option value="+7">Kazakhstan (+7)</option>
-                                <option value="+254">Kenya (+254)</option>
-                                <option value="+686">Kiribati (+686)</option>
-                                <option value="+383">Kosovo (+383)</option>
-                                <option value="+965">Kuwait (+965)</option>
-                                <option value="+996">Kyrgyzstan (+996)</option>
-                                <option value="+856">Laos (+856)</option>
-                                <option value="+371">Latvia (+371)</option>
-                                <option value="+961">Lebanon (+961)</option>
-                                <option value="+266">Lesotho (+266)</option>
-                                <option value="+231">Liberia (+231)</option>
-                                <option value="+218">Libya (+218)</option>
-                                <option value="+423">Liechtenstein (+423)</option>
-                                <option value="+370">Lithuania (+370)</option>
-                                <option value="+352">Luxembourg (+352)</option>
-                                <option value="+853">Macao (+853)</option>
-                                <option value="+261">Madagascar (+261)</option>
-                                <option value="+265">Malawi (+265)</option>
-                                <option value="+60">Malaysia (+60)</option>
-                                <option value="+960">Maldives (+960)</option>
-                                <option value="+223">Mali (+223)</option>
-                                <option value="+356">Malta (+356)</option>
-                                <option value="+692">Marshall Islands (+692)</option>
-                                <option value="+596">Martinique (+596)</option>
-                                <option value="+222">Mauritania (+222)</option>
-                                <option value="+230">Mauritius (+230)</option>
-                                <option value="+262">Mayotte (+262)</option>
-                                <option value="+52">Mexico (+52)</option>
-                                <option value="+691">Micronesia (+691)</option>
-                                <option value="+373">Moldova (+373)</option>
-                                <option value="+377">Monaco (+377)</option>
-                                <option value="+976">Mongolia (+976)</option>
-                                <option value="+382">Montenegro (+382)</option>
-                                <option value="+1-664">Montserrat (+1-664)</option>
-                                <option value="+212">Morocco (+212)</option>
-                                <option value="+258">Mozambique (+258)</option>
-                                <option value="+95">Myanmar (+95)</option>
-                                <option value="+264">Namibia (+264)</option>
-                                <option value="+674">Nauru (+674)</option>
-                                <option value="+977">Nepal (+977)</option>
-                                <option value="+31">Netherlands (+31)</option>
-                                <option value="+687">New Caledonia (+687)</option>
-                                <option value="+64">New Zealand (+64)</option>
-                                <option value="+505">Nicaragua (+505)</option>
-                                <option value="+227">Niger (+227)</option>
-                                <option value="+234">Nigeria (+234)</option>
-                                <option value="+683">Niue (+683)</option>
-                                <option value="+850">North Korea (+850)</option>
-                                <option value="+389">North Macedonia (+389)</option>
-                                <option value="+1-670">Northern Mariana Islands (+1-670)</option>
-                                <option value="+47">Norway (+47)</option>
-                                <option value="+968">Oman (+968)</option>
-                                <option value="+92">Pakistan (+92)</option>
-                                <option value="+680">Palau (+680)</option>
-                                <option value="+970">Palestine (+970)</option>
-                                <option value="+507">Panama (+507)</option>
-                                <option value="+675">Papua New Guinea (+675)</option>
-                                <option value="+595">Paraguay (+595)</option>
-                                <option value="+51">Peru (+51)</option>
-                                <option value="+63">Philippines (+63)</option>
-                                <option value="+48">Poland (+48)</option>
-                                <option value="+351">Portugal (+351)</option>
-                                <option value="+1-787">Puerto Rico (+1-787)</option>
-                                <option value="+1-939">Puerto Rico (+1-939)</option>
-                                <option value="+974">Qatar (+974)</option>
-                                <option value="+242">Republic of the Congo (+242)</option>
-                                <option value="+262">Reunion (+262)</option>
-                                <option value="+40">Romania (+40)</option>
-                                <option value="+7">Russia (+7)</option>
-                                <option value="+250">Rwanda (+250)</option>
-                                <option value="+590">Saint Barthélemy (+590)</option>
-                                <option value="+290">Saint Helena (+290)</option>
-                                <option value="+1-869">Saint Kitts and Nevis (+1-869)</option>
-                                <option value="+1-758">Saint Lucia (+1-758)</option>
-                                <option value="+590">Saint Martin (+590)</option>
-                                <option value="+508">Saint Pierre and Miquelon (+508)</option>
-                                <option value="+1-784">Saint Vincent and the Grenadines (+1-784)</option>
-                                <option value="+685">Samoa (+685)</option>
-                                <option value="+378">San Marino (+378)</option>
-                                <option value="+239">Sao Tome and Principe (+239)</option>
-                                <option value="+966">Saudi Arabia (+966)</option>
-                                <option value="+221">Senegal (+221)</option>
-                                <option value="+381">Serbia (+381)</option>
-                                <option value="+248">Seychelles (+248)</option>
-                                <option value="+232">Sierra Leone (+232)</option>
-                                <option value="+65">Singapore (+65)</option>
-                                <option value="+1-721">Sint Maarten (+1-721)</option>
-                                <option value="+421">Slovakia (+421)</option>
-                                <option value="+386">Slovenia (+386)</option>
-                                <option value="+677">Solomon Islands (+677)</option>
-                                <option value="+252">Somalia (+252)</option>
-                                <option value="+27">South Africa (+27)</option>
-                                <option value="+82">South Korea (+82)</option>
-                                <option value="+211">South Sudan (+211)</option>
-                                <option value="+34">Spain (+34)</option>
-                                <option value="+94">Sri Lanka (+94)</option>
-                                <option value="+249">Sudan (+249)</option>
-                                <option value="+597">Suriname (+597)</option>
-                                <option value="+46">Sweden (+46)</option>
-                                <option value="+41">Switzerland (+41)</option>
-                                <option value="+963">Syria (+963)</option>
-                                <option value="+886">Taiwan (+886)</option>
-                                <option value="+992">Tajikistan (+992)</option>
-                                <option value="+255">Tanzania (+255)</option>
-                                <option value="+66">Thailand (+66)</option>
-                                <option value="+228">Togo (+228)</option>
-                                <option value="+690">Tokelau (+690)</option>
-                                <option value="+676">Tonga (+676)</option>
-                                <option value="+1-868">Trinidad and Tobago (+1-868)</option>
-                                <option value="+216">Tunisia (+216)</option>
-                                <option value="+90">Turkey (+90)</option>
-                                <option value="+993">Turkmenistan (+993)</option>
-                                <option value="+1-649">Turks and Caicos Islands (+1-649)</option>
-                                <option value="+688">Tuvalu (+688)</option>
-                                <option value="+256">Uganda (+256)</option>
-                                <option value="+380">Ukraine (+380)</option>
-                                <option value="+971">United Arab Emirates (+971)</option>
-                                <option value="+44">United Kingdom (+44)</option>
-                                <option value="+1">United States (+1)</option>
-                                <option value="+1-340">U.S. Virgin Islands (+1-340)</option>
-                                <option value="+598">Uruguay (+598)</option>
-                                <option value="+998">Uzbekistan (+998)</option>
-                                <option value="+678">Vanuatu (+678)</option>
-                                <option value="+379">Vatican City (+379)</option>
-                                <option value="+58">Venezuela (+58)</option>
-                                <option value="+84">Vietnam (+84)</option>
-                                <option value="+681">Wallis and Futuna (+681)</option>
-                                <option value="+212">Western Sahara (+212)</option>
-                                <option value="+967">Yemen (+967)</option>
-                                <option value="+260">Zambia (+260)</option>
-                                <option value="+263">Zimbabwe (+263)</option>
-                            </select>
+            <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-14">
+                <div class="max-w-xl mx-auto">
+                    <header class="mb-8">
+                        <div class="mb-6">
+                            <a href="${pageContext.request.contextPath}/"
+                                class="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#ea580c] shadow-md ring-1 ring-slate-200 transition-all hover:bg-slate-50">
+                                <span aria-hidden="true">←</span>
+                                Back to Home
+                            </a>
                         </div>
-                        <div class="sm:col-span-2">
-                            <label for="contact" class="sr-only">Phone number</label>
-                            <input id="contact" name="contact" type="tel"
-                                   value="<%= request.getAttribute("contact") != null ? request.getAttribute("contact") : "" %>"
-                                   class="bt-field w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder-slate-400"
-                                   placeholder="Phone number" required>
-                        </div>
+                        <p class="text-[#ea580c] font-extrabold text-4xl sm:text-5xl tracking-tight uppercase mt-5">
+                            CONTACT US</p>
+                        <p class="text-slate-600 mt-3">Send your details and we’ll get back to you.</p>
+                    </header>
+
+                    <div class="bt-card bg-white rounded-2xl ring-1 ring-slate-100 shadow-sm p-8">
+                        <% String successMessage=(String) request.getAttribute("successMessage"); %>
+                            <% if (successMessage !=null) { %>
+                                <div
+                                    class="mb-6 rounded-xl bg-emerald-50 ring-1 ring-emerald-100 px-4 py-3 text-emerald-800 font-medium">
+                                    <%= successMessage %>
+                                </div>
+                                <% } %>
+
+                                    <form method="post" action="${pageContext.request.contextPath}/contact"
+                                        class="space-y-5">
+
+                                        <div>
+                                            <label for="name"
+                                                class="block text-sm font-semibold text-slate-700 mb-1">Name</label>
+                                            <input id="name" name="name" type="text" value="<%= request.getAttribute("name") != null ? request.getAttribute("name") : "" %>" class="bt-field w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder-slate-400" placeholder="Your full name" required>
+                                            <% if (request.getAttribute("nameError") !=null) { %>
+                                                <p class="mt-1 text-sm text-rose-600">
+                                                    <%= request.getAttribute("nameError") %>
+                                                </p>
+                                                <% } %>
+                                        </div>
+
+                                        <div>
+                                            <label for="contact"
+                                                class="block text-sm font-semibold text-slate-700 mb-1">Contact</label>
+                                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                                <div class="sm:col-span-1">
+                                                    <label for="dialCode" class="sr-only">Country code</label>
+                                                    <select id="dialCode" name="dialCode"
+                                                        class="bt-field bt-select w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900">
+                                                        <option value="">Code</option>
+                                                        <option value="+93">Afghanistan (+93)</option>
+                                                        <option value="+355">Albania (+355)</option>
+                                                        <option value="+213">Algeria (+213)</option>
+                                                        <option value="+1-684">American Samoa (+1-684)</option>
+                                                        <option value="+376">Andorra (+376)</option>
+                                                        <option value="+244">Angola (+244)</option>
+                                                        <option value="+1-264">Anguilla (+1-264)</option>
+                                                        <option value="+672">Antarctica (+672)</option>
+                                                        <option value="+1-268">Antigua and Barbuda (+1-268)</option>
+                                                        <option value="+54">Argentina (+54)</option>
+                                                        <option value="+374">Armenia (+374)</option>
+                                                        <option value="+297">Aruba (+297)</option>
+                                                        <option value="+61">Australia (+61)</option>
+                                                        <option value="+43">Austria (+43)</option>
+                                                        <option value="+994">Azerbaijan (+994)</option>
+                                                        <option value="+1-242">Bahamas (+1-242)</option>
+                                                        <option value="+973">Bahrain (+973)</option>
+                                                        <option value="+880">Bangladesh (+880)</option>
+                                                        <option value="+1-246">Barbados (+1-246)</option>
+                                                        <option value="+375">Belarus (+375)</option>
+                                                        <option value="+32">Belgium (+32)</option>
+                                                        <option value="+501">Belize (+501)</option>
+                                                        <option value="+229">Benin (+229)</option>
+                                                        <option value="+1-441">Bermuda (+1-441)</option>
+                                                        <option value="+975">Bhutan (+975)</option>
+                                                        <option value="+591">Bolivia (+591)</option>
+                                                        <option value="+387">Bosnia and Herzegovina (+387)</option>
+                                                        <option value="+267">Botswana (+267)</option>
+                                                        <option value="+55">Brazil (+55)</option>
+                                                        <option value="+246">British Indian Ocean Territory (+246)
+                                                        </option>
+                                                        <option value="+1-284">British Virgin Islands (+1-284)</option>
+                                                        <option value="+673">Brunei (+673)</option>
+                                                        <option value="+359">Bulgaria (+359)</option>
+                                                        <option value="+226">Burkina Faso (+226)</option>
+                                                        <option value="+257">Burundi (+257)</option>
+                                                        <option value="+855">Cambodia (+855)</option>
+                                                        <option value="+237">Cameroon (+237)</option>
+                                                        <option value="+1">Canada (+1)</option>
+                                                        <option value="+238">Cape Verde (+238)</option>
+                                                        <option value="+1-345">Cayman Islands (+1-345)</option>
+                                                        <option value="+236">Central African Republic (+236)</option>
+                                                        <option value="+235">Chad (+235)</option>
+                                                        <option value="+56">Chile (+56)</option>
+                                                        <option value="+86">China (+86)</option>
+                                                        <option value="+61">Christmas Island (+61)</option>
+                                                        <option value="+61">Cocos (Keeling) Islands (+61)</option>
+                                                        <option value="+57">Colombia (+57)</option>
+                                                        <option value="+269">Comoros (+269)</option>
+                                                        <option value="+682">Cook Islands (+682)</option>
+                                                        <option value="+506">Costa Rica (+506)</option>
+                                                        <option value="+385">Croatia (+385)</option>
+                                                        <option value="+53">Cuba (+53)</option>
+                                                        <option value="+599">Curaçao (+599)</option>
+                                                        <option value="+357">Cyprus (+357)</option>
+                                                        <option value="+420">Czechia (+420)</option>
+                                                        <option value="+243">DR Congo (+243)</option>
+                                                        <option value="+45">Denmark (+45)</option>
+                                                        <option value="+253">Djibouti (+253)</option>
+                                                        <option value="+1-767">Dominica (+1-767)</option>
+                                                        <option value="+1-809">Dominican Republic (+1-809)</option>
+                                                        <option value="+1-829">Dominican Republic (+1-829)</option>
+                                                        <option value="+1-849">Dominican Republic (+1-849)</option>
+                                                        <option value="+670">East Timor (+670)</option>
+                                                        <option value="+593">Ecuador (+593)</option>
+                                                        <option value="+20">Egypt (+20)</option>
+                                                        <option value="+503">El Salvador (+503)</option>
+                                                        <option value="+240">Equatorial Guinea (+240)</option>
+                                                        <option value="+291">Eritrea (+291)</option>
+                                                        <option value="+372">Estonia (+372)</option>
+                                                        <option value="+268">Eswatini (+268)</option>
+                                                        <option value="+251">Ethiopia (+251)</option>
+                                                        <option value="+500">Falkland Islands (+500)</option>
+                                                        <option value="+298">Faroe Islands (+298)</option>
+                                                        <option value="+679">Fiji (+679)</option>
+                                                        <option value="+358">Finland (+358)</option>
+                                                        <option value="+33">France (+33)</option>
+                                                        <option value="+594">French Guiana (+594)</option>
+                                                        <option value="+689">French Polynesia (+689)</option>
+                                                        <option value="+241">Gabon (+241)</option>
+                                                        <option value="+220">Gambia (+220)</option>
+                                                        <option value="+995">Georgia (+995)</option>
+                                                        <option value="+49">Germany (+49)</option>
+                                                        <option value="+233">Ghana (+233)</option>
+                                                        <option value="+350">Gibraltar (+350)</option>
+                                                        <option value="+30">Greece (+30)</option>
+                                                        <option value="+299">Greenland (+299)</option>
+                                                        <option value="+1-473">Grenada (+1-473)</option>
+                                                        <option value="+590">Guadeloupe (+590)</option>
+                                                        <option value="+1-671">Guam (+1-671)</option>
+                                                        <option value="+502">Guatemala (+502)</option>
+                                                        <option value="+44-1481">Guernsey (+44-1481)</option>
+                                                        <option value="+224">Guinea (+224)</option>
+                                                        <option value="+245">Guinea-Bissau (+245)</option>
+                                                        <option value="+592">Guyana (+592)</option>
+                                                        <option value="+509">Haiti (+509)</option>
+                                                        <option value="+504">Honduras (+504)</option>
+                                                        <option value="+852">Hong Kong (+852)</option>
+                                                        <option value="+36">Hungary (+36)</option>
+                                                        <option value="+354">Iceland (+354)</option>
+                                                        <option value="+91">India (+91)</option>
+                                                        <option value="+62">Indonesia (+62)</option>
+                                                        <option value="+98">Iran (+98)</option>
+                                                        <option value="+964">Iraq (+964)</option>
+                                                        <option value="+353">Ireland (+353)</option>
+                                                        <option value="+44-1624">Isle of Man (+44-1624)</option>
+                                                        <option value="+972">Israel (+972)</option>
+                                                        <option value="+39">Italy (+39)</option>
+                                                        <option value="+225">Ivory Coast (+225)</option>
+                                                        <option value="+1-876">Jamaica (+1-876)</option>
+                                                        <option value="+81">Japan (+81)</option>
+                                                        <option value="+44-1534">Jersey (+44-1534)</option>
+                                                        <option value="+962">Jordan (+962)</option>
+                                                        <option value="+7">Kazakhstan (+7)</option>
+                                                        <option value="+254">Kenya (+254)</option>
+                                                        <option value="+686">Kiribati (+686)</option>
+                                                        <option value="+383">Kosovo (+383)</option>
+                                                        <option value="+965">Kuwait (+965)</option>
+                                                        <option value="+996">Kyrgyzstan (+996)</option>
+                                                        <option value="+856">Laos (+856)</option>
+                                                        <option value="+371">Latvia (+371)</option>
+                                                        <option value="+961">Lebanon (+961)</option>
+                                                        <option value="+266">Lesotho (+266)</option>
+                                                        <option value="+231">Liberia (+231)</option>
+                                                        <option value="+218">Libya (+218)</option>
+                                                        <option value="+423">Liechtenstein (+423)</option>
+                                                        <option value="+370">Lithuania (+370)</option>
+                                                        <option value="+352">Luxembourg (+352)</option>
+                                                        <option value="+853">Macao (+853)</option>
+                                                        <option value="+261">Madagascar (+261)</option>
+                                                        <option value="+265">Malawi (+265)</option>
+                                                        <option value="+60">Malaysia (+60)</option>
+                                                        <option value="+960">Maldives (+960)</option>
+                                                        <option value="+223">Mali (+223)</option>
+                                                        <option value="+356">Malta (+356)</option>
+                                                        <option value="+692">Marshall Islands (+692)</option>
+                                                        <option value="+596">Martinique (+596)</option>
+                                                        <option value="+222">Mauritania (+222)</option>
+                                                        <option value="+230">Mauritius (+230)</option>
+                                                        <option value="+262">Mayotte (+262)</option>
+                                                        <option value="+52">Mexico (+52)</option>
+                                                        <option value="+691">Micronesia (+691)</option>
+                                                        <option value="+373">Moldova (+373)</option>
+                                                        <option value="+377">Monaco (+377)</option>
+                                                        <option value="+976">Mongolia (+976)</option>
+                                                        <option value="+382">Montenegro (+382)</option>
+                                                        <option value="+1-664">Montserrat (+1-664)</option>
+                                                        <option value="+212">Morocco (+212)</option>
+                                                        <option value="+258">Mozambique (+258)</option>
+                                                        <option value="+95">Myanmar (+95)</option>
+                                                        <option value="+264">Namibia (+264)</option>
+                                                        <option value="+674">Nauru (+674)</option>
+                                                        <option value="+977">Nepal (+977)</option>
+                                                        <option value="+31">Netherlands (+31)</option>
+                                                        <option value="+687">New Caledonia (+687)</option>
+                                                        <option value="+64">New Zealand (+64)</option>
+                                                        <option value="+505">Nicaragua (+505)</option>
+                                                        <option value="+227">Niger (+227)</option>
+                                                        <option value="+234">Nigeria (+234)</option>
+                                                        <option value="+683">Niue (+683)</option>
+                                                        <option value="+850">North Korea (+850)</option>
+                                                        <option value="+389">North Macedonia (+389)</option>
+                                                        <option value="+1-670">Northern Mariana Islands (+1-670)
+                                                        </option>
+                                                        <option value="+47">Norway (+47)</option>
+                                                        <option value="+968">Oman (+968)</option>
+                                                        <option value="+92">Pakistan (+92)</option>
+                                                        <option value="+680">Palau (+680)</option>
+                                                        <option value="+970">Palestine (+970)</option>
+                                                        <option value="+507">Panama (+507)</option>
+                                                        <option value="+675">Papua New Guinea (+675)</option>
+                                                        <option value="+595">Paraguay (+595)</option>
+                                                        <option value="+51">Peru (+51)</option>
+                                                        <option value="+63">Philippines (+63)</option>
+                                                        <option value="+48">Poland (+48)</option>
+                                                        <option value="+351">Portugal (+351)</option>
+                                                        <option value="+1-787">Puerto Rico (+1-787)</option>
+                                                        <option value="+1-939">Puerto Rico (+1-939)</option>
+                                                        <option value="+974">Qatar (+974)</option>
+                                                        <option value="+242">Republic of the Congo (+242)</option>
+                                                        <option value="+262">Reunion (+262)</option>
+                                                        <option value="+40">Romania (+40)</option>
+                                                        <option value="+7">Russia (+7)</option>
+                                                        <option value="+250">Rwanda (+250)</option>
+                                                        <option value="+590">Saint Barthélemy (+590)</option>
+                                                        <option value="+290">Saint Helena (+290)</option>
+                                                        <option value="+1-869">Saint Kitts and Nevis (+1-869)</option>
+                                                        <option value="+1-758">Saint Lucia (+1-758)</option>
+                                                        <option value="+590">Saint Martin (+590)</option>
+                                                        <option value="+508">Saint Pierre and Miquelon (+508)</option>
+                                                        <option value="+1-784">Saint Vincent and the Grenadines (+1-784)
+                                                        </option>
+                                                        <option value="+685">Samoa (+685)</option>
+                                                        <option value="+378">San Marino (+378)</option>
+                                                        <option value="+239">Sao Tome and Principe (+239)</option>
+                                                        <option value="+966">Saudi Arabia (+966)</option>
+                                                        <option value="+221">Senegal (+221)</option>
+                                                        <option value="+381">Serbia (+381)</option>
+                                                        <option value="+248">Seychelles (+248)</option>
+                                                        <option value="+232">Sierra Leone (+232)</option>
+                                                        <option value="+65">Singapore (+65)</option>
+                                                        <option value="+1-721">Sint Maarten (+1-721)</option>
+                                                        <option value="+421">Slovakia (+421)</option>
+                                                        <option value="+386">Slovenia (+386)</option>
+                                                        <option value="+677">Solomon Islands (+677)</option>
+                                                        <option value="+252">Somalia (+252)</option>
+                                                        <option value="+27">South Africa (+27)</option>
+                                                        <option value="+82">South Korea (+82)</option>
+                                                        <option value="+211">South Sudan (+211)</option>
+                                                        <option value="+34">Spain (+34)</option>
+                                                        <option value="+94">Sri Lanka (+94)</option>
+                                                        <option value="+249">Sudan (+249)</option>
+                                                        <option value="+597">Suriname (+597)</option>
+                                                        <option value="+46">Sweden (+46)</option>
+                                                        <option value="+41">Switzerland (+41)</option>
+                                                        <option value="+963">Syria (+963)</option>
+                                                        <option value="+886">Taiwan (+886)</option>
+                                                        <option value="+992">Tajikistan (+992)</option>
+                                                        <option value="+255">Tanzania (+255)</option>
+                                                        <option value="+66">Thailand (+66)</option>
+                                                        <option value="+228">Togo (+228)</option>
+                                                        <option value="+690">Tokelau (+690)</option>
+                                                        <option value="+676">Tonga (+676)</option>
+                                                        <option value="+1-868">Trinidad and Tobago (+1-868)</option>
+                                                        <option value="+216">Tunisia (+216)</option>
+                                                        <option value="+90">Turkey (+90)</option>
+                                                        <option value="+993">Turkmenistan (+993)</option>
+                                                        <option value="+1-649">Turks and Caicos Islands (+1-649)
+                                                        </option>
+                                                        <option value="+688">Tuvalu (+688)</option>
+                                                        <option value="+256">Uganda (+256)</option>
+                                                        <option value="+380">Ukraine (+380)</option>
+                                                        <option value="+971">United Arab Emirates (+971)</option>
+                                                        <option value="+44">United Kingdom (+44)</option>
+                                                        <option value="+1">United States (+1)</option>
+                                                        <option value="+1-340">U.S. Virgin Islands (+1-340)</option>
+                                                        <option value="+598">Uruguay (+598)</option>
+                                                        <option value="+998">Uzbekistan (+998)</option>
+                                                        <option value="+678">Vanuatu (+678)</option>
+                                                        <option value="+379">Vatican City (+379)</option>
+                                                        <option value="+58">Venezuela (+58)</option>
+                                                        <option value="+84">Vietnam (+84)</option>
+                                                        <option value="+681">Wallis and Futuna (+681)</option>
+                                                        <option value="+212">Western Sahara (+212)</option>
+                                                        <option value="+967">Yemen (+967)</option>
+                                                        <option value="+260">Zambia (+260)</option>
+                                                        <option value="+263">Zimbabwe (+263)</option>
+                                                    </select>
+                                                </div>
+                                                <div class="sm:col-span-2">
+                                                    <label for="contact" class="sr-only">Phone number</label>
+                                                    <input id="contact" name="contact" type="tel"
+                                                        value="<%= request.getAttribute("contact") != null ? request.getAttribute("contact") : "" %>"
+                                                    class="bt-field w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder-slate-400"
+                                                    placeholder="Phone number" required>
+                                                </div>
+                                            </div>
+                                            <% if (request.getAttribute("contactError") !=null) { %>
+                                                <p class="mt-1 text-sm text-rose-600">
+                                                    <%= request.getAttribute("contactError") %>
+                                                </p>
+                                                <% } %>
+                                        </div>
+
+                                        <div>
+                                            <label for="email"
+                                                class="block text-sm font-semibold text-slate-700 mb-1">Email</label>
+                                            <input id="email" name="email" type="email" value="<%= request.getAttribute("email") != null ? request.getAttribute("email") : "" %>" class="bt-field w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder-slate-400" placeholder="email@gmail.com" required>
+                                            <% if (request.getAttribute("emailError") !=null) { %>
+                                                <p class="mt-1 text-sm text-rose-600">
+                                                    <%= request.getAttribute("emailError") %>
+                                                </p>
+                                                <% } %>
+                                        </div>
+
+                                        <div>
+                                            <label for="country"
+                                                class="block text-sm font-semibold text-slate-700 mb-1">Country</label>
+                                            <% String selectedCountry=(String) request.getAttribute("country"); %>
+                                                <select id="country" name="country" required
+                                                    class="bt-field bt-select w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900">
+                                                    <option value="" <%= (selectedCountry == null || selectedCountry.trim().isEmpty()) ? "selected" : "" %>>Select a country</option>
+                                                            <option value="Afghanistan" <%= "Afghanistan".equals(selectedCountry) ? "selected" : "" %>>Afghanistan</option>
+                                                            <option value="Albania" <%= "Albania".equals(selectedCountry) ? "selected" : "" %>>Albania</option>
+                                                            <option value="Algeria" <%= "Algeria".equals(selectedCountry) ? "selected" : "" %>>Algeria</option>
+                                                            <option value="American Samoa" <%= "American Samoa".equals(selectedCountry) ? "selected" : "" %>>American Samoa</option>
+                                                            <option value="Andorra" <%= "Andorra".equals(selectedCountry) ? "selected" : "" %>>Andorra</option>
+                                                            <option value="Angola" <%= "Angola".equals(selectedCountry) ? "selected" : "" %>>Angola</option>
+                                                            <option value="Anguilla" <%= "Anguilla".equals(selectedCountry) ? "selected" : "" %>>Anguilla</option>
+                                                            <option value="Antarctica" <%= "Antarctica".equals(selectedCountry) ? "selected" : "" %>>Antarctica</option>
+                                                            <option value="Antigua and Barbuda" <%= "Antigua and Barbuda".equals(selectedCountry) ? "selected" : "" %>>Antigua and Barbuda</option>
+                                                            <option value="Argentina" <%= "Argentina".equals(selectedCountry) ? "selected" : "" %>>Argentina</option>
+                                                            <option value="Armenia" <%= "Armenia".equals(selectedCountry) ? "selected" : "" %>>Armenia</option>
+                                                            <option value="Aruba" <%= "Aruba".equals(selectedCountry) ? "selected" : "" %>>Aruba</option>
+                                                            <option value="Australia" <%= "Australia".equals(selectedCountry) ? "selected" : "" %>>Australia</option>
+                                                            <option value="Austria" <%= "Austria".equals(selectedCountry) ? "selected" : "" %>>Austria</option>
+                                                            <option value="Azerbaijan" <%= "Azerbaijan".equals(selectedCountry) ? "selected" : "" %>>Azerbaijan</option>
+                                                            <option value="Bahamas" <%= "Bahamas".equals(selectedCountry) ? "selected" : "" %>>Bahamas</option>
+                                                            <option value="Bahrain" <%= "Bahrain".equals(selectedCountry) ? "selected" : "" %>>Bahrain</option>
+                                                            <option value="Bangladesh" <%= "Bangladesh".equals(selectedCountry) ? "selected" : "" %>>Bangladesh</option>
+                                                            <option value="Barbados" <%= "Barbados".equals(selectedCountry) ? "selected" : "" %>>Barbados</option>
+                                                            <option value="Belarus" <%= "Belarus".equals(selectedCountry) ? "selected" : "" %>>Belarus</option>
+                                                            <option value="Belgium" <%= "Belgium".equals(selectedCountry) ? "selected" : "" %>>Belgium</option>
+                                                            <option value="Belize" <%= "Belize".equals(selectedCountry) ? "selected" : "" %>>Belize</option>
+                                                            <option value="Benin" <%= "Benin".equals(selectedCountry) ? "selected" : "" %>>Benin</option>
+                                                            <option value="Bermuda" <%= "Bermuda".equals(selectedCountry) ? "selected" : "" %>>Bermuda</option>
+                                                            <option value="Bhutan" <%= "Bhutan".equals(selectedCountry) ? "selected" : "" %>>Bhutan</option>
+                                                            <option value="Bolivia" <%= "Bolivia".equals(selectedCountry) ? "selected" : "" %>>Bolivia</option>
+                                                            <option value="Bosnia and Herzegovina" <%= "Bosnia and Herzegovina".equals(selectedCountry) ? "selected" : "" %>>Bosnia and Herzegovina</option>
+                                                            <option value="Botswana" <%= "Botswana".equals(selectedCountry) ? "selected" : "" %>>Botswana</option>
+                                                            <option value="Brazil" <%= "Brazil".equals(selectedCountry) ? "selected" : "" %>>Brazil</option>
+                                                            <option value="British Indian Ocean Territory" <%= "British Indian Ocean Territory".equals(selectedCountry) ? "selected" : "" %>>British Indian Ocean Territory</option>
+                                                            <option value="British Virgin Islands" <%= "British Virgin Islands".equals(selectedCountry) ? "selected" : "" %>>British Virgin Islands</option>
+                                                            <option value="Brunei" <%= "Brunei".equals(selectedCountry) ? "selected" : "" %>>Brunei</option>
+                                                            <option value="Bulgaria" <%= "Bulgaria".equals(selectedCountry) ? "selected" : "" %>>Bulgaria</option>
+                                                            <option value="Burkina Faso" <%= "Burkina Faso".equals(selectedCountry) ? "selected" : "" %>>Burkina Faso</option>
+                                                            <option value="Burundi" <%= "Burundi".equals(selectedCountry) ? "selected" : "" %>>Burundi</option>
+                                                            <option value="Cambodia" <%= "Cambodia".equals(selectedCountry) ? "selected" : "" %>>Cambodia</option>
+                                                            <option value="Cameroon" <%= "Cameroon".equals(selectedCountry) ? "selected" : "" %>>Cameroon</option>
+                                                            <option value="Canada" <%= "Canada".equals(selectedCountry) ? "selected" : "" %>>Canada</option>
+                                                            <option value="Cape Verde" <%= "Cape Verde".equals(selectedCountry) ? "selected" : "" %>>Cape Verde</option>
+                                                            <option value="Cayman Islands" <%= "Cayman Islands".equals(selectedCountry) ? "selected" : "" %>>Cayman Islands</option>
+                                                            <option value="Central African Republic" <%= "Central African Republic".equals(selectedCountry) ? "selected" : "" %>>Central African Republic</option>
+                                                            <option value="Chad" <%= "Chad".equals(selectedCountry) ? "selected" : "" %>>Chad</option>
+                                                            <option value="Chile" <%= "Chile".equals(selectedCountry) ? "selected" : "" %>>Chile</option>
+                                                            <option value="China" <%= "China".equals(selectedCountry) ? "selected" : "" %>>China</option>
+                                                            <option value="Christmas Island" <%= "Christmas Island".equals(selectedCountry) ? "selected" : "" %>>Christmas Island</option>
+                                                            <option value="Cocos (Keeling) Islands" <%= "Cocos (Keeling) Islands".equals(selectedCountry) ? "selected" : "" %>>Cocos (Keeling) Islands</option>
+                                                            <option value="Colombia" <%= "Colombia".equals(selectedCountry) ? "selected" : "" %>>Colombia</option>
+                                                            <option value="Comoros" <%= "Comoros".equals(selectedCountry) ? "selected" : "" %>>Comoros</option>
+                                                            <option value="Cook Islands" <%= "Cook Islands".equals(selectedCountry) ? "selected" : "" %>>Cook Islands</option>
+                                                            <option value="Costa Rica" <%= "Costa Rica".equals(selectedCountry) ? "selected" : "" %>>Costa Rica</option>
+                                                            <option value="Croatia" <%= "Croatia".equals(selectedCountry) ? "selected" : "" %>>Croatia</option>
+                                                            <option value="Cuba" <%= "Cuba".equals(selectedCountry) ? "selected" : "" %>>Cuba</option>
+                                                            <option value="Curaçao" <%= "Curaçao".equals(selectedCountry) ? "selected" : "" %>>Curaçao</option>
+                                                            <option value="Cyprus" <%= "Cyprus".equals(selectedCountry) ? "selected" : "" %>>Cyprus</option>
+                                                            <option value="Czechia" <%= "Czechia".equals(selectedCountry) ? "selected" : "" %>>Czechia</option>
+                                                            <option value="DR Congo" <%= "DR Congo".equals(selectedCountry) ? "selected" : "" %>>DR Congo</option>
+                                                            <option value="Denmark" <%= "Denmark".equals(selectedCountry) ? "selected" : "" %>>Denmark</option>
+                                                            <option value="Djibouti" <%= "Djibouti".equals(selectedCountry) ? "selected" : "" %>>Djibouti</option>
+                                                            <option value="Dominica" <%= "Dominica".equals(selectedCountry) ? "selected" : "" %>>Dominica</option>
+                                                            <option value="Dominican Republic" <%= "Dominican Republic".equals(selectedCountry) ? "selected" : "" %>>Dominican Republic</option>
+                                                            <option value="East Timor" <%= "East Timor".equals(selectedCountry) ? "selected" : "" %>>East Timor</option>
+                                                            <option value="Ecuador" <%= "Ecuador".equals(selectedCountry) ? "selected" : "" %>>Ecuador</option>
+                                                            <option value="Egypt" <%= "Egypt".equals(selectedCountry) ? "selected" : "" %>>Egypt</option>
+                                                            <option value="El Salvador" <%= "El Salvador".equals(selectedCountry) ? "selected" : "" %>>El Salvador</option>
+                                                            <option value="Equatorial Guinea" <%= "Equatorial Guinea".equals(selectedCountry) ? "selected" : "" %>>Equatorial Guinea</option>
+                                                            <option value="Eritrea" <%= "Eritrea".equals(selectedCountry) ? "selected" : "" %>>Eritrea</option>
+                                                            <option value="Estonia" <%= "Estonia".equals(selectedCountry) ? "selected" : "" %>>Estonia</option>
+                                                            <option value="Eswatini" <%= "Eswatini".equals(selectedCountry) ? "selected" : "" %>>Eswatini</option>
+                                                            <option value="Ethiopia" <%= "Ethiopia".equals(selectedCountry) ? "selected" : "" %>>Ethiopia</option>
+                                                            <option value="Falkland Islands" <%= "Falkland Islands".equals(selectedCountry) ? "selected" : "" %>>Falkland Islands</option>
+                                                            <option value="Faroe Islands" <%= "Faroe Islands".equals(selectedCountry) ? "selected" : "" %>>Faroe Islands</option>
+                                                            <option value="Fiji" <%= "Fiji".equals(selectedCountry) ? "selected" : "" %>>Fiji</option>
+                                                            <option value="Finland" <%= "Finland".equals(selectedCountry) ? "selected" : "" %>>Finland</option>
+                                                            <option value="France" <%= "France".equals(selectedCountry) ? "selected" : "" %>>France</option>
+                                                            <option value="French Guiana" <%= "French Guiana".equals(selectedCountry) ? "selected" : "" %>>French Guiana</option>
+                                                            <option value="French Polynesia" <%= "French Polynesia".equals(selectedCountry) ? "selected" : "" %>>French Polynesia</option>
+                                                            <option value="Gabon" <%= "Gabon".equals(selectedCountry) ? "selected" : "" %>>Gabon</option>
+                                                            <option value="Gambia" <%= "Gambia".equals(selectedCountry) ? "selected" : "" %>>Gambia</option>
+                                                            <option value="Georgia" <%= "Georgia".equals(selectedCountry) ? "selected" : "" %>>Georgia</option>
+                                                            <option value="Germany" <%= "Germany".equals(selectedCountry) ? "selected" : "" %>>Germany</option>
+                                                            <option value="Ghana" <%= "Ghana".equals(selectedCountry) ? "selected" : "" %>>Ghana</option>
+                                                            <option value="Gibraltar" <%= "Gibraltar".equals(selectedCountry) ? "selected" : "" %>>Gibraltar</option>
+                                                            <option value="Greece" <%= "Greece".equals(selectedCountry) ? "selected" : "" %>>Greece</option>
+                                                            <option value="Greenland" <%= "Greenland".equals(selectedCountry) ? "selected" : "" %>>Greenland</option>
+                                                            <option value="Grenada" <%= "Grenada".equals(selectedCountry) ? "selected" : "" %>>Grenada</option>
+                                                            <option value="Guadeloupe" <%= "Guadeloupe".equals(selectedCountry) ? "selected" : "" %>>Guadeloupe</option>
+                                                            <option value="Guam" <%= "Guam".equals(selectedCountry) ? "selected" : "" %>>Guam</option>
+                                                            <option value="Guatemala" <%= "Guatemala".equals(selectedCountry) ? "selected" : "" %>>Guatemala</option>
+                                                            <option value="Guernsey" <%= "Guernsey".equals(selectedCountry) ? "selected" : "" %>>Guernsey</option>
+                                                            <option value="Guinea" <%= "Guinea".equals(selectedCountry) ? "selected" : "" %>>Guinea</option>
+                                                            <option value="Guinea-Bissau" <%= "Guinea-Bissau".equals(selectedCountry) ? "selected" : "" %>>Guinea-Bissau</option>
+                                                            <option value="Guyana" <%= "Guyana".equals(selectedCountry) ? "selected" : "" %>>Guyana</option>
+                                                            <option value="Haiti" <%= "Haiti".equals(selectedCountry) ? "selected" : "" %>>Haiti</option>
+                                                            <option value="Honduras" <%= "Honduras".equals(selectedCountry) ? "selected" : "" %>>Honduras</option>
+                                                            <option value="Hong Kong" <%= "Hong Kong".equals(selectedCountry) ? "selected" : "" %>>Hong Kong</option>
+                                                            <option value="Hungary" <%= "Hungary".equals(selectedCountry) ? "selected" : "" %>>Hungary</option>
+                                                            <option value="Iceland" <%= "Iceland".equals(selectedCountry) ? "selected" : "" %>>Iceland</option>
+                                                            <option value="India" <%= "India".equals(selectedCountry) ? "selected" : "" %>>India</option>
+                                                            <option value="Indonesia" <%= "Indonesia".equals(selectedCountry) ? "selected" : "" %>>Indonesia</option>
+                                                            <option value="Iran" <%= "Iran".equals(selectedCountry) ? "selected" : "" %>>Iran</option>
+                                                            <option value="Iraq" <%= "Iraq".equals(selectedCountry) ? "selected" : "" %>>Iraq</option>
+                                                            <option value="Ireland" <%= "Ireland".equals(selectedCountry) ? "selected" : "" %>>Ireland</option>
+                                                            <option value="Isle of Man" <%= "Isle of Man".equals(selectedCountry) ? "selected" : "" %>>Isle of Man</option>
+                                                            <option value="Israel" <%= "Israel".equals(selectedCountry) ? "selected" : "" %>>Israel</option>
+                                                            <option value="Italy" <%= "Italy".equals(selectedCountry) ? "selected" : "" %>>Italy</option>
+                                                            <option value="Ivory Coast" <%= "Ivory Coast".equals(selectedCountry) ? "selected" : "" %>>Ivory Coast</option>
+                                                            <option value="Jamaica" <%= "Jamaica".equals(selectedCountry) ? "selected" : "" %>>Jamaica</option>
+                                                            <option value="Japan" <%= "Japan".equals(selectedCountry) ? "selected" : "" %>>Japan</option>
+                                                            <option value="Jersey" <%= "Jersey".equals(selectedCountry) ? "selected" : "" %>>Jersey</option>
+                                                            <option value="Jordan" <%= "Jordan".equals(selectedCountry) ? "selected" : "" %>>Jordan</option>
+                                                            <option value="Kazakhstan" <%= "Kazakhstan".equals(selectedCountry) ? "selected" : "" %>>Kazakhstan</option>
+                                                            <option value="Kenya" <%= "Kenya".equals(selectedCountry) ? "selected" : "" %>>Kenya</option>
+                                                            <option value="Kiribati" <%= "Kiribati".equals(selectedCountry) ? "selected" : "" %>>Kiribati</option>
+                                                            <option value="Kosovo" <%= "Kosovo".equals(selectedCountry) ? "selected" : "" %>>Kosovo</option>
+                                                            <option value="Kuwait" <%= "Kuwait".equals(selectedCountry) ? "selected" : "" %>>Kuwait</option>
+                                                            <option value="Kyrgyzstan" <%= "Kyrgyzstan".equals(selectedCountry) ? "selected" : "" %>>Kyrgyzstan</option>
+                                                            <option value="Laos" <%= "Laos".equals(selectedCountry) ? "selected" : "" %>>Laos</option>
+                                                            <option value="Latvia" <%= "Latvia".equals(selectedCountry) ? "selected" : "" %>>Latvia</option>
+                                                            <option value="Lebanon" <%= "Lebanon".equals(selectedCountry) ? "selected" : "" %>>Lebanon</option>
+                                                            <option value="Lesotho" <%= "Lesotho".equals(selectedCountry) ? "selected" : "" %>>Lesotho</option>
+                                                            <option value="Liberia" <%= "Liberia".equals(selectedCountry) ? "selected" : "" %>>Liberia</option>
+                                                            <option value="Libya" <%= "Libya".equals(selectedCountry) ? "selected" : "" %>>Libya</option>
+                                                            <option value="Liechtenstein" <%= "Liechtenstein".equals(selectedCountry) ? "selected" : "" %>>Liechtenstein</option>
+                                                            <option value="Lithuania" <%= "Lithuania".equals(selectedCountry) ? "selected" : "" %>>Lithuania</option>
+                                                            <option value="Luxembourg" <%= "Luxembourg".equals(selectedCountry) ? "selected" : "" %>>Luxembourg</option>
+                                                            <option value="Macao" <%= "Macao".equals(selectedCountry) ? "selected" : "" %>>Macao</option>
+                                                            <option value="Madagascar" <%= "Madagascar".equals(selectedCountry) ? "selected" : "" %>>Madagascar</option>
+                                                            <option value="Malawi" <%= "Malawi".equals(selectedCountry) ? "selected" : "" %>>Malawi</option>
+                                                            <option value="Malaysia" <%= "Malaysia".equals(selectedCountry) ? "selected" : "" %>>Malaysia</option>
+                                                            <option value="Maldives" <%= "Maldives".equals(selectedCountry) ? "selected" : "" %>>Maldives</option>
+                                                            <option value="Mali" <%= "Mali".equals(selectedCountry) ? "selected" : "" %>>Mali</option>
+                                                            <option value="Malta" <%= "Malta".equals(selectedCountry) ? "selected" : "" %>>Malta</option>
+                                                            <option value="Marshall Islands" <%= "Marshall Islands".equals(selectedCountry) ? "selected" : "" %>>Marshall Islands</option>
+                                                            <option value="Martinique" <%= "Martinique".equals(selectedCountry) ? "selected" : "" %>>Martinique</option>
+                                                            <option value="Mauritania" <%= "Mauritania".equals(selectedCountry) ? "selected" : "" %>>Mauritania</option>
+                                                            <option value="Mauritius" <%= "Mauritius".equals(selectedCountry) ? "selected" : "" %>>Mauritius</option>
+                                                            <option value="Mayotte" <%= "Mayotte".equals(selectedCountry) ? "selected" : "" %>>Mayotte</option>
+                                                            <option value="Mexico" <%= "Mexico".equals(selectedCountry) ? "selected" : "" %>>Mexico</option>
+                                                            <option value="Micronesia" <%= "Micronesia".equals(selectedCountry) ? "selected" : "" %>>Micronesia</option>
+                                                            <option value="Moldova" <%= "Moldova".equals(selectedCountry) ? "selected" : "" %>>Moldova</option>
+                                                            <option value="Monaco" <%= "Monaco".equals(selectedCountry) ? "selected" : "" %>>Monaco</option>
+                                                            <option value="Mongolia" <%= "Mongolia".equals(selectedCountry) ? "selected" : "" %>>Mongolia</option>
+                                                            <option value="Montenegro" <%= "Montenegro".equals(selectedCountry) ? "selected" : "" %>>Montenegro</option>
+                                                            <option value="Montserrat" <%= "Montserrat".equals(selectedCountry) ? "selected" : "" %>>Montserrat</option>
+                                                            <option value="Morocco" <%= "Morocco".equals(selectedCountry) ? "selected" : "" %>>Morocco</option>
+                                                            <option value="Mozambique" <%= "Mozambique".equals(selectedCountry) ? "selected" : "" %>>Mozambique</option>
+                                                            <option value="Myanmar" <%= "Myanmar".equals(selectedCountry) ? "selected" : "" %>>Myanmar</option>
+                                                            <option value="Namibia" <%= "Namibia".equals(selectedCountry) ? "selected" : "" %>>Namibia</option>
+                                                            <option value="Nauru" <%= "Nauru".equals(selectedCountry) ? "selected" : "" %>>Nauru</option>
+                                                            <option value="Nepal" <%= "Nepal".equals(selectedCountry) ? "selected" : "" %>>Nepal</option>
+                                                            <option value="Netherlands" <%= "Netherlands".equals(selectedCountry) ? "selected" : "" %>>Netherlands</option>
+                                                            <option value="New Caledonia" <%= "New Caledonia".equals(selectedCountry) ? "selected" : "" %>>New Caledonia</option>
+                                                            <option value="New Zealand" <%= "New Zealand".equals(selectedCountry) ? "selected" : "" %>>New Zealand</option>
+                                                            <option value="Nicaragua" <%= "Nicaragua".equals(selectedCountry) ? "selected" : "" %>>Nicaragua</option>
+                                                            <option value="Niger" <%= "Niger".equals(selectedCountry) ? "selected" : "" %>>Niger</option>
+                                                            <option value="Nigeria" <%= "Nigeria".equals(selectedCountry) ? "selected" : "" %>>Nigeria</option>
+                                                            <option value="Niue" <%= "Niue".equals(selectedCountry) ? "selected" : "" %>>Niue</option>
+                                                            <option value="North Korea" <%= "North Korea".equals(selectedCountry) ? "selected" : "" %>>North Korea</option>
+                                                            <option value="North Macedonia" <%= "North Macedonia".equals(selectedCountry) ? "selected" : "" %>>North Macedonia</option>
+                                                            <option value="Northern Mariana Islands" <%= "Northern Mariana Islands".equals(selectedCountry) ? "selected" : "" %>>Northern Mariana Islands</option>
+                                                            <option value="Norway" <%= "Norway".equals(selectedCountry) ? "selected" : "" %>>Norway</option>
+                                                            <option value="Oman" <%= "Oman".equals(selectedCountry) ? "selected" : "" %>>Oman</option>
+                                                            <option value="Pakistan" <%= "Pakistan".equals(selectedCountry) ? "selected" : "" %>>Pakistan</option>
+                                                            <option value="Palau" <%= "Palau".equals(selectedCountry) ? "selected" : "" %>>Palau</option>
+                                                            <option value="Palestine" <%= "Palestine".equals(selectedCountry) ? "selected" : "" %>>Palestine</option>
+                                                            <option value="Panama" <%= "Panama".equals(selectedCountry) ? "selected" : "" %>>Panama</option>
+                                                            <option value="Papua New Guinea" <%= "Papua New Guinea".equals(selectedCountry) ? "selected" : "" %>>Papua New Guinea</option>
+                                                            <option value="Paraguay" <%= "Paraguay".equals(selectedCountry) ? "selected" : "" %>>Paraguay</option>
+                                                            <option value="Peru" <%= "Peru".equals(selectedCountry) ? "selected" : "" %>>Peru</option>
+                                                            <option value="Philippines" <%= "Philippines".equals(selectedCountry) ? "selected" : "" %>>Philippines</option>
+                                                            <option value="Poland" <%= "Poland".equals(selectedCountry) ? "selected" : "" %>>Poland</option>
+                                                            <option value="Portugal" <%= "Portugal".equals(selectedCountry) ? "selected" : "" %>>Portugal</option>
+                                                            <option value="Puerto Rico" <%= "Puerto Rico".equals(selectedCountry) ? "selected" : "" %>>Puerto Rico</option>
+                                                            <option value="Qatar" <%= "Qatar".equals(selectedCountry) ? "selected" : "" %>>Qatar</option>
+                                                            <option value="Republic of the Congo" <%= "Republic of the Congo".equals(selectedCountry) ? "selected" : "" %>>Republic of the Congo</option>
+                                                            <option value="Reunion" <%= "Reunion".equals(selectedCountry) ? "selected" : "" %>>Reunion</option>
+                                                            <option value="Romania" <%= "Romania".equals(selectedCountry) ? "selected" : "" %>>Romania</option>
+                                                            <option value="Russia" <%= "Russia".equals(selectedCountry) ? "selected" : "" %>>Russia</option>
+                                                            <option value="Rwanda" <%= "Rwanda".equals(selectedCountry) ? "selected" : "" %>>Rwanda</option>
+                                                            <option value="Saint Barthélemy" <%= "Saint Barthélemy".equals(selectedCountry) ? "selected" : "" %>>Saint Barthélemy</option>
+                                                            <option value="Saint Helena" <%= "Saint Helena".equals(selectedCountry) ? "selected" : "" %>>Saint Helena</option>
+                                                            <option value="Saint Kitts and Nevis" <%= "Saint Kitts and Nevis".equals(selectedCountry) ? "selected" : "" %>>Saint Kitts and Nevis</option>
+                                                            <option value="Saint Lucia" <%= "Saint Lucia".equals(selectedCountry) ? "selected" : "" %>>Saint Lucia</option>
+                                                            <option value="Saint Martin" <%= "Saint Martin".equals(selectedCountry) ? "selected" : "" %>>Saint Martin</option>
+                                                            <option value="Saint Pierre and Miquelon" <%= "Saint Pierre and Miquelon".equals(selectedCountry) ? "selected" : "" %>>Saint Pierre and Miquelon</option>
+                                                            <option value="Saint Vincent and the Grenadines" <%= "Saint Vincent and the Grenadines".equals(selectedCountry) ? "selected" : "" %>>Saint Vincent and the Grenadines</option>
+                                                            <option value="Samoa" <%= "Samoa".equals(selectedCountry) ? "selected" : "" %>>Samoa</option>
+                                                            <option value="San Marino" <%= "San Marino".equals(selectedCountry) ? "selected" : "" %>>San Marino</option>
+                                                            <option value="Sao Tome and Principe" <%= "Sao Tome and Principe".equals(selectedCountry) ? "selected" : "" %>>Sao Tome and Principe</option>
+                                                            <option value="Saudi Arabia" <%= "Saudi Arabia".equals(selectedCountry) ? "selected" : "" %>>Saudi Arabia</option>
+                                                            <option value="Senegal" <%= "Senegal".equals(selectedCountry) ? "selected" : "" %>>Senegal</option>
+                                                            <option value="Serbia" <%= "Serbia".equals(selectedCountry) ? "selected" : "" %>>Serbia</option>
+                                                            <option value="Seychelles" <%= "Seychelles".equals(selectedCountry) ? "selected" : "" %>>Seychelles</option>
+                                                            <option value="Sierra Leone" <%= "Sierra Leone".equals(selectedCountry) ? "selected" : "" %>>Sierra Leone</option>
+                                                            <option value="Singapore" <%= "Singapore".equals(selectedCountry) ? "selected" : "" %>>Singapore</option>
+                                                            <option value="Sint Maarten" <%= "Sint Maarten".equals(selectedCountry) ? "selected" : "" %>>Sint Maarten</option>
+                                                            <option value="Slovakia" <%= "Slovakia".equals(selectedCountry) ? "selected" : "" %>>Slovakia</option>
+                                                            <option value="Slovenia" <%= "Slovenia".equals(selectedCountry) ? "selected" : "" %>>Slovenia</option>
+                                                            <option value="Solomon Islands" <%= "Solomon Islands".equals(selectedCountry) ? "selected" : "" %>>Solomon Islands</option>
+                                                            <option value="Somalia" <%= "Somalia".equals(selectedCountry) ? "selected" : "" %>>Somalia</option>
+                                                            <option value="South Africa" <%= "South Africa".equals(selectedCountry) ? "selected" : "" %>>South Africa</option>
+                                                            <option value="South Korea" <%= "South Korea".equals(selectedCountry) ? "selected" : "" %>>South Korea</option>
+                                                            <option value="South Sudan" <%= "South Sudan".equals(selectedCountry) ? "selected" : "" %>>South Sudan</option>
+                                                            <option value="Spain" <%= "Spain".equals(selectedCountry) ? "selected" : "" %>>Spain</option>
+                                                            <option value="Sri Lanka" <%= "Sri Lanka".equals(selectedCountry) ? "selected" : "" %>>Sri Lanka</option>
+                                                            <option value="Sudan" <%= "Sudan".equals(selectedCountry) ? "selected" : "" %>>Sudan</option>
+                                                            <option value="Suriname" <%= "Suriname".equals(selectedCountry) ? "selected" : "" %>>Suriname</option>
+                                                            <option value="Sweden" <%= "Sweden".equals(selectedCountry) ? "selected" : "" %>>Sweden</option>
+                                                            <option value="Switzerland" <%= "Switzerland".equals(selectedCountry) ? "selected" : "" %>>Switzerland</option>
+                                                            <option value="Syria" <%= "Syria".equals(selectedCountry) ? "selected" : "" %>>Syria</option>
+                                                            <option value="Taiwan" <%= "Taiwan".equals(selectedCountry) ? "selected" : "" %>>Taiwan</option>
+                                                            <option value="Tajikistan" <%= "Tajikistan".equals(selectedCountry) ? "selected" : "" %>>Tajikistan</option>
+                                                            <option value="Tanzania" <%= "Tanzania".equals(selectedCountry) ? "selected" : "" %>>Tanzania</option>
+                                                            <option value="Thailand" <%= "Thailand".equals(selectedCountry) ? "selected" : "" %>>Thailand</option>
+                                                            <option value="Togo" <%= "Togo".equals(selectedCountry) ? "selected" : "" %>>Togo</option>
+                                                            <option value="Tokelau" <%= "Tokelau".equals(selectedCountry) ? "selected" : "" %>>Tokelau</option>
+                                                            <option value="Tonga" <%= "Tonga".equals(selectedCountry) ? "selected" : "" %>>Tonga</option>
+                                                            <option value="Trinidad and Tobago" <%= "Trinidad and Tobago".equals(selectedCountry) ? "selected" : "" %>>Trinidad and Tobago</option>
+                                                            <option value="Tunisia" <%= "Tunisia".equals(selectedCountry) ? "selected" : "" %>>Tunisia</option>
+                                                            <option value="Turkey" <%= "Turkey".equals(selectedCountry) ? "selected" : "" %>>Turkey</option>
+                                                            <option value="Turkmenistan" <%= "Turkmenistan".equals(selectedCountry) ? "selected" : "" %>>Turkmenistan</option>
+                                                            <option value="Turks and Caicos Islands" <%= "Turks and Caicos Islands".equals(selectedCountry) ? "selected" : "" %>>Turks and Caicos Islands</option>
+                                                            <option value="Tuvalu" <%= "Tuvalu".equals(selectedCountry) ? "selected" : "" %>>Tuvalu</option>
+                                                            <option value="Uganda" <%= "Uganda".equals(selectedCountry) ? "selected" : "" %>>Uganda</option>
+                                                            <option value="Ukraine" <%= "Ukraine".equals(selectedCountry) ? "selected" : "" %>>Ukraine</option>
+                                                            <option value="United Arab Emirates" <%= "United Arab Emirates".equals(selectedCountry) ? "selected" : "" %>>United Arab Emirates</option>
+                                                            <option value="United Kingdom" <%= "United Kingdom".equals(selectedCountry) ? "selected" : "" %>>United Kingdom</option>
+                                                            <option value="United States" <%= "United States".equals(selectedCountry) ? "selected" : "" %>>United States</option>
+                                                            <option value="U.S. Virgin Islands" <%= "U.S. Virgin Islands".equals(selectedCountry) ? "selected" : "" %>>U.S. Virgin Islands</option>
+                                                            <option value="Uruguay" <%= "Uruguay".equals(selectedCountry) ? "selected" : "" %>>Uruguay</option>
+                                                            <option value="Uzbekistan" <%= "Uzbekistan".equals(selectedCountry) ? "selected" : "" %>>Uzbekistan</option>
+                                                            <option value="Vanuatu" <%= "Vanuatu".equals(selectedCountry) ? "selected" : "" %>>Vanuatu</option>
+                                                            <option value="Vatican City" <%= "Vatican City".equals(selectedCountry) ? "selected" : "" %>>Vatican City</option>
+                                                            <option value="Venezuela" <%= "Venezuela".equals(selectedCountry) ? "selected" : "" %>>Venezuela</option>
+                                                            <option value="Vietnam" <%= "Vietnam".equals(selectedCountry) ? "selected" : "" %>>Vietnam</option>
+                                                            <option value="Wallis and Futuna" <%= "Wallis and Futuna".equals(selectedCountry) ? "selected" : "" %>>Wallis and Futuna</option>
+                                                            <option value="Western Sahara" <%= "Western Sahara".equals(selectedCountry) ? "selected" : "" %>>Western Sahara</option>
+                                                            <option value="Yemen" <%= "Yemen".equals(selectedCountry) ? "selected" : "" %>>Yemen</option>
+                                                            <option value="Zambia" <%= "Zambia".equals(selectedCountry) ? "selected" : "" %>>Zambia</option>
+                                                            <option value="Zimbabwe" <%= "Zimbabwe".equals(selectedCountry) ? "selected" : "" %>>Zimbabwe</option>
+                                                </select>
+                                        </div>
+
+                                        <div>
+                                            <label for="message"
+                                                class="block text-sm font-semibold text-slate-700 mb-1">Message</label>
+                                            <textarea id="message" name="message" rows="5" required
+                                                class="bt-field w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder-slate-400"
+                                                placeholder="Tell us how we can help"></textarea>
+                                        </div>
+
+                                        <button type="submit"
+                                            class="w-full inline-flex items-center justify-center rounded-xl bg-[#ea580c] px-6 py-3 text-base font-semibold text-white shadow-md transition hover:bg-[#c2410c]">
+                                            Send Message
+                                        </button>
+                                    </form>
                     </div>
-                    <% if (request.getAttribute("contactError") != null) { %>
-                        <p class="mt-1 text-sm text-rose-600"><%= request.getAttribute("contactError") %></p>
-                    <% } %>
                 </div>
+            </main>
 
-                <div>
-                    <label for="email" class="block text-sm font-semibold text-slate-700 mb-1">Email</label>
-                    <input id="email" name="email" type="email"
-                           value="<%= request.getAttribute("email") != null ? request.getAttribute("email") : "" %>"
-                           class="bt-field w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder-slate-400"
-                           placeholder="you@company.com" required>
-                    <% if (request.getAttribute("emailError") != null) { %>
-                        <p class="mt-1 text-sm text-rose-600"><%= request.getAttribute("emailError") %></p>
-                    <% } %>
-                </div>
+            <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 
-                <div>
-                    <label for="country" class="block text-sm font-semibold text-slate-700 mb-1">Country</label>
-                    <% String selectedCountry = (String) request.getAttribute("country"); %>
-                    <select id="country" name="country" required
-                            class="bt-field bt-select w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900">
-                        <option value="" <%= (selectedCountry == null || selectedCountry.trim().isEmpty()) ? "selected" : "" %>>Select a country</option>
-                        <% if (selectedCountry != null && !selectedCountry.trim().isEmpty()) { %>
-                            <option value="<%= selectedCountry %>" selected><%= selectedCountry %></option>
-                        <% } %>
-                        <option value="Afghanistan">Afghanistan</option>
-                        <option value="Albania">Albania</option>
-                        <option value="Algeria">Algeria</option>
-                        <option value="American Samoa">American Samoa</option>
-                        <option value="Andorra">Andorra</option>
-                    </select>
-                </div>
+    </body>
 
-                <div>
-                    <label for="message" class="block text-sm font-semibold text-slate-700 mb-1">Message</label>
-                    <textarea id="message" name="message" rows="5" required
-                              class="bt-field w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder-slate-400"
-                              placeholder="Tell us how we can help"></textarea>
-                </div>
-
-                <button type="submit"
-                        class="w-full inline-flex items-center justify-center rounded-xl bg-[#ea580c] px-6 py-3 text-base font-semibold text-white shadow-md transition hover:bg-[#c2410c]">
-                    Send Message
-                </button>
-            </form>
-        </div>
-    </div>
-</main>
-
-<%@ include file="/WEB-INF/views/common/footer.jsp" %>
-
-</body>
-</html>
-
+    </html>
