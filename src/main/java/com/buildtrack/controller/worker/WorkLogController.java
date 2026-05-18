@@ -1,7 +1,7 @@
 package com.buildtrack.controller.worker;
 
 import com.buildtrack.model.User;
-import com.buildtrack.service.worker.WorkLogService;
+import com.buildtrack.service.worker.WorkerService;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @WebServlet("/worker/worklog")
 public class WorkLogController extends HttpServlet {
 
-    private final WorkLogService workLogService = new WorkLogService();
+    private final WorkerService workerService = new WorkerService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -32,8 +32,8 @@ public class WorkLogController extends HttpServlet {
             month = LocalDate.now().toString().substring(0, 7);
         }
 
-        request.setAttribute("assignedProjects", workLogService.getAssignedProjects(user.getId()));
-        request.setAttribute("workLogs", workLogService.getWorkerLogs(user.getId(), month));
+        request.setAttribute("assignedProjects", workerService.getAssignedProjects(user.getId()));
+        request.setAttribute("workLogs", workerService.getWorkerLogs(user.getId(), month));
         request.setAttribute("currentMonth", month);
 
         request.getRequestDispatcher("/WEB-INF/views/worker/worklog.jsp")
@@ -50,7 +50,7 @@ public class WorkLogController extends HttpServlet {
             return;
         }
 
-        java.util.List<String> errors = workLogService.createWorkLog(
+        java.util.List<String> errors = workerService.createWorkLog(
                 user.getId(),
                 request.getParameter("projectId"),
                 request.getParameter("date"),
