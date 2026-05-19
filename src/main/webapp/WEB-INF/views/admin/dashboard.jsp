@@ -82,7 +82,7 @@
                 </c:if>
                 <jsp:include page="../common/statsCard.jsp">
                     <jsp:param name="title" value="Budget Utilization" />
-                    <jsp:param name="value" value="${String.format('%.1f', budgetPct)}%" />
+                    <jsp:param name="value" value="<fmt:formatNumber value='${budgetPct}' maxFractionDigits='1' />%" />
                     <jsp:param name="subtitle" value="NPR ${globalTotalUtilized} of NPR ${globalTotalBudget}" />
                     <jsp:param name="icon" value="badge-indian-rupee" />
                     <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-blue-100" />
