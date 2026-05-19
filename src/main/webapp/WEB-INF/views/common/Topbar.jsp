@@ -45,15 +45,6 @@
         </div>
  
         <div class="ml-auto flex items-center gap-3 sm:gap-4">
- 
-          <% if (!isDashboard) { %>
-          <div class="relative hidden sm:block">
-            <i data-lucide="search"
-              class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"></i>
-            <input type="text" placeholder="Search..."
-              class="h-11 w-56 rounded-xl border border-slate-300 bg-white pl-10 pr-4 text-sm text-slate-900 placeholder:text-slate-500 outline-none transition focus:border-amber-400/60 focus:ring-2 focus:ring-amber-400/20 lg:w-72" />
-          </div>
-          <% } %>
 
           <div class="relative">
             <button type="button" id="topbarNotificationButton"

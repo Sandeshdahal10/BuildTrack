@@ -12,7 +12,6 @@ import java.io.IOException;
 public class AdminProfileController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/views/admin/profile.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/common/profile.jsp").forward(request, response);
     }
 }
-

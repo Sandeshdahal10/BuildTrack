@@ -20,8 +20,7 @@ public class ProfileController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Forward request to the JSP view
-        request.getRequestDispatcher("/WEB-INF/views/worker/profile.jsp")
+        request.getRequestDispatcher("/WEB-INF/views/common/profile.jsp")
                 .forward(request, response);
     }
 
@@ -46,7 +45,7 @@ public class ProfileController extends HttpServlet {
                 || newPassword == null || newPassword.trim().isEmpty()
                 || confirmPassword == null || confirmPassword.trim().isEmpty()) {
             request.setAttribute("error", "All password fields are required.");
-            request.getRequestDispatcher("/WEB-INF/views/worker/profile.jsp")
+            request.getRequestDispatcher("/WEB-INF/views/common/profile.jsp")
                     .forward(request, response);
             return;
         }
@@ -54,7 +53,7 @@ public class ProfileController extends HttpServlet {
         // Check new password matches confirmation
         if (!newPassword.equals(confirmPassword)) {
             request.setAttribute("error", "New password and confirmation do not match.");
-            request.getRequestDispatcher("/WEB-INF/views/worker/profile.jsp")
+            request.getRequestDispatcher("/WEB-INF/views/common/profile.jsp")
                     .forward(request, response);
             return;
         }
@@ -62,7 +61,7 @@ public class ProfileController extends HttpServlet {
         // Check minimum password length
         if (newPassword.length() < 6) {
             request.setAttribute("error", "New password must be at least 6 characters.");
-            request.getRequestDispatcher("/WEB-INF/views/worker/profile.jsp")
+            request.getRequestDispatcher("/WEB-INF/views/common/profile.jsp")
                     .forward(request, response);
             return;
         }
@@ -71,7 +70,7 @@ public class ProfileController extends HttpServlet {
         User dbUser = authDao.findById(user.getId());
         if (dbUser == null) {
             request.setAttribute("error", "User not found. Please log in again.");
-            request.getRequestDispatcher("/WEB-INF/views/worker/profile.jsp")
+            request.getRequestDispatcher("/WEB-INF/views/common/profile.jsp")
                     .forward(request, response);
             return;
         }
@@ -79,7 +78,7 @@ public class ProfileController extends HttpServlet {
         // Verify current password
         if (!PasswordUtil.verifyPassword(currentPassword, dbUser.getPassword())) {
             request.setAttribute("error", "Current password is incorrect.");
-            request.getRequestDispatcher("/WEB-INF/views/worker/profile.jsp")
+            request.getRequestDispatcher("/WEB-INF/views/common/profile.jsp")
                     .forward(request, response);
             return;
         }
@@ -94,7 +93,7 @@ public class ProfileController extends HttpServlet {
             request.setAttribute("error", "Failed to update password. Please try again.");
         }
 
-        request.getRequestDispatcher("/WEB-INF/views/worker/profile.jsp")
+        request.getRequestDispatcher("/WEB-INF/views/common/profile.jsp")
                 .forward(request, response);
     }
 }

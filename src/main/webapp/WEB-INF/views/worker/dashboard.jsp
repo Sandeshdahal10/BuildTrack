@@ -76,21 +76,14 @@
         <!-- CONTENT -->
         <div class="px-8 py-6 overflow-y-auto grow space-y-8">
 
-                <!-- Welcome Section -->
                 <section class="glass-card rounded-xl px-6 py-6 flex flex-col md:flex-row items-center justify-between">
                     <div>
                         <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-1">
-                            Welcome back, <span class="gradient-text"><%= displayName %></span>
+                            Welcome back, <span ><%= displayName %></span>
                         </h1>
                         <p class="text-slate-500 font-medium text-sm">
                             Here is what's happening with your assignments today.
                         </p>
-                    </div>
-                    <div class="mt-4 md:mt-0">
-                        <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-50 text-green-700 font-semibold text-xs border border-green-200 shadow-sm">
-                            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                            Active Site
-                        </span>
                     </div>
                 </section>
 

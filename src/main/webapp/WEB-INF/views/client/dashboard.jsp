@@ -23,22 +23,17 @@
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased selection:bg-blue-200 selection:text-blue-900">
 <div class="h-screen overflow-hidden">
-    <!-- Sidebar Container -->
     <div id="sidebar-container" class="fixed inset-y-0 left-0 z-50 w-56 transform -translate-x-full transition-transform duration-300 md:translate-x-0 border-r border-blue-900/60 bg-[#0b1f4d]">
         <jsp:include page="../common/sidebar.jsp" />
     </div>
 
-    <!-- Main Content Area -->
     <div class="ml-0 md:ml-56 flex h-screen min-w-0 flex-1 flex-col overflow-hidden">
-        <!-- Top Navbar Header -->
         <div class="sticky top-0 z-20 shrink-0">
             <jsp:include page="../common/Topbar.jsp" />
         </div>
 
-        <!-- Dashboard Content Viewport -->
         <main class="flex-1 overflow-y-auto px-6 py-6 space-y-6">
             
-            <!-- Welcome Header Card -->
             <section class="rounded-2xl border border-slate-200 bg-white px-6 py-6 shadow-sm">
                 <h1 class="text-3xl font-bold tracking-tight text-slate-900">Welcome back, <%= displayName %></h1>
                 <p class="mt-1.5 text-sm text-slate-500 font-medium">Stay updated on your construction projects today.</p>

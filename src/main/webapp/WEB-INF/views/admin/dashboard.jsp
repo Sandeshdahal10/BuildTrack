@@ -46,7 +46,7 @@
                 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
                 <c:choose>
                     <c:when test="${not empty sessionScope.user.fullName}">
-                        <h1 class="text-3xl font-bold tracking-tight text-slate-900">Good Morning, <c:out value="${sessionScope.user.fullName}" /></h1>
+                        <h1 class="text-3xl font-bold tracking-tight text-slate-900">Welcome back, <c:out value="${sessionScope.user.fullName}" /></h1>
                     </c:when>
                     <c:otherwise>
                         <h1 class="text-3xl font-bold tracking-tight text-slate-900">Good Morning, Admin</h1>
