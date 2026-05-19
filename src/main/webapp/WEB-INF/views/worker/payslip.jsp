@@ -31,47 +31,51 @@
 
         <!-- CONTENT -->
         <div class="px-8 py-6 overflow-y-auto grow">
-                <!-- Title Section -->
-                <section class="rounded-2xl border border-slate-200 bg-white px-6 py-5 shadow-sm mb-6">
-                    <h1 class="m-0 text-3xl font-extrabold leading-none tracking-tight text-slate-900">Payslips</h1>
-                    <p class="mt-2 text-sm text-slate-500 font-medium">View your salary slips and earnings</p>
-                </section>
+            <!-- Title Section -->
+            <section class="mb-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <h1 class="text-2xl font-bold text-slate-800">Payslips</h1>
+                        <p class="mt-1 text-slate-500">View your salary slips and earnings.</p>
+                    </div>
+                </div>
+            </section>
 
-                <!-- Payslip List -->
-                <div class="space-y-4">
-                    <c:choose>
-                        <c:when test="${empty payslips}">
-                            <div class="rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
-                                <p class="text-slate-500 font-medium">No payslips available yet.</p>
-                            </div>
-                        </c:when>
-                        <c:otherwise>
-                            <c:forEach var="ps" items="${payslips}">
-                                <article class="rounded-2xl border border-slate-200 bg-white px-6 py-5 shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 group">
-                                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                                        <div class="flex items-center gap-4">
-                                            <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 group-hover:bg-blue-100 transition-colors">
-                                                <i data-lucide="file-text" class="w-6 h-6"></i>
-                                            </div>
-                                            <div>
-                                                <h3 class="text-lg font-bold text-slate-900">${ps.monthYearDisplay} Payslip</h3>
-                                                <p class="text-sm font-medium text-slate-500">Status: <span class="${ps.status == 'PAID' ? 'text-green-600' : 'text-amber-600'} font-bold">${ps.status}</span></p>
-                                            </div>
+            <!-- Payslip List -->
+            <div class="space-y-4">
+                <c:choose>
+                    <c:when test="${empty payslips}">
+                        <div class="rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
+                            <p class="text-slate-500 font-medium">No payslips available yet.</p>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <c:forEach var="ps" items="${payslips}">
+                            <article class="rounded-2xl border border-slate-200 bg-white px-6 py-5 shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 group">
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 group-hover:bg-blue-100 transition-colors">
+                                            <i data-lucide="file-text" class="w-6 h-6"></i>
                                         </div>
-                                        <div class="flex items-center justify-between sm:flex-col sm:items-end gap-2 sm:gap-1">
-                                            <p class="text-xl font-bold text-slate-900">NPR ${ps.totalSalary}</p>
-                                            <c:if test="${ps.status == 'PAID'}">
-                                                <a href="${pageContext.request.contextPath}/worker/payslip/download?id=${ps.payrollId}" class="inline-flex items-center gap-1.5 text-amber-600 text-sm font-bold hover:text-amber-700 hover:underline">
-                                                    <i data-lucide="download" class="w-4 h-4"></i> Download PDF
-                                                </a>
-                                            </c:if>
+                                        <div>
+                                            <h3 class="text-lg font-bold text-slate-900">${ps.monthYearDisplay} Payslip</h3>
+                                            <p class="text-sm font-medium text-slate-500">Status: <span class="${ps.status == 'PAID' ? 'text-green-600' : 'text-amber-600'} font-bold">${ps.status}</span></p>
                                         </div>
                                     </div>
-                                </article>
-                            </c:forEach>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
+                                    <div class="flex items-center justify-between sm:flex-col sm:items-end gap-2 sm:gap-1">
+                                        <p class="text-xl font-bold text-slate-900">NPR ${ps.totalSalary}</p>
+                                        <c:if test="${ps.status == 'PAID'}">
+                                            <a href="${pageContext.request.contextPath}/worker/payslip/download?id=${ps.payrollId}" class="inline-flex items-center gap-1.5 text-amber-600 text-sm font-bold hover:text-amber-700 hover:underline">
+                                                <i data-lucide="download" class="w-4 h-4"></i> Download PDF
+                                            </a>
+                                        </c:if>
+                                    </div>
+                                </div>
+                            </article>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
+            </div>
         </div>
     </main>
 </div>

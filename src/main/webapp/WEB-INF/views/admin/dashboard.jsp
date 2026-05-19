@@ -46,7 +46,7 @@
                 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
                 <c:choose>
                     <c:when test="${not empty sessionScope.user.fullName}">
-                        <h1 class="text-3xl font-bold tracking-tight text-slate-900">Good Morning, <c:out value="${sessionScope.user.fullName}" /></h1>
+                        <h1 class="text-3xl font-bold tracking-tight text-slate-900">Welcome back, <c:out value="${sessionScope.user.fullName}" /></h1>
                     </c:when>
                     <c:otherwise>
                         <h1 class="text-3xl font-bold tracking-tight text-slate-900">Good Morning, Admin</h1>
@@ -82,7 +82,7 @@
                 </c:if>
                 <jsp:include page="../common/statsCard.jsp">
                     <jsp:param name="title" value="Budget Utilization" />
-                    <jsp:param name="value" value="${String.format('%.1f', budgetPct)}%" />
+                    <jsp:param name="value" value="<fmt:formatNumber value='${budgetPct}' maxFractionDigits='1' />%" />
                     <jsp:param name="subtitle" value="NPR ${globalTotalUtilized} of NPR ${globalTotalBudget}" />
                     <jsp:param name="icon" value="badge-indian-rupee" />
                     <jsp:param name="iconWrapClass" value="p-3 rounded-lg bg-blue-100" />

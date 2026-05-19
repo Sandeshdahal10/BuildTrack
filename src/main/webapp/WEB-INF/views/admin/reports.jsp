@@ -146,7 +146,7 @@
                                         <span class="font-extrabold text-slate-700">NPR ${cat.totalCost}</span>
                                     </div>
                                     <div class="w-full bg-slate-100 rounded-full h-2">
-                                        <div class="bg-orange-500 h-2 rounded-full" style="width: ${pct}%"></div>
+                                        <div class="bg-orange-500 h-2 rounded-full" style="width: ${pct}"></div>
                                     </div>
                                 </div>
                             </c:forEach>
