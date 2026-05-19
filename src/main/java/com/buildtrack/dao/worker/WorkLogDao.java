@@ -18,6 +18,12 @@ import java.util.List;
  */
 public class WorkLogDao {
 
+	/**
+	 * Inserts a work log record.
+	 *
+	 * @param workLog the work log object to insert
+	 * @return true if successful, false otherwise
+	 */
 	public boolean insert(WorkLog workLog) {
 		String sql = "INSERT INTO work_logs (worker_id, project_id, log_date, description, created_at) "
 				+ "VALUES (?, ?, ?, ?, ?)";
@@ -36,6 +42,13 @@ public class WorkLogDao {
 		}
 	}
 
+	/**
+	 * Gets work logs for one worker in a month.
+	 *
+	 * @param workerId the worker id
+	 * @param monthYear the month in YYYY-MM format
+	 * @return the matching work log records
+	 */
 	public List<WorkLog> findByWorker(int workerId, String monthYear) {
 		List<WorkLog> list = new ArrayList<>();
 		String sql = "SELECT wl.*, p.title AS project_name, u.full_name AS worker_name "
@@ -60,6 +73,12 @@ public class WorkLogDao {
 		return list;
 	}
 
+	/**
+	 * Gets the active projects assigned to a worker.
+	 *
+	 * @param workerId the worker id
+	 * @return the assigned projects
+	 */
 	public List<Project> findAssignedProjects(int workerId) {
 		List<Project> projects = new ArrayList<>();
 		String sql = "SELECT DISTINCT p.* "
@@ -88,6 +107,13 @@ public class WorkLogDao {
 		return projects;
 	}
 
+	/**
+	 * Maps a result set row to a work log.
+	 *
+	 * @param rs result set positioned on a row
+	 * @return mapped work log record
+	 * @throws SQLException if column access fails
+	 */
 	private WorkLog mapRow(ResultSet rs) throws SQLException {
 		WorkLog workLog = new WorkLog();
 		workLog.setId(rs.getInt("id"));

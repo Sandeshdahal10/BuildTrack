@@ -11,7 +11,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * DAO for client project creation and document management.
+ * DAO for client-owned project creation and document uploads.
+ * Uses the database to persist new projects, store uploaded files,
+ * and verify project ownership before client actions.
  */
 public class ClientProjectDAO {
 
@@ -93,7 +95,7 @@ public class ClientProjectDAO {
      *
      * @param projectId project identifier
      * @param clientId  client identifier
-     * @return true if project exists and belongs to client
+      * @return true if the project exists and belongs to the client, false otherwise
      */
     public boolean projectBelongsToClient(int projectId, int clientId) {
         String sql = "SELECT 1 FROM projects WHERE id = ? AND client_id = ? LIMIT 1";

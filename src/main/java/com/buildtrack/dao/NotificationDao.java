@@ -7,12 +7,23 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DAO for application notifications stored in the notifications table.
+ * It creates the table if needed and handles insert, fetch, unread count,
+ * and mark-read database operations.
+ */
 public class NotificationDao {
 
+    /**
+     * Creates the notifications table if it does not already exist.
+     */
     public NotificationDao() {
         createTableIfNotExists();
     }
 
+    /**
+     * Creates the notifications table if it does not already exist.
+     */
     private void createTableIfNotExists() {
         String sql = "CREATE TABLE IF NOT EXISTS `notifications` (" +
                 "  `id` INT AUTO_INCREMENT PRIMARY KEY," +
@@ -30,6 +41,13 @@ public class NotificationDao {
         }
     }
 
+    /**
+     * Adds a notification for a user.
+     *
+     * @param userId the target user id
+     * @param message the notification message
+     * @return true if the insert succeeds, false otherwise
+     */
     public boolean addNotification(int userId, String message) {
         String sql = "INSERT INTO `notifications` (`user_id`, `message`) VALUES (?, ?)";
         try (Connection conn = DBUtil.getConnection();
@@ -43,6 +61,12 @@ public class NotificationDao {
         }
     }
 
+    /**
+     * Returns the most recent notifications for a user.
+     *
+     * @param userId the target user id
+     * @return the notifications ordered from newest to oldest
+     */
     public List<Notification> getNotificationsByUserId(int userId) {
         List<Notification> list = new ArrayList<>();
         String sql = "SELECT * FROM `notifications` WHERE `user_id` = ? ORDER BY `created_at` DESC LIMIT 20";
@@ -66,6 +90,12 @@ public class NotificationDao {
         return list;
     }
 
+    /**
+     * Returns the number of unread notifications for a user.
+     *
+     * @param userId the target user id
+     * @return the unread notification count
+     */
     public int getUnreadCount(int userId) {
         String sql = "SELECT COUNT(*) FROM `notifications` WHERE `user_id` = ? AND `is_read` = 0";
         try (Connection conn = DBUtil.getConnection();
@@ -82,6 +112,12 @@ public class NotificationDao {
         return 0;
     }
 
+    /**
+     * Marks all notifications for a user as read.
+     *
+     * @param userId the target user id
+     * @return true if at least one row was updated, false otherwise
+     */
     public boolean markAllAsRead(int userId) {
         String sql = "UPDATE `notifications` SET `is_read` = 1 WHERE `user_id` = ?";
         try (Connection conn = DBUtil.getConnection();

@@ -16,12 +16,18 @@ import java.util.Map;
 
 /**
  * DAO containing read-only queries used by client-side project tracking views.
+ * It retrieves project progress, material usage, and manual expense data for
+ * the authenticated client.
  */
 public class ProjectTrackingDao {
 
 	/**
 	 * Returns project overview for a given project if it belongs to the client.
 	 * Populates assignedWorkerCount and actualCost on the Project object.
+	 *
+	 * @param projectId the project id
+	 * @param clientId the client id
+	 * @return the project overview, or null if the project does not belong to the client
 	 */
 	public Project findProjectForClient(int projectId, int clientId) {
 		String sql = "SELECT p.*, u.full_name AS client_name, " +
@@ -63,6 +69,9 @@ public class ProjectTrackingDao {
 
 	/**
 	 * Returns list of material usages for a project, newest first.
+	 *
+	 * @param projectId the project id
+	 * @return the material usage records for the project
 	 */
 	public List<MaterialUsage> findMaterialUsageForProject(int projectId) {
 		List<MaterialUsage> list = new ArrayList<>();
@@ -105,6 +114,9 @@ public class ProjectTrackingDao {
 	/**
 	 * Returns a simple expense list (manual expenses) for a project.
 	 * Each map contains id, category, amount, notes, recordedBy, createdAt.
+	 *
+	 * @param projectId the project id
+	 * @return the manual expense rows as key-value maps
 	 */
 	public List<Map<String, Object>> findExpensesForProject(int projectId) {
 		List<Map<String, Object>> list = new ArrayList<>();
@@ -136,6 +148,9 @@ public class ProjectTrackingDao {
 	/**
 	 * Returns approximate time progress percentage (0-100) based on start/end dates.
 	 * If dates are missing, returns 0.
+	 *
+	 * @param projectId the project id
+	 * @return the progress percentage from 0 to 100
 	 */
 	public int getTimeProgressPercent(int projectId) {
 		String sql = "SELECT start_date, end_date FROM projects WHERE id = ?";
