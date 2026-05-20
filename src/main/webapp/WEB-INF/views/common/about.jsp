@@ -21,7 +21,7 @@
                 <!-- Back to Home -->
                 <div class="mb-10">
                     <a href="${pageContext.request.contextPath}/"
-                        class="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#ea580c] shadow-md ring-1 ring-slate-200 transition-all hover:bg-slate-50">
+                        class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50">
                         <span aria-hidden="true">←</span>
                         Back to Home
                     </a>
